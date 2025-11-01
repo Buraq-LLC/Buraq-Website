@@ -215,7 +215,7 @@
           <div class="stage__head">
             <p class="eyebrow">3D System View</p>
             <h2 class="xl">Edge Module Preview</h2>
-            <p class="muted">Interact with the drone model — zoom, rotate, and pan.</p>
+            <p class="muted">Interact with the drone model — zoom, rotate, and pan. (May take a minute to load.)</p>
           </div>
 
           <figure class="stage__media media-16x9" style="position:relative;">
@@ -243,57 +243,47 @@
       </ul>
 
       <!-- MODULE IMAGE (static, with scroll-reveal pins) -->
-<div class="stage" style="margin-top:20px;">
-  <div class="stage__head">
-    <p class="eyebrow">System Snapshot</p>
-    <h2 class="xl">Edge Module — Image Preview</h2>
-    <p class="muted">Exploded view with labeled parts.</p>
-  </div>
+      <div class="stage" style="margin-top:20px;">
+        <div class="stage__head">
+          <p class="eyebrow">System Snapshot</p>
+          <h2 class="xl">Edge Module — Image Preview</h2>
+          <p class="muted">Exploded view with labeled parts.</p>
+        </div>
 
-  <figure class="stage__media media-16x9">
-    <div class="annotated" id="moduleImage">
-      <img
-        src="assets/modelrepresentation.png"
-        alt="Exploded view: case cover, AI hat, Raspberry Pi, physical case"
-        loading="lazy"
-        decoding="async"
-      />
-    <ol class="pins" aria-label="Module parts">
-    <!-- Case cover — move whole group to the RIGHT -->
-    <li class="pin"
-        style="--x:65%; --y:12%; --i:0; --offset: 90px"
-        data-side="right">
-      <span class="pin__dot" aria-hidden="true"></span>
-      <span class="pin__label">Case cover</span>
-    </li>
-
-    <!-- AI hat — move whole group to the LEFT -->
-    <li class="pin"
-        style="--x:30%; --y:34%; --i:1; --offset: 110px"
-        data-side="left">
-      <span class="pin__dot" aria-hidden="true"></span>
-      <span class="pin__label">AI hat</span>
-    </li>
-
-    <!-- Raspberry Pi — move whole group to the RIGHT -->
-    <li class="pin"
-        style="--x:65%; --y:57%; --i:2; --offset: 90px"
-        data-side="right">
-      <span class="pin__dot" aria-hidden="true"></span>
-      <span class="pin__label">Raspberry&nbsp;Pi</span>
-    </li>
-
-    <!-- Physical case — move whole group to the LEFT -->
-    <li class="pin"
-        style="--x:30%; --y:82%; --i:3; --offset: 110px"
-        data-side="left">
-      <span class="pin__dot" aria-hidden="true"></span>
-      <span class="pin__label">Physical case</span>
-    </li>
-  </ol>
-    </div>
-  </figure>
-</div>
+        <figure class="stage__media media-16x9">
+          <div class="annotated" id="moduleImage">
+            <img
+              src="assets/modelrepresentation.png"
+              alt="Exploded view: case cover, AI hat, Raspberry Pi, physical case"
+              loading="lazy"
+              decoding="async"
+            />
+            <ol class="pins" aria-label="Module parts">
+              <!-- Case cover — right -->
+              <li class="pin" style="--x:65%; --y:12%; --i:0; --offset: 90px" data-side="right">
+                <span class="pin__dot" aria-hidden="true"></span>
+                <span class="pin__label">Case cover</span>
+              </li>
+              <!-- AI hat — left -->
+              <li class="pin" style="--x:30%; --y:34%; --i:1; --offset: 110px" data-side="left">
+                <span class="pin__dot" aria-hidden="true"></span>
+                <span class="pin__label">AI hat</span>
+              </li>
+              <!-- Raspberry Pi — right -->
+              <li class="pin" style="--x:65%; --y:57%; --i:2; --offset: 90px" data-side="right">
+                <span class="pin__dot" aria-hidden="true"></span>
+                <span class="pin__label">Raspberry&nbsp;Pi</span>
+              </li>
+              <!-- Physical case — left -->
+              <li class="pin" style="--x:30%; --y:82%; --i:3; --offset: 110px" data-side="left">
+                <span class="pin__dot" aria-hidden="true"></span>
+                <span class="pin__label">Physical case</span>
+              </li>
+            </ol>
+          </div>
+        </figure>
+      </div>
+    </section>
 
     <!-- ===== GALLERY ===== -->
     <section id="gallery" class="container section">
@@ -347,25 +337,25 @@
 
     <!-- ===== CONTACT ===== -->
     <section id="contact" class="container section">
-        <h2 class="xl">Connect With Us</h2>
-        <p class="lead">Contact our team to discuss deployments, partnerships, or access requests.</p>
+      <h2 class="xl">Connect With Us</h2>
+      <p class="lead">Contact our team to discuss deployments, partnerships, or access requests.</p>
 
-        <form id="inqForm" class="form" novalidate>
-          <div class="form__grid">
-            <label class="field"><span>First Name*</span><input type="text" name="firstName" required></label>
-            <label class="field"><span>Last Name*</span><input type="text" name="lastName" required></label>
-            <label class="field"><span>Business Email*</span><input type="email" name="email" required></label>
-            <label class="field"><span>Organization Name*</span><input type="text" name="org" required></label>
-            <label class="field"><span>Job Title*</span><input type="text" name="title"></label>
-            <label class="field"><span>Country*</span><input type="text" name="country" required></label>
-            <label class="field field--full"><span>Tell us challenges, project timing, and plans for using Buraq AI*</span><textarea name="notes" rows="5" required></textarea></label>
-          </div>
-          <div class="g-recaptcha" data-sitekey="6Lf8SLwrAAAAADyqwKLrfs-_4kFu053sjEtz3N6_" data-theme="light"></div>
-          <div class="form__actions">
-            <button type="submit" class="btn btn--solid">Submit inquiry</button>
-            <div id="formMsg" class="form__msg" role="status" aria-live="polite"></div>
-          </div>
-        </form>
+      <form id="inqForm" class="form" novalidate>
+        <div class="form__grid">
+          <label class="field"><span>First Name*</span><input type="text" name="firstName" required></label>
+          <label class="field"><span>Last Name*</span><input type="text" name="lastName" required></label>
+          <label class="field"><span>Business Email*</span><input type="email" name="email" required></label>
+          <label class="field"><span>Organization Name*</span><input type="text" name="org" required></label>
+          <label class="field"><span>Job Title*</span><input type="text" name="title"></label>
+          <label class="field"><span>Country*</span><input type="text" name="country" required></label>
+          <label class="field field--full"><span>Tell us challenges, project timing, and plans for using Buraq AI*</span><textarea name="notes" rows="5" required></textarea></label>
+        </div>
+        <div class="g-recaptcha" data-sitekey="6Lf8SLwrAAAAADyqwKLrfs-_4kFu053sjEtz3N6_" data-theme="light"></div>
+        <div class="form__actions">
+          <button type="submit" class="btn btn--solid">Submit inquiry</button>
+          <div id="formMsg" class="form__msg" role="status" aria-live="polite"></div>
+        </div>
+      </form>
     </section>
 
     <!-- ===== FOOTER ===== -->
@@ -382,19 +372,64 @@
     </footer>
   </main>
 
-  <!-- Menu drawer -->
-  <div id="menuPanel" class="panel" aria-hidden="true">
-    <div class="panel__backdrop" data-close="menu"></div>
-    <nav class="panel__content panel__content--menu" role="dialog" aria-modal="true" aria-label="Menu">
-      <button class="icon-btn panel__close" data-close="menu" aria-label="Close menu">✕</button>
-      <a href="#overview">Overview</a>
-      <a href="#ops">Opposition</a>
-      <a href="#platform">Platform</a>
-      <a href="#model">3D Model</a>
-      <a href="#resources">Principles</a>
-      <a href="#ethics">Ethics</a>
-      <a href="#gallery">How it works</a>
-      <a href="#contact">Get Started</a>
+<!-- Menu drawer (clean, on-top overlay) -->
+<div id="menuPanel" class="panel" aria-hidden="true">
+  <div class="panel__backdrop" data-close="menu"></div>
+
+  <nav class="panel__content panel__content--menu" role="dialog" aria-modal="true" aria-label="Menu">
+    <button class="icon-btn panel__close" data-close="menu" aria-label="Close menu">✕</button>
+
+    <!-- NAVIGATE -->
+    <h3 class="menu-section-title">Navigate</h3>
+    <a class="menu-link" href="index.html#top">Home</a>
+    <a class="menu-link" href="articles.html#field-reports">Field Reports</a>
+
+    <!-- FOLLOW US -->
+    <h3 class="menu-section-title">Follow Us</h3>
+
+    <a
+      class="menu-link"
+      href="https://www.instagram.com/buraqaiofficial"
+      target="_blank"
+      rel="noopener"
+      aria-label="Follow us on Instagram"
+    >
+      <!-- Instagram icon -->
+      <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"></rect>
+        <circle cx="12" cy="12" r="4.8" fill="none" stroke="currentColor" stroke-width="2"></circle>
+        <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"></circle>
+      </svg>
+      <span>Instagram</span>
+    </a>
+
+    <a
+      class="menu-link"
+      href="https://www.linkedin.com/company/watchtower-platform/posts/?feedView=alli"
+      target="_blank"
+      rel="noopener"
+      aria-label="Follow us on LinkedIn"
+    >
+      <!-- LinkedIn icon -->
+      <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="currentColor" d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v15H0V8zm7.5 0h4.8v2.05h.07c.67-1.27 2.3-2.6 4.74-2.6 5.07 0 6 3.34 6 7.68V23H18V16.5c0-1.55-.03-3.55-2.17-3.55-2.17 0-2.5 1.7-2.5 3.45V23h-5V8z"/>
+      </svg>
+      <span>LinkedIn</span>
+    </a>
+  </nav>
+</div>
+
+      <hr class="menu-divider" />
+
+      <!-- Existing links -->
+      <a class="menu-link" href="#overview">Overview</a>
+      <a class="menu-link" href="#ops">Opposition</a>
+      <a class="menu-link" href="#platform">Platform</a>
+      <a class="menu-link" href="#model">3D Model</a>
+      <a class="menu-link" href="#resources">Principles</a>
+      <a class="menu-link" href="#ethics">Ethics</a>
+      <a class="menu-link" href="#gallery">How it works</a>
+      <a class="menu-link" href="#contact">Get Started</a>
     </nav>
   </div>
 

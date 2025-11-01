@@ -212,49 +212,84 @@ function setupPanels() {
     });
   };
 
+  // Stop clicks inside contents from closing via backdrop
   $('.panel__content--search')?.addEventListener('click', e => e.stopPropagation());
   $('.panel__content--menu')?.addEventListener('click',   e => e.stopPropagation());
 
+  // SEARCH TOGGLE (optional)
   btnSearch?.addEventListener('click', (e) => {
     e.preventDefault(); e.stopPropagation();
-    if (isOpen(searchPanel)) { close(searchPanel); return; }
-    if (isOpen(menuPanel))   { close(menuPanel); openAfterClose(searchPanel); }
-    else { open(searchPanel); siteSearch?.focus(); }
+    const openNow = isOpen(searchPanel);
+    if (openNow) {
+      close(searchPanel);
+      btnSearch.setAttribute('aria-expanded','false');
+    } else {
+      if (isOpen(menuPanel)) { close(menuPanel); btnMenu?.setAttribute('aria-expanded','false'); }
+      open(searchPanel);
+      btnSearch.setAttribute('aria-expanded','true');
+      siteSearch?.focus();
+    }
   });
 
-  btnMenu?.addEventListener('click', (e) => {
-    e.preventDefault(); e.stopPropagation();
-    if (isOpen(menuPanel))   { close(menuPanel); return; }
-    if (isOpen(searchPanel)) { close(searchPanel); openAfterClose(menuPanel); }
-    else { open(menuPanel); }
-  });
+  // MENU TOGGLE — click again to close
+  // MENU TOGGLE — click again to close
+btnMenu?.setAttribute('aria-expanded','false');
 
-  $$('[data-close="search"]').forEach(el =>
-    el.addEventListener('click', () => close(searchPanel))
-  );
-  $$('[data-close="menu"]').forEach(el =>
-    el.addEventListener('click', () => close(menuPanel))
-  );
+btnMenu?.addEventListener('click', (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  const openNow = menuPanel.getAttribute('aria-hidden') === 'false';
+  if (openNow) {
+    menuPanel.setAttribute('aria-hidden', 'true');
+    btnMenu.setAttribute('aria-expanded', 'false');
+  } else {
+    // ensure search (if open) is closed
+    if (searchPanel && searchPanel.getAttribute('aria-hidden') === 'false') {
+      searchPanel.setAttribute('aria-hidden', 'true');
+      btnSearch?.setAttribute('aria-expanded', 'false');
+    }
+    menuPanel.setAttribute('aria-hidden', 'false');
+    btnMenu.setAttribute('aria-expanded', 'true');
+  }
+});
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') { close(searchPanel); close(menuPanel); }
-  });
+// Click backdrop or ✕ to close
+menuPanel.querySelectorAll('[data-close="menu"], .panel__backdrop')
+  .forEach(el => el.addEventListener('click', () => {
+    menuPanel.setAttribute('aria-hidden', 'true');
+    btnMenu?.setAttribute('aria-expanded', 'false');
+  }));
 
-  // Inline nav search slot
+// Close when a menu link is clicked
+menuPanel.querySelectorAll('.menu-link')
+  .forEach(a => a.addEventListener('click', () => {
+    menuPanel.setAttribute('aria-hidden', 'true');
+    btnMenu?.setAttribute('aria-expanded', 'false');
+  }));
+
+// ESC to close
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && menuPanel.getAttribute('aria-hidden') === 'false') {
+    menuPanel.setAttribute('aria-hidden', 'true');
+    btnMenu?.setAttribute('aria-expanded', 'false');
+  }
+});
+
+  // Optional inline search slot behavior (unchanged)
   const navSlot = document.querySelector('.nav-inline-search');
   const inlineInput = document.getElementById('navSearch');
   btnSearch?.addEventListener('click', (e) => {
     if (!navSlot || !inlineInput) return;
     e.preventDefault();
-    const opened = navSlot.classList.toggle('is-open');
-    btnSearch.setAttribute('aria-expanded', String(opened));
-    if (opened) setTimeout(() => inlineInput.focus(), 150);
+    const openIt = navSlot.classList.toggle('is-open');
+    btnSearch.setAttribute('aria-expanded', String(openIt));
+    if (openIt) setTimeout(() => inlineInput.focus(), 150);
   });
   document.addEventListener('click', (e) => {
     if (!navSlot?.classList.contains('is-open')) return;
     if (!navSlot.contains(e.target) && e.target !== btnSearch) {
       navSlot.classList.remove('is-open');
-      btnSearch.setAttribute('aria-expanded','false');
+      btnSearch?.setAttribute('aria-expanded','false');
     }
   });
   document.addEventListener('keydown', (e) => {
@@ -265,6 +300,7 @@ function setupPanels() {
     }
   });
 }
+
 
 /* ===== Form: HTML5 validity + reCAPTCHA + global saveInquiry() ===== */
 function setupForm() {
