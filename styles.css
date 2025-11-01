@@ -936,3 +936,133 @@ section[id] {
 
 /* Keep labels on top of the line visually */
 .pin__label{ position: relative; z-index: 1; }
+
+/* Drawer menu links */
+.panel__content--menu .menu-link{
+  display:block;
+  padding:12px 14px;
+  margin:4px 0;
+  border-radius:12px;
+  color:#2b3245;
+  text-decoration:none;
+  font-weight:600;
+  transition: background .15s ease, transform .12s ease;
+}
+.panel__content--menu .menu-link:hover{
+  background:#f3f5fb;
+  transform: translateX(2px);
+}
+
+/* Instagram row */
+.panel__content--menu .menu-social{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.panel__content--menu .menu-social svg{
+  flex:0 0 auto;
+  width:18px; height:18px;
+  color:#E1306C; /* Instagram magenta */
+}
+
+/* Divider */
+.panel__content--menu .menu-divider{
+  border:none;
+  border-top:1px solid var(--hair);
+  margin:10px 0;
+}
+
+/* === Menu drawer must sit above all content === */
+.nav-wrap { z-index: 1000; position: fixed; } /* keep as is */
+
+.panel{
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 99999;              /* <<< higher than anything else */
+}
+
+.panel[aria-hidden="false"]{ display: block; }
+
+.panel__backdrop{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.45); /* slight dim for clarity */
+  z-index: 0;
+}
+
+.panel__content{
+  position: absolute;
+  z-index: 1;                   /* content over backdrop */
+}
+
+.panel__content--menu{
+  top: var(--nav-h);
+  right: 0;
+  height: calc(100% - var(--nav-h));
+  width: min(420px, 86vw);
+  padding: 18px;
+  border-left: 1px solid var(--hair);
+  background: var(--card);
+  overflow: auto;
+}
+
+/* Optional: prevent page scroll when drawer is open */
+body.no-scroll { overflow: hidden; }
+/* Drawer section label */
+.menu-section-title{
+  margin: 8px 0 6px;
+  padding: 6px 4px;
+  font-size: .78rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #6b7390;
+  pointer-events: none;  /* unclickable header */
+}
+
+/* Drawer links with leading icons */
+.menu-link{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 8px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.menu-link:hover{
+  background: #f3f5fb;
+}
+
+.menu-link .menu-icon{
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  display: inline-block;
+  color: currentColor; /* ensure icon follows link color */
+}
+/* Keep hamburger clickable even when the drawer is open */
+#btnMenu{
+  position: relative;     /* create a stacking context */
+  z-index: 10002;         /* higher than the drawer/backdrop */
+}
+
+/* Drawer stays above the page but below the hamburger */
+.panel{ z-index: 9999; }
+
+/* Keep the header/hamburger above the drawer so it can close it */
+.nav-wrap { 
+  position: fixed;      /* you already have this */
+  z-index: 10020;       /* above the drawer/backdrop */
+}
+
+/* Drawer sits above the page but below the header */
+.panel { 
+  z-index: 10010; 
+}
+
+/* Optional: make the backdrop start under the header so header stays visible */
+#menuPanel .panel__backdrop {
+  top: var(--nav-h, 72px);
+}
