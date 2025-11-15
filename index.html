@@ -49,13 +49,15 @@
         <a href="#ai">Deployment</a>
         <a href="#developers">Ethics</a>
         <a href="#cta">Contact</a>
-        <a href="#newsletter">Updates</a>
+        <a href="#contact">Connect</a>
       </nav>
     </header>
 
     <main>
       <section class="hero" id="hero">
+        <canvas id="saber"></canvas>
         <div class="hero__background" aria-hidden="true"></div>
+        <canvas id="saber-bg"></canvas>
         <div class="hero__orb" aria-hidden="true"></div>
         <div class="hero__content" data-reveal>
           <h1>AI-Powered ISR for Human Rights Defense.</h1>
@@ -115,6 +117,8 @@
           </div>
         </div>
       </section>
+
+      
 
       <section class="spotlight" id="spotlight">
         <div class="spotlight__inner">
@@ -383,17 +387,51 @@
         </div>
       </section>
 
-      <section class="newsletter" id="newsletter">
-        <div class="newsletter__panel" data-reveal>
-          <h2>Join the waitlist.</h2>
-          <p>Get early access, release notes, and the latest extension drops.</p>
-          <form id="waitlistForm" novalidate>
-            <label>
-              <span>Email</span>
-              <input type="email" name="email" placeholder="you@example.com" required />
-            </label>
-            <button class="btn btn--ghost" type="submit">Notify me</button>
-            <p class="form-msg" role="status" aria-live="polite"></p>
+      <section class="contact" id="contact">
+        <div class="contact__inner">
+          <div class="contact__copy" data-reveal>
+            <span class="eyebrow">Connect with us</span>
+            <h2>Let’s talk deployments, partnerships, and access.</h2>
+            <p>Share a bit about your mission and we’ll coordinate a secure briefing tailored to your needs.</p>
+          </div>
+          <form id="inqForm" class="contact__form" novalidate data-reveal>
+            <div class="contact__fields">
+              <label class="contact__field">
+                <span>First name*</span>
+                <input type="text" name="firstName" autocomplete="given-name" required />
+              </label>
+              <label class="contact__field">
+                <span>Last name*</span>
+                <input type="text" name="lastName" autocomplete="family-name" required />
+              </label>
+              <label class="contact__field">
+                <span>Business email*</span>
+                <input type="email" name="email" autocomplete="email" required />
+              </label>
+              <label class="contact__field">
+                <span>Organization*</span>
+                <input type="text" name="org" autocomplete="organization" required />
+              </label>
+              <label class="contact__field">
+                <span>Job title</span>
+                <input type="text" name="title" autocomplete="organization-title" />
+              </label>
+              <label class="contact__field">
+                <span>Country*</span>
+                <input type="text" name="country" autocomplete="country-name" required />
+              </label>
+              <label class="contact__field contact__field--full">
+                <span>Tell us about your operational challenges*</span>
+                <textarea name="notes" rows="5" required></textarea>
+              </label>
+            </div>
+            <div class="contact__captcha">
+              <div class="g-recaptcha" data-sitekey="6Lf8SLwrAAAAADyqwKLrfs-_4kFu053sjEtz3N6_" data-theme="dark"></div>
+            </div>
+            <div class="contact__actions">
+              <button type="submit" class="btn btn--primary">Submit inquiry</button>
+              <p id="formMsg" class="contact__msg" role="status" aria-live="polite"></p>
+            </div>
           </form>
         </div>
       </section>
@@ -410,11 +448,13 @@
           <a href="#extensions">Extensions</a>
           <a href="#ai">AI</a>
           <a href="#developers">Developers</a>
-          <a href="#newsletter">Contact</a>
+          <a href="#contact">Contact</a>
         </nav>
       </div>
     </footer>
 
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script type="module" src="firebase-init.js"></script>
     <script src="main.js" type="module"></script>
   </body>
 </html>

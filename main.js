@@ -485,6 +485,90 @@ function setupWaitlistForm() {
     form.reset();
   });
 }
+function setupInquiryForm() {
+  const form = document.getElementById('inqForm');
+  if (!form) return;
+  const message = document.getElementById('formMsg');
+
+  const setMessage = (text, tone = 'default') => {
+    if (!message) return;
+    message.textContent = text;
+    if (tone === 'success') message.style.color = '#7bffb3';
+    else if (tone === 'error') message.style.color = '#ff7a7a';
+    else message.style.color = 'rgba(255, 255, 255, 0.7)';
+  };
+
+  let busy = false;
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (busy) return;
+
+    if (!form.checkValidity()) {
+      form.reportValidity?.();
+      return;
+    }
+
+    const grecaptcha = window.grecaptcha;
+    if (!grecaptcha || typeof grecaptcha.getResponse !== 'function') {
+      setMessage('reCAPTCHA did not load. Please refresh and try again.', 'error');
+      return;
+    }
+
+    const token = grecaptcha.getResponse();
+    if (!token) {
+      setMessage('Please complete the reCAPTCHA challenge.', 'error');
+      document.querySelector('.g-recaptcha')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    const formData = new FormData(form);
+    const payload = {
+      firstName: formData.get('firstName')?.trim() || '',
+      lastName: formData.get('lastName')?.trim() || '',
+      email: formData.get('email')?.trim() || '',
+      org: formData.get('org')?.trim() || '',
+      title: formData.get('title')?.trim() || '',
+      country: formData.get('country')?.trim() || '',
+      notes: formData.get('notes')?.trim() || '',
+      recaptchaToken: token
+    };
+
+    const submitButton = form.querySelector('button[type="submit"]');
+    const initialLabel = submitButton?.textContent;
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Submitting…';
+    }
+
+    busy = true;
+    setMessage('Submitting…');
+
+    try {
+      if (typeof window.saveInquiry !== 'function') {
+        throw new Error('saveInquiry() is unavailable. Check firebase-init.js.');
+      }
+
+      const result = await window.saveInquiry(payload);
+      if (!result?.ok) {
+        throw new Error(result?.error || 'Unknown submission error');
+      }
+
+      setMessage('Thanks — we’ll reach out shortly.', 'success');
+      form.reset();
+      grecaptcha.reset();
+    } catch (error) {
+      console.error('[Inquiry] Submission failed:', error);
+      setMessage('Something went wrong. Please try again or email ops@buraq.ai.', 'error');
+    } finally {
+      busy = false;
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = initialLabel || 'Submit inquiry';
+      }
+    }
+  });
+}
 
 function setupYear() {
   const yearNode = document.querySelector('[data-year]');
@@ -507,3 +591,7 @@ window.addEventListener('DOMContentLoaded', () => {
   setupWaitlistForm();
   setupYear();
 });
+
+
+  setupInquiryForm();
+
