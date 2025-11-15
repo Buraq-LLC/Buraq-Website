@@ -1,74 +1,7 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js';
-
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-
-const beamVertexShader = /* glsl */ `
-  varying vec2 vUv;
-
-  void main() {
-    vUv = uv;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  }
-`;
-
-const beamFragmentShader = /* glsl */ `
-  precision highp float;
-
-  varying vec2 vUv;
-  uniform float uTime;
-
-  float hash(vec2 p) {
-    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
-  }
-
-  float noise(vec2 p) {
-    vec2 i = floor(p);
-    vec2 f = fract(p);
-
-    vec2 u = f * f * (3.0 - 2.0 * f);
-
-    return mix(
-      mix(hash(i + vec2(0.0, 0.0)), hash(i + vec2(1.0, 0.0)), u.x),
-      mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x),
-      u.y
-    );
-  }
-
-  float fbm(vec2 p) {
-    float value = 0.0;
-    float amplitude = 0.5;
-    float frequency = 1.0;
-    for (int i = 0; i < 4; i++) {
-      value += amplitude * noise(p * frequency);
-      frequency *= 2.0;
-      amplitude *= 0.5;
-    }
-    return value;
-  }
-
-  void main() {
-    vec2 uv = vUv;
-    float centerMask = 1.0 - smoothstep(0.18, 0.48, abs(uv.y - 0.5));
-    float sweep = sin(uv.x * 6.0 + uTime * 1.8) * 0.25;
-    float flicker = fbm(vec2(uv.x * 4.0 + uTime * 0.6, uv.y * 2.0 - uTime * 0.4));
-    float ripple = fbm(vec2(uv.x * 8.0 - uTime * 0.8, uTime * 0.2));
-
-    float intensity = clamp(centerMask * (0.4 + sweep + flicker * 0.8 + ripple * 0.6), 0.0, 1.0);
-    float glow = pow(intensity, 1.4);
-
-    vec3 base = vec3(0.16, 0.4, 0.95);
-    vec3 highlight = vec3(0.45, 0.78, 1.0);
-    vec3 color = mix(base, highlight, pow(intensity, 2.2));
-    color += highlight * pow(centerMask, 5.0) * 0.9;
-
-    float alpha = smoothstep(0.05, 0.48, intensity);
-
-    gl_FragColor = vec4(color * glow, alpha);
-  }
-`;
 
 function setupNav() {
   const nav = $('.site-nav');
@@ -150,69 +83,126 @@ function setupScrollProgress() {
 
 function setupHeroBeam() {
   const canvas = document.getElementById('heroBeam');
-  if (!canvas) return;
+  const heroSection = document.getElementById('hero');
+  if (!canvas || !heroSection) return;
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReducedMotion) {
-    canvas.style.display = 'none';
-    return;
-  }
-
-  let renderer;
-
-  try {
-    renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-  } catch (error) {
-    console.warn('Hero beam disabled: WebGL unavailable.', error);
+  const prefersReducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (prefersReducedMotionQuery.matches) {
     canvas.remove();
     return;
   }
 
-  renderer.setClearColor(0x000000, 0);
+  const ctx = canvas.getContext('2d');
+  if (!ctx) {
+    canvas.remove();
+    return;
+  }
 
-  const scene = new THREE.Scene();
-  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
-  camera.position.z = 1;
+  const noiseCanvas = document.createElement('canvas');
+  noiseCanvas.width = 256;
+  noiseCanvas.height = 256;
+  const noiseCtx = noiseCanvas.getContext('2d');
 
-  const uniforms = {
-    uTime: { value: 0 }
+  const regenerateNoise = () => {
+    if (!noiseCtx) return;
+    const imageData = noiseCtx.createImageData(noiseCanvas.width, noiseCanvas.height);
+    const { data } = imageData;
+    for (let i = 0; i < data.length; i += 4) {
+      const value = Math.random() * 255;
+      data[i] = value;
+      data[i + 1] = value;
+      data[i + 2] = value;
+      data[i + 3] = 36 + Math.random() * 20;
+    }
+    noiseCtx.putImageData(imageData, 0, 0);
   };
 
-  const material = new THREE.ShaderMaterial({
-    uniforms,
-    vertexShader: beamVertexShader,
-    fragmentShader: beamFragmentShader,
-    transparent: true,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false
-  });
+  regenerateNoise();
 
-  const geometry = new THREE.PlaneGeometry(2, 1, 1, 1);
-  const mesh = new THREE.Mesh(geometry, material);
-  scene.add(mesh);
+  const state = {
+    pixelRatio: 1,
+    width: 0,
+    height: 0
+  };
 
   const resize = () => {
-    const { clientWidth, clientHeight } = canvas;
-    if (clientWidth === 0 || clientHeight === 0) return;
-    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-    renderer.setPixelRatio(pixelRatio);
-    renderer.setSize(clientWidth, clientHeight, false);
-    mesh.scale.set(clientWidth / clientHeight, 1, 1);
+    const rect = heroSection.getBoundingClientRect();
+    const displayWidth = canvas.clientWidth || rect.width;
+    const displayHeight = canvas.clientHeight || Math.max(200, rect.height * 0.5);
+    state.pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    state.width = displayWidth;
+    state.height = displayHeight;
+    canvas.width = displayWidth * state.pixelRatio;
+    canvas.height = displayHeight * state.pixelRatio;
   };
 
   resize();
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', resize, { passive: true });
 
-  const clock = new THREE.Clock();
   let animationId;
+  let lastNoiseUpdate = 0;
 
-  const render = () => {
-    uniforms.uTime.value += clock.getDelta();
-    renderer.render(scene, camera);
+  const render = (time) => {
     animationId = requestAnimationFrame(render);
+
+    const { width, height, pixelRatio } = state;
+    if (width === 0 || height === 0) return;
+
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    ctx.clearRect(0, 0, width, height);
+
+    const t = time * 0.001;
+    const baseY = height * (0.38 + Math.sin(t * 0.42) * 0.04);
+    const beamHeight = height * 0.32;
+
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.filter = 'blur(72px)';
+    const gradient = ctx.createLinearGradient(0, 0, width, 0);
+    const sweep = Math.sin(t * 0.8) * 0.06;
+    gradient.addColorStop(0.0, 'rgba(255, 40, 70, 0)');
+    gradient.addColorStop(0.25 + sweep, 'rgba(255, 60, 80, 0.25)');
+    gradient.addColorStop(0.5, 'rgba(255, 120, 140, 0.55)');
+    gradient.addColorStop(0.75 - sweep, 'rgba(255, 60, 80, 0.28)');
+    gradient.addColorStop(1.0, 'rgba(255, 40, 70, 0)');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, baseY - beamHeight / 2, width, beamHeight);
+
+    ctx.filter = 'blur(120px)';
+    ctx.globalAlpha = 0.55 + Math.sin(t * 1.3) * 0.1;
+    ctx.fillStyle = 'rgba(255, 95, 120, 0.6)';
+    ctx.fillRect(0, baseY - beamHeight * 0.4, width, beamHeight * 0.8);
+    ctx.restore();
+
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.filter = 'blur(26px)';
+    ctx.globalAlpha = 0.5;
+    const pulseX = (Math.sin(t * 0.6) * 0.5 + 0.5) * width;
+    const pulseRadius = width * 0.35;
+    const pulse = ctx.createRadialGradient(pulseX, baseY, pulseRadius * 0.1, pulseX, baseY, pulseRadius);
+    pulse.addColorStop(0.0, 'rgba(255, 150, 190, 0.9)');
+    pulse.addColorStop(1.0, 'rgba(255, 60, 90, 0)');
+    ctx.fillStyle = pulse;
+    ctx.fillRect(0, 0, width, height);
+    ctx.restore();
+
+    if (noiseCtx && time - lastNoiseUpdate > 90) {
+      regenerateNoise();
+      lastNoiseUpdate = time;
+    }
+
+    if (noiseCtx) {
+      ctx.save();
+      ctx.globalCompositeOperation = 'screen';
+      ctx.globalAlpha = 0.12;
+      ctx.filter = 'blur(0)';
+      ctx.drawImage(noiseCanvas, 0, 0, width, height);
+      ctx.restore();
+    }
   };
 
-  render();
+  animationId = requestAnimationFrame(render);
 
   const handleVisibility = () => {
     if (document.hidden) {
@@ -221,23 +211,31 @@ function setupHeroBeam() {
         animationId = undefined;
       }
     } else if (!animationId) {
-      clock.getDelta();
-      render();
+      lastNoiseUpdate = performance.now();
+      animationId = requestAnimationFrame(render);
     }
   };
 
-  document.addEventListener('visibilitychange', handleVisibility);
-
-  const cleanup = () => {
+  function cleanup() {
     if (animationId) cancelAnimationFrame(animationId);
     window.removeEventListener('resize', resize);
     document.removeEventListener('visibilitychange', handleVisibility);
+    prefersReducedMotionQuery.removeEventListener('change', handleMotionChange);
     window.removeEventListener('beforeunload', cleanup);
-    material.dispose();
-    geometry.dispose();
-    renderer.dispose();
-  };
+  }
 
+  function handleMotionChange(event) {
+    if (!event.matches) {
+      resize();
+      animationId = requestAnimationFrame(render);
+    } else {
+      cleanup();
+      canvas.remove();
+    }
+  }
+
+  document.addEventListener('visibilitychange', handleVisibility);
+  prefersReducedMotionQuery.addEventListener('change', handleMotionChange);
   window.addEventListener('beforeunload', cleanup);
 }
 
@@ -408,6 +406,57 @@ function setupCarousel() {
   }, { passive: false });
 }
 
+function setupSpotlightPreview() {
+  const list = document.querySelector('.command-palette__list');
+  const target = document.querySelector('[data-spotlight-preview-target]');
+  if (!list || !target) return;
+
+  const items = Array.from(list.querySelectorAll('.command-palette__item'));
+  if (!items.length) return;
+
+  const activate = (button) => {
+    items.forEach((item) => {
+      const isActive = item === button;
+      item.classList.toggle('is-active', isActive);
+      item.setAttribute('aria-selected', String(isActive));
+      item.setAttribute('tabindex', isActive ? '0' : '-1');
+    });
+
+    const type = button.dataset.previewType || 'image';
+    const src = button.dataset.previewSrc;
+    const alt = button.dataset.previewAlt || '';
+
+    target.innerHTML = '';
+
+    if (!src) return;
+
+    if (type === 'video') {
+      const video = document.createElement('video');
+      video.src = src;
+      video.autoplay = true;
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.setAttribute('aria-label', alt);
+      target.append(video);
+    } else {
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = alt;
+      target.append(img);
+    }
+  };
+
+  items.forEach((button) => {
+    button.addEventListener('click', () => activate(button));
+  });
+
+  const initialActive = items.find((item) => item.classList.contains('is-active')) || items[0];
+  if (initialActive) {
+    activate(initialActive);
+  }
+}
+
 function setupWaitlistForm() {
   const form = $('#waitlistForm');
   if (!form) return;
@@ -454,6 +503,7 @@ window.addEventListener('DOMContentLoaded', () => {
   setupTilt();
   setupExtensionFilters();
   setupCarousel();
+  setupSpotlightPreview();
   setupWaitlistForm();
   setupYear();
 });
