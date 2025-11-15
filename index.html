@@ -128,18 +128,24 @@
                 <span class="key">⌘</span><span class="key">K</span>
                 <span class="ghost">Search commands</span>
               </div>
-              <ul class="command-palette__list">
-                <li class="is-active">
-                  <strong>magic.png</strong>
-                  <span>Today • Clipboard</span>
+              <ul class="command-palette__list" role="tablist">
+                <li>
+                  <button class="command-palette__item is-active" type="button" role="tab" aria-selected="true" data-spotlight-preview="magic" data-preview-type="image" data-preview-src="assets/command-magic.png" data-preview-alt="Clipboard magic preview">
+                    <strong>magic.png</strong>
+                    <span>Today • Clipboard</span>
+                  </button>
                 </li>
                 <li>
-                  <strong>motion-design-final.mov</strong>
-                  <span>Yesterday • Downloads</span>
+                  <button class="command-palette__item" type="button" role="tab" aria-selected="false" data-spotlight-preview="motion" data-preview-type="video" data-preview-src="assets/spotlight-command.mp4" data-preview-alt="Motion design clip">
+                    <strong>motion-design-final.mov</strong>
+                    <span>Yesterday • Downloads</span>
+                  </button>
                 </li>
                 <li>
-                  <strong>Generate AI answer…</strong>
-                  <span>Ask Buraq Copilot</span>
+                  <button class="command-palette__item" type="button" role="tab" aria-selected="false" data-spotlight-preview="ai" data-preview-type="image" data-preview-src="assets/command-ai.png" data-preview-alt="Ask Buraq Copilot preview">
+                    <strong>Generate AI answer…</strong>
+                    <span>Ask Buraq Copilot</span>
+                  </button>
                 </li>
               </ul>
               <footer>
@@ -151,8 +157,8 @@
                 </div>
               </footer>
             </div>
-            <div class="spotlight__video">
-              <video src="assets/spotlight-command.mp4" autoplay muted loop playsinline></video>
+            <div class="spotlight__preview" data-spotlight-preview-target>
+              <img src="assets/command-magic.png" alt="Clipboard magic preview" />
             </div>
           </div>
         </div>
@@ -397,7 +403,7 @@
       <div class="site-footer__inner">
         <div class="site-footer__brand">
           <img src="assets/logo-placeholder.svg" alt="Buraq logo placeholder" width="26" height="26" />
-          <span>© <span data-year></span> Buraq. Inspired by Raycast.</span>
+          <span>© <span data-year></span> Buraq AI</span>
         </div>
         <nav class="site-footer__links">
           <a href="#features">Features</a>
