@@ -53,12 +53,15 @@ content="Buraq AI: The first ISR platform built for protecting civilians and pro
 </nav>
 </header>
 
-<main>
 <section class="hero" id="hero">
 <div class="hero__background" aria-hidden="true"></div>
+<div class="hero__gradient-overlay" aria-hidden="true"></div>
 <div class="container">
 <div class="hero__content">
-<h1 class="hero__title animate-on-load fade-in-up">AI-Powered ISR</h1>
+<h1 class="hero__title animate-on-load fade-in-up">
+<span class="hero__title-white">Buraq</span>
+<span class="hero__title-blue">AI-Powered ISR</span>
+</h1>
 <p class="hero__subtitle animate-on-load fade-in-up delay-1">The first Intelligence, Surveillance, & Reconnaissance platform built for protecting civilians and prosecuting abusers.</p>
 <div class="hero__stats animate-on-load fade-in-up delay-2">
 <div class="stat">
@@ -75,60 +78,20 @@ content="Buraq AI: The first ISR platform built for protecting civilians and pro
 </div>
 </div>
 <div class="hero__actions animate-on-load fade-in-up delay-3">
-<a class="btn btn--primary" href="#cta">Download</a>
-<a class="btn btn--ghost" href="#spotlight">Explore the mission</a>
+<a class="btn btn--primary" href="#cta">
+<span class="btn__icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+<path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+</svg>
+</span>
+Download for Mac
+</a>
+<a class="btn btn--ghost" href="#cta">Join Windows waitlist</a>
 </div>
-</div>
-<div class="hero__device animate-on-load fade-in-up delay-4">
-<div class="device-frame">
-<div class="device-frame__shimmer" aria-hidden="true"></div>
-<div class="device-frame__slides" data-hero-slides>
-<article class="device-slide is-active">
-<img src="https://picsum.photos/seed/detectedevents/800/450.jpg" alt="Detected events visualization" />
-<header>
-<span>Real-Time Monitoring</span>
-<span class="pill">Autonomous vision</span>
-</header>
-<p>Deploy drones with real-time AI vision to capture, geotag, and verify war crimes even when the network goes dark.</p>
-<footer>
-<div class="chip">Geo-tagged captures</div>
-<div class="chip">Tamper-evident logs</div>
-</footer>
-</article>
-<article class="device-slide">
-<img src="https://picsum.photos/seed/sar-thermal-drone/800/450.jpg" alt="SAR thermal drone" />
-<header>
-<span>Signal Intelligence</span>
-<span class="pill">Predictive AI</span>
-</header>
-<p>Multilingual NLP scans chatter, reports, and sensor feeds to escalate warning signs before atrocities unfold.</p>
-<footer>
-<div class="chip">Early-warning models</div>
-<div class="chip">Rapid escalation</div>
-</footer>
-</article>
-<article class="device-slide">
-<img src="https://picsum.photos/seed/dashboard/800/450.jpg" alt="Dashboard" />
-<header>
-<span>Forensic Evidence Chain</span>
-<span class="pill">Evidence engine</span>
-</header>
-<p>Produce time-stamped, ICC-compliant dossiers ready for investigators, courts, and humanitarian partners.</p>
-<footer>
-<div class="chip">ICC / UNHRC ready</div>
-<div class="chip">Case bundles</div>
-</footer>
-</article>
-</div>
-<div class="device-frame__controls">
-<button type="button" class="device-frame__control" data-prev aria-label="Previous slide"></button>
-<div class="device-frame__dots" aria-hidden="true">
-<span class="is-active"></span>
-<span></span>
-<span></span>
-</div>
-<button type="button" class="device-frame__control" data-next aria-label="Next slide"></button>
-</div>
+<div class="hero__version animate-on-load fade-in-up delay-4">
+<span>Version 2.4.1</span>
+<span>•</span>
+<span>Updated 2 days ago</span>
 </div>
 </div>
 </div>
@@ -186,7 +149,6 @@ content="Buraq AI: The first ISR platform built for protecting civilians and pro
 <div class="container">
 <article class="feature-row animate-on-scroll fade-in-left">
 <div class="feature-row__copy">
-<span class="eyebrow">Buraq Capabilities</span>
 <h3>Real-Time Monitoring</h3>
 <p>Deploy drones and AI to monitor operational areas and detect threats in real-time, even when network connectivity is compromised.</p>
 <ul>
@@ -201,7 +163,6 @@ content="Buraq AI: The first ISR platform built for protecting civilians and pro
 </article>
 <article class="feature-row feature-row--reverse animate-on-scroll fade-in-right">
 <div class="feature-row__copy">
-<span class="eyebrow">Edge AI</span>
 <h3>Edge AI Detection</h3>
 <p>Deploy autonomous vision at the edge to detect threats even when the network goes dark. Our edge AI capabilities ensure continuous operation in disconnected environments.</p>
 <ul>
@@ -216,7 +177,6 @@ content="Buraq AI: The first ISR platform built for protecting civilians and pro
 </article>
 <article class="feature-row animate-on-scroll fade-in-left">
 <div class="feature-row__copy">
-<span class="eyebrow">Forensics</span>
 <h3>Forensic Evidence Chain</h3>
 <p>Cryptographically hash-chained mission logs record all ISR events with region and severity metadata, ensuring tamper-evident auditability for international justice.</p>
 <ul>
@@ -231,7 +191,6 @@ content="Buraq AI: The first ISR platform built for protecting civilians and pro
 </article>
 <article class="feature-row feature-row--reverse animate-on-scroll fade-in-right">
 <div class="feature-row__copy">
-<span class="eyebrow">Signal Intelligence</span>
 <h3>Signal Intelligence</h3>
 <p>Multilingual NLP scans chatter, reports, and sensor feeds to correlate drone and sensor data, predicting threats before they materialize.</p>
 <ul>
@@ -250,7 +209,6 @@ content="Buraq AI: The first ISR platform built for protecting civilians and pro
 <section class="ethics" id="developers">
 <div class="container">
 <header class="animate-on-scroll fade-in-up">
-<span class="eyebrow">Buraq's Ethics</span>
 <h2>Engineered for Responsibility</h2>
 <p>Buraq is engineered for responsible intelligence operations with built-in safeguards and accountability measures.</p>
 </header>
@@ -302,7 +260,6 @@ content="Buraq AI: The first ISR platform built for protecting civilians and pro
 <section class="contact" id="contact">
 <div class="contact__inner">
 <div class="contact__copy animate-on-scroll fade-in-left">
-<span class="eyebrow">Connect with us</span>
 <h2>Let's talk deployments, partnerships, and access.</h2>
 <p>Share a bit about your mission and we'll coordinate a secure briefing tailored to your needs.</p>
 </div>
