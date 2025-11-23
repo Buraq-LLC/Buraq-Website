@@ -1,461 +1,370 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Buraq AI | ISR Platform for Human Rights Defense</title>
-    <meta
-      name="description"
-      content="Buraq AI: The first ISR platform built for protecting civilians and prosecuting abusers. From detection to deterrence for human-rights oversight." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-tab.png" />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="scroll-progress" aria-hidden="true"><span></span></div>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Buraq AI | ISR Platform for Human Rights Defense</title>
+<meta
+name="description"
+content="Buraq AI: The first ISR platform built for protecting civilians and prosecuting abusers. From detection to deterrence for human-rights oversight." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/png" sizes="48x48" href="https://picsum.photos/seed/buraq-tab/48/48.jpg" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
 
-    <header class="site-nav" data-fixed>
-      <div class="site-nav__inner">
-        <a class="site-nav__brand" href="#hero" aria-label="Buraq AI home">
-          <span class="site-nav__mark">
-            <img src="assets/buraq-horse.png" alt="Buraq logo" width="28" height="28" />
-          </span>
-          <span class="site-nav__wordmark">Buraq AI</span>
-        </a>
-        <nav class="site-nav__links" aria-label="Main">
-          <a href="#hero">Overview</a>
-          <a href="#spotlight">Mission</a>
-          <a href="#features">Capabilities</a>
-          <a href="#extensions">Threats</a>
-          <a href="#ai">Deployment</a>
-          <a href="#developers">Ethics</a>
-          <a href="#cta">Contact</a>
-        </nav>
-        <div class="site-nav__actions">
-          <a class="site-nav__ghost" href="#spotlight">Mission brief</a>
-          <a class="site-nav__cta" href="#cta">Get in touch</a>
-          <button class="site-nav__toggle" type="button" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
-            <span></span>
-          </button>
-        </div>
-      </div>
-      <nav id="mobileMenu" class="mobile-menu" aria-hidden="true">
-        <a href="#hero">Overview</a>
-        <a href="#spotlight">Mission</a>
-        <a href="#features">Capabilities</a>
-        <a href="#extensions">Threats</a>
-        <a href="#ai">Deployment</a>
-        <a href="#developers">Ethics</a>
-        <a href="#cta">Contact</a>
-        <a href="#contact">Connect</a>
-      </nav>
-    </header>
+<header class="site-nav" data-fixed>
+<div class="site-nav__inner">
+<a class="site-nav__brand" href="#hero" aria-label="Buraq AI home">
+<span class="site-nav__mark">
+<img src="https://picsum.photos/seed/buraq-horse/28/28.jpg" alt="Buraq logo" width="28" height="28" />
+</span>
+<span class="site-nav__wordmark">Buraq AI</span>
+</a>
+<nav class="site-nav__links" aria-label="Main">
+<a href="#hero">Overview</a>
+<a href="#spotlight">Mission</a>
+<a href="#features">Capabilities</a>
+<a href="#extensions">Threats</a>
+<a href="#ai">Deployment</a>
+<a href="#developers">Ethics</a>
+<a href="#cta">Contact</a>
+</nav>
+<div class="site-nav__actions">
+<a class="site-nav__ghost" href="#spotlight">Mission brief</a>
+<a class="site-nav__cta" href="#cta">Get in touch</a>
+<button class="site-nav__toggle" type="button" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
+<span></span>
+</button>
+</div>
+</div>
+<nav id="mobileMenu" class="mobile-menu" aria-hidden="true">
+<a href="#hero">Overview</a>
+<a href="#spotlight">Mission</a>
+<a href="#features">Capabilities</a>
+<a href="#extensions">Threats</a>
+<a href="#ai">Deployment</a>
+<a href="#developers">Ethics</a>
+<a href="#cta">Contact</a>
+<a href="#contact">Connect</a>
+</nav>
+</header>
 
-    <main>
-      <section class="hero" id="hero">
-        <canvas id="saber"></canvas>
-        <div class="hero__background" aria-hidden="true"></div>
-        <canvas id="saber-bg"></canvas>
-        <div class="hero__orb" aria-hidden="true"></div>
-        <div class="hero__content" data-reveal>
-          <h1>AI-POWERED ISR</h1>
-          <p>The first Intelligence, Surveillance, & Reconnaissance platform built for protecting civilians and prosecuting abusers.</p>
-          <div class="hero__actions">
-            <a class="btn btn--primary" href="#cta">Get started</a>
-            <a class="btn btn--ghost" href="#spotlight">Explore the mission</a>
-          </div>
-          <p class="hero__meta">Edge Autonomy • Federated Learning • Resilient Architecture</p>
-        </div>
-        <div class="hero__device" data-reveal>
-          <div class="device-frame">
-            <div class="device-frame__shimmer" aria-hidden="true"></div>
-            <div class="device-frame__slides" data-hero-slides>
-              <article class="device-slide is-active" data-image="assets/detectedevents.png">
-                <div class="device-slide__overlay"></div>
-                <header>
-                  <span>Edge ops</span>
-                  <span class="pill">Autonomous vision</span>
-                </header>
-                <p>Deploy drones with real-time AI vision to capture, geotag, and verify war crimes even when the network goes dark.</p>
-                <footer>
-                  <div class="chip">Geo-tagged captures</div>
-                  <div class="chip">Tamper-evident logs</div>
-                </footer>
-              </article>
-              <article class="device-slide" data-image="assets/sar-thermal-drone.png">
-                <div class="device-slide__overlay"></div>
-                <header>
-                  <span>Signal fusion</span>
-                  <span class="pill">Predictive AI</span>
-                </header>
-                <p>Multilingual NLP scans chatter, reports, and sensor feeds to escalate warning signs before atrocities unfold.</p>
-                <footer>
-                  <div class="chip">Early-warning models</div>
-                  <div class="chip">Rapid escalation</div>
-                </footer>
-              </article>
-              <article class="device-slide" data-image="assets/dashboard.png">
-                <div class="device-slide__overlay"></div>
-                <header>
-                  <span>Chain of custody</span>
-                  <span class="pill">Evidence engine</span>
-                </header>
-                <p>Produce time-stamped, ICC-compliant dossiers ready for investigators, courts, and humanitarian partners.</p>
-                <footer>
-                  <div class="chip">ICC / UNHRC ready</div>
-                  <div class="chip">Case bundles</div>
-                </footer>
-              </article>
-            </div>
-            <div class="device-frame__controls">
-              <button type="button" class="device-frame__control" data-prev aria-label="Previous slide"></button>
-              <div class="device-frame__dots" aria-hidden="true"></div>
-              <button type="button" class="device-frame__control" data-next aria-label="Next slide"></button>
-            </div>
-          </div>
-        </div>
-      </section>
+<main>
+<section class="hero" id="hero">
+<div class="hero__background" aria-hidden="true"></div>
+<div class="container">
+<div class="hero__content">
+<h1 class="hero__title animate-on-load fade-in-up">AI-Powered ISR</h1>
+<p class="hero__subtitle animate-on-load fade-in-up delay-1">The first Intelligence, Surveillance, & Reconnaissance platform built for protecting civilians and prosecuting abusers.</p>
+<div class="hero__stats animate-on-load fade-in-up delay-2">
+<div class="stat">
+<span class="stat__value">99.8%</span>
+<span class="stat__label">ACCURACY</span>
+</div>
+<div class="stat">
+<span class="stat__value">&lt;100ms</span>
+<span class="stat__label">RESPONSE TIME</span>
+</div>
+<div class="stat">
+<span class="stat__value">99.9%</span>
+<span class="stat__label">UPTIME</span>
+</div>
+</div>
+<div class="hero__actions animate-on-load fade-in-up delay-3">
+<a class="btn btn--primary" href="#cta">Download</a>
+<a class="btn btn--ghost" href="#spotlight">Explore the mission</a>
+</div>
+</div>
+<div class="hero__device animate-on-load fade-in-up delay-4">
+<div class="device-frame">
+<div class="device-frame__shimmer" aria-hidden="true"></div>
+<div class="device-frame__slides" data-hero-slides>
+<article class="device-slide is-active">
+<img src="https://picsum.photos/seed/detectedevents/800/450.jpg" alt="Detected events visualization" />
+<header>
+<span>Real-Time Monitoring</span>
+<span class="pill">Autonomous vision</span>
+</header>
+<p>Deploy drones with real-time AI vision to capture, geotag, and verify war crimes even when the network goes dark.</p>
+<footer>
+<div class="chip">Geo-tagged captures</div>
+<div class="chip">Tamper-evident logs</div>
+</footer>
+</article>
+<article class="device-slide">
+<img src="https://picsum.photos/seed/sar-thermal-drone/800/450.jpg" alt="SAR thermal drone" />
+<header>
+<span>Signal Intelligence</span>
+<span class="pill">Predictive AI</span>
+</header>
+<p>Multilingual NLP scans chatter, reports, and sensor feeds to escalate warning signs before atrocities unfold.</p>
+<footer>
+<div class="chip">Early-warning models</div>
+<div class="chip">Rapid escalation</div>
+</footer>
+</article>
+<article class="device-slide">
+<img src="https://picsum.photos/seed/dashboard/800/450.jpg" alt="Dashboard" />
+<header>
+<span>Forensic Evidence Chain</span>
+<span class="pill">Evidence engine</span>
+</header>
+<p>Produce time-stamped, ICC-compliant dossiers ready for investigators, courts, and humanitarian partners.</p>
+<footer>
+<div class="chip">ICC / UNHRC ready</div>
+<div class="chip">Case bundles</div>
+</footer>
+</article>
+</div>
+<div class="device-frame__controls">
+<button type="button" class="device-frame__control" data-prev aria-label="Previous slide"></button>
+<div class="device-frame__dots" aria-hidden="true">
+<span class="is-active"></span>
+<span></span>
+<span></span>
+</div>
+<button type="button" class="device-frame__control" data-next aria-label="Next slide"></button>
+</div>
+</div>
+</div>
+</div>
+</section>
 
-      <section class="spotlight" id="spotlight">
-        <div class="spotlight__inner">
-          <header data-reveal>
-            <h2>Tactical Autonomy</h2>
-            <p>Buraq empowers operators with a unified ISR interface—streamlining intelligence, surveillance, and reconnaissance across conflict zones. Every action is logged with forensic integrity, supporting accountability and global transparancy. Our platform fuses edge AI, real-time data, and resilient architecture to deliver actionable insights, reduce decision latency, and safeguard mission outcomes.</p>
-          </header>
-          <div class="spotlight__canvas" data-tilt data-reveal>
-            <div class="command-palette">
-              <div class="command-palette__search">
-                <span class="key">⌘</span><span class="key">K</span>
-                <span class="ghost">Search commands</span>
-              </div>
-              <ul class="command-palette__list" role="tablist">
-                <li>
-                  <button class="command-palette__item is-active" type="button" role="tab" aria-selected="true" data-spotlight-preview="magic" data-preview-type="image" data-preview-src="assets/command-magic.png" data-preview-alt="Clipboard magic preview">
-                    <strong>magic.png</strong>
-                    <span>Today • Clipboard</span>
-                  </button>
-                </li>
-                <li>
-                  <button class="command-palette__item" type="button" role="tab" aria-selected="false" data-spotlight-preview="motion" data-preview-type="video" data-preview-src="assets/spotlight-command.mp4" data-preview-alt="Motion design clip">
-                    <strong>motion-design-final.mov</strong>
-                    <span>Yesterday • Downloads</span>
-                  </button>
-                </li>
-                <li>
-                  <button class="command-palette__item" type="button" role="tab" aria-selected="false" data-spotlight-preview="ai" data-preview-type="image" data-preview-src="assets/command-ai.png" data-preview-alt="Ask Buraq Copilot preview">
-                    <strong>Generate AI answer…</strong>
-                    <span>Ask Buraq Copilot</span>
-                  </button>
-                </li>
-              </ul>
-              <footer>
-                <button type="button">Copy to clipboard</button>
-                <div class="chips">
-                  <span class="chip">Clipboard History</span>
-                  <span class="chip">Actions</span>
-                  <span class="chip">⌘ P</span>
-                </div>
-              </footer>
-            </div>
-            <div class="spotlight__preview" data-spotlight-preview-target>
-              <img src="assets/command-magic.png" alt="Clipboard magic preview" />
-            </div>
-          </div>
-        </div>
-      </section>
+<section class="spotlight" id="spotlight">
+<div class="spotlight__inner">
+<div class="spotlight__copy animate-on-scroll fade-in-left">
+<h2>Tactical Autonomy</h2>
+<p>Buraq empowers operators with a unified ISR interface—streamlining intelligence, surveillance, and reconnaissance across conflict zones. Every action is logged with forensic integrity, supporting accountability and global transparancy. Our platform fuses edge AI, real-time data, and resilient architecture to deliver actionable insights, reduce decision latency, and safeguard mission outcomes.</p>
+</div>
+<div class="spotlight__canvas animate-on-scroll fade-in-right">
+<div class="command-palette">
+<div class="command-palette__search">
+<span class="key">⌘</span><span class="key">K</span>
+<span class="ghost">Search commands</span>
+</div>
+<ul class="command-palette__list" role="tablist">
+<li>
+<button class="command-palette__item is-active" type="button" role="tab" aria-selected="true">
+<strong>magic.png</strong>
+<span>Today • Clipboard</span>
+</button>
+</li>
+<li>
+<button class="command-palette__item" type="button" role="tab" aria-selected="false">
+<strong>motion-design-final.mov</strong>
+<span>Yesterday • Downloads</span>
+</button>
+</li>
+<li>
+<button class="command-palette__item" type="button" role="tab" aria-selected="false">
+<strong>Generate AI answer…</strong>
+<span>Ask Buraq Copilot</span>
+</button>
+</li>
+</ul>
+<footer>
+<button type="button">Copy to clipboard</button>
+<div class="chips">
+<span class="chip">Clipboard History</span>
+<span class="chip">Actions</span>
+<span class="chip">⌘ P</span>
+</div>
+</footer>
+</div>
+<div class="spotlight__preview">
+<img src="https://picsum.photos/seed/command-magic/600/400.jpg" alt="Command palette preview" />
+</div>
+</div>
+</div>
+</section>
 
-      <section class="feature-rows" id="features">
-        <article class="feature-row" data-reveal>
-          <div class="feature-row__copy">
-            <span class="eyebrow">Buraq Capabilities</span>
-            <h3>Mission Ledger & Forensic Event Chain</h3>
-            <p>Buraq implements a cryptographically hash-chained mission log, recording all ISR events (pins, tracks, warnings, operator feedback) with region and severity metadata.</p>
-            <ul>
-              <li>SQL-backed ledger with WAL mode for concurrent writes</li>
-              <li>SHA-256 hash chain for tamper-evident auditability</li>
-              <li>Automated evidence export in standardized formats (JSON, CSV, PDF)</li>
-            </ul>
-          </div>
-          <div class="feature-row__visual">
-            <img src="assets/clipboard-preview.png" alt="Clipboard history preview placeholder" />
-          </div>
-        </article>
-        <article class="feature-row feature-row--reverse" data-reveal>
-          <div class="feature-row__copy">
-            <span class="eyebrow">Kubernetes</span>
-            <h3>Federated Edge AI & Multimodal Fusion</h3>
-            <p>Buraq deploys containerized AI microservices (YOLOv8, BERT NER, Bayesian fusion) across Kubernetes clusters for real-time, distributed inference.</p>
-            <ul>
-              <li>MQTT-based streaming for sub-100ms event propagation</li>
-              <li>Federated learning with privacy-preserving model updates</li>
-              <li>Entity recognition, sentiment analysis, and object detection fused via Bayesian correlation</li>
-              <li>Full analytic provenance: every inference is logged with model version, input, and output trace</li>
-            </ul>
-          </div>
-          <div class="feature-row__visual">
-            <img src="assets/ai-query-frame.png" alt="AI query interface placeholder" />
-          </div>
-        </article>
-        <article class="feature-row" data-reveal>
-          <div class="feature-row__copy">
-            <span class="eyebrow">The Interface</span>
-            <h3>Operator Interface & Mission Control</h3>
-            <p>Buraq's dashboard leverages WebSocket MQTT, Deck.gl, and Mapbox GL JS for interactive, real-time visualization.</p>
-            <ul>
-              <li>Customizable AO dashboards with region-specific overlays</li>
-              <li>Per-operator keybinding profiles with conflict resolution</li>
-              <li>Secure authentication and role-based access</li>
-              <li>Asset management, mission log review, and evidence export via RESTful API endpoints</li>
-            </ul>
-          </div>
-          <div class="feature-row__visual">
-            <img src="assets/hotkeys-panel.png" alt="Automation quicklinks placeholder" />
-          </div>
-        </article>
-      </section>
+<section class="feature-rows" id="features">
+<div class="container">
+<article class="feature-row animate-on-scroll fade-in-left">
+<div class="feature-row__copy">
+<span class="eyebrow">Buraq Capabilities</span>
+<h3>Real-Time Monitoring</h3>
+<p>Deploy drones and AI to monitor operational areas and detect threats in real-time, even when network connectivity is compromised.</p>
+<ul>
+<li class="animate-on-scroll fade-in-up stagger-1">Live AO monitoring with dynamic map overlays</li>
+<li class="animate-on-scroll fade-in-up stagger-2">Automated zone alerts and threat escalation</li>
+<li class="animate-on-scroll fade-in-up stagger-3">Secure data synchronization between edge units</li>
+</ul>
+</div>
+<div class="feature-row__visual animate-on-scroll fade-in-right">
+<img src="https://picsum.photos/seed/realtime-monitoring/600/400.jpg" alt="Real-time monitoring visualization" />
+</div>
+</article>
+<article class="feature-row feature-row--reverse animate-on-scroll fade-in-right">
+<div class="feature-row__copy">
+<span class="eyebrow">Edge AI</span>
+<h3>Edge AI Detection</h3>
+<p>Deploy autonomous vision at the edge to detect threats even when the network goes dark. Our edge AI capabilities ensure continuous operation in disconnected environments.</p>
+<ul>
+<li class="animate-on-scroll fade-in-up stagger-1">Containerized AI microservices for real-time inference</li>
+<li class="animate-on-scroll fade-in-up stagger-2">MQTT-based streaming for sub-100ms event propagation</li>
+<li class="animate-on-scroll fade-in-up stagger-3">Federated learning with privacy-preserving updates</li>
+</ul>
+</div>
+<div class="feature-row__visual animate-on-scroll fade-in-left">
+<img src="https://picsum.photos/seed/edge-ai-detection/600/400.jpg" alt="Edge AI detection visualization" />
+</div>
+</article>
+<article class="feature-row animate-on-scroll fade-in-left">
+<div class="feature-row__copy">
+<span class="eyebrow">Forensics</span>
+<h3>Forensic Evidence Chain</h3>
+<p>Cryptographically hash-chained mission logs record all ISR events with region and severity metadata, ensuring tamper-evident auditability for international justice.</p>
+<ul>
+<li class="animate-on-scroll fade-in-up stagger-1">Geo-tagged captures with tamper-evident logs</li>
+<li class="animate-on-scroll fade-in-up stagger-2">Time-stamped, ICC-compliant dossiers</li>
+<li class="animate-on-scroll fade-in-up stagger-3">Automated evidence export in standardized formats</li>
+</ul>
+</div>
+<div class="feature-row__visual animate-on-scroll fade-in-right">
+<img src="https://picsum.photos/seed/forensic-evidence/600/400.jpg" alt="Forensic evidence chain visualization" />
+</div>
+</article>
+<article class="feature-row feature-row--reverse animate-on-scroll fade-in-right">
+<div class="feature-row__copy">
+<span class="eyebrow">Signal Intelligence</span>
+<h3>Signal Intelligence</h3>
+<p>Multilingual NLP scans chatter, reports, and sensor feeds to correlate drone and sensor data, predicting threats before they materialize.</p>
+<ul>
+<li class="animate-on-scroll fade-in-up stagger-1">Entity recognition and sentiment analysis</li>
+<li class="animate-on-scroll fade-in-up stagger-2">Bayesian correlation of multimodal data</li>
+<li class="animate-on-scroll fade-in-up stagger-3">Early-warning models with rapid escalation</li>
+</ul>
+</div>
+<div class="feature-row__visual animate-on-scroll fade-in-left">
+<img src="https://picsum.photos/seed/signal-intelligence/600/400.jpg" alt="Signal intelligence visualization" />
+</div>
+</article>
+</div>
+</section>
 
-      <section class="extensions" id="extensions">
-        <header data-reveal>
-          <span class="eyebrow">Extension gallery</span>
-          <h2>There's an extension for that.</h2>
-          <p>Use your favorite tools without even opening them. Placeholder cards reference <code>extension-card-*.png</code>.</p>
-          <div class="pill-group" role="tablist">
-            <button type="button" class="pill is-active" data-filter="all">Productivity</button>
-            <button type="button" class="pill" data-filter="engineering">Engineering</button>
-            <button type="button" class="pill" data-filter="design">Design</button>
-            <button type="button" class="pill" data-filter="writing">Writing</button>
-          </div>
-        </header>
-        <div class="extensions__carousel" data-carousel>
-          <button class="carousel__arrow carousel__arrow--prev" type="button" aria-label="Previous extensions"></button>
-          <div class="carousel__track">
-            <article class="extension-card" data-category="productivity" style="--accent: #5c6cff" data-reveal>
-              <header>
-                <img src="assets/extension-icon-linear.png" alt="Linear icon placeholder" />
-                <div>
-                  <h3>Linear</h3>
-                  <p>Create, search, and modify issues without leaving your keyboard.</p>
-                </div>
-              </header>
-              <img class="extension-card__media" src="assets/extension-card-linear.png" alt="Linear extension preview placeholder" />
-            </article>
-            <article class="extension-card" data-category="productivity" style="--accent: #1db954" data-reveal>
-              <header>
-                <img src="assets/extension-icon-spotify.png" alt="Spotify icon placeholder" />
-                <div>
-                  <h3>Spotify</h3>
-                  <p>Search your library, control playback, and surface lyrics instantly.</p>
-                </div>
-              </header>
-              <img class="extension-card__media" src="assets/extension-card-spotify.png" alt="Spotify extension preview placeholder" />
-            </article>
-            <article class="extension-card" data-category="design" style="--accent: #7f5af0" data-reveal>
-              <header>
-                <img src="assets/extension-icon-figma.png" alt="Figma icon placeholder" />
-                <div>
-                  <h3>Figma Scratchpad</h3>
-                  <p>Jump into projects, collect assets, and launch collaborative sessions.</p>
-                </div>
-              </header>
-              <img class="extension-card__media" src="assets/extension-card-figma.png" alt="Figma extension preview placeholder" />
-            </article>
-            <article class="extension-card" data-category="writing" style="--accent: #ff4f81" data-reveal>
-              <header>
-                <img src="assets/extension-icon-notes.png" alt="Notes icon placeholder" />
-                <div>
-                  <h3>Quick Notes</h3>
-                  <p>Start drafting with AI templates and auto-sync to your workspace.</p>
-                </div>
-              </header>
-              <img class="extension-card__media" src="assets/extension-card-notes.png" alt="Notes extension preview placeholder" />
-            </article>
-          </div>
-          <button class="carousel__arrow carousel__arrow--next" type="button" aria-label="Next extensions"></button>
-        </div>
-      </section>
+<section class="ethics" id="developers">
+<div class="container">
+<header class="animate-on-scroll fade-in-up">
+<span class="eyebrow">Buraq's Ethics</span>
+<h2>Engineered for Responsibility</h2>
+<p>Buraq is engineered for responsible intelligence operations with built-in safeguards and accountability measures.</p>
+</header>
+<div class="ethics__grid">
+<article class="ethics-card animate-on-scroll fade-in-up stagger-1">
+<div class="ethics-card__icon">
+<img src="https://picsum.photos/seed/ethics-shield/48/48.jpg" alt="Shield icon" />
+</div>
+<div class="ethics-card__content">
+<h3>Anti-Authoritarian Safeguards</h3>
+<p>Buraq's architecture prevents centralized misuse—ensuring mission data and AI inferences remain under operator control, not regime authority.</p>
+</div>
+</article>
+<article class="ethics-card animate-on-scroll fade-in-up stagger-2">
+<div class="ethics-card__icon">
+<img src="https://picsum.photos/seed/ethics-humanitarian/48/48.jpg" alt="Humanitarian icon" />
+</div>
+<div class="ethics-card__content">
+<h3>Humanitarian Mission Support</h3>
+<p>Designed for civilian protection, Buraq enables ethical ISR deployments in humanitarian operations and conflict zones.</p>
+</div>
+</article>
+<article class="ethics-card animate-on-scroll fade-in-up stagger-3">
+<div class="ethics-card__icon">
+<img src="https://picsum.photos/seed/ethics-transparency/48/48.jpg" alt="Transparency icon" />
+</div>
+<div class="ethics-card__content">
+<h3>Transparent Accountability</h3>
+<p>Every action is logged and auditable, supporting international justice and protecting operators from unlawful orders or coercion.</p>
+</div>
+</article>
+</div>
+</div>
+</section>
 
-      <section class="ai-spotlight" id="ai">
-        <header data-reveal>
-          <span class="eyebrow">Buraq Deployments</span>
-          <h2>Multi-Cluster ISR for Drone Surveillance</h2>
-          <p>Buraq is engineered for rapid deployment across edge, cloud, and hybrid environments, with a focus on autonomous drone surveillance operations.
-            Deploy Buraq to orchestrate, analyze, and secure drone-based ISR missions—delivering actionable intelligence, forensic logging, and resilient operations in any environment.
-          </p>
-        </header>
-        <div class="ai-spotlight__stack" data-reveal>
-          <div class="ai-window ai-window--primary">
-            <img src="assets/ai-window-primary.png" alt="AI answer placeholder window" />
-          </div>
-          <div class="ai-window ai-window--secondary">
-            <img src="assets/ai-window-secondary.png" alt="Secondary AI window placeholder" />
-          </div>
-          <div class="ai-window ai-window--tertiary">
-            <img src="assets/ai-window-tertiary.png" alt="Tertiary AI panel placeholder" />
-          </div>
-        </div>
-        <div class="ai-spotlight__columns" data-reveal>
-          <article>
-            <h3>Live AO Monitoring</h3>
-            <p>Visualize real-time activity and threat levels across all operational regions, with dynamic map overlays and automated zone alerts.
-            </p>
-          </article>
-          <article>
-            <h3>Secure Data Synch</h3>
-            <p>Synchronize mission logs, drone telemetry, and analytic results between edge units and command centers using encrypted, fault-tolerant channels.</p>
-          </article>
-          <article>
-            <h3>Role-Based Access Control</h3>
-            <p>Manage operator permissions, mission scopes, and asset controls with granular, audit-ready authentication and authorization.</p>
-          </article>
-        </div>
-      </section>
+<section class="cta-band" id="cta">
+<div class="container">
+<div class="cta-band__copy animate-on-scroll fade-in-left">
+<h2>Ready to deploy Buraq AI?</h2>
+<p>Get in touch with our team to discuss your operational requirements and deployment options.</p>
+<a class="btn btn--primary" href="#">Download</a>
+</div>
+<div class="cta-band__art animate-on-scroll fade-in-right">
+<img src="https://picsum.photos/seed/cta-deployment/600/400.jpg" alt="Deployment visualization" />
+</div>
+</div>
+</section>
 
-      <section class="automation" id="automation">
-        <header data-reveal>
-          <span class="eyebrow">Automation hub</span>
-          <h2>Don't repeat yourself.</h2>
-          <p>Snippets, quicklinks, and hotkeys live together. Replace <code>automation-snippet.mp4</code> and friends when ready.</p>
-        </header>
-        <div class="automation__grid">
-          <article class="automation-card" data-reveal>
-            <div class="automation-card__media">
-              <video src="assets/automation-snippet.mp4" autoplay muted loop playsinline></video>
-            </div>
-            <h3>Snippets</h3>
-            <p>Save recurring answers and drop them instantly into any workflow.</p>
-          </article>
-          <article class="automation-card" data-reveal>
-            <div class="automation-card__media">
-              <img src="assets/automation-quicklinks.png" alt="Quicklinks placeholder" />
-            </div>
-            <h3>Quicklinks</h3>
-            <p>Launch anything from anywhere—no more hunting through browser tabs.</p>
-          </article>
-          <article class="automation-card" data-reveal>
-            <div class="automation-card__media">
-              <img src="assets/automation-hotkeys.png" alt="Hotkeys placeholder" />
-            </div>
-            <h3>Hotkeys &amp; aliases</h3>
-            <p>Assign muscle-memory shortcuts and keep them in sync across devices.</p>
-          </article>
-        </div>
-      </section>
+<section class="contact" id="contact">
+<div class="contact__inner">
+<div class="contact__copy animate-on-scroll fade-in-left">
+<span class="eyebrow">Connect with us</span>
+<h2>Let's talk deployments, partnerships, and access.</h2>
+<p>Share a bit about your mission and we'll coordinate a secure briefing tailored to your needs.</p>
+</div>
+<form id="inqForm" class="contact__form animate-on-scroll fade-in-right" novalidate>
+<div class="contact__fields">
+<label class="contact__field animate-on-scroll fade-in-up stagger-1">
+<span>First name*</span>
+<input type="text" name="firstName" autocomplete="given-name" required />
+</label>
+<label class="contact__field animate-on-scroll fade-in-up stagger-2">
+<span>Last name*</span>
+<input type="text" name="lastName" autocomplete="family-name" required />
+</label>
+<label class="contact__field animate-on-scroll fade-in-up stagger-3">
+<span>Business email*</span>
+<input type="email" name="email" autocomplete="email" required />
+</label>
+<label class="contact__field animate-on-scroll fade-in-up stagger-4">
+<span>Organization*</span>
+<input type="text" name="org" autocomplete="organization" required />
+</label>
+<label class="contact__field animate-on-scroll fade-in-up stagger-5">
+<span>Job title</span>
+<input type="text" name="title" autocomplete="organization-title" />
+</label>
+<label class="contact__field animate-on-scroll fade-in-up stagger-6">
+<span>Country*</span>
+<input type="text" name="country" autocomplete="country-name" required />
+</label>
+<label class="contact__field contact__field--full animate-on-scroll fade-in-up stagger-7">
+<span>Tell us about your operational challenges*</span>
+<textarea name="notes" rows="5" required></textarea>
+</label>
+</div>
+<div class="contact__captcha">
+<div class="g-recaptcha" data-sitekey="6Lf8SLwrAAAAADyqwKLrfs-_4kFu053sjEtz3N6_" data-theme="dark"></div>
+</div>
+<div class="contact__actions">
+<button type="submit" class="btn btn--primary">Submit inquiry</button>
+<p id="formMsg" class="contact__msg" role="status" aria-live="polite"></p>
+</div>
+</form>
+</div>
+</section>
+</main>
 
-      <section class="developer" id="developers">
-        <header data-reveal>
-          <span class="eyebrow">Buraq's Ethics</span>
-          <h2>Ethics and Accountability</h2>
-          <p>Buraq is engineered for responsible intelligence.</p>
-        </header>
-        <div class="developer__grid">
-          <article class="blueprint" data-reveal>
-            <img src="assets/blueprint-01.png" alt="Blueprint figure placeholder" />
-            <div class="blueprint__caption">
-              <span>FIG_01</span>
-              <h3>Anti-Authoritarian Safeguards</h3>
-              <p>Buraq's architecture prevents centralized misuse—ensuring mission data and AI inferences remain under operator control, not regime authority.</p>
-            </div>
-          </article>
-          <article class="blueprint" data-reveal>
-            <img src="assets/blueprint-02.png" alt="Built-in UI placeholder" />
-            <div class="blueprint__caption">
-              <span>FIG_03</span>
-              <h3>Humanitarian Mission Support</h3>
-              <p>Designed for civilian protection, Buraq enables ethical ISR deployments in humanitarian operations and conflict zones.</p>
-            </div>
-          </article>
-          <article class="blueprint" data-reveal>
-            <img src="assets/blueprint-03.png" alt="Batteries included placeholder" />
-            <div class="blueprint__caption">
-              <span>FIG_05</span>
-              <h3>Transparent Accountability</h3>
-              <p>Every action is logged and auditable, supporting international justice and protecting operators from unlawful orders or coercion.</p>
-            </div>
-          </article>
-        </div>
-      </section>
+<footer class="site-footer">
+<div class="site-footer__inner">
+<div class="site-footer__brand">
+<img src="https://picsum.photos/seed/buraq-logo/26/26.jpg" alt="Buraq logo" width="26" height="26" />
+<span>© <span data-year></span> Buraq AI</span>
+</div>
+<nav class="site-footer__links">
+<a href="#features">Features</a>
+<a href="#ai">AI</a>
+<a href="#developers">Ethics</a>
+<a href="#contact">Contact</a>
+</nav>
+</div>
+</footer>
 
-      <section class="cta-band" id="cta">
-        <div class="cta-band__copy" data-reveal>
-          <h2>It's not about saving time. It's about never wasting it.</h2>
-          <p>Ready when you are—drop in your final background <code>cta-keyboard.png</code> and go live.</p>
-          <a class="btn btn--primary" href="#">Download</a>
-        </div>
-        <div class="cta-band__art" data-reveal>
-          <img src="assets/cta-keyboard.png" alt="Keyboard lighting placeholder" />
-        </div>
-      </section>
-
-      <section class="contact" id="contact">
-        <div class="contact__inner">
-          <div class="contact__copy" data-reveal>
-            <span class="eyebrow">Connect with us</span>
-            <h2>Let's talk deployments, partnerships, and access.</h2>
-            <p>Share a bit about your mission and we'll coordinate a secure briefing tailored to your needs.</p>
-          </div>
-          <form id="inqForm" class="contact__form" novalidate data-reveal>
-            <div class="contact__fields">
-              <label class="contact__field">
-                <span>First name*</span>
-                <input type="text" name="firstName" autocomplete="given-name" required />
-              </label>
-              <label class="contact__field">
-                <span>Last name*</span>
-                <input type="text" name="lastName" autocomplete="family-name" required />
-              </label>
-              <label class="contact__field">
-                <span>Business email*</span>
-                <input type="email" name="email" autocomplete="email" required />
-              </label>
-              <label class="contact__field">
-                <span>Organization*</span>
-                <input type="text" name="org" autocomplete="organization" required />
-              </label>
-              <label class="contact__field">
-                <span>Job title</span>
-                <input type="text" name="title" autocomplete="organization-title" />
-              </label>
-              <label class="contact__field">
-                <span>Country*</span>
-                <input type="text" name="country" autocomplete="country-name" required />
-              </label>
-              <label class="contact__field contact__field--full">
-                <span>Tell us about your operational challenges*</span>
-                <textarea name="notes" rows="5" required></textarea>
-              </label>
-            </div>
-            <div class="contact__captcha">
-              <div class="g-recaptcha" data-sitekey="6Lf8SLwrAAAAADyqwKLrfs-_4kFu053sjEtz3N6_" data-theme="dark"></div>
-            </div>
-            <div class="contact__actions">
-              <button type="submit" class="btn btn--primary">Submit inquiry</button>
-              <p id="formMsg" class="contact__msg" role="status" aria-live="polite"></p>
-            </div>
-          </form>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div class="site-footer__inner">
-        <div class="site-footer__brand">
-          <img src="assets/logo-placeholder.svg" alt="Buraq logo placeholder" width="26" height="26" />
-          <span>© <span data-year></span> Buraq AI</span>
-        </div>
-        <nav class="site-footer__links">
-          <a href="#features">Features</a>
-          <a href="#extensions">Extensions</a>
-          <a href="#ai">AI</a>
-          <a href="#developers">Developers</a>
-          <a href="#contact">Contact</a>
-        </nav>
-      </div>
-    </footer>
-
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script type="module" src="firebase-init.js"></script>
-    <script src="main.js" type="module"></script>
-  </body>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="script.js" type="module"></script>
+</body>
 </html>
