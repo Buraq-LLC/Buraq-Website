@@ -30,6 +30,7 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
+  font-weight: 400;
 }
 
 /* Typography */
@@ -42,7 +43,7 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: clamp(3rem, 8vw, 5.5rem);
-  font-weight: 900;
+  font-weight: 700;
   background: var(--accent-gradient);
   -webkit-background-clip: text;
   background-clip: text;
@@ -53,7 +54,7 @@ h1 {
 
 h2 {
   font-size: clamp(2.5rem, 6vw, 4rem);
-  font-weight: 800;
+  font-weight: 700;
   background: var(--accent-gradient);
   -webkit-background-clip: text;
   background-clip: text;
@@ -62,7 +63,7 @@ h2 {
 
 h3 {
   font-size: clamp(1.8rem, 4vw, 2.5rem);
-  font-weight: 700;
+  font-weight: 600;
   color: var(--text-primary);
 }
 
@@ -70,6 +71,7 @@ p {
   font-size: 1.1rem;
   color: var(--text-secondary);
   margin-bottom: 1.5rem;
+  font-weight: 400;
 }
 
 a {
@@ -112,22 +114,25 @@ a:hover {
   }
 }
 
-/* Scroll Progress */
+/* Scroll Progress - Enhanced and Visible */
 .scroll-progress {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 3px;
-  z-index: 1000;
-  background: rgba(255, 255, 255, 0.1);
+  height: 4px;
+  z-index: 9999;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
 }
 
 .scroll-progress span {
   display: block;
   height: 100%;
   background: var(--accent-gradient);
-  width: 0;
+  width: 0%;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
 }
 
 /* Navigation */
@@ -296,7 +301,6 @@ a:hover {
   color: white;
   animation: fadeInUp 1.4s ease-out forwards;
   opacity: 0;
-  animation-delay: 0.4s;
 }
 
 .btn--primary::before {
@@ -315,7 +319,6 @@ a:hover {
   color: var(--text-primary);
   animation: fadeInUp 1.4s ease-out forwards;
   opacity: 0;
-  animation-delay: 0.5s;
 }
 
 .btn--ghost:hover {
@@ -336,7 +339,7 @@ section {
   padding: 0 2rem;
 }
 
-/* Hero Section */
+/* Hero Section - Enhanced */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -345,6 +348,7 @@ section {
   position: relative;
   overflow: hidden;
   text-align: center;
+  transform: translateY(100px); 
 }
 
 .hero__background {
@@ -353,7 +357,17 @@ section {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle at 50% 50%, rgba(21, 34, 54, 0.08) 0%, transparent 70%);
+  z-index: -2;
+}
+
+.hero__gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, rgba(7, 21, 43, 0.15) 0%, rgba(6, 21, 61, 0.08) 40%, rgba(0, 0, 0, 0) 100%);
   z-index: -1;
 }
 
@@ -364,19 +378,51 @@ section {
   flex-direction: column;
   align-items: center;
   gap: 2rem;
+  position: relative;
+  z-index: 1;
 }
 
 .hero__title {
   margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.hero__title-white {
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 700;
+  color: white;
+  animation: fadeInUp 1.2s ease-out forwards;
+  opacity: 0;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
+}
+
+.hero__title-blue {
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 700;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: fadeInUp 1.2s ease-out forwards;
+  opacity: 0;
+  animation-delay: 0.1s;
+  letter-spacing: -0.02em;
+  position: relative;
 }
 
 .hero__subtitle {
   font-size: clamp(1.2rem, 4vw, 1.8rem);
-  color: var(--text-primary);
-  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
   animation: fadeInUp 1.2s ease-out forwards;
   opacity: 0;
   animation-delay: 0.2s;
+  line-height: 1.5;
+  max-width: 600px;
+  letter-spacing: 0.01em;
 }
 
 .hero__stats {
@@ -398,7 +444,7 @@ section {
 
 .stat__value {
   font-size: 2rem;
-  font-weight: 800;
+  font-weight: 700;
   background: var(--accent-gradient);
   -webkit-background-clip: text;
   background-clip: text;
@@ -560,6 +606,21 @@ section {
   transform: scale(1.2);
 }
 
+.hero__version {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  animation: fadeInUp 1.4s ease-out forwards;
+  opacity: 0;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+}
+
 /* Spotlight Section */
 .spotlight {
   background: var(--bg-secondary);
@@ -650,6 +711,7 @@ section {
   border: 1px solid var(--border);
   border-radius: 6px;
   font-size: 0.875rem;
+  font-weight: 500;
   color: var(--text-primary);
   cursor: pointer;
   transition: var(--transition);

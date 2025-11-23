@@ -1,14 +1,52 @@
 // Initialize the website
 document.addEventListener('DOMContentLoaded', function() {
-  // Set current year in footer
-  document.querySelector('[data-year]').textContent = new Date().getFullYear();
+  console.log('DOM loaded');
   
-  // Scroll progress indicator
-  const scrollProgress = document.querySelector('.scroll-progress span');
-  window.addEventListener('scroll', () => {
-    const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-    scrollProgress.style.width = `${scrollPercentage}%`;
-  });
+  // Set current year in footer
+  const yearElement = document.querySelector('[data-year]');
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+  }
+  
+  // Enhanced scroll progress indicator with debugging
+  const scrollProgress = document.querySelector('.scroll-progress');
+  const scrollProgressSpan = document.querySelector('.scroll-progress span');
+  
+  console.log('Scroll progress element:', scrollProgress);
+  console.log('Scroll progress span element:', scrollProgressSpan);
+  
+  if (!scrollProgress || !scrollProgressSpan) {
+    console.error('Scroll progress elements not found!');
+    return;
+  }
+  
+  // Set initial state to make it visible
+  scrollProgressSpan.style.width = '0%';
+  scrollProgress.style.display = 'block';
+  scrollProgress.style.visibility = 'visible';
+  
+  // Scroll event listener with immediate update
+  const updateScrollProgress = () => {
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const scrollTop = window.scrollY;
+    const scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
+    
+    // Ensure the progress bar is visible and update width
+    scrollProgress.style.display = 'block';
+    scrollProgress.style.visibility = 'visible';
+    scrollProgressSpan.style.width = `${Math.max(0, Math.min(100, scrollPercentage))}%`;
+    
+    // Debug log
+    if (Math.random() < 0.01) { // Only log occasionally to avoid spam
+      console.log('Scroll percentage:', scrollPercentage.toFixed(2) + '%');
+    }
+  };
+  
+  window.addEventListener('scroll', updateScrollProgress, { passive: true });
+  
+  // Initial check
+  updateScrollProgress();
   
   // Reveal animation on scroll
   const revealElements = document.querySelectorAll('[data-reveal]');
@@ -23,40 +61,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   };
   
-  window.addEventListener('scroll', revealOnScroll);
+  window.addEventListener('scroll', revealOnScroll, { passive: true });
   revealOnScroll(); // Initial check
-  
-  // Hero slides functionality
-  const slides = document.querySelectorAll('.device-slide');
-  const dots = document.querySelectorAll('.device-frame__dots span');
-  const prevBtn = document.querySelector('.device-frame__control[data-prev]');
-  const nextBtn = document.querySelector('.device-frame__control[data-next]');
-  let currentSlide = 0;
-  
-  const showSlide = (index) => {
-    slides.forEach(slide => slide.classList.remove('is-active'));
-    dots.forEach(dot => dot.classList.remove('is-active'));
-    
-    slides[index].classList.add('is-active');
-    dots[index].classList.add('is-active');
-    currentSlide = index;
-  };
-  
-  const nextSlide = () => {
-    const newIndex = (currentSlide + 1) % slides.length;
-    showSlide(newIndex);
-  };
-  
-  const prevSlide = () => {
-    const newIndex = (currentSlide - 1 + slides.length) % slides.length;
-    showSlide(newIndex);
-  };
-  
-  nextBtn.addEventListener('click', nextSlide);
-  prevBtn.addEventListener('click', prevSlide);
-  
-  // Auto-advance slides
-  setInterval(nextSlide, 5000);
   
   // Command palette functionality
   const commandItems = document.querySelectorAll('.command-palette__item');
