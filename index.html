@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-tab.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-tab.png" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -60,13 +60,13 @@
         <canvas id="saber-bg"></canvas>
         <div class="hero__orb" aria-hidden="true"></div>
         <div class="hero__content" data-reveal>
-          <h1>AI-Powered ISR for Human Rights Defense.</h1>
-          <p>The first ISR platform built for protecting civilians and prosecuting abusers.</p>
+          <h1>AI-POWERED ISR</h1>
+          <p>The first Intelligence, Surveillance, & Reconnaissance platform built for protecting civilians and prosecuting abusers.</p>
           <div class="hero__actions">
             <a class="btn btn--primary" href="#cta">Get started</a>
             <a class="btn btn--ghost" href="#spotlight">Explore the mission</a>
           </div>
-          <p class="hero__meta">Edge autonomy • ICC-ready evidence • Built for conflict zones</p>
+          <p class="hero__meta">Edge Autonomy • Federated Learning • Resilient Architecture</p>
         </div>
         <div class="hero__device" data-reveal>
           <div class="device-frame">
@@ -118,13 +118,11 @@
         </div>
       </section>
 
-      
-
       <section class="spotlight" id="spotlight">
         <div class="spotlight__inner">
           <header data-reveal>
-            <h2>Take shortcuts, not detours.</h2>
-            <p>One interface. Everything you need. Swap the animation clip named <code>spotlight-command.mp4</code> when your creative team is ready.</p>
+            <h2>Tactical Autonomy</h2>
+            <p>Buraq empowers operators with a unified ISR interface—streamlining intelligence, surveillance, and reconnaissance across conflict zones. Every action is logged with forensic integrity, supporting accountability and global transparancy. Our platform fuses edge AI, real-time data, and resilient architecture to deliver actionable insights, reduce decision latency, and safeguard mission outcomes.</p>
           </header>
           <div class="spotlight__canvas" data-tilt data-reveal>
             <div class="command-palette">
@@ -171,13 +169,13 @@
       <section class="feature-rows" id="features">
         <article class="feature-row" data-reveal>
           <div class="feature-row__copy">
-            <span class="eyebrow">Remember everything</span>
-            <h3>Clipboard history that feels like time travel.</h3>
-            <p>Snag anything, anywhere. Each capture lands in a gorgeous gallery awaiting your story. Replace the mock image <code>clipboard-preview.png</code> later.</p>
+            <span class="eyebrow">Buraq Capabilities</span>
+            <h3>Mission Ledger & Forensic Event Chain</h3>
+            <p>Buraq implements a cryptographically hash-chained mission log, recording all ISR events (pins, tracks, warnings, operator feedback) with region and severity metadata.</p>
             <ul>
-              <li>Auto-tagged clips with intent labels.</li>
-              <li>Quick actions for copy, pin, and share.</li>
-              <li>Privacy lock with one keystroke.</li>
+              <li>SQL-backed ledger with WAL mode for concurrent writes</li>
+              <li>SHA-256 hash chain for tamper-evident auditability</li>
+              <li>Automated evidence export in standardized formats (JSON, CSV, PDF)</li>
             </ul>
           </div>
           <div class="feature-row__visual">
@@ -186,13 +184,14 @@
         </article>
         <article class="feature-row feature-row--reverse" data-reveal>
           <div class="feature-row__copy">
-            <span class="eyebrow">Ask boldly</span>
-            <h3>Always-on AI copilots tuned to your workspace.</h3>
-            <p>Swap <code>ai-query-frame.png</code> when final renders arrive. For now, dynamic gradients and blurred panels mimic the Raycast glow.</p>
+            <span class="eyebrow">Kubernetes</span>
+            <h3>Federated Edge AI & Multimodal Fusion</h3>
+            <p>Buraq deploys containerized AI microservices (YOLOv8, BERT NER, Bayesian fusion) across Kubernetes clusters for real-time, distributed inference.</p>
             <ul>
-              <li>Seamless follow-up prompts from the keyboard.</li>
-              <li>Source citations with hover previews.</li>
-              <li>Cache answers locally for offline recall.</li>
+              <li>MQTT-based streaming for sub-100ms event propagation</li>
+              <li>Federated learning with privacy-preserving model updates</li>
+              <li>Entity recognition, sentiment analysis, and object detection fused via Bayesian correlation</li>
+              <li>Full analytic provenance: every inference is logged with model version, input, and output trace</li>
             </ul>
           </div>
           <div class="feature-row__visual">
@@ -201,13 +200,14 @@
         </article>
         <article class="feature-row" data-reveal>
           <div class="feature-row__copy">
-            <span class="eyebrow">Launch faster</span>
-            <h3>Quicklinks, snippets, and hotkeys without context switching.</h3>
-            <p>Cards in this grid animate on hover, ready for future Lottie swaps (<code>automation-card-*.json</code>).</p>
+            <span class="eyebrow">The Interface</span>
+            <h3>Operator Interface & Mission Control</h3>
+            <p>Buraq's dashboard leverages WebSocket MQTT, Deck.gl, and Mapbox GL JS for interactive, real-time visualization.</p>
             <ul>
-              <li>Personal spaces for work, personal, and creative flows.</li>
-              <li>Per-app keybindings with instant conflict checks.</li>
-              <li>Shared libraries for your entire team.</li>
+              <li>Customizable AO dashboards with region-specific overlays</li>
+              <li>Per-operator keybinding profiles with conflict resolution</li>
+              <li>Secure authentication and role-based access</li>
+              <li>Asset management, mission log review, and evidence export via RESTful API endpoints</li>
             </ul>
           </div>
           <div class="feature-row__visual">
@@ -219,7 +219,7 @@
       <section class="extensions" id="extensions">
         <header data-reveal>
           <span class="eyebrow">Extension gallery</span>
-          <h2>There’s an extension for that.</h2>
+          <h2>There's an extension for that.</h2>
           <p>Use your favorite tools without even opening them. Placeholder cards reference <code>extension-card-*.png</code>.</p>
           <div class="pill-group" role="tablist">
             <button type="button" class="pill is-active" data-filter="all">Productivity</button>
@@ -278,9 +278,11 @@
 
       <section class="ai-spotlight" id="ai">
         <header data-reveal>
-          <span class="eyebrow">AI Spotlight</span>
-          <h2>Your Mac just got smarter.</h2>
-          <p>AI where it’s most useful—right on your OS. Layered windows below expect image exports <code>ai-window-*.png</code>.</p>
+          <span class="eyebrow">Buraq Deployments</span>
+          <h2>Multi-Cluster ISR for Drone Surveillance</h2>
+          <p>Buraq is engineered for rapid deployment across edge, cloud, and hybrid environments, with a focus on autonomous drone surveillance operations.
+            Deploy Buraq to orchestrate, analyze, and secure drone-based ISR missions—delivering actionable intelligence, forensic logging, and resilient operations in any environment.
+          </p>
         </header>
         <div class="ai-spotlight__stack" data-reveal>
           <div class="ai-window ai-window--primary">
@@ -295,17 +297,17 @@
         </div>
         <div class="ai-spotlight__columns" data-reveal>
           <article>
-            <h3>Ask anything, anytime.</h3>
-            <p>Quick AI blends your docs with the web. Each response includes references.
+            <h3>Live AO Monitoring</h3>
+            <p>Visualize real-time activity and threat levels across all operational regions, with dynamic map overlays and automated zone alerts.
             </p>
           </article>
           <article>
-            <h3>Always-on ChatGPT.</h3>
-            <p>Compose emails, review code, or brainstorm ideas without leaving the launcher.</p>
+            <h3>Secure Data Synch</h3>
+            <p>Synchronize mission logs, drone telemetry, and analytic results between edge units and command centers using encrypted, fault-tolerant channels.</p>
           </article>
           <article>
-            <h3>Your automation assistant.</h3>
-            <p>Create custom AI commands to slice through repetitive tasks.</p>
+            <h3>Role-Based Access Control</h3>
+            <p>Manage operator permissions, mission scopes, and asset controls with granular, audit-ready authentication and authorization.</p>
           </article>
         </div>
       </section>
@@ -313,7 +315,7 @@
       <section class="automation" id="automation">
         <header data-reveal>
           <span class="eyebrow">Automation hub</span>
-          <h2>Don’t repeat yourself.</h2>
+          <h2>Don't repeat yourself.</h2>
           <p>Snippets, quicklinks, and hotkeys live together. Replace <code>automation-snippet.mp4</code> and friends when ready.</p>
         </header>
         <div class="automation__grid">
@@ -343,42 +345,41 @@
 
       <section class="developer" id="developers">
         <header data-reveal>
-          <span class="eyebrow">Developer blueprints</span>
-          <h2>Build the perfect tools.</h2>
-          <p>Our API lets anyone with web skills unleash the power of Buraq. Swap blueprint renders named <code>blueprint-*.png</code>.</p>
+          <span class="eyebrow">Buraq's Ethics</span>
+          <h2>Ethics and Accountability</h2>
+          <p>Buraq is engineered for responsible intelligence.</p>
         </header>
         <div class="developer__grid">
           <article class="blueprint" data-reveal>
             <img src="assets/blueprint-01.png" alt="Blueprint figure placeholder" />
             <div class="blueprint__caption">
               <span>FIG_01</span>
-              <h3>React to macOS.</h3>
-              <p>Build rich, native-feeling extensions with familiar tech.</p>
+              <h3>Anti-Authoritarian Safeguards</h3>
+              <p>Buraq's architecture prevents centralized misuse—ensuring mission data and AI inferences remain under operator control, not regime authority.</p>
             </div>
           </article>
           <article class="blueprint" data-reveal>
             <img src="assets/blueprint-02.png" alt="Built-in UI placeholder" />
             <div class="blueprint__caption">
               <span>FIG_03</span>
-              <h3>Built-in UI.</h3>
-              <p>Component library handles the pixels so you focus on logic.</p>
+              <h3>Humanitarian Mission Support</h3>
+              <p>Designed for civilian protection, Buraq enables ethical ISR deployments in humanitarian operations and conflict zones.</p>
             </div>
           </article>
           <article class="blueprint" data-reveal>
             <img src="assets/blueprint-03.png" alt="Batteries included placeholder" />
             <div class="blueprint__caption">
               <span>FIG_05</span>
-              <h3>Batteries included.</h3>
-              <p>Typed APIs, hot reloading, and modern tooling from the start.</p>
+              <h3>Transparent Accountability</h3>
+              <p>Every action is logged and auditable, supporting international justice and protecting operators from unlawful orders or coercion.</p>
             </div>
           </article>
         </div>
-        <a class="link-arrow" href="#">Read the docs</a>
       </section>
 
       <section class="cta-band" id="cta">
         <div class="cta-band__copy" data-reveal>
-          <h2>It’s not about saving time. It’s about never wasting it.</h2>
+          <h2>It's not about saving time. It's about never wasting it.</h2>
           <p>Ready when you are—drop in your final background <code>cta-keyboard.png</code> and go live.</p>
           <a class="btn btn--primary" href="#">Download</a>
         </div>
@@ -391,8 +392,8 @@
         <div class="contact__inner">
           <div class="contact__copy" data-reveal>
             <span class="eyebrow">Connect with us</span>
-            <h2>Let’s talk deployments, partnerships, and access.</h2>
-            <p>Share a bit about your mission and we’ll coordinate a secure briefing tailored to your needs.</p>
+            <h2>Let's talk deployments, partnerships, and access.</h2>
+            <p>Share a bit about your mission and we'll coordinate a secure briefing tailored to your needs.</p>
           </div>
           <form id="inqForm" class="contact__form" novalidate data-reveal>
             <div class="contact__fields">
