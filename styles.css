@@ -171,14 +171,11 @@ a:hover {
   justify-content: center;
   width: 40px;
   height: 40px;
-  background: var(--accent-gradient);
-  border-radius: 8px;
 }
 
 .site-nav__mark img {
-  width: 24px;
-  height: 24px;
-  filter: brightness(0) invert(1);
+  width: 40px;
+  height: 40px;
 }
 
 .site-nav__links {
