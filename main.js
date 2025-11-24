@@ -12,11 +12,17 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log('Intro animation element:', introAnimation);
   console.log('Nav element:', siteNav);
   
+
+  // Show the navigation immediately on load
+  if (siteNav) {
+    siteNav.classList.add('visible');
+    console.log('Navigation visible (immediate)');
+  }
+
   // Make the video play once
   if (introAnimation) {
     introAnimation.loop = false;
     introAnimation.removeAttribute('loop');
-    
     // Fade in the animation when it starts
     setTimeout(() => {
       introAnimation.classList.add('loaded');
@@ -24,31 +30,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 100);
   }
   
-  // After 3.5 seconds, minimize animation and show content
+  // After 5.5 seconds, fade out animation
   setTimeout(() => {
-    console.log('3.5 seconds passed, minimizing animation and showing content');
-    
-    // Minimize and move animation to top
+    console.log('5.5 seconds passed, fading out animation');
+    // Fade out the animation
     if (introAnimation) {
-      introAnimation.classList.add('minimized');
-      console.log('Animation minimized and moved to top');
+      introAnimation.classList.add('fade-out');
+      console.log('Animation fading out');
     }
-    
-    // Show the navigation
-    if (siteNav) {
-      siteNav.classList.add('visible');
-      console.log('Navigation visible');
-    }
-    
-    // Show the hero content below
+    // (Navigation is now shown immediately on load)
+    // After the fade-out transition (1.5s), show the hero content
     setTimeout(() => {
       if (heroContent) {
         heroContent.classList.add('visible');
         console.log('Hero content visible');
       }
-    }, 500); // Slight delay for smoother transition
-    
-  }, 3500); // 3.5 seconds
+    }, 1500); // match CSS transition duration for fade-out
+  }, 5500); // 5.5 seconds
   
   // Set current year in footer
   const yearElement = document.querySelector('[data-year]');
