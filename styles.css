@@ -456,13 +456,13 @@ section {
 .hero__title-blue {
   font-size: clamp(3rem, 8vw, 5.5rem);
   font-weight: 700;
-  background: linear-gradient(135deg, #3b82f6, #60a5fa, #93c5fd);
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6, #60a5fa);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   letter-spacing: -0.02em;
   position: relative;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5)) brightness(1.05);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
 }
 
 .hero__subtitle {
@@ -971,6 +971,123 @@ section {
 .ethics-card__content h3 {
   margin-bottom: 1rem;
   font-size: 1.5rem;
+}
+
+/* Threats Section */
+.threats {
+  background: var(--bg-primary);
+  padding: 6rem 0;
+}
+
+.threats header {
+  text-align: center;
+  margin-bottom: 4rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.threats header h2 {
+  margin-bottom: 1rem;
+}
+
+.threats header p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+.threats__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.threat-card {
+  background: var(--bg-tertiary);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid var(--border);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.threat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.threat-card__header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.threat-card__header h3 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.threat-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.meta-item {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.meta-item strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.threat-card__content p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1.5rem;
+}
+
+.threat-list {
+  list-style: none;
+  margin-top: 1rem;
+}
+
+.threat-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.threat-list li::before {
+  content: '⚠';
+  position: absolute;
+  left: 0;
+  color: #ef4444;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .threats__grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .threat-card {
+    padding: 1.5rem;
+  }
 }
 
 /* CTA Band */
