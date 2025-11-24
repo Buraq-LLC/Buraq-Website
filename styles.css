@@ -418,7 +418,7 @@ section {
 }
 
 .hero__content {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto 4rem;
   display: flex;
   flex-direction: column;
@@ -437,7 +437,7 @@ section {
 }
 
 .hero__title {
-  margin-bottom: 0.1rem;
+  margin-bottom: 2.5rem;
   display: flex;
   flex-direction: column;
   line-height: 1;
@@ -449,6 +449,8 @@ section {
   color: white;
   letter-spacing: -0.02em;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  margin-top: 3rem;
+  margin-bottom: 2rem;
 }
 
 .hero__title-blue {
@@ -468,7 +470,7 @@ section {
   color: rgba(255, 255, 255, 0.85);
   font-weight: 500;
   line-height: 1.5;
-  max-width: 600px;
+  max-width: 900px;
   letter-spacing: 0.01em;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
@@ -1256,7 +1258,7 @@ section {
 }
 
 .hero__content {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto 4rem;
   display: flex;
   flex-direction: column;
