@@ -5,30 +5,50 @@ document.addEventListener('DOMContentLoaded', function() {
   // Hero animation functionality
   const heroContent = document.querySelector('.hero__content');
   const introAnimation = document.querySelector('.hero__intro-animation');
+  const siteNav = document.querySelector('.site-nav');
   
   // Debug: Check if elements are found
   console.log('Hero content element:', heroContent);
   console.log('Intro animation element:', introAnimation);
+  console.log('Nav element:', siteNav);
   
-  // Make the video loop and stay visible
+  // Make the video play once
   if (introAnimation) {
-    introAnimation.loop = false; // Play once
-    introAnimation.removeAttribute('loop'); // Ensure no loop attribute
+    introAnimation.loop = false;
+    introAnimation.removeAttribute('loop');
+    
+    // Fade in the animation when it starts
+    setTimeout(() => {
+      introAnimation.classList.add('loaded');
+      console.log('Animation loaded and visible');
+    }, 100);
   }
   
-  // Set a timer to show hero content after animation
+  // After 3.5 seconds, minimize animation and show content
   setTimeout(() => {
-    console.log('3 seconds passed, showing hero content');
+    console.log('3.5 seconds passed, minimizing animation and showing content');
     
-    // DON'T fade out the intro animation - keep it visible
-    // Just show the hero content on top of it
-    
-    // Show the hero content smoothly
-    if (heroContent) {
-      heroContent.classList.add('visible');
-      console.log('Added visible class to hero content');
+    // Minimize and move animation to top
+    if (introAnimation) {
+      introAnimation.classList.add('minimized');
+      console.log('Animation minimized and moved to top');
     }
-  }, 4000);
+    
+    // Show the navigation
+    if (siteNav) {
+      siteNav.classList.add('visible');
+      console.log('Navigation visible');
+    }
+    
+    // Show the hero content below
+    setTimeout(() => {
+      if (heroContent) {
+        heroContent.classList.add('visible');
+        console.log('Hero content visible');
+      }
+    }, 500); // Slight delay for smoother transition
+    
+  }, 3500); // 3.5 seconds
   
   // Set current year in footer
   const yearElement = document.querySelector('[data-year]');
