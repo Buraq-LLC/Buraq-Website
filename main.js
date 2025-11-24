@@ -1,3 +1,4 @@
+
 // Initialize the website
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DOM loaded');
@@ -139,14 +140,50 @@ document.addEventListener('DOMContentLoaded', function() {
   const contactForm = document.getElementById('inqForm');
   const formMsg = document.getElementById('formMsg');
   
-  contactForm.addEventListener('submit', (e) => {
+  contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    // In a real implementation, this would submit the form data to a server
-    // For demo purposes, we'll just show a success message
-    formMsg.textContent = 'Thank you for your inquiry. We will be in touch shortly.';
-    formMsg.style.color = '#10b981';
-    contactForm.reset();
+    // Get form data
+    const formData = new FormData(contactForm);
+    const data = {
+      firstName: formData.get('firstName'),
+      lastName: formData.get('lastName'),
+      email: formData.get('email'),
+      org: formData.get('org'),
+      title: formData.get('title') || '',
+      country: formData.get('country'),
+      notes: formData.get('notes')
+    };
+    
+    // Show loading message
+    formMsg.textContent = 'Submitting...';
+    formMsg.style.color = '#60a5fa';
+    
+    try {
+      // Check if Firebase is ready
+      if (typeof window.saveInquiry === 'function') {
+        const result = await window.saveInquiry(data);
+        
+        if (result.ok) {
+          formMsg.textContent = 'Thank you for your inquiry. We will be in touch shortly.';
+          formMsg.style.color = '#10b981';
+          contactForm.reset();
+          
+          // Reset reCAPTCHA if it exists
+          if (typeof grecaptcha !== 'undefined') {
+            grecaptcha.reset();
+          }
+        } else {
+          throw new Error(result.error || 'Failed to submit');
+        }
+      } else {
+        throw new Error('Firebase not initialized');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      formMsg.textContent = 'There was an error submitting your inquiry. Please try again.';
+      formMsg.style.color = '#ef4444';
+    }
   });
   
   // Smooth scroll for anchor links
