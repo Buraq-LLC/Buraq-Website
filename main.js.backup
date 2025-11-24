@@ -1,0 +1,240 @@
+// Configuration constants
+const CONFIG = {
+  ANIMATION_DELAY: 100,
+  FADE_OUT_DELAY: 4500,
+  HERO_REVEAL_DELAY: 1500,
+  SCROLL_OFFSET: 80,
+  REVEAL_THRESHOLD: 100,
+  DEBUG_MODE: false
+};
+
+// Utility functions
+const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => document.querySelectorAll(selector);
+const log = (...args) => CONFIG.DEBUG_MODE && console.log(...args);
+const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+
+// Hero animation controller
+class HeroAnimationController {
+  constructor() {
+    this.elements = {
+      heroContent: $('.hero__content'),
+      introAnimation: $('.hero__intro-animation'),
+      siteNav: $('.site-nav')
+    };
+    this.initialized = false;
+  }
+
+  init() {
+    if (this.initialized || !this.validateElements()) return;
+    
+    this.showNavigation();
+    this.configureVideo();
+    this.scheduleAnimationSequence();
+    this.initialized = true;
+    log('HeroAnimationController initialized');
+  }
+
+  validateElements() {
+    const { heroContent, introAnimation, siteNav } = this.elements;
+    return heroContent && introAnimation && siteNav;
+  }
+
+  showNavigation() {
+    this.elements.siteNav?.classList.add('visible');
+  }
+
+  configureVideo() {
+    const video = this.elements.introAnimation;
+    if (!video) return;
+    
+    video.loop = false;
+    video.removeAttribute('loop');
+    
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        video.classList.add('loaded');
+        log('Animation loaded');
+      }, CONFIG.ANIMATION_DELAY);
+    });
+  }
+
+  scheduleAnimationSequence() {
+    setTimeout(() => {
+      this.fadeOutAnimation();
+      setTimeout(() => this.showHeroContent(), CONFIG.HERO_REVEAL_DELAY);
+    }, CONFIG.FADE_OUT_DELAY);
+  }
+
+  fadeOutAnimation() {
+    this.elements.introAnimation?.classList.add('fade-out');
+    log('Animation fading out');
+  }
+
+  showHeroContent() {
+    this.elements.heroContent?.classList.add('visible');
+    log('Hero content visible');
+  }
+}
+  
+  // Set current year in footer
+  const yearElement = document.querySelector('[data-year]');
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+  }
+  
+  // Enhanced scroll progress indicator with debugging
+  const scrollProgress = document.querySelector('.scroll-progress');
+  const scrollProgressSpan = document.querySelector('.scroll-progress span');
+  
+  console.log('Scroll progress element:', scrollProgress);
+  console.log('Scroll progress span element:', scrollProgressSpan);
+  
+  if (!scrollProgress || !scrollProgressSpan) {
+    console.error('Scroll progress elements not found!');
+    return;
+  }
+  
+  // Set initial state to make it visible
+  scrollProgressSpan.style.width = '0%';
+  scrollProgress.style.display = 'block';
+  scrollProgress.style.visibility = 'visible';
+  
+  // Scroll event listener with immediate update
+  const updateScrollProgress = () => {
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const scrollTop = window.scrollY;
+    const scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
+    
+    // Ensure the progress bar is visible and update width
+    scrollProgress.style.display = 'block';
+    scrollProgress.style.visibility = 'visible';
+    scrollProgressSpan.style.width = `${Math.max(0, Math.min(100, scrollPercentage))}%`;
+    
+    // Debug log
+    if (Math.random() < 0.01) { // Only log occasionally to avoid spam
+      console.log('Scroll percentage:', scrollPercentage.toFixed(2) + '%');
+    }
+  };
+  
+  window.addEventListener('scroll', updateScrollProgress, { passive: true });
+  
+  // Initial check
+  updateScrollProgress();
+  
+  // Reveal animation on scroll
+  const revealElements = document.querySelectorAll('[data-reveal]');
+  const revealOnScroll = () => {
+    revealElements.forEach(element => {
+      const elementTop = element.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+      
+      if (elementTop < windowHeight - 100) {
+        element.classList.add('active');
+      }
+    });
+  };
+  
+  window.addEventListener('scroll', revealOnScroll, { passive: true });
+  revealOnScroll(); // Initial check
+  
+  // Command palette functionality
+  const commandItems = document.querySelectorAll('.command-palette__item');
+  const previewImg = document.querySelector('.spotlight__preview img');
+  
+  commandItems.forEach(item => {
+    item.addEventListener('click', () => {
+      commandItems.forEach(i => i.classList.remove('is-active'));
+      item.classList.add('is-active');
+      
+      // In a real implementation, this would change the preview image
+      // For demo purposes, we'll just log the action
+      console.log('Selected command:', item.querySelector('strong').textContent);
+    });
+  });
+  
+  // Mobile menu toggle
+  const navToggle = document.querySelector('.site-nav__toggle');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  
+  navToggle.addEventListener('click', () => {
+    const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+    navToggle.setAttribute('aria-expanded', !expanded);
+    mobileMenu.setAttribute('aria-hidden', expanded);
+  });
+  
+  // Form submission
+  const contactForm = document.getElementById('inqForm');
+  const formMsg = document.getElementById('formMsg');
+  
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Get form data
+    const formData = new FormData(contactForm);
+    const data = {
+      firstName: formData.get('firstName'),
+      lastName: formData.get('lastName'),
+      email: formData.get('email'),
+      org: formData.get('org'),
+      title: formData.get('title') || '',
+      country: formData.get('country'),
+      notes: formData.get('notes')
+    };
+    
+    // Show loading message
+    formMsg.textContent = 'Submitting...';
+    formMsg.style.color = '#60a5fa';
+    
+    try {
+      // Check if Firebase is ready
+      if (typeof window.saveInquiry === 'function') {
+        const result = await window.saveInquiry(data);
+        
+        if (result.ok) {
+          formMsg.textContent = 'Thank you for your inquiry. We will be in touch shortly.';
+          formMsg.style.color = '#10b981';
+          contactForm.reset();
+          
+          // Reset reCAPTCHA if it exists
+          if (typeof grecaptcha !== 'undefined') {
+            grecaptcha.reset();
+          }
+        } else {
+          throw new Error(result.error || 'Failed to submit');
+        }
+      } else {
+        throw new Error('Firebase not initialized');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      formMsg.textContent = 'There was an error submitting your inquiry. Please try again.';
+      formMsg.style.color = '#ef4444';
+    }
+  });
+  
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      const targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop - 80, // Account for fixed header
+          behavior: 'smooth'
+        });
+        
+        // Close mobile menu if open
+        if (navToggle.getAttribute('aria-expanded') === 'true') {
+          navToggle.setAttribute('aria-expanded', false);
+          mobileMenu.setAttribute('aria-hidden', true);
+        }
+      }
+    });
+  });
+});

@@ -1,212 +1,430 @@
+// Configuration constants
+const CONFIG = {
+  ANIMATION_DELAY: 100,
+  FADE_OUT_DELAY: 4500,
+  HERO_REVEAL_DELAY: 1500,
+  SCROLL_OFFSET: 80,
+  REVEAL_THRESHOLD: 100,
+  DEBUG_MODE: false
+};
 
-// Initialize the website
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('DOM loaded');
-  
-  // Hero animation functionality
-  const heroContent = document.querySelector('.hero__content');
-  const introAnimation = document.querySelector('.hero__intro-animation');
-  const siteNav = document.querySelector('.site-nav');
-  
-  // Debug: Check if elements are found
-  console.log('Hero content element:', heroContent);
-  console.log('Intro animation element:', introAnimation);
-  console.log('Nav element:', siteNav);
-  
+// Utility functions
+const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => document.querySelectorAll(selector);
+const log = (...args) => CONFIG.DEBUG_MODE && console.log(...args);
+const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
-  // Show the navigation immediately on load
-  if (siteNav) {
-    siteNav.classList.add('visible');
-    console.log('Navigation visible (immediate)');
+// Hero animation controller
+class HeroAnimationController {
+  constructor() {
+    this.elements = {
+      heroContent: $('.hero__content'),
+      introAnimation: $('.hero__intro-animation'),
+      siteNav: $('.site-nav')
+    };
+    this.initialized = false;
   }
 
-  // Make the video play once
-  if (introAnimation) {
-    introAnimation.loop = false;
-    introAnimation.removeAttribute('loop');
-    // Fade in the animation when it starts
+  init() {
+    if (this.initialized || !this.validateElements()) return;
+    
+    this.showNavigation();
+    this.configureVideo();
+    this.scheduleAnimationSequence();
+    this.initialized = true;
+    log('HeroAnimationController initialized');
+  }
+
+  validateElements() {
+    const { heroContent, introAnimation, siteNav } = this.elements;
+    return heroContent && introAnimation && siteNav;
+  }
+
+  showNavigation() {
+    this.elements.siteNav?.classList.add('visible');
+  }
+
+  configureVideo() {
+    const video = this.elements.introAnimation;
+    if (!video) return;
+    
+    video.loop = false;
+    video.removeAttribute('loop');
+    
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        video.classList.add('loaded');
+        log('Animation loaded');
+      }, CONFIG.ANIMATION_DELAY);
+    });
+  }
+
+  scheduleAnimationSequence() {
     setTimeout(() => {
-      introAnimation.classList.add('loaded');
-      console.log('Animation loaded and visible');
-    }, 100);
+      this.fadeOutAnimation();
+      setTimeout(() => this.showHeroContent(), CONFIG.HERO_REVEAL_DELAY);
+    }, CONFIG.FADE_OUT_DELAY);
   }
-  
-  // After 5.5 seconds, fade out animation
-  setTimeout(() => {
-    console.log('5 seconds passed, fading out animation');
-    // Fade out the animation
-    if (introAnimation) {
-      introAnimation.classList.add('fade-out');
-      console.log('Animation fading out');
+
+  fadeOutAnimation() {
+    this.elements.introAnimation?.classList.add('fade-out');
+    log('Animation fading out');
+  }
+
+  showHeroContent() {
+    this.elements.heroContent?.classList.add('visible');
+    log('Hero content visible');
+  }
+}
+
+// Scroll progress controller
+class ScrollProgressController {
+  constructor() {
+    this.progressBar = $('.scroll-progress');
+    this.progressSpan = $('.scroll-progress span');
+    this.rafId = null;
+    this.ticking = false;
+  }
+
+  init() {
+    if (!this.progressBar || !this.progressSpan) {
+      log('Scroll progress elements not found');
+      return;
     }
-    // (Navigation is now shown immediately on load)
-    // After the fade-out transition (1.5s), show the hero content
-    setTimeout(() => {
-      if (heroContent) {
-        heroContent.classList.add('visible');
-        console.log('Hero content visible');
+
+    this.initializeStyles();
+    this.attachScrollListener();
+    this.update();
+  }
+
+  initializeStyles() {
+    this.progressSpan.style.width = '0%';
+    this.progressBar.style.display = 'block';
+    this.progressBar.style.visibility = 'visible';
+  }
+
+  attachScrollListener() {
+    window.addEventListener('scroll', () => {
+      if (!this.ticking) {
+        this.rafId = requestAnimationFrame(() => this.update());
+        this.ticking = true;
       }
-    }, 1500); // match CSS transition duration for fade-out
-  }, 4500); // 5.5 seconds
-  
-  // Set current year in footer
-  const yearElement = document.querySelector('[data-year]');
-  if (yearElement) {
-    yearElement.textContent = new Date().getFullYear();
+    }, { passive: true });
   }
-  
-  // Enhanced scroll progress indicator with debugging
-  const scrollProgress = document.querySelector('.scroll-progress');
-  const scrollProgressSpan = document.querySelector('.scroll-progress span');
-  
-  console.log('Scroll progress element:', scrollProgress);
-  console.log('Scroll progress span element:', scrollProgressSpan);
-  
-  if (!scrollProgress || !scrollProgressSpan) {
-    console.error('Scroll progress elements not found!');
-    return;
-  }
-  
-  // Set initial state to make it visible
-  scrollProgressSpan.style.width = '0%';
-  scrollProgress.style.display = 'block';
-  scrollProgress.style.visibility = 'visible';
-  
-  // Scroll event listener with immediate update
-  const updateScrollProgress = () => {
+
+  update() {
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
     const scrollTop = window.scrollY;
     const scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
     
-    // Ensure the progress bar is visible and update width
-    scrollProgress.style.display = 'block';
-    scrollProgress.style.visibility = 'visible';
-    scrollProgressSpan.style.width = `${Math.max(0, Math.min(100, scrollPercentage))}%`;
-    
-    // Debug log
-    if (Math.random() < 0.01) { // Only log occasionally to avoid spam
-      console.log('Scroll percentage:', scrollPercentage.toFixed(2) + '%');
+    this.progressSpan.style.width = `${clamp(scrollPercentage, 0, 100)}%`;
+    this.ticking = false;
+  }
+}
+
+// Scroll reveal controller
+class ScrollRevealController {
+  constructor() {
+    this.elements = Array.from($$('[data-reveal]'));
+    this.ticking = false;
+    this.observer = null;
+  }
+
+  init() {
+    if (!this.elements.length) return;
+
+    // Use Intersection Observer for better performance
+    if ('IntersectionObserver' in window) {
+      this.initIntersectionObserver();
+    } else {
+      this.initScrollListener();
     }
-  };
-  
-  window.addEventListener('scroll', updateScrollProgress, { passive: true });
-  
-  // Initial check
-  updateScrollProgress();
-  
-  // Reveal animation on scroll
-  const revealElements = document.querySelectorAll('[data-reveal]');
-  const revealOnScroll = () => {
-    revealElements.forEach(element => {
-      const elementTop = element.getBoundingClientRect().top;
-      const windowHeight = window.innerHeight;
+  }
+
+  initIntersectionObserver() {
+    const options = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          this.observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+
+    this.elements.forEach(el => this.observer.observe(el));
+  }
+
+  initScrollListener() {
+    const revealOnScroll = () => {
+      if (!this.ticking) {
+        requestAnimationFrame(() => {
+          this.checkVisibility();
+          this.ticking = false;
+        });
+        this.ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', revealOnScroll, { passive: true });
+    this.checkVisibility();
+  }
+
+  checkVisibility() {
+    const windowHeight = window.innerHeight;
+    this.elements.forEach(element => {
+      if (element.classList.contains('active')) return;
       
-      if (elementTop < windowHeight - 100) {
+      const elementTop = element.getBoundingClientRect().top;
+      if (elementTop < windowHeight - CONFIG.REVEAL_THRESHOLD) {
         element.classList.add('active');
       }
     });
-  };
-  
-  window.addEventListener('scroll', revealOnScroll, { passive: true });
-  revealOnScroll(); // Initial check
-  
-  // Command palette functionality
-  const commandItems = document.querySelectorAll('.command-palette__item');
-  const previewImg = document.querySelector('.spotlight__preview img');
-  
-  commandItems.forEach(item => {
-    item.addEventListener('click', () => {
-      commandItems.forEach(i => i.classList.remove('is-active'));
-      item.classList.add('is-active');
-      
-      // In a real implementation, this would change the preview image
-      // For demo purposes, we'll just log the action
-      console.log('Selected command:', item.querySelector('strong').textContent);
+  }
+}
+
+// Command palette controller
+class CommandPaletteController {
+  constructor() {
+    this.items = $$('.command-palette__item');
+    this.preview = $('.spotlight__preview img');
+  }
+
+  init() {
+    if (!this.items.length) return;
+
+    this.items.forEach(item => {
+      item.addEventListener('click', () => this.selectItem(item));
     });
-  });
-  
-  // Mobile menu toggle
-  const navToggle = document.querySelector('.site-nav__toggle');
-  const mobileMenu = document.querySelector('.mobile-menu');
-  
-  navToggle.addEventListener('click', () => {
-    const expanded = navToggle.getAttribute('aria-expanded') === 'true';
-    navToggle.setAttribute('aria-expanded', !expanded);
-    mobileMenu.setAttribute('aria-hidden', expanded);
-  });
-  
-  // Form submission
-  const contactForm = document.getElementById('inqForm');
-  const formMsg = document.getElementById('formMsg');
-  
-  contactForm.addEventListener('submit', async (e) => {
+  }
+
+  selectItem(selectedItem) {
+    this.items.forEach(item => item.classList.remove('is-active'));
+    selectedItem.classList.add('is-active');
+    
+    const commandText = selectedItem.querySelector('strong')?.textContent;
+    log('Selected command:', commandText);
+  }
+}
+
+// Mobile menu controller
+class MobileMenuController {
+  constructor() {
+    this.toggle = $('.site-nav__toggle');
+    this.menu = $('.mobile-menu');
+  }
+
+  init() {
+    if (!this.toggle || !this.menu) return;
+
+    this.toggle.addEventListener('click', () => this.toggleMenu());
+  }
+
+  toggleMenu() {
+    const isExpanded = this.toggle.getAttribute('aria-expanded') === 'true';
+    this.toggle.setAttribute('aria-expanded', !isExpanded);
+    this.menu.setAttribute('aria-hidden', isExpanded);
+  }
+
+  close() {
+    if (!this.toggle || !this.menu) return;
+    this.toggle.setAttribute('aria-expanded', 'false');
+    this.menu.setAttribute('aria-hidden', 'true');
+  }
+}
+
+// Form controller with validation and security
+class FormController {
+  constructor() {
+    this.form = $('#inqForm');
+    this.message = $('#formMsg');
+    this.isSubmitting = false;
+  }
+
+  init() {
+    if (!this.form || !this.message) return;
+
+    this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+  }
+
+  async handleSubmit(e) {
     e.preventDefault();
     
-    // Get form data
-    const formData = new FormData(contactForm);
-    const data = {
-      firstName: formData.get('firstName'),
-      lastName: formData.get('lastName'),
-      email: formData.get('email'),
-      org: formData.get('org'),
-      title: formData.get('title') || '',
-      country: formData.get('country'),
-      notes: formData.get('notes')
-    };
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
+
+    const data = this.getFormData();
     
-    // Show loading message
-    formMsg.textContent = 'Submitting...';
-    formMsg.style.color = '#60a5fa';
-    
-    try {
-      // Check if Firebase is ready
-      if (typeof window.saveInquiry === 'function') {
-        const result = await window.saveInquiry(data);
-        
-        if (result.ok) {
-          formMsg.textContent = 'Thank you for your inquiry. We will be in touch shortly.';
-          formMsg.style.color = '#10b981';
-          contactForm.reset();
-          
-          // Reset reCAPTCHA if it exists
-          if (typeof grecaptcha !== 'undefined') {
-            grecaptcha.reset();
-          }
-        } else {
-          throw new Error(result.error || 'Failed to submit');
-        }
-      } else {
-        throw new Error('Firebase not initialized');
-      }
-    } catch (error) {
-      console.error('Form submission error:', error);
-      formMsg.textContent = 'There was an error submitting your inquiry. Please try again.';
-      formMsg.style.color = '#ef4444';
+    if (!this.validateData(data)) {
+      this.showMessage('Please fill in all required fields.', 'error');
+      this.isSubmitting = false;
+      return;
     }
-  });
-  
-  // Smooth scroll for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      e.preventDefault();
-      
-      const targetId = this.getAttribute('href');
-      if (targetId === '#') return;
-      
-      const targetElement = document.querySelector(targetId);
-      if (targetElement) {
-        window.scrollTo({
-          top: targetElement.offsetTop - 80, // Account for fixed header
-          behavior: 'smooth'
-        });
-        
-        // Close mobile menu if open
-        if (navToggle.getAttribute('aria-expanded') === 'true') {
-          navToggle.setAttribute('aria-expanded', false);
-          mobileMenu.setAttribute('aria-hidden', true);
-        }
+
+    this.showMessage('Submitting...', 'loading');
+
+    try {
+      await this.submitData(data);
+      this.showMessage('Thank you for your inquiry. We will be in touch shortly.', 'success');
+      this.form.reset();
+      this.resetCaptcha();
+    } catch (error) {
+      log('Form submission error:', error);
+      this.showMessage('There was an error submitting your inquiry. Please try again.', 'error');
+    } finally {
+      this.isSubmitting = false;
+    }
+  }
+
+  getFormData() {
+    const formData = new FormData(this.form);
+    return {
+      firstName: this.sanitize(formData.get('firstName')),
+      lastName: this.sanitize(formData.get('lastName')),
+      email: this.sanitize(formData.get('email')),
+      org: this.sanitize(formData.get('org')),
+      title: this.sanitize(formData.get('title') || ''),
+      country: this.sanitize(formData.get('country')),
+      notes: this.sanitize(formData.get('notes'))
+    };
+  }
+
+  sanitize(value) {
+    if (typeof value !== 'string') return value;
+    return value.trim().replace(/[<>]/g, '');
+  }
+
+  validateData(data) {
+    const required = ['firstName', 'lastName', 'email', 'org', 'country'];
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    const hasRequired = required.every(field => data[field]);
+    const validEmail = emailPattern.test(data.email);
+    
+    return hasRequired && validEmail;
+  }
+
+  async submitData(data) {
+    if (typeof window.saveInquiry !== 'function') {
+      throw new Error('Firebase not initialized');
+    }
+
+    const result = await window.saveInquiry(data);
+    
+    if (!result.ok) {
+      throw new Error(result.error || 'Submission failed');
+    }
+
+    return result;
+  }
+
+  showMessage(text, type) {
+    const colors = {
+      loading: '#60a5fa',
+      success: '#10b981',
+      error: '#ef4444'
+    };
+
+    this.message.textContent = text;
+    this.message.style.color = colors[type] || colors.loading;
+  }
+
+  resetCaptcha() {
+    if (typeof grecaptcha !== 'undefined' && grecaptcha.reset) {
+      try {
+        grecaptcha.reset();
+      } catch (e) {
+        log('reCAPTCHA reset error:', e);
       }
+    }
+  }
+}
+
+// Smooth scroll controller
+class SmoothScrollController {
+  constructor() {
+    this.links = $$('a[href^="#"]');
+    this.mobileMenu = null;
+  }
+
+  init(mobileMenuController) {
+    this.mobileMenu = mobileMenuController;
+    
+    this.links.forEach(link => {
+      link.addEventListener('click', (e) => this.handleClick(e, link));
     });
-  });
-});
+  }
+
+  handleClick(e, link) {
+    const targetId = link.getAttribute('href');
+    if (targetId === '#') return;
+
+    const target = $(targetId);
+    if (!target) return;
+
+    e.preventDefault();
+    
+    const targetPosition = target.offsetTop - CONFIG.SCROLL_OFFSET;
+    window.scrollTo({
+      top: targetPosition,
+      behavior: 'smooth'
+    });
+
+    this.mobileMenu?.close();
+  }
+}
+
+// Utility controller for miscellaneous tasks
+class UtilityController {
+  static updateFooterYear() {
+    const yearElement = $('[data-year]');
+    if (yearElement) {
+      yearElement.textContent = new Date().getFullYear();
+    }
+  }
+}
+
+// Main application controller
+class App {
+  constructor() {
+    this.controllers = {
+      hero: new HeroAnimationController(),
+      scrollProgress: new ScrollProgressController(),
+      scrollReveal: new ScrollRevealController(),
+      commandPalette: new CommandPaletteController(),
+      mobileMenu: new MobileMenuController(),
+      form: new FormController(),
+      smoothScroll: new SmoothScrollController()
+    };
+  }
+
+  init() {
+    log('Initializing Buraq AI Website');
+    
+    // Initialize all controllers
+    this.controllers.hero.init();
+    this.controllers.scrollProgress.init();
+    this.controllers.scrollReveal.init();
+    this.controllers.commandPalette.init();
+    this.controllers.mobileMenu.init();
+    this.controllers.form.init();
+    this.controllers.smoothScroll.init(this.controllers.mobileMenu);
+    
+    // Utility functions
+    UtilityController.updateFooterYear();
+    
+    log('All controllers initialized');
+  }
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => new App().init());
+} else {
+  new App().init();
+}
