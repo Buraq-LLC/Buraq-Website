@@ -1029,10 +1029,32 @@ section {
 .threat-card__header h3 {
   font-size: 1.75rem;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #ef4444, #dc2626);
+  background: linear-gradient(90deg, 
+    rgba(239, 68, 68, 1) 0%, 
+    rgba(255, 100, 100, 1) 25%, 
+    rgba(255, 50, 50, 1) 50%, 
+    rgba(255, 100, 100, 1) 75%, 
+    rgba(239, 68, 68, 1) 100%);
+  background-size: 200% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  animation: warningGlow 2.5s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.5));
+}
+
+@keyframes warningGlow {
+  0% {
+    background-position: 0% 50%;
+    filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(239, 68, 68, 0.8));
+  }
+  100% {
+    background-position: 200% 50%;
+    filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.4));
+  }
 }
 
 .threat-card__meta {
