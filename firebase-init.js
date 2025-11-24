@@ -2,25 +2,22 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 import { getAnalytics, isSupported as analyticsIsSupported } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js';
-
-// Configuration
-const FIREBASE_CONFIG = {
-  apiKey: "AIzaSyBT1yoRjsG-mj0PVzIuyLnrbRvILe4S4rs",
-  authDomain: "buraq-ai-2670c.firebaseapp.com",
-  databaseURL: "https://buraq-ai-2670c-default-rtdb.firebaseio.com",
-  projectId: "buraq-ai-2670c",
-  storageBucket: "buraq-ai-2670c.firebasestorage.app",
-  messagingSenderId: "910712236530",
-  appId: "1:910712236530:web:9ad3566251dbf05e0fe36b",
-  measurementId: "G-P9RSTYSVT3"
-};
+import { configLoader } from './firebase-config-loader.js';
 
 const COLLECTION_NAME = 'inquiries';
+
+// Rate limiting configuration
+const RATE_LIMIT = {
+  maxRequests: 5,
+  windowMs: 60000, // 1 minute
+  requests: [],
+};
 
 // Firebase state
 let app = null;
 let db = null;
 let analytics = null;
+let FIREBASE_CONFIG = null;
 
 /**
  * Firebase Manager Class
@@ -39,6 +36,9 @@ class FirebaseManager {
     if (this.initialized) return true;
 
     try {
+      // Load configuration securely
+      FIREBASE_CONFIG = await configLoader.loadConfig();
+      
       // Initialize Firebase App
       app = initializeApp(FIREBASE_CONFIG);
       console.log(`[Firebase] App initialized: ${app.options.projectId}`);
@@ -81,6 +81,35 @@ class FirebaseManager {
     } catch (error) {
       console.warn('[Firebase] Analytics initialization failed:', error);
     }
+  }
+
+  /**
+   * Check rate limiting
+   * @returns {Object} Rate limit status
+   */
+  checkRateLimit() {
+    const now = Date.now();
+    
+    // Remove old requests outside the window
+    RATE_LIMIT.requests = RATE_LIMIT.requests.filter(
+      timestamp => now - timestamp < RATE_LIMIT.windowMs
+    );
+    
+    // Check if limit exceeded
+    if (RATE_LIMIT.requests.length >= RATE_LIMIT.maxRequests) {
+      const oldestRequest = Math.min(...RATE_LIMIT.requests);
+      const resetTime = Math.ceil((oldestRequest + RATE_LIMIT.windowMs - now) / 1000);
+      
+      return {
+        allowed: false,
+        resetIn: resetTime
+      };
+    }
+    
+    // Add current request
+    RATE_LIMIT.requests.push(now);
+    
+    return { allowed: true };
   }
 
   /**
@@ -164,6 +193,15 @@ class FirebaseManager {
       };
     }
 
+    // Check rate limiting
+    const rateLimit = this.checkRateLimit();
+    if (!rateLimit.allowed) {
+      return {
+        ok: false,
+        error: `Too many requests. Please try again in ${rateLimit.resetIn} seconds.`
+      };
+    }
+
     // Validate payload
     const validation = this.validatePayload(payload);
     if (!validation.isValid) {
@@ -182,7 +220,8 @@ class FirebaseManager {
         ...sanitizedPayload,
         createdAt: serverTimestamp(),
         userAgent: this.sanitizeUserAgent(navigator.userAgent),
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        ipHash: await this.getClientFingerprint() // For abuse detection
       });
 
       console.log(`[Firebase] Inquiry saved with ID: ${docRef.id}`);
@@ -198,6 +237,30 @@ class FirebaseManager {
         ok: false, 
         error: this.getUserFriendlyError(error)
       };
+    }
+  }
+
+  /**
+   * Generate client fingerprint for abuse detection
+   * @returns {Promise<string>} Hashed fingerprint
+   */
+  async getClientFingerprint() {
+    try {
+      const fingerprint = [
+        navigator.userAgent,
+        navigator.language,
+        new Date().getTimezoneOffset(),
+        screen.width + 'x' + screen.height
+      ].join('|');
+      
+      // Hash the fingerprint
+      const encoder = new TextEncoder();
+      const data = encoder.encode(fingerprint);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 16);
+    } catch {
+      return 'unknown';
     }
   }
 
@@ -238,5 +301,5 @@ firebaseManager.init();
 // Expose to global scope for form submission
 window.saveInquiry = (payload) => firebaseManager.saveInquiry(payload);
 
-// Export for module usage
-export { firebaseManager, FIREBASE_CONFIG };
+// Do not export configuration to prevent exposure
+export { firebaseManager };
