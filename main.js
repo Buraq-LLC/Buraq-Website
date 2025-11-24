@@ -290,7 +290,8 @@ class FormController {
       org: this.sanitize(formData.get('org')),
       title: this.sanitize(formData.get('title') || ''),
       country: this.sanitize(formData.get('country')),
-      notes: this.sanitize(formData.get('notes'))
+      notes: this.sanitize(formData.get('notes')),
+      recaptchaToken: this.getRecaptchaResponse()
     };
   }
 
@@ -306,7 +307,29 @@ class FormController {
     const hasRequired = required.every(field => data[field]);
     const validEmail = emailPattern.test(data.email);
     
+    // Validate reCAPTCHA
+    const recaptchaResponse = this.getRecaptchaResponse();
+    if (!recaptchaResponse) {
+      this.showMessage('Please complete the reCAPTCHA verification.', 'error');
+      return false;
+    }
+    
     return hasRequired && validEmail;
+  }
+
+  getRecaptchaResponse() {
+    if (typeof grecaptcha === 'undefined') {
+      log('reCAPTCHA not loaded');
+      // Allow submission if reCAPTCHA is not loaded (development mode)
+      return 'dev-mode';
+    }
+    
+    try {
+      return grecaptcha.getResponse();
+    } catch (error) {
+      log('reCAPTCHA error:', error);
+      return 'dev-mode';
+    }
   }
 
   async submitData(data) {
