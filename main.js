@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // After 5.5 seconds, fade out animation
   setTimeout(() => {
-    console.log('5.5 seconds passed, fading out animation');
+    console.log('5 seconds passed, fading out animation');
     // Fade out the animation
     if (introAnimation) {
       introAnimation.classList.add('fade-out');
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Hero content visible');
       }
     }, 1500); // match CSS transition duration for fade-out
-  }, 5500); // 5.5 seconds
+  }, 4500); // 5.5 seconds
   
   // Set current year in footer
   const yearElement = document.querySelector('[data-year]');
