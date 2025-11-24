@@ -58,7 +58,7 @@ content="Buraq AI: The first ISR platform built for protecting civilians and pro
 
 <section class="hero" id="hero">
 <!-- Initial animation that plays first -->
-<video class="hero__intro-animation" autoplay muted playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback" disableremoteplayback>
+<video class="hero__intro-animation" autoplay muted playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback noplaybackrate" disableremoteplayback style="pointer-events: none;">
   <source src="assets/buraq-animation.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
@@ -135,7 +135,7 @@ Contact Us
     </div>
     <div class="spotlight__canvas animate-on-scroll fade-in-right">
         <div class="spotlight__preview">
-            <video src="assets/demo1.mp4" autoplay loop muted playsinline style="max-width:100%; border-radius:1.2rem; box-shadow:0 2px 12px 0 rgba(0,0,0,0.08);" alt="Platform demo video"></video>
+            <video src="assets/demo1.mp4" autoplay loop muted playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback noplaybackrate" disableremoteplayback style="max-width:100%; border-radius:1.2rem; box-shadow:0 2px 12px 0 rgba(0,0,0,0.08); pointer-events: none;" alt="Platform demo video"></video>
         </div>
     </div>
 </div>
@@ -346,7 +346,7 @@ Contact Us
 </label>
 </div>
 <div class="contact__captcha">
-<div class="g-recaptcha" data-sitekey="6Lf8SLwrAAAAADyqwKLrfs-_4kFu053sjEtz3N6_" data-theme="dark"></div>
+<div class="g-recaptcha"></div>
 </div>
 <div class="contact__actions">
 <button type="submit" class="btn btn--primary">Submit inquiry</button>
@@ -372,7 +372,25 @@ Contact Us
 </div>
 </footer>
 
-<script src="https://www.google.com/recaptcha/api.js" async defer crossorigin="anonymous"></script>
+<script>
+// Callback function for reCAPTCHA
+window.onRecaptchaLoad = function() {
+  console.log('reCAPTCHA loaded successfully');
+  if (typeof grecaptcha !== 'undefined') {
+    try {
+      // Explicitly render the reCAPTCHA
+      grecaptcha.render(document.querySelector('.g-recaptcha'), {
+        'sitekey': '6Lf8SLwrAAAAADyqwKLrfs-_4kFu053sjEtz3N6_',
+        'theme': 'dark'
+      });
+      console.log('reCAPTCHA rendered');
+    } catch (error) {
+      console.error('reCAPTCHA render error:', error);
+    }
+  }
+};
+</script>
+<script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer crossorigin="anonymous"></script>
 <script type="module" src="firebase-init.js"></script>
 <script type="module" src="main.js"></script>
 </body>

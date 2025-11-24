@@ -1,3 +1,5 @@
+/* Enhanced styles.css with Apple-like animations */
+
 /* Reset and Base Styles */
 * {
   margin: 0;
@@ -18,6 +20,10 @@
   --border: rgba(255, 255, 255, 0.1);
   --card-bg: rgba(255, 255, 255, 0.05);
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Apple-style animation variables */
+  --animation-duration: 0.8s;
+  --animation-easing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --stagger-delay: 100ms;
 }
 
 html {
@@ -48,8 +54,6 @@ h1 {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: fadeInUp 1.2s ease-out forwards;
-  opacity: 0;
 }
 
 h2 {
@@ -84,16 +88,42 @@ a:hover {
   color: var(--accent);
 }
 
-/* Gradient Text */
-.gradient-text {
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  display: inline-block;
+/* Apple-style Animation Classes */
+.animate-on-load {
+  opacity: 0;
+  transform: translateY(30px);
 }
 
-/* Animations */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--animation-duration) var(--animation-easing),
+              transform var(--animation-duration) var(--animation-easing);
+}
+
+.animate-on-scroll.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp var(--animation-duration) var(--animation-easing) forwards;
+}
+
+.fade-in-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  animation: fadeInLeft var(--animation-duration) var(--animation-easing) forwards;
+}
+
+.fade-in-right {
+  opacity: 0;
+  transform: translateX(30px);
+  animation: fadeInRight var(--animation-duration) var(--animation-easing) forwards;
+}
+
 @keyframes fadeInUp {
   0% {
     opacity: 0;
@@ -105,6 +135,47 @@ a:hover {
   }
 }
 
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Staggered animations for lists */
+.stagger-1 { animation-delay: calc(var(--stagger-delay) * 1); }
+.stagger-2 { animation-delay: calc(var(--stagger-delay) * 2); }
+.stagger-3 { animation-delay: calc(var(--stagger-delay) * 3); }
+.stagger-4 { animation-delay: calc(var(--stagger-delay) * 4); }
+.stagger-5 { animation-delay: calc(var(--stagger-delay) * 5); }
+.stagger-6 { animation-delay: calc(var(--stagger-delay) * 6); }
+.stagger-7 { animation-delay: calc(var(--stagger-delay) * 7); }
+
+/* Gradient Text */
+.gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+/* Animations */
 @keyframes shimmer {
   0% {
     transform: translateX(-100%);
@@ -301,8 +372,6 @@ a:hover {
 .btn--primary {
   background: linear-gradient(135deg, #2563eb, #3b82f6, #60a5fa);
   color: white;
-  animation: fadeInUp 1.4s ease-out forwards;
-  opacity: 0;
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
@@ -321,8 +390,6 @@ a:hover {
   border: 2px solid rgba(59, 130, 246, 0.5);
   backdrop-filter: blur(10px);
   color: var(--text-primary);
-  animation: fadeInUp 1.4s ease-out forwards;
-  opacity: 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
@@ -375,10 +442,6 @@ section {
   pointer-events: none;
   user-select: none;
   -webkit-user-select: none;
-  opacity: 0;
-}
-
-.hero__intro-animation.loaded {
   opacity: 1;
 }
 
@@ -553,9 +616,6 @@ section {
   box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
   position: relative;
   border: 1px solid var(--border);
-  animation: fadeInUp 1.8s ease-out forwards;
-  opacity: 0;
-  animation-delay: 0.8s;
 }
 
 .device-frame__shimmer {
@@ -1200,6 +1260,14 @@ section {
 
 .contact__captcha {
   margin: 1.5rem 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 78px;
+}
+
+.contact__captcha .g-recaptcha {
+  transform-origin: 0 0;
 }
 
 .contact__actions {
@@ -1323,95 +1391,4 @@ section {
     flex-direction: column;
     gap: 1rem;
   }
-}
-/* Hero Section - Animation First, Then Content */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 8vh;
-  position: relative;
-  overflow: hidden;
-  text-align: center;
-  background: #000000;
-}
-
-/* Initial animation that plays first */
-.hero__intro-animation {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 870px;
-  height: 870px;
-  object-fit: cover;
-  z-index: 1000;
-  transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-  border: none;
-  outline: none;
-  display: block;
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-select: none;
-  opacity: 0;
-}
-
-.hero__intro-animation.loaded {
-  opacity: 1;
-}
-
-.hero__intro-animation.minimized {
-  top: 80px;
-  left: 50%;
-  transform: translate(-50%, 0);
-  width: 120px;
-  height: 200px;
-  z-index: 1001;
-}
-
-.hero__intro-animation.fade-out {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* Hero content that appears after animation */
-.hero__background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at 50% 50%, rgba(21, 34, 54, 0.08) 0%, transparent 70%);
-  z-index: -2;
-}
-
-.hero__gradient-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(ellipse at center, rgba(7, 21, 43, 0.15) 0%, rgba(6, 21, 61, 0.08) 40%, rgba(0, 0, 0, 0) 100%);
-  z-index: -1;
-}
-
-.hero__content {
-  max-width: 1200px;
-  margin: 0 auto 4rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.3rem;
-  position: relative;
-  z-index: 10;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 2s ease-out;
-}
-
-.hero__content.visible {
-  opacity: 1;
-  pointer-events: auto;
-  transition: opacity 2s ease-out, visibility 0s linear 0s;
 }

@@ -1,3 +1,5 @@
+// Enhanced main.js with Apple-style animations
+
 // Import security manager
 import { securityManager } from './security-manager.js';
 
@@ -8,7 +10,11 @@ const CONFIG = {
   HERO_REVEAL_DELAY: 1500,
   SCROLL_OFFSET: 80,
   REVEAL_THRESHOLD: 100,
-  DEBUG_MODE: false
+  DEBUG_MODE: false,
+  // Animation settings for Apple-like feel
+  ANIMATION_DURATION: 0.8,
+  ANIMATION_EASING: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)', // Apple's easing
+  STAGGER_DELAY: 100
 };
 
 // Utility functions
@@ -17,13 +23,18 @@ const $$ = (selector) => document.querySelectorAll(selector);
 const log = (...args) => CONFIG.DEBUG_MODE && console.log(...args);
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
-// Hero animation controller
+// Enhanced hero animation controller with Apple-style animations
 class HeroAnimationController {
   constructor() {
     this.elements = {
       heroContent: $('.hero__content'),
       introAnimation: $('.hero__intro-animation'),
-      siteNav: $('.site-nav')
+      siteNav: $('.site-nav'),
+      heroTitle: $('.hero__title'),
+      heroSubtitle: $('.hero__subtitle'),
+      heroStats: $('.hero__stats'),
+      heroActions: $('.hero__actions'),
+      heroVersion: $('.hero__version')
     };
     this.initialized = false;
   }
@@ -53,13 +64,7 @@ class HeroAnimationController {
     
     video.loop = false;
     video.removeAttribute('loop');
-    
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        video.classList.add('loaded');
-        log('Animation loaded');
-      }, CONFIG.ANIMATION_DELAY);
-    });
+    log('Animation configured');
   }
 
   scheduleAnimationSequence() {
@@ -76,11 +81,48 @@ class HeroAnimationController {
 
   showHeroContent() {
     this.elements.heroContent?.classList.add('visible');
-    log('Hero content visible');
+    
+    // Stagger the animation of hero elements
+    if (this.elements.heroTitle) {
+      this.elements.heroTitle.classList.add('animate-on-load', 'fade-in-up');
+      this.elements.heroTitle.style.animationDelay = '0s';
+      this.elements.heroTitle.style.animationDuration = `${CONFIG.ANIMATION_DURATION}s`;
+      this.elements.heroTitle.style.animationTimingFunction = CONFIG.ANIMATION_EASING;
+    }
+    
+    if (this.elements.heroSubtitle) {
+      this.elements.heroSubtitle.classList.add('animate-on-load', 'fade-in-up');
+      this.elements.heroSubtitle.style.animationDelay = '0.2s';
+      this.elements.heroSubtitle.style.animationDuration = `${CONFIG.ANIMATION_DURATION}s`;
+      this.elements.heroSubtitle.style.animationTimingFunction = CONFIG.ANIMATION_EASING;
+    }
+    
+    if (this.elements.heroStats) {
+      this.elements.heroStats.classList.add('animate-on-load', 'fade-in-up');
+      this.elements.heroStats.style.animationDelay = '0.4s';
+      this.elements.heroStats.style.animationDuration = `${CONFIG.ANIMATION_DURATION}s`;
+      this.elements.heroStats.style.animationTimingFunction = CONFIG.ANIMATION_EASING;
+    }
+    
+    if (this.elements.heroActions) {
+      this.elements.heroActions.classList.add('animate-on-load', 'fade-in-up');
+      this.elements.heroActions.style.animationDelay = '0.6s';
+      this.elements.heroActions.style.animationDuration = `${CONFIG.ANIMATION_DURATION}s`;
+      this.elements.heroActions.style.animationTimingFunction = CONFIG.ANIMATION_EASING;
+    }
+    
+    if (this.elements.heroVersion) {
+      this.elements.heroVersion.classList.add('animate-on-load', 'fade-in-up');
+      this.elements.heroVersion.style.animationDelay = '0.8s';
+      this.elements.heroVersion.style.animationDuration = `${CONFIG.ANIMATION_DURATION}s`;
+      this.elements.heroVersion.style.animationTimingFunction = CONFIG.ANIMATION_EASING;
+    }
+    
+    log('Hero content visible with staggered animations');
   }
 }
 
-// Scroll progress controller
+// Enhanced scroll progress controller
 class ScrollProgressController {
   constructor() {
     this.progressBar = $('.scroll-progress');
@@ -126,10 +168,10 @@ class ScrollProgressController {
   }
 }
 
-// Scroll reveal controller
+// Enhanced scroll reveal controller with Apple-style animations
 class ScrollRevealController {
   constructor() {
-    this.elements = Array.from($$('[data-reveal]'));
+    this.elements = Array.from($$('[data-reveal], .animate-on-scroll'));
     this.ticking = false;
     this.observer = null;
   }
@@ -137,12 +179,41 @@ class ScrollRevealController {
   init() {
     if (!this.elements.length) return;
 
+    // Add Apple-style animation classes to elements
+    this.enhanceElements();
+    
     // Use Intersection Observer for better performance
     if ('IntersectionObserver' in window) {
       this.initIntersectionObserver();
     } else {
       this.initScrollListener();
     }
+  }
+
+  enhanceElements() {
+    this.elements.forEach((element, index) => {
+      // Add base animation class if not present
+      if (!element.classList.contains('fade-in-up') && 
+          !element.classList.contains('fade-in-left') && 
+          !element.classList.contains('fade-in-right')) {
+        element.classList.add('fade-in-up');
+      }
+      
+      // Set animation properties
+      element.style.animationDuration = `${CONFIG.ANIMATION_DURATION}s`;
+      element.style.animationTimingFunction = CONFIG.ANIMATION_EASING;
+      element.style.animationFillMode = 'both';
+      
+      // Add staggered delay for elements in the same section
+      const parent = element.closest('section');
+      if (parent) {
+        const siblings = Array.from(parent.querySelectorAll('.animate-on-scroll'));
+        const siblingIndex = siblings.indexOf(element);
+        if (siblingIndex > 0) {
+          element.style.animationDelay = `${siblingIndex * CONFIG.STAGGER_DELAY}ms`;
+        }
+      }
+    });
   }
 
   initIntersectionObserver() {
