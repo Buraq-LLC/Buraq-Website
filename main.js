@@ -1,3 +1,6 @@
+// Import security manager
+import { securityManager } from './security-manager.js';
+
 // Configuration constants
 const CONFIG = {
   ANIMATION_DELAY: 100,
@@ -244,12 +247,18 @@ class FormController {
     this.form = $('#inqForm');
     this.message = $('#formMsg');
     this.isSubmitting = false;
+    this.securityInitialized = false;
   }
 
-  init() {
+  async init() {
     if (!this.form || !this.message) return;
 
+    // Initialize security manager
+    await securityManager.init();
+    this.securityInitialized = true;
+
     this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+    log('FormController initialized with security');
   }
 
   async handleSubmit(e) {
@@ -260,22 +269,41 @@ class FormController {
 
     const data = this.getFormData();
     
+    // Basic validation
     if (!this.validateData(data)) {
       this.showMessage('Please fill in all required fields.', 'error');
       this.isSubmitting = false;
       return;
     }
 
+    // Security validation
+    if (this.securityInitialized) {
+      const securityCheck = await securityManager.validateSubmission(data);
+      if (!securityCheck.valid) {
+        this.showMessage(securityCheck.errors[0], 'error');
+        this.isSubmitting = false;
+        return;
+      }
+    }
+
     this.showMessage('Submitting...', 'loading');
 
     try {
+      // Add fingerprint for abuse tracking
+      const fingerprint = await securityManager.generateFingerprint();
+      data._fingerprint = fingerprint;
+      data._timestamp = Date.now();
+      
       await this.submitData(data);
       this.showMessage('Thank you for your inquiry. We will be in touch shortly.', 'success');
       this.form.reset();
       this.resetCaptcha();
+      
+      // Regenerate CSRF token after successful submission
+      securityManager.generateCSRFToken();
     } catch (error) {
       log('Form submission error:', error);
-      this.showMessage('There was an error submitting your inquiry. Please try again.', 'error');
+      this.showMessage(error.message || 'There was an error submitting your inquiry. Please try again.', 'error');
     } finally {
       this.isSubmitting = false;
     }
