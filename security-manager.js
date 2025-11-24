@@ -198,22 +198,30 @@ class SecurityManager {
    * @returns {Promise<boolean>} Validation result
    */
   async validateRecaptcha() {
+    // Check if reCAPTCHA script is present
+    const recaptchaScript = document.querySelector('script[src*="recaptcha/api.js"]');
+    if (!recaptchaScript) {
+      alert('reCAPTCHA script failed to load. Please check your network or browser settings.');
+      console.warn('[Security] reCAPTCHA script element not found');
+      return false;
+    }
+
     if (typeof grecaptcha === 'undefined') {
+      alert('reCAPTCHA failed to initialize. Please disable browser extensions or try a different network.');
       console.warn('[Security] reCAPTCHA not loaded');
       return false;
     }
 
     try {
       const response = grecaptcha.getResponse();
-      
       if (!response || response.length === 0) {
         return false;
       }
-
       // Note: Actual server-side verification should be done on backend
       // This is client-side check only
       return true;
     } catch (error) {
+      alert('An error occurred during reCAPTCHA validation.');
       console.error('[Security] reCAPTCHA validation error:', error);
       return false;
     }
