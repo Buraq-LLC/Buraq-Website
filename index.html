@@ -346,7 +346,7 @@ Contact Us
 </label>
 </div>
 <div class="contact__captcha">
-<div class="g-recaptcha"></div>
+<div class="g-recaptcha" data-sitekey="6Lf8SLwrAAAAADyqwKLrfs-_4kFu053sjEtz3N6_" data-theme="dark"></div>
 </div>
 <div class="contact__actions">
 <button type="submit" class="btn btn--primary">Submit inquiry</button>
@@ -372,25 +372,7 @@ Contact Us
 </div>
 </footer>
 
-<script>
-// Callback function for reCAPTCHA
-window.onRecaptchaLoad = function() {
-  console.log('reCAPTCHA loaded successfully');
-  if (typeof grecaptcha !== 'undefined') {
-    try {
-      // Explicitly render the reCAPTCHA
-      grecaptcha.render(document.querySelector('.g-recaptcha'), {
-        'sitekey': '6Lf8SLwrAAAAADyqwKLrfs-_4kFu053sjEtz3N6_',
-        'theme': 'dark'
-      });
-      console.log('reCAPTCHA rendered');
-    } catch (error) {
-      console.error('reCAPTCHA render error:', error);
-    }
-  }
-};
-</script>
-<script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer crossorigin="anonymous"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer crossorigin="anonymous"></script>
 <script type="module" src="firebase-init.js"></script>
 <script type="module" src="main.js"></script>
 </body>
