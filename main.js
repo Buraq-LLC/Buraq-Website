@@ -2,6 +2,34 @@
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DOM loaded');
   
+  // Hero animation functionality
+  const heroContent = document.querySelector('.hero__content');
+  const introAnimation = document.querySelector('.hero__intro-animation');
+  
+  // Debug: Check if elements are found
+  console.log('Hero content element:', heroContent);
+  console.log('Intro animation element:', introAnimation);
+  
+  // Make the video loop and stay visible
+  if (introAnimation) {
+    introAnimation.loop = false; // Play once
+    introAnimation.removeAttribute('loop'); // Ensure no loop attribute
+  }
+  
+  // Set a timer to show hero content after animation
+  setTimeout(() => {
+    console.log('3 seconds passed, showing hero content');
+    
+    // DON'T fade out the intro animation - keep it visible
+    // Just show the hero content on top of it
+    
+    // Show the hero content smoothly
+    if (heroContent) {
+      heroContent.classList.add('visible');
+      console.log('Added visible class to hero content');
+    }
+  }, 4000);
+  
   // Set current year in footer
   const yearElement = document.querySelector('[data-year]');
   if (yearElement) {
