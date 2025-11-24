@@ -16,7 +16,6 @@ content="Buraq AI: The first ISR platform built for protecting civilians and pro
 <body>
 <div class="scroll-progress" aria-hidden="true"><span></span></div>
 
-
 <header class="site-nav" data-fixed>
 <div class="site-nav__inner">
 <a class="site-nav__brand" href="#hero" aria-label="Buraq AI home">
@@ -55,6 +54,13 @@ content="Buraq AI: The first ISR platform built for protecting civilians and pro
 </header>
 
 <section class="hero" id="hero">
+<!-- Initial animation that plays first -->
+<video class="hero__intro-animation" autoplay muted playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback" disableremoteplayback>
+  <source src="assets/buraq-animation.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<!-- Hero content that appears after animation -->
 <div class="hero__background" aria-hidden="true"></div>
 <div class="hero__gradient-overlay" aria-hidden="true"></div>
 <div class="container">
@@ -100,21 +106,20 @@ Download for Mac
 
 <!-- Mission/Why Buraq Section -->
 <section class="mission" id="mission">
-	<div class="container">
-		<div class="mission__content animate-on-scroll fade-in-up">
-			<h2 class="mission__title">Why Buraq?</h2>
-			<p class="mission__subtitle">
-				Buraq AI was created to protect civilians and uphold human rights in the world’s most challenging environments. This includes environments of asymmetric warfare, where traditional surveillance methods fall short. Our mission is to empower humanitarian operations and international justice with advanced, transparent, and ethical intelligence technology.
-			</p>
-			<ul class="mission__highlights">
-				<li>Purpose-built for humanitarian and civilian protection</li>
-				<li>Forensic integrity and accountability at every step</li>
-				<li>AI-driven insights for rapid, ethical decision-making</li>
+    <div class="container">
+        <div class="mission__content animate-on-scroll fade-in-up">
+            <h2 class="mission__title">Why Buraq?</h2>
+            <p class="mission__subtitle">
+                Buraq AI was created to protect civilians and uphold human rights in the world's most challenging environments. This includes environments of asymmetric warfare, where traditional surveillance methods fall short. Our mission is to empower humanitarian operations and international justice with advanced, transparent, and ethical intelligence technology.
+            </p>
+            <ul class="mission__highlights">
+                <li>Purpose-built for humanitarian and civilian protection</li>
+                <li>Forensic integrity and accountability at every step</li>
+                <li>AI-driven insights for rapid, ethical decision-making</li>
                 <li>Technology to resist censorship, authoritarianism, and global imperialism.</li>
-			</ul>
-		</div>
-	</div>
-</section>
+            </ul>
+        </div>
+    </div>
 </section>
 
 <section class="spotlight" id="spotlight">
@@ -296,6 +301,6 @@ Download for Mac
 </footer>
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script src="script.js" type="module"></script>
+<script src="main.js" type="module"></script>
 </body>
 </html>
