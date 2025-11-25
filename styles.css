@@ -28,6 +28,10 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* iOS smooth scrolling */
+  -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -37,6 +41,11 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   font-weight: 400;
+  /* Better mobile performance */
+  -webkit-tap-highlight-color: rgba(59, 130, 246, 0.2);
+  /* Prevent text size adjustment on iOS */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
 }
 
 /* Typography */
@@ -330,14 +339,17 @@ a:hover {
 .mobile-menu {
   display: none;
   position: fixed;
-  top: 70px;
+  top: 60px;
   left: 0;
   width: 100%;
-  background: rgba(0, 0, 0, 0.95);
+  max-height: calc(100vh - 60px);
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.98);
   backdrop-filter: blur(10px);
-  padding: 2rem;
+  padding: 1.5rem;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem;
+  z-index: 998;
 }
 
 /* Buttons */
@@ -354,6 +366,11 @@ a:hover {
   border: none;
   position: relative;
   overflow: hidden;
+  /* Mobile touch optimization */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .btn::before {
@@ -383,6 +400,7 @@ a:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(59, 130, 246, 0.5);
   background: linear-gradient(135deg, #1d4ed8, #2563eb, #3b82f6);
+  color: white;
 }
 
 .btn--ghost {
@@ -1249,6 +1267,11 @@ section {
   font-family: inherit;
   font-size: 1rem;
   transition: var(--transition);
+  /* Mobile optimization - prevent zoom on focus */
+  font-size: max(16px, 1rem);
+  /* Better mobile touch */
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .contact__field input:focus,
@@ -1260,14 +1283,6 @@ section {
 
 .contact__captcha {
   margin: 1.5rem 0;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  min-height: 78px;
-}
-
-.contact__captcha .g-recaptcha {
-  transform-origin: 0 0;
 }
 
 .contact__actions {
@@ -1364,6 +1379,60 @@ section {
     display: flex;
   }
   
+  /* Fix navigation bar height on mobile */
+  .site-nav {
+    padding: 0.5rem 0;
+  }
+  
+  .site-nav__inner {
+    padding: 0 1rem;
+  }
+  
+  .site-nav__brand {
+    font-size: 1rem;
+  }
+  
+  .site-nav__mark {
+    width: 32px;
+    height: 32px;
+  }
+  
+  /* Fix hero section on mobile */
+  .hero {
+    min-height: 100vh;
+    padding-bottom: 4vh;
+    align-items: center;
+  }
+  
+  /* Fix hero animation on mobile */
+  .hero__intro-animation {
+    width: 90vw;
+    height: 90vw;
+    max-width: 400px;
+    max-height: 400px;
+  }
+  
+  .hero__intro-animation.minimized {
+    top: 60px;
+    width: 80px;
+    height: 133px;
+  }
+  
+  /* Hero content spacing */
+  .hero__content {
+    padding-top: 6rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .hero__title {
+    font-size: 1.75rem;
+  }
+  
+  .hero__subtitle {
+    font-size: 1rem;
+  }
+  
   .hero__actions {
     flex-direction: column;
     width: 100%;
@@ -1390,5 +1459,50 @@ section {
   .site-footer__inner {
     flex-direction: column;
     gap: 1rem;
+  }
+}
+
+/* iOS and Android Specific Optimizations */
+/* Ensure minimum touch target size of 44x44px (Apple) / 48x48px (Android) */
+@media (max-width: 768px) {
+  .btn,
+  .site-nav__links a,
+  .site-nav__cta,
+  .site-nav__ghost,
+  .mobile-menu a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better mobile video performance */
+  video {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  /* Prevent iOS rubber band scrolling on fixed elements */
+  .site-nav,
+  .scroll-progress {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+}
+
+/* Landscape mobile optimization */
+@media (max-width: 768px) and (orientation: landscape) {
+  .hero__content {
+    padding: 2rem 0;
+  }
+  
+  .hero__title {
+    font-size: 1.5rem;
+  }
+}
+
+/* High DPI screens (Retina) */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Ensure crisp images on high DPI displays */
+  img {
+    image-rendering: -webkit-optimize-contrast;
   }
 }
