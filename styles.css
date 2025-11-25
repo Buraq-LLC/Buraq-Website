@@ -1442,25 +1442,15 @@ section {
     align-items: center;
   }
   
-  /* Fix hero animation on mobile - move up higher */
+  /* Hide intro animation completely on mobile */
   .hero__intro-animation {
-    width: 90vw;
-    height: 90vw;
-    max-width: 400px;
-    max-height: 400px;
-    top: 40%;
+    display: none !important;
   }
   
-  .hero__intro-animation.minimized {
-    top: 0.5rem;
-    left: 1rem;
-    transform: translate(0, 0);
-    width: 60px;
-    height: 100px;
-  }
-  
-  /* Hero content spacing */
+  /* Show hero content immediately on mobile */
   .hero__content {
+    opacity: 1 !important;
+    pointer-events: auto !important;
     padding-top: 2rem;
     padding-left: 1rem;
     padding-right: 1rem;
