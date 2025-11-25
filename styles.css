@@ -93,7 +93,7 @@ a {
   transition: var(--transition);
 }
 
-a:hover {
+a:hover:not(.btn):not(.site-nav__cta):not(.site-nav__ghost) {
   color: var(--accent);
 }
 
@@ -296,24 +296,28 @@ a:hover {
 
 .site-nav__ghost {
   padding: 0.5rem 1rem;
+  color: white;
   border-radius: 8px;
   font-weight: 500;
-  transition: var(--transition);
+  transition: all 0.3s ease;
 }
 
 .site-nav__ghost:hover {
+  color: white !important;
   background: rgba(255, 255, 255, 0.1);
 }
 
 .site-nav__cta {
   padding: 0.5rem 1.5rem;
   background: var(--accent-gradient);
+  color: white;
   border-radius: 8px;
   font-weight: 600;
-  transition: var(--transition);
+  transition: all 0.3s ease;
 }
 
 .site-nav__cta:hover {
+  color: white !important;
   transform: translateY(-2px);
   box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
 }
@@ -350,6 +354,23 @@ a:hover {
   flex-direction: column;
   gap: 0.75rem;
   z-index: 998;
+}
+
+.mobile-menu[aria-hidden="false"] {
+  display: flex;
+}
+
+.mobile-menu a {
+  padding: 0.75rem 1rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: var(--transition);
+}
+
+.mobile-menu a:hover {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--accent);
 }
 
 /* Buttons */
@@ -390,6 +411,7 @@ a:hover {
   background: linear-gradient(135deg, #2563eb, #3b82f6, #60a5fa);
   color: white;
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  transition: all 0.3s ease;
 }
 
 .btn--primary::before {
@@ -400,7 +422,7 @@ a:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(59, 130, 246, 0.5);
   background: linear-gradient(135deg, #1d4ed8, #2563eb, #3b82f6);
-  color: white;
+  color: white !important;
 }
 
 .btn--ghost {
@@ -1366,21 +1388,9 @@ section {
 }
 
 @media (max-width: 768px) {
-  .site-nav__links,
-  .site-nav__actions {
-    display: none;
-  }
-  
-  .site-nav__toggle {
-    display: flex;
-  }
-  
-  .mobile-menu {
-    display: flex;
-  }
-  
-  /* Fix navigation bar height on mobile */
+  /* Compact nav bar on mobile - show only logo and key buttons */
   .site-nav {
+    display: block;
     padding: 0.5rem 0;
   }
   
@@ -1388,6 +1398,12 @@ section {
     padding: 0 1rem;
   }
   
+  /* Hide navigation links */
+  .site-nav__links {
+    display: none;
+  }
+  
+  /* Keep logo visible but smaller */
   .site-nav__brand {
     font-size: 1rem;
   }
@@ -1397,6 +1413,28 @@ section {
     height: 32px;
   }
   
+  /* Show only Mission Brief and Get in Touch buttons */
+  .site-nav__actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .site-nav__ghost,
+  .site-nav__cta {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+  
+  /* Hide hamburger - not needed with simplified nav */
+  .site-nav__toggle {
+    display: none;
+  }
+  
+  /* Hide mobile menu - using simplified nav instead */
+  .mobile-menu {
+    display: none !important;
+  }
+  
   /* Fix hero section on mobile */
   .hero {
     min-height: 100vh;
@@ -1404,23 +1442,26 @@ section {
     align-items: center;
   }
   
-  /* Fix hero animation on mobile */
+  /* Fix hero animation on mobile - move up higher */
   .hero__intro-animation {
     width: 90vw;
     height: 90vw;
     max-width: 400px;
     max-height: 400px;
+    top: 40%;
   }
   
   .hero__intro-animation.minimized {
-    top: 60px;
-    width: 80px;
-    height: 133px;
+    top: 0.5rem;
+    left: 1rem;
+    transform: translate(0, 0);
+    width: 60px;
+    height: 100px;
   }
   
   /* Hero content spacing */
   .hero__content {
-    padding-top: 6rem;
+    padding-top: 2rem;
     padding-left: 1rem;
     padding-right: 1rem;
   }
