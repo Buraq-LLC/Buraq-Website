@@ -29,6 +29,7 @@ class HeroAnimationController {
     this.elements = {
       heroContent: $('.hero__content'),
       introAnimation: $('.hero__intro-animation'),
+      bgVideo: $('.hero__bg-video'),
       siteNav: $('.site-nav'),
       heroTitle: $('.hero__title'),
       heroSubtitle: $('.hero__subtitle'),
@@ -81,6 +82,9 @@ class HeroAnimationController {
 
   showHeroContent() {
     this.elements.heroContent?.classList.add('visible');
+    
+    // Fade in background video
+    this.elements.bgVideo?.classList.add('visible');
     
     // Stagger the animation of hero elements
     if (this.elements.heroTitle) {
