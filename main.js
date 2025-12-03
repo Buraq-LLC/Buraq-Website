@@ -515,6 +515,147 @@ class UtilityController {
   }
 }
 
+/**
+ * Threat Animation Controller
+ * - 3 clear header states: "center" → "top" → "free"
+ * - Word "Threats" goes blue → red; description fades at same time
+ * - Header unsticks just before the first card would touch it
+ */
+class ThreatAnimationController {
+  constructor() {
+    this.section = $('.threats');
+    this.header = $('.threats__header');
+    this.titleThreats = $('.threats__title-threats');
+    this.description = $('.threats__description');
+    this.cards = Array.from($$('.threat-card'));
+    this.firstCard = this.cards[0] || null;
+
+    this.state = null; // 'center' | 'top' | 'free' – start null so first setState always applies
+    this.ticking = false;
+    this.lastScrollY = window.scrollY || 0;
+  }
+
+  init() {
+    if (!this.section || !this.header || !this.titleThreats || !this.description || !this.cards.length) {
+      return;
+    }
+
+    // Fade cards in as they enter viewport (no sticky cards)
+    this.initCardObserver();
+
+    window.addEventListener('scroll', () => this.onScroll(), { passive: true });
+    window.addEventListener('resize', () => this.onScroll());
+
+    // Initial pass
+    this.update();
+  }
+
+  initCardObserver() {
+    if (!('IntersectionObserver' in window)) {
+      this.cards.forEach(card => card.classList.add('threat-card--visible'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('threat-card--visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.2,
+        rootMargin: '0px 0px -10% 0px'
+      }
+    );
+
+    this.cards.forEach(card => observer.observe(card));
+  }
+
+  onScroll() {
+    if (!this.ticking) {
+      requestAnimationFrame(() => {
+        this.update();
+        this.ticking = false;
+      });
+      this.ticking = true;
+    }
+  }
+
+  update() {
+    if (!this.section) return;
+
+    const viewportHeight = window.innerHeight;
+    const sectionRect = this.section.getBoundingClientRect();
+    const sectionTop = sectionRect.top;
+    const sectionBottom = sectionRect.bottom;
+
+    // Section completely off-screen: reset
+    if (sectionBottom <= 0 || sectionTop >= viewportHeight) {
+      this.setState('center');
+      this.setColorState(false);
+      return;
+    }
+
+    // Simple trigger points
+    const colorTrigger = viewportHeight * 0.35;
+    const topTrigger = viewportHeight * 0.25;
+
+    // Color change
+    const shouldBeRed = sectionTop <= colorTrigger;
+    this.setColorState(shouldBeRed);
+
+    // Position logic - only switch to free when cards are very close
+    let nextState = sectionTop <= topTrigger ? 'top' : 'center';
+    
+    // Only check for free state if we're already at top
+    if (nextState === 'top' && this.firstCard) {
+      const headerRect = this.header.getBoundingClientRect();
+      const cardRect = this.firstCard.getBoundingClientRect();
+      
+      // Only go free when card is about to overlap
+      if (cardRect.top <= headerRect.bottom + 10) {
+        nextState = 'free';
+      }
+    }
+
+    this.setState(nextState);
+  }
+
+  setState(newState) {
+    if (this.state === newState) return;
+    this.state = newState;
+
+    this.header.classList.remove(
+      'threats__header--center',
+      'threats__header--top',
+      'threats__header--free'
+    );
+
+    if (newState === 'center') {
+      this.header.classList.add('threats__header--center');
+    } else if (newState === 'top') {
+      this.header.classList.add('threats__header--top');
+    } else if (newState === 'free') {
+      this.header.classList.add('threats__header--free');
+    }
+  }
+
+  setColorState(isRed) {
+    if (!this.titleThreats || !this.description) return;
+
+    if (isRed) {
+      this.titleThreats.classList.add('is-red');
+      this.description.classList.add('is-hidden');
+    } else {
+      this.titleThreats.classList.remove('is-red');
+      this.description.classList.remove('is-hidden');
+    }
+  }
+}
+
 // Main application controller
 class App {
   constructor() {
@@ -525,7 +666,8 @@ class App {
       commandPalette: new CommandPaletteController(),
       mobileMenu: new MobileMenuController(),
       form: new FormController(),
-      smoothScroll: new SmoothScrollController()
+      smoothScroll: new SmoothScrollController(),
+      threatAnimation: new ThreatAnimationController()
     };
   }
 
@@ -540,6 +682,7 @@ class App {
     this.controllers.mobileMenu.init();
     this.controllers.form.init();
     this.controllers.smoothScroll.init(this.controllers.mobileMenu);
+    this.controllers.threatAnimation.init();
     
     // Utility functions
     UtilityController.updateFooterYear();
