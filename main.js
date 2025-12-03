@@ -525,7 +525,7 @@ class ThreatAnimationController {
   constructor() {
     this.section = $('.threats');
     this.header = $('.threats__header');
-    this.titleThreats = $('.threats__title-threats');
+    this.title = $('.threats__title');
     this.description = $('.threats__description');
     this.cards = Array.from($$('.threat-card'));
     this.firstCard = this.cards[0] || null;
@@ -536,7 +536,7 @@ class ThreatAnimationController {
   }
 
   init() {
-    if (!this.section || !this.header || !this.titleThreats || !this.description || !this.cards.length) {
+    if (!this.section || !this.header || !this.title || !this.description || !this.cards.length) {
       return;
     }
 
@@ -644,13 +644,13 @@ class ThreatAnimationController {
   }
 
   setColorState(isRed) {
-    if (!this.titleThreats || !this.description) return;
+    if (!this.title || !this.description) return;
 
     if (isRed) {
-      this.titleThreats.classList.add('is-red');
+      this.title.classList.add('is-red');
       this.description.classList.add('is-hidden');
     } else {
-      this.titleThreats.classList.remove('is-red');
+      this.title.classList.remove('is-red');
       this.description.classList.remove('is-hidden');
     }
   }
