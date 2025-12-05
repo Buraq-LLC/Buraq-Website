@@ -71,9 +71,16 @@ content="Buraq AI: The first secure, AI-driven platform for advanced situational
 <section class="hero" id="hero">
 <!-- Initial animation that plays first -->
 <video class="hero__intro-animation" autoplay muted playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback noplaybackrate" disableremoteplayback style="pointer-events: none;">
-  <source src="assets/buraq-animation.mp4" type="video/mp4">
-  Your browser does not support the video tag.
+    <source src="assets/buraq-animation.mp4" type="video/mp4">
+    Your browser does not support the video tag.
 </video>
+
+<!-- Gaza background video, fades in after logo animation -->
+<video class="hero__bg-video" autoplay loop muted playsinline aria-hidden="true" disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback noplaybackrate" disableremoteplayback>
+    <source src="assets/hero_background.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<div class="hero__gradient-overlay" aria-hidden="true"></div>
 
 <!-- Hero content that appears after animation -->
 <div class="container">
@@ -130,19 +137,19 @@ Contact Us
             <div class="mission__features">
                 <div class="mission__feature-card animate-on-scroll scale-in stagger-1">
                     <div class="mission__feature-number">01</div>
-                    <h4>Purpose-built for humanitarian and civilian protection</h4>
+                    <h4>Engineered to protect vulnerable populations and enable humanitarian response in crisis zones.</h4>
                 </div>
                 <div class="mission__feature-card animate-on-scroll scale-in stagger-2">
                     <div class="mission__feature-number">02</div>
-                    <h4>Forensic integrity and accountability at every step</h4>
+                    <h4>Delivers verifiable, tamper-proof records for full transparency and legal accountability.</h4>
                 </div>
                 <div class="mission__feature-card animate-on-scroll scale-in stagger-3">
                     <div class="mission__feature-number">03</div>
-                    <h4>AI-driven insights for rapid, ethical decision-making</h4>
+                    <h4>Empowers teams with fast, responsible intelligence for complex operational decisions.</h4>
                 </div>
                 <div class="mission__feature-card animate-on-scroll scale-in stagger-4">
                     <div class="mission__feature-number">04</div>
-                    <h4>Technology to resist censorship, authoritarianism, and global imperialism</h4>
+                    <h4>Built to defend against information suppression and safeguard mission-critical data worldwide.</h4>
                 </div>
             </div>
         </div>
@@ -156,9 +163,9 @@ Contact Us
     </div>
     <div class="feature-immersive__content animate-on-scroll blur-in delay-200">
         <span class="section-eyebrow">Unified Operations</span>
-        <h2 class="feature-immersive__title">Command center for modern operations.</h2>
+        <h2 class="feature-immersive__title">Mission control for ethical action.</h2>
         <p class="feature-immersive__description">
-            Buraq AI provides a streamlined interface for situational awareness and operational coordination. The platform brings together advanced analytics and real-time data to support informed decision-making and effective outcomes.
+            Buraq AI unifies intelligence, planning, and response in a single platform designed for humanitarian impact. Empower your team with real-time situational awareness, collaborative tools, and advanced analytics—enabling fast, ethical decisions that protect lives and uphold international standards in the world’s most complex environments.
         </p>
     </div>
 </section>
@@ -172,9 +179,9 @@ Contact Us
             </div>
             <div class="feature-compact__text">
                 <span class="section-eyebrow animate-on-scroll blur-in">Real-Time Monitoring</span>
-                <h3 class="feature-compact__title animate-on-scroll fade-in-right delay-100">See everything. Miss nothing.</h3>
+                <h3 class="feature-compact__title animate-on-scroll fade-in-right delay-100">Total awareness. Instant response.</h3>
                 <p class="feature-compact__body animate-on-scroll fade-in-right delay-200">
-                    Monitor operational areas and receive timely updates to support effective decision-making.
+                    Maintain a live operational picture and act on critical events as they unfold. Buraq AI delivers the clarity and speed needed to safeguard lives and drive mission success.
                 </p>
                 <div class="feature-compact__features">
                     <div class="feature-compact__feature-item animate-on-scroll fade-in-right stagger-1">
@@ -183,7 +190,7 @@ Contact Us
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                             </svg>
                         </div>
-                        <span class="feature-compact__feature-text">Live monitoring with clear visualizations</span>
+                        <span class="feature-compact__feature-text">Live situational feeds for rapid action</span>
                     </div>
                     <div class="feature-compact__feature-item animate-on-scroll fade-in-right stagger-2">
                         <div class="feature-compact__feature-icon">
@@ -191,7 +198,7 @@ Contact Us
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                             </svg>
                         </div>
-                        <span class="feature-compact__feature-text">Automated alerts for important events</span>
+                        <span class="feature-compact__feature-text">Automated alerts for threats and incidents</span>
                     </div>
                     <div class="feature-compact__feature-item animate-on-scroll fade-in-right stagger-3">
                         <div class="feature-compact__feature-icon">
@@ -199,7 +206,7 @@ Contact Us
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                             </svg>
                         </div>
-                        <span class="feature-compact__feature-text">Reliable data sharing</span>
+                        <span class="feature-compact__feature-text">Seamless, secure data sharing across teams</span>
                     </div>
                 </div>
             </div>
@@ -220,11 +227,11 @@ Contact Us
                     <img src="assets/image4.png" alt="Automated detection system" />
                 </div>
                 <div class="feature-stacked__details">
-                    <p>Leverage advanced technology to automatically identify important patterns and events, even in challenging environments.</p>
+                    <p>Uncover hidden connections and critical threats in real time. Buraq AI harnesses advanced graph analytics to reveal complex relationships and spotlight urgent risks, empowering teams to respond with confidence in any environment.</p>
                     <ul>
-                        <li>Automated analysis for rapid insights</li>
-                        <li>Efficient event notification</li>
-                        <li>Continuous improvement with secure updates</li>
+                        <li>Entity mapping for rapid insights</li>
+                        <li>Priority risk visualization</li>
+                        <li>Adaptive pattern detection</li>
                     </ul>
                 </div>
             </div>
@@ -276,18 +283,21 @@ Contact Us
                 </p>
                 <div class="feature-showcase__stats">
                     <div class="feature-showcase__stat animate-on-scroll scale-in stagger-1">
-                        <div class="stat-value">Automated data analysis</div>
+                        <div class="stat-value">Automated Data Analysis</div>
+                        <div class="stat-label">Uncover actionable insights instantly</div>
                     </div>
                     <div class="feature-showcase__stat animate-on-scroll scale-in stagger-2">
-                        <div class="stat-value">Correlation of multiple information streams</div>
+                        <div class="stat-value">Multi-Source Correlation</div>
+                        <div class="stat-label">Connect information for a complete picture</div>
                     </div>
                     <div class="feature-showcase__stat animate-on-scroll scale-in stagger-3">
-                        <div class="stat-value">Early-warning notifications</div>
+                        <div class="stat-value">Proactive Early-Warning</div>
+                        <div class="stat-label">Get timely alerts to anticipate risks</div>
                     </div>
                 </div>
-            </div>
-            <div class="feature-showcase__visual animate-on-scroll slide-up-scale delay-300">
-                <img src="assets/image13.png" alt="Data intelligence dashboard" />
+                <div class="feature-showcase__visual animate-on-scroll slide-up-scale delay-300" style="margin-top: 1.5rem;">
+                    <img src="assets/image13.png" alt="Data intelligence dashboard" style="width: 100%; height: auto; display: block;" />
+                </div>
             </div>
         </div>
     </div>
