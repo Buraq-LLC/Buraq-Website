@@ -24,6 +24,7 @@ content="Buraq AI: The first secure, AI-driven platform for advanced situational
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-logo.png" />
 <link rel="stylesheet" href="styles.css" />
 <link rel="preconnect" href="https://www.gstatic.com" />
@@ -75,53 +76,61 @@ content="Buraq AI: The first secure, AI-driven platform for advanced situational
     Your browser does not support the video tag.
 </video>
 
-<!-- Gaza background video, fades in after logo animation -->
-<video class="hero__bg-video" autoplay loop muted playsinline aria-hidden="true" disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback noplaybackrate" disableremoteplayback>
-    <source src="assets/hero_background.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
-<div class="hero__gradient-overlay" aria-hidden="true"></div>
-
 <!-- Hero content that appears after animation -->
-<div class="container">
-<div class="hero__content">
-<div class="hero__text-group">
-<span class="section-eyebrow animate-on-scroll blur-in">Advanced Intelligence Platform</span>
-<h1 class="hero__title animate-on-scroll slide-up-scale delay-100">
-<span class="hero__title-main">BURAQ AI</span>
-</h1>
-<p class="hero__tagline animate-on-scroll fade-in-up delay-200">AI-Powered Platform for Humanitarian Operations</p>
-<p class="hero__subtitle animate-on-scroll fade-in-up delay-250">A next-generation platform built for protecting civilians, enforcing humanitarian operations, and prosecuting abusers.</p>
-</div>
-<div class="hero__stats animate-on-scroll scale-in delay-300">
-<div class="stat">
-<span class="stat__value">GLOBAL</span>
-<span class="stat__label">COVERAGE</span>
-</div>
-<div class="stat">
-<span class="stat__value">&lt;100ms</span>
-<span class="stat__label">RESPONSE TIME</span>
-</div>
-<div class="stat">
-<span class="stat__value">99.9%</span>
-<span class="stat__label">UPTIME</span>
-</div>
-</div>
-<div class="hero__cta">
-<a class="btn btn--primary" href="#contact">
-<span class="btn__icon">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-<path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-</svg>
-</span>
-Contact Us
-</a>
-<a class="btn btn--ghost" href="#mission">Learn More</a>
-</div>
-<div class="hero__version">
-<span>Version 2.4.1</span>
-</div>
-</div>
+<div class="hero__container">
+    <div class="hero__content">
+        
+        <h1 class="hero__title-highlight">AI-Powered Platform for Humanitarian Operations </span>
+        </h1>
+        
+        <p class="hero__description animate-on-scroll fade-in-up delay-200">
+            A next-generation platform built for protecting civilians, enforcing humanitarian operations, and prosecuting abusers.
+        </p>
+        
+        <div class="hero__cta-group animate-on-scroll fade-in-up delay-300">
+            <a class="btn btn--hero-primary" href="#contact">
+                Contact Us
+            </a>
+            <a class="btn btn--hero-ghost" href="#mission">
+                Learn More
+            </a>
+        </div>
+        
+        <div class="hero__features animate-on-scroll fade-in-up delay-400">
+            <div class="hero__feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+                <span>Global Coverage</span>
+            </div>
+            <div class="hero__feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                <span>&lt;100ms Response</span>
+            </div>
+            <div class="hero__feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>99.9% Uptime</span>
+            </div>
+            <div class="hero__feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                <span>256-bit Encryption</span>
+            </div>
+            <div class="hero__feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>24/7 Support</span>
+            </div>
+        </div>
+    </div>
+    
+
 </div>
 </section>
 
@@ -170,14 +179,11 @@ Contact Us
     </div>
 </section>
 
-<!-- Real-Time Monitoring - Compact Side by Side -->
+<!-- Real-Time Monitoring - Split Layout -->
 <section class="feature-compact" id="monitoring">
     <div class="container">
-        <div class="feature-compact__grid">
-            <div class="feature-compact__visual animate-on-scroll slide-up-scale">
-                <img src="assets/image5.png" alt="Real-time monitoring interface" />
-            </div>
-            <div class="feature-compact__text">
+        <div class="feature-compact__split">
+            <div class="feature-compact__content">
                 <span class="section-eyebrow animate-on-scroll blur-in">Real-Time Monitoring</span>
                 <h3 class="feature-compact__title animate-on-scroll fade-in-right delay-100">Total awareness. Instant response.</h3>
                 <p class="feature-compact__body animate-on-scroll fade-in-right delay-200">
@@ -210,11 +216,14 @@ Contact Us
                     </div>
                 </div>
             </div>
+            <div class="feature-compact__visual animate-on-scroll slide-in-right delay-300">
+                <img src="assets/image5.png" alt="Real-time monitoring interface" />
+            </div>
         </div>
     </div>
 </section>
 
-<!-- Automated Detection - Stacked Card Style -->
+<!-- Automated Detection - Card with List Layout -->
 <section class="feature-stacked" id="detection">
     <div class="container">
         <div class="feature-stacked__header">
@@ -239,64 +248,83 @@ Contact Us
     </div>
 </section>
 
-<!-- Evidence Management - Asymmetric Grid -->
+<!-- Evidence Management - Grid Cards Layout -->
 <section class="feature-asymmetric" id="evidence">
     <div class="container">
-        <div class="feature-asymmetric__layout">
-            <div class="feature-asymmetric__lead">
-                <span class="section-eyebrow animate-on-scroll blur-in">Evidence Management</span>
-                <h2 class="feature-asymmetric__title animate-on-scroll fade-in-left delay-100">Documentation<br>you can trust.</h2>
-                <p class="feature-asymmetric__intro animate-on-scroll fade-in-left delay-200">
-                    Maintain secure and reliable records of important events, supporting transparency and accountability.
-                </p>
-            </div>
-            <div class="feature-asymmetric__visual animate-on-scroll slide-up-scale delay-200">
-                <img src="assets/image2.png" alt="Evidence management system" />
-            </div>
+        <div class="feature-asymmetric__header">
+            <span class="section-eyebrow animate-on-scroll blur-in">Evidence Management</span>
+            <h2 class="feature-asymmetric__title animate-on-scroll fade-in-up delay-100">Documentation you can trust.</h2>
         </div>
-        <div class="feature-asymmetric__features">
-            <div class="feature-asymmetric__item animate-on-scroll scale-in stagger-1">
-                <h4>Secure Storage</h4>
-                <p>Encrypted capture and storage of records</p>
+        
+        <div class="feature-asymmetric__grid">
+            <div class="evidence-card evidence-card--large animate-on-scroll slide-up-scale delay-200">
+                <div class="evidence-card__image">
+                    <img src="assets/image2.png" alt="Evidence management system" />
+                </div>
+                <div class="evidence-card__content">
+                    <div class="evidence-card__number">01</div>
+                    <h3>Secure Storage</h3>
+                    <p>Maintain secure and reliable records of important events with encrypted capture and storage of records, supporting transparency and accountability.</p>
+                </div>
             </div>
-            <div class="feature-asymmetric__item animate-on-scroll scale-in stagger-2">
-                <h4>Time-Stamped</h4>
-                <p>Chronological documentation with verification</p>
+            
+            <div class="evidence-card animate-on-scroll slide-up-scale stagger-1">
+                <div class="evidence-card__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div class="evidence-card__content">
+                    <div class="evidence-card__number">02</div>
+                    <h3>Chronological Verification</h3>
+                    <p>Every record is time-stamped with cryptographic verification, ensuring chronological documentation that stands up to legal scrutiny.</p>
+                </div>
             </div>
-            <div class="feature-asymmetric__item animate-on-scroll scale-in stagger-3">
-                <h4>Export Ready</h4>
-                <p>Automated export in standard formats</p>
+            
+            <div class="evidence-card animate-on-scroll slide-up-scale stagger-2">
+                <div class="evidence-card__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                </div>
+                <div class="evidence-card__content">
+                    <div class="evidence-card__number">03</div>
+                    <h3>Export Ready</h3>
+                    <p>Automated export in standard formats for seamless integration with international justice systems and legal frameworks.</p>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Data Intelligence - Split Feature with Stats -->
+<!-- Data Intelligence - Diagonal Split Layout -->
 <section class="feature-showcase" id="intelligence">
     <div class="container">
-        <div class="feature-showcase__wrapper">
-            <div class="feature-showcase__content">
-                <span class="section-eyebrow animate-on-scroll blur-in">Data Intelligence</span>
-                <h2 class="feature-showcase__title animate-on-scroll fade-in-left delay-100">Insights that move you forward.</h2>
-                <p class="feature-showcase__description animate-on-scroll fade-in-left delay-200">
-                    Analyze diverse data sources to provide early insights and support proactive decision-making.
-                </p>
-                <div class="feature-showcase__stats">
-                    <div class="feature-showcase__stat animate-on-scroll scale-in stagger-1">
-                        <div class="stat-value">Automated Data Analysis</div>
-                        <div class="stat-label">Uncover actionable insights instantly</div>
-                    </div>
-                    <div class="feature-showcase__stat animate-on-scroll scale-in stagger-2">
-                        <div class="stat-value">Multi-Source Correlation</div>
-                        <div class="stat-label">Connect information for a complete picture</div>
-                    </div>
-                    <div class="feature-showcase__stat animate-on-scroll scale-in stagger-3">
-                        <div class="stat-value">Proactive Early-Warning</div>
-                        <div class="stat-label">Get timely alerts to anticipate risks</div>
-                    </div>
+        <div class="feature-showcase__diagonal">
+            <div class="feature-showcase__visual-side">
+                <div class="feature-showcase__image-wrapper animate-on-scroll slide-in-left delay-100">
+                    <img src="assets/image13.png" alt="Data intelligence dashboard" />
                 </div>
-                <div class="feature-showcase__visual animate-on-scroll slide-up-scale delay-300" style="margin-top: 1.5rem;">
-                    <img src="assets/image13.png" alt="Data intelligence dashboard" style="width: 100%; height: auto; display: block;" />
+            </div>
+            <div class="feature-showcase__content-side">
+                <div class="feature-showcase__intro animate-on-scroll fade-in-right delay-200">
+                    <span class="section-eyebrow">Data Intelligence</span>
+                    <h2 class="feature-showcase__title">Insights that move you forward.</h2>
+                    <p class="feature-showcase__lead">Analyze diverse data sources to provide early insights and support proactive decision-making.</p>
+                </div>
+                <div class="feature-showcase__features-stack">
+                    <div class="feature-showcase__feature-card animate-on-scroll fade-in-right stagger-1">
+                        <h4>Automated Analysis</h4>
+                        <p>Uncover actionable insights instantly</p>
+                    </div>
+                    <div class="feature-showcase__feature-card animate-on-scroll fade-in-right stagger-2">
+                        <h4>Multi-Source Correlation</h4>
+                        <p>Connect information for complete picture</p>
+                    </div>
+                    <div class="feature-showcase__feature-card animate-on-scroll fade-in-right stagger-3">
+                        <h4>Proactive Early-Warning</h4>
+                        <p>Get timely alerts to anticipate risks</p>
+                    </div>
                 </div>
             </div>
         </div>
