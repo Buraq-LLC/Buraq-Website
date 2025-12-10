@@ -4139,7 +4139,7 @@ section {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('assets/hero-background10.png');
+  background-image: url('assets/hero-background.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -4181,9 +4181,22 @@ section {
   margin-bottom: 2rem;
 }
 
+.hero__supertitle {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: heroBackgroundFadeIn 1.5s ease-out forwards;
+  animation-delay: 7s;
+}
+
 .hero__title {
   font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: clamp(1.75rem, 4.5vw, 3rem);
+  font-size: clamp(1.4rem, 3.5vw, 2.2rem);
   font-weight: 400;
   line-height: 1.3;
   color: #ffffff;
