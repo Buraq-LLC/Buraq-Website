@@ -4144,9 +4144,19 @@ section {
   background-position: center;
   background-repeat: no-repeat;
   opacity: 0;
+  z-index: 1;
+}
+
+/* When animation plays (first visit) */
+.hero.with-animation::before {
   animation: heroBackgroundFadeIn 1.5s ease-out forwards;
   animation-delay: 7s;
-  z-index: 1;
+}
+
+/* When animation is skipped (refresh) */
+.hero.skip-animation::before {
+  animation: heroBackgroundFadeIn 1.5s ease-out forwards;
+  animation-delay: 0.5s;
 }
 
 .hero__container {
@@ -4164,8 +4174,16 @@ section {
   text-align: center;
   padding: 10rem 0 8rem;
   opacity: 0;
+}
+
+.hero.with-animation .hero__content {
   animation: heroFadeIn 1.5s ease-out forwards;
   animation-delay: 6.8s;
+}
+
+.hero.skip-animation .hero__content {
+  animation: heroFadeIn 1.5s ease-out forwards;
+  animation-delay: 0.3s;
 }
 
 .hero__eyebrow {
@@ -4190,8 +4208,16 @@ section {
   margin-bottom: 1rem;
   text-transform: uppercase;
   opacity: 0;
+}
+
+.hero.with-animation .hero__supertitle {
   animation: heroBackgroundFadeIn 1.5s ease-out forwards;
   animation-delay: 7s;
+}
+
+.hero.skip-animation .hero__supertitle {
+  animation: heroBackgroundFadeIn 1.5s ease-out forwards;
+  animation-delay: 0.5s;
 }
 
 .hero__title {

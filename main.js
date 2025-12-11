@@ -27,6 +27,7 @@ const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 class HeroAnimationController {
   constructor() {
     this.elements = {
+      hero: $('.hero'),
       heroContent: $('.hero__content'),
       introAnimation: $('.hero__intro-animation'),
       bgVideo: $('.hero__bg-video'),
@@ -43,11 +44,50 @@ class HeroAnimationController {
   init() {
     if (this.initialized || !this.validateElements()) return;
     
+    // Check if animation has already played this session
+    const hasPlayedAnimation = sessionStorage.getItem('buraq-animation-played');
+    
+    if (hasPlayedAnimation === 'true') {
+      // Skip animation, show content immediately
+      this.skipAnimation();
+    } else {
+      // Play animation for first time this session
+      this.playAnimation();
+      sessionStorage.setItem('buraq-animation-played', 'true');
+    }
+    
+    this.initialized = true;
+    log('HeroAnimationController initialized');
+  }
+
+  skipAnimation() {
+    // Add class to show background and content immediately
+    if (this.elements.hero) {
+      this.elements.hero.classList.add('skip-animation');
+    }
+    
+    // Hide the intro animation immediately
+    if (this.elements.introAnimation) {
+      this.elements.introAnimation.style.display = 'none';
+    }
+    
+    // Show navigation and content immediately
+    this.showNavigation();
+    this.showHeroContent();
+    
+    log('Animation skipped - already played this session');
+  }
+
+  playAnimation() {
+    // Add class to trigger delayed animations
+    if (this.elements.hero) {
+      this.elements.hero.classList.add('with-animation');
+    }
+    
     this.showNavigation();
     this.configureVideo();
     this.scheduleAnimationSequence();
-    this.initialized = true;
-    log('HeroAnimationController initialized');
+    log('Playing animation - first visit this session');
   }
 
   validateElements() {
