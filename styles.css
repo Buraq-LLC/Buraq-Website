@@ -1150,11 +1150,13 @@ section {
 }
 
 .mission__feature-card:hover::before {
-  height: 100%;
+  height: 0;
 }
 
 .mission__feature-card:hover {
-  background: rgba(59, 130, 246, 0.03);
+  background: none;
+  transform: none;
+  border-color: var(--border);
 }
 
 .mission__feature-number {
@@ -1170,7 +1172,7 @@ section {
 }
 
 .mission__feature-card:hover .mission__feature-number {
-  opacity: 1;
+  opacity: 0.7;
 }
 
 .mission__feature-card h4 {
@@ -1183,8 +1185,8 @@ section {
 }
 
 .mission__feature-card:hover h4 {
-  color: rgba(255, 255, 255, 0.95);
-  transform: translateX(4px);
+  color: var(--text-primary);
+  transform: none;
 }
 
 /* Immersive Feature - Full Bleed with Video Background */
@@ -1301,9 +1303,10 @@ section {
 }
 
 .feature-compact__feature-item:hover {
-  transform: translateX(8px);
-  border-color: var(--accent);
-  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+  transform: none;
+  border-color: var(--border);
+  box-shadow: none;
+  background: var(--bg-primary);
 }
 
 .feature-compact__feature-icon {
@@ -1444,13 +1447,14 @@ section {
 }
 
 .feature-item:hover::before {
-  left: 100%;
+  left: -100%;
 }
 
 .feature-item:hover {
-  transform: translateY(-8px) scale(1.05);
-  border-color: var(--accent);
-  box-shadow: 0 15px 40px rgba(59, 130, 246, 0.3);
+  transform: none;
+  border-color: var(--border);
+  box-shadow: none;
+  background: var(--bg-secondary);
 }
 
 .feature-item__text {
@@ -1575,8 +1579,8 @@ section {
 
 .feature-asymmetric__layout {
   display: grid;
-  grid-template-columns: 45% 55%;
-  gap: 5rem;
+  grid-template-columns: 58% 42%;
+  gap: 3rem;
   max-width: 1400px;
   margin: 0 auto;
   align-items: start;
@@ -1633,14 +1637,14 @@ section {
 }
 
 .evidence-feature-item:hover::before {
-  height: 100%;
+  height: 0;
 }
 
 .evidence-feature-item:hover {
-  transform: translateX(12px);
-  border-color: rgba(59, 130, 246, 0.4);
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(135deg, var(--bg-primary) 0%, rgba(59, 130, 246, 0.03) 100%);
+  transform: none;
+  border-color: var(--border);
+  box-shadow: none;
+  background: var(--bg-primary);
 }
 
 .evidence-feature-item__number {
@@ -1660,8 +1664,8 @@ section {
 }
 
 .evidence-feature-item:hover .evidence-feature-item__number {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.6);
+  transform: none;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
 }
 
 .evidence-feature-item__content h3 {
@@ -1673,7 +1677,7 @@ section {
 }
 
 .evidence-feature-item:hover .evidence-feature-item__content h3 {
-  color: var(--accent);
+  color: var(--text-primary);
 }
 
 .evidence-feature-item__content p {
@@ -2088,12 +2092,13 @@ section {
 }
 
 .intelligence-feature:hover::before {
-  transform: scaleY(1);
+  transform: scaleY(0);
 }
 
 .intelligence-feature:hover {
-  padding-left: 2.5rem;
-  background: rgba(59, 130, 246, 0.03);
+  padding-left: 2rem;
+  background: none;
+  transform: none;
 }
 
 .intelligence-feature__header {
@@ -2112,7 +2117,7 @@ section {
 }
 
 .intelligence-feature:hover .intelligence-feature__header svg {
-  transform: scale(1.2) rotate(5deg);
+  transform: none;
 }
 
 .intelligence-feature__header h3 {
@@ -2124,7 +2129,7 @@ section {
 }
 
 .intelligence-feature:hover .intelligence-feature__header h3 {
-  color: var(--accent);
+  color: var(--text-primary);
 }
 
 .intelligence-feature p {
