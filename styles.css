@@ -605,7 +605,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8rem 0 4rem;
+  padding: 10rem 0 4rem;
   position: relative;
   overflow: hidden;
   text-align: center;
@@ -4553,154 +4553,88 @@ section {
   right: calc(100% + 20px);
 }
 
-/* Pin line */
+/* Circuit-style pin line that extends from image to info */
 .integration-hero .pin-line {
   position: absolute;
   top: 50%;
-  width: 40px;
+  width: 0;
   height: 1px;
-  background: var(--accent);
   transform: translateY(-50%);
   opacity: 0;
-  transition: opacity 0.4s ease 0.8s;
-  box-shadow: 0 0 8px rgba(59, 130, 246, 0.8), 0 0 4px rgba(59, 130, 246, 0.6);
+  transition: opacity 0.3s ease 1.3s, width 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.3s;
+  background: linear-gradient(90deg, 
+    rgba(59, 130, 246, 0.9) 0%,
+    rgba(59, 130, 246, 0.6) 50%,
+    rgba(59, 130, 246, 0.3) 100%);
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
 }
 
-.integration-hero .pin-line::before {
+/* Circuit connection nodes */
+.integration-hero .pin-line::before,
+.integration-hero .pin-line::after {
   content: '';
   position: absolute;
   top: 50%;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(59, 130, 246, 0.4) 25%, 
-    rgba(59, 130, 246, 0.8) 50%, 
-    rgba(59, 130, 246, 0.4) 75%, 
-    transparent 100%);
+  width: 4px;
+  height: 4px;
+  background: #3b82f6;
+  border-radius: 50%;
   transform: translateY(-50%);
-  filter: blur(1px);
-  animation: pulse-line 2s ease-in-out infinite;
+  box-shadow: 0 0 6px rgba(59, 130, 246, 0.8);
 }
 
-@keyframes pulse-line {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+.integration-hero .pin-line::before {
+  left: 0;
+}
+
+.integration-hero .pin-line::after {
+  right: 0;
 }
 
 .integration-hero .exploded-layer[data-side="right"] .pin-line {
-  left: 0;
+  left: calc(100% - 10px);
 }
 
 .integration-hero .exploded-layer[data-side="left"] .pin-line {
-  right: 0;
+  right: calc(100% - 10px);
+  background: linear-gradient(270deg, 
+    rgba(59, 130, 246, 0.9) 0%,
+    rgba(59, 130, 246, 0.6) 50%,
+    rgba(59, 130, 246, 0.3) 100%);
 }
 
 .integration-hero .exploded-view.exploded .pin-line {
   opacity: 1;
+  width: 100px;
 }
 
-/* Pin dot */
-.integration-hero .pin-dot {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
-  color: white;
-  font-weight: 700;
-  font-size: 0.875rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  opacity: 0;
-  transition: all 0.4s ease 1s;
-  box-shadow: 
-    0 0 20px rgba(59, 130, 246, 0.8),
-    0 0 40px rgba(59, 130, 246, 0.4),
-    inset 0 0 10px rgba(147, 197, 253, 0.3);
-  border: 2px solid rgba(147, 197, 253, 0.5);
-  position: relative;
-}
-
-.integration-hero .pin-dot::before {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  background: transparent;
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  animation: pulse-ring 2s ease-in-out infinite;
-}
-
-@keyframes pulse-ring {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.3);
-    opacity: 0;
-  }
-}
-
-.integration-hero .exploded-layer[data-side="right"] .pin-dot {
-  left: 40px;
-}
-
-.integration-hero .exploded-layer[data-side="left"] .pin-dot {
-  right: 40px;
-}
-
-.integration-hero .exploded-view.exploded .pin-dot {
-  opacity: 1;
-}
-
-.integration-hero .pin-dot:hover {
-  transform: translateY(-50%) scale(1.15);
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
-}
-
-/* Pin tooltip - hidden by default, shown on hover */
+/* Pin tooltip - appears at end of circuit line */
 .integration-hero .pin-tooltip {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) scale(0.95);
   background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 58, 138, 0.95) 100%);
   border: 1px solid rgba(59, 130, 246, 0.3);
   border-radius: 12px;
   padding: 1.25rem;
   width: 280px;
   opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.5s ease 2.2s, transform 0.5s ease 2.2s;
   backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.1);
 }
 
 .integration-hero .exploded-layer[data-side="right"] .pin-tooltip {
-  left: 80px;
+  left: calc(100% + 90px);
 }
 
 .integration-hero .exploded-layer[data-side="left"] .pin-tooltip {
-  right: 80px;
+  right: calc(100% + 90px);
 }
 
-.integration-hero .exploded-layer:hover .pin-tooltip {
+.integration-hero .exploded-view.exploded .pin-tooltip {
   opacity: 1;
-  pointer-events: auto;
-}
-
-.integration-hero .exploded-layer[data-side="right"]:hover .pin-tooltip {
-  transform: translateY(-50%) translateX(10px);
-}
-
-.integration-hero .exploded-layer[data-side="left"]:hover .pin-tooltip {
-  transform: translateY(-50%) translateX(-10px);
+  transform: translateY(-50%) scale(1);
 }
 
 .integration-hero .pin-tooltip h3 {
