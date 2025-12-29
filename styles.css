@@ -4498,22 +4498,22 @@ section {
 
 /* Exploded state - Layer 1: Case Top moves UP */
 .integration-hero .exploded-view.exploded .exploded-layer[data-layer="1"] {
-  transform: translate(-50%, -323px) !important;
+  transform: translate(-50%, -270px) !important;
 }
 
 /* Layer 2: AI HAT moves UP slightly less */
 .integration-hero .exploded-view.exploded .exploded-layer[data-layer="2"] {
-  transform: translate(-50%, -102px) !important;
+  transform: translate(-50%, -90px) !important;
 }
 
 /* Layer 3: Raspberry Pi moves DOWN slightly */
 .integration-hero .exploded-view.exploded .exploded-layer[data-layer="3"] {
-  transform: translate(-50%, 102px) !important;
+  transform: translate(-50%, 90px) !important;
 }
 
 /* Layer 4: Bottom Case moves DOWN more */
 .integration-hero .exploded-view.exploded .exploded-layer[data-layer="4"] {
-  transform: translate(-50%, 323px) !important;
+  transform: translate(-50%, 270px) !important;
 }
 
 .integration-hero .exploded-layer img {
@@ -4524,29 +4524,197 @@ section {
   transition: filter 0.4s ease;
 }
 
+/* Make layers 1-3 slightly smaller, keep layer 4 (base) full size */
+.integration-hero .exploded-layer[data-layer="1"] img,
+.integration-hero .exploded-layer[data-layer="2"] img,
+.integration-hero .exploded-layer[data-layer="3"] img {
+  width: 88%;
+  margin: 0 auto;
+}
+
 .integration-hero .exploded-layer:hover img {
   filter: drop-shadow(0 35px 70px rgba(59, 130, 246, 0.4));
 }
 
-/* Layer Labels */
-.integration-hero .layer-label {
+/* Layer Pin Points */
+.integration-hero .layer-pin {
   position: absolute;
-  left: calc(100% + 40px);
   top: 50%;
   transform: translateY(-50%);
-  background: linear-gradient(135deg, rgba(30, 58, 138, 0.08) 0%, rgba(59, 130, 246, 0.08) 100%);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  border-radius: 16px;
-  padding: 1.5rem;
-  width: 260px;
-  opacity: 0;
-  transition: opacity 0.6s ease 1s;
-  backdrop-filter: blur(10px);
-  pointer-events: none;
+  z-index: 10;
 }
 
-.integration-hero .exploded-view.exploded .layer-label {
+/* Alternate sides */
+.integration-hero .exploded-layer[data-side="right"] .layer-pin {
+  left: calc(100% + 20px);
+}
+
+.integration-hero .exploded-layer[data-side="left"] .layer-pin {
+  right: calc(100% + 20px);
+}
+
+/* Pin line */
+.integration-hero .pin-line {
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 1px;
+  background: var(--accent);
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.4s ease 0.8s;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.8), 0 0 4px rgba(59, 130, 246, 0.6);
+}
+
+.integration-hero .pin-line::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(59, 130, 246, 0.4) 25%, 
+    rgba(59, 130, 246, 0.8) 50%, 
+    rgba(59, 130, 246, 0.4) 75%, 
+    transparent 100%);
+  transform: translateY(-50%);
+  filter: blur(1px);
+  animation: pulse-line 2s ease-in-out infinite;
+}
+
+@keyframes pulse-line {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.integration-hero .exploded-layer[data-side="right"] .pin-line {
+  left: 0;
+}
+
+.integration-hero .exploded-layer[data-side="left"] .pin-line {
+  right: 0;
+}
+
+.integration-hero .exploded-view.exploded .pin-line {
   opacity: 1;
+}
+
+/* Pin dot */
+.integration-hero .pin-dot {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  color: white;
+  font-weight: 700;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.4s ease 1s;
+  box-shadow: 
+    0 0 20px rgba(59, 130, 246, 0.8),
+    0 0 40px rgba(59, 130, 246, 0.4),
+    inset 0 0 10px rgba(147, 197, 253, 0.3);
+  border: 2px solid rgba(147, 197, 253, 0.5);
+  position: relative;
+}
+
+.integration-hero .pin-dot::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  animation: pulse-ring 2s ease-in-out infinite;
+}
+
+@keyframes pulse-ring {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+.integration-hero .exploded-layer[data-side="right"] .pin-dot {
+  left: 40px;
+}
+
+.integration-hero .exploded-layer[data-side="left"] .pin-dot {
+  right: 40px;
+}
+
+.integration-hero .exploded-view.exploded .pin-dot {
+  opacity: 1;
+}
+
+.integration-hero .pin-dot:hover {
+  transform: translateY(-50%) scale(1.15);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+}
+
+/* Pin tooltip - hidden by default, shown on hover */
+.integration-hero .pin-tooltip {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 58, 138, 0.95) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 12px;
+  padding: 1.25rem;
+  width: 280px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.integration-hero .exploded-layer[data-side="right"] .pin-tooltip {
+  left: 80px;
+}
+
+.integration-hero .exploded-layer[data-side="left"] .pin-tooltip {
+  right: 80px;
+}
+
+.integration-hero .exploded-layer:hover .pin-tooltip {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.integration-hero .exploded-layer[data-side="right"]:hover .pin-tooltip {
+  transform: translateY(-50%) translateX(10px);
+}
+
+.integration-hero .exploded-layer[data-side="left"]:hover .pin-tooltip {
+  transform: translateY(-50%) translateX(-10px);
+}
+
+.integration-hero .pin-tooltip h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem;
+}
+
+.integration-hero .pin-tooltip p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.6;
 }
 
 .integration-hero .layer-label__number {
