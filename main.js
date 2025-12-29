@@ -728,7 +728,7 @@
 
       log('Initializing Pi Module exploded view animation');
       
-      // Ensure it starts collapsed
+      // Ensure it starts collapsed and hidden
       this.explodedView.classList.remove('exploded');
       
       // Use Intersection Observer to trigger on scroll
@@ -737,16 +737,15 @@
           entries.forEach((entry) => {
             if (entry.isIntersecting && !this.hasTriggered) {
               this.hasTriggered = true;
-              log('Exploded view is visible, triggering animation in 500ms');
-              setTimeout(() => {
-                this.explodedView.classList.add('exploded');
-                log('Exploded view animation triggered - layers should pull apart now');
-              }, 500);
+              log('Exploded view is visible, triggering animation');
+              // First make it visible, then trigger explosion after fade in
+              this.explodedView.classList.add('exploded');
+              log('Exploded view animation triggered - layers should pull apart now');
             }
           });
         },
         {
-          threshold: 0.2,
+          threshold: 0.3,
           rootMargin: '0px'
         }
       );
