@@ -4386,7 +4386,7 @@ section {
 
 /* Integration Hero with Exploded View */
 .integration-hero {
-  padding: 8rem 0 12rem;
+  padding: 12rem 0 12rem;
   background: linear-gradient(180deg, var(--bg-primary) 0%, rgba(10, 10, 15, 0.95) 100%);
   position: relative;
   overflow: hidden;
@@ -4406,7 +4406,7 @@ section {
 
 .integration-hero__content {
   text-align: center;
-  margin-bottom: 6rem;
+  margin-bottom: 3rem;
   position: relative;
   z-index: 2;
 }
@@ -4449,13 +4449,19 @@ section {
 /* Exploded View Animation */
 .integration-hero .exploded-view {
   position: relative;
-  min-height: 1000px;
+  min-height: 1200px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   perspective: 2000px;
-  margin-top: 4rem;
+  margin-top: 2rem;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.integration-hero .exploded-view.exploded {
+  opacity: 1;
 }
 
 .integration-hero .exploded-layer {
@@ -4465,7 +4471,7 @@ section {
   transform: translate(-50%, -50%);
   width: 550px;
   max-width: 85vw;
-  transition: transform 1.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 1.2s ease-out;
   opacity: 1;
   will-change: transform;
 }
