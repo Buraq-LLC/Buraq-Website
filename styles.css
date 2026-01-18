@@ -5136,7 +5136,7 @@ section {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url('assets/hero2-background.png') center center / contain no-repeat;
+  background: url('assets/hero2-background6.png') center center / 95% no-repeat;
   opacity: 0;
   animation: fadeInBackground 1s ease-out 1.5s forwards;
   z-index: -1;
@@ -5150,13 +5150,13 @@ section {
 
 @keyframes fadeInBackground {
   to {
-    opacity: 0.8;
+    opacity: 1;
   }
 }
 
 .pi-hero__intro-text {
-  font-size: clamp(3.5rem, 10vw, 7rem);
-  font-weight: 600;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 500;
   color: #ffffff;
   letter-spacing: -0.04em;
   margin-bottom: 4rem;
@@ -5266,7 +5266,7 @@ section {
 
 /* Section 2: Features Grid */
 .pi-features {
-  background: #0a0a0a;
+  background: #000000;
   padding: 6rem 2rem;
 }
 
@@ -5279,9 +5279,18 @@ section {
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 700;
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 1rem;
   color: #ffffff;
   letter-spacing: -0.03em;
+}
+
+.pi-features__intro {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 4rem;
+  line-height: 1.6;
 }
 
 .pi-features__grid {
