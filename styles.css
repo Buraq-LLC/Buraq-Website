@@ -5038,7 +5038,7 @@ section {
 .pi-hero {
   background: #000000;
   color: #ffffff;
-  padding: 8rem 2rem 6rem;
+  padding: 12rem 2rem 6rem;
   text-align: center;
 }
 
@@ -5048,7 +5048,7 @@ section {
 }
 
 .pi-hero__intro {
-  font-size: clamp(2.75rem, 6.5vw, 5rem);
+  font-size: clamp(3.5rem, 8vw, 6.5rem);
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 1rem;
@@ -5081,14 +5081,14 @@ section {
 }
 
 .pi-hero__title {
-  font-size: clamp(4rem, 10vw, 8rem);
+  font-size: clamp(3.5rem, 9vw, 7rem);
   font-weight: 700;
   line-height: 1.05;
   margin-bottom: 1.5rem;
   color: #3b82f6;
   letter-spacing: -0.04em;
   opacity: 0;
-  animation: fadeInGlow 1s ease-out 2s forwards;
+  animation: fadeInGlow 1s ease-out 3s forwards;
   text-shadow: 
     0 0 10px rgba(59, 130, 246, 0.5),
     0 0 20px rgba(59, 130, 246, 0.3),
@@ -5108,7 +5108,7 @@ section {
   margin-bottom: 4rem;
   line-height: 1.4;
   opacity: 0;
-  animation: fadeInSubtitle 1s ease-out 3.5s forwards;
+  animation: fadeInSubtitle 1s ease-out 4.5s forwards;
 }
 
 @keyframes fadeInSubtitle {
