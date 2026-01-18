@@ -66,224 +66,140 @@ content="Learn how to integrate the Buraq AI Raspberry Pi module for edge AI pro
 </nav>
 </header>
 
-<!-- Integration Hero with Exploded View -->
-<section class="integration-hero">
-    <div class="container">
-        <div class="integration-hero__content">
-            <div class="integration-hero__icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                </svg>
-            </div>
-            
-            <h1 class="integration-hero__title">Pi Module</h1>
-            
-            <p class="integration-hero__description">
-                The Buraq AI Raspberry Pi module brings powerful edge AI processing to field operations. Designed for rugged environments, this compact unit processes visual intelligence locally, reducing latency and enabling real-time decision-making in areas with limited connectivity.
-            </p>
+<!-- Hero Section - Minimalist Product Focus -->
+<section class="pi-hero">
+    <div class="pi-hero__container">
+        <div class="pi-hero__intro">Introducing</div>
+        <h1 class="pi-hero__title">Marqab™</h1>
+        <p class="pi-hero__subtitle">Buraq AI's Edge Module, Ready for Deployment</p>
+        <div class="pi-hero__image-frame">
+            <div class="pi-hero__placeholder">[Hero Product Image Placeholder]</div>
         </div>
-        
-        <!-- Exploded View Animation -->
-        <div class="exploded-view" id="piModuleExploded">
-            <div class="exploded-layer" data-layer="1" data-side="right">
-                <img src="assets/casetop.png" alt="Case Top" />
-                <div class="layer-pin">
-                    <div class="pin-line"></div>
-                    <div class="pin-tooltip">
-                        <h3>Protective Case Top</h3>
-                        <p>Weather-resistant enclosure with IP65 rating for harsh environments.</p>
-                    </div>
-                </div>
+    </div>
+</section>
+
+<!-- Features Grid - Card-Based Layout -->
+<section class="pi-features">
+    <div class="pi-features__container">
+        <h2 class="pi-features__heading">[Section Title Placeholder]</h2>
+        <div class="pi-features__grid">
+            <div class="pi-features__card">
+                <div class="pi-features__icon-box">[Icon]</div>
+                <h3 class="pi-features__card-title">[Feature Title]</h3>
+                <p class="pi-features__card-desc">[Feature description placeholder text goes here]</p>
             </div>
-            
-            <div class="exploded-layer" data-layer="2" data-side="left">
-                <img src="assets/aihat.png" alt="AI HAT" />
-                <div class="layer-pin">
-                    <div class="pin-line"></div>
-                    <div class="pin-tooltip">
-                        <h3>AI HAT Module</h3>
-                        <p>Custom hardware accelerator delivering 26 TOPS of AI performance.</p>
-                    </div>
-                </div>
+            <div class="pi-features__card">
+                <div class="pi-features__icon-box">[Icon]</div>
+                <h3 class="pi-features__card-title">[Feature Title]</h3>
+                <p class="pi-features__card-desc">[Feature description placeholder text goes here]</p>
             </div>
-            
-            <div class="exploded-layer" data-layer="3" data-side="right">
-                <img src="assets/raspberrypi.png" alt="Raspberry Pi" />
-                <div class="layer-pin">
-                    <div class="pin-line"></div>
-                    <div class="pin-tooltip">
-                        <h3>Raspberry Pi 4</h3>
-                        <p>Quad-core processor with 8GB RAM for edge computing tasks.</p>
-                    </div>
-                </div>
+            <div class="pi-features__card">
+                <div class="pi-features__icon-box">[Icon]</div>
+                <h3 class="pi-features__card-title">[Feature Title]</h3>
+                <p class="pi-features__card-desc">[Feature description placeholder text goes here]</p>
             </div>
-            
-            <div class="exploded-layer" data-layer="4" data-side="left">
-                <img src="assets/bottomcase.png" alt="Bottom Case" />
-                <div class="layer-pin">
-                    <div class="pin-line"></div>
-                    <div class="pin-tooltip">
-                        <h3>Base Platform</h3>
-                        <p>Mounting interface with cooling system and power management.</p>
-                    </div>
-                </div>
+            <div class="pi-features__card">
+                <div class="pi-features__icon-box">[Icon]</div>
+                <h3 class="pi-features__card-title">[Feature Title]</h3>
+                <p class="pi-features__card-desc">[Feature description placeholder text goes here]</p>
+            </div>
+            <div class="pi-features__card">
+                <div class="pi-features__icon-box">[Icon]</div>
+                <h3 class="pi-features__card-title">[Feature Title]</h3>
+                <p class="pi-features__card-desc">[Feature description placeholder text goes here]</p>
+            </div>
+            <div class="pi-features__card">
+                <div class="pi-features__icon-box">[Icon]</div>
+                <h3 class="pi-features__card-title">[Feature Title]</h3>
+                <p class="pi-features__card-desc">[Feature description placeholder text goes here]</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Integration Steps -->
-<section class="integration-steps">
-    <div class="container">
-        <div class="integration-step">
-            <div class="integration-step__header">
-                <h6>Step 1: Hardware Setup</h6>
-            </div>
-            <div class="integration-step__content">
-                <ul>
-                    <li>Ensure you have a Raspberry Pi 4 Model B (4GB or 8GB RAM recommended) with the official Buraq AI HAT attached.</li>
-                    <li>Connect power supply (5V, 3A minimum) and ensure all connections are secure.</li>
-                    <li>Insert a microSD card (32GB+) with the pre-configured Buraq AI OS image.</li>
-                    <li>Connect camera module to the CSI port and verify camera detection with <code>vcgencmd get_camera</code>.</li>
-                </ul>
-                <p></p>
-            </div>
+<!-- Specifications - Table/List Layout -->
+<section class="pi-specs">
+    <div class="pi-specs__container">
+        <div class="pi-specs__header">
+            <h2 class="pi-specs__title">[Specifications Title Placeholder]</h2>
+            <p class="pi-specs__intro">[Introduction text about technical details]</p>
         </div>
-        
-        <div class="integration-step">
-            <div class="integration-step__header">
-                <h6>Step 2: Initial Configuration</h6>
-            </div>
-            <div class="integration-step__content">
-                <ul>
-                    <li>Power on the device and wait for the initial boot sequence (approximately 2 minutes).</li>
-                    <li>Connect to the device via SSH using the default credentials provided in your deployment package.</li>
-                    <li>Run the setup wizard: <code>sudo buraq-setup</code> and follow the on-screen prompts.</li>
-                    <li>Configure network settings (WiFi or Ethernet) and set your preferred timezone and locale.</li>
-                </ul>
-                <p></p>
-            </div>
-        </div>
-        
-        <div class="integration-step">
-            <div class="integration-step__header">
-                <h6>Step 3: Connect to Buraq Platform</h6>
-            </div>
-            <div class="integration-step__content">
-                <ul>
-                    <li>Log in to your Buraq AI dashboard at <a href="https://dashboard.buraq-ai.com">dashboard.buraq-ai.com</a> and navigate to the "Devices" section.</li>
-                    <li>Click "Add New Device" and select "Raspberry Pi Module" from the device type dropdown.</li>
-                    <li>Generate a secure device token by clicking "Generate Token" - this token will be displayed only once.</li>
-                    <li>On your Pi module, run <code>sudo buraq-register --token YOUR_TOKEN</code> to authenticate the device with the platform.</li>
-                    <li>Verify the connection status in the dashboard - you should see a green indicator once the device is successfully registered.</li>
-                </ul>
-                <p></p>
-            </div>
-        </div>
-        
-        <div class="integration-step">
-            <div class="integration-step__header">
-                <h6>Step 4: Configure AI Models</h6>
-            </div>
-            <div class="integration-step__content">
-                <ul>
-                    <li>From the dashboard, select your registered device and navigate to the "AI Models" tab.</li>
-                    <li>Choose which detection models to deploy based on your operational needs (person detection, vehicle classification, threat identification).</li>
-                    <li>Download the selected models to the device by clicking "Deploy Models" - this may take 5-10 minutes depending on connection speed.</li>
-                    <li>Configure detection thresholds and alert parameters in the "Model Settings" section.</li>
-                    <li>Test the model deployment by running <code>buraq-test-inference</code> on the Pi module.</li>
-                </ul>
-                <p></p>
-            </div>
-        </div>
-        
-        <div class="integration-step">
-            <div class="integration-step__header">
-                <h6>Step 5: Deploy and Monitor</h6>
-            </div>
-            <div class="integration-step__content">
-                <ul>
-                    <li>Mount the Pi module in your chosen location using the weatherproof enclosure provided.</li>
-                    <li>Ensure the camera has an unobstructed view of the area you need to monitor.</li>
-                    <li>Start the inference service: <code>sudo systemctl start buraq-inference</code>.</li>
-                    <li>Enable automatic startup on boot: <code>sudo systemctl enable buraq-inference</code>.</li>
-                    <li>Monitor real-time detections and system health through the Buraq AI dashboard.</li>
-                    <li>Set up automated alerts for critical events in the "Notifications" section of your dashboard.</li>
-                </ul>
-                <p></p>
-            </div>
-        </div>
-        
-        <div class="integration-step">
-            <div class="integration-step__header">
-                <h6>Step 6: Maintenance and Updates</h6>
-            </div>
-            <div class="integration-step__content">
-                <ul>
-                    <li>The Pi module will automatically check for software updates daily.</li>
-                    <li>To manually trigger an update, run <code>sudo buraq-update</code> on the device.</li>
-                    <li>Monitor system performance metrics (CPU, memory, temperature) through the dashboard.</li>
-                    <li>Clean the camera lens regularly to maintain optimal detection accuracy.</li>
-                    <li>Review detection logs periodically: <code>journalctl -u buraq-inference -f</code>.</li>
-                </ul>
-                <p></p>
-            </div>
-        </div>
-        
-        <div class="integration-step">
-            <div class="integration-step__header">
-                <h6>Step 7: Troubleshooting</h6>
-            </div>
-            <div class="integration-step__content">
-                <ul>
-                    <li>If the device doesn't appear in the dashboard, verify network connectivity with <code>ping 8.8.8.8</code>.</li>
-                    <li>Check service status with <code>sudo systemctl status buraq-inference</code> to identify any errors.</li>
-                    <li>Review system logs for detailed error messages: <code>sudo journalctl -xe</code>.</li>
-                    <li>Consult the Buraq AI documentation at <a href="https://docs.buraq-ai.com">docs.buraq-ai.com</a> for detailed troubleshooting guides.</li>
-                    <li>For persistent issues, contact our support team through the dashboard's help section or email <a href="mailto:support@buraq-ai.com">support@buraq-ai.com</a>.</li>
-                    <li>Include your device ID and relevant log snippets when contacting support for faster resolution.</li>
-                </ul>
-                <p></p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Other Hardware Modules -->
-<section class="other-integrations">
-    <div class="container">
-        <h2>Other hardware modules</h2>
-        
-        <div class="integrations-grid">
-            <a href="drone-edge-ai.html" class="integration-card">
-                <div class="integration-card__icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                    </svg>
+        <div class="pi-specs__content">
+            <div class="pi-specs__column">
+                <div class="pi-specs__group">
+                    <h3 class="pi-specs__group-title">[Category 1]</h3>
+                    <dl class="pi-specs__list">
+                        <div class="pi-specs__item">
+                            <dt>[Spec Label]</dt>
+                            <dd>[Spec Value]</dd>
+                        </div>
+                        <div class="pi-specs__item">
+                            <dt>[Spec Label]</dt>
+                            <dd>[Spec Value]</dd>
+                        </div>
+                        <div class="pi-specs__item">
+                            <dt>[Spec Label]</dt>
+                            <dd>[Spec Value]</dd>
+                        </div>
+                    </dl>
                 </div>
-                <h3>Drone Edge AI Unit</h3>
-                <p>Powerful aerial intelligence processing for real-time threat detection and area surveillance.</p>
-            </a>
-            
-            <a href="#" class="integration-card">
-                <div class="integration-card__icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                    </svg>
+                <div class="pi-specs__group">
+                    <h3 class="pi-specs__group-title">[Category 2]</h3>
+                    <dl class="pi-specs__list">
+                        <div class="pi-specs__item">
+                            <dt>[Spec Label]</dt>
+                            <dd>[Spec Value]</dd>
+                        </div>
+                        <div class="pi-specs__item">
+                            <dt>[Spec Label]</dt>
+                            <dd>[Spec Value]</dd>
+                        </div>
+                        <div class="pi-specs__item">
+                            <dt>[Spec Label]</dt>
+                            <dd>[Spec Value]</dd>
+                        </div>
+                    </dl>
                 </div>
-                <h3>Fixed Camera Station</h3>
-                <p>Stationary monitoring solution with enhanced processing power for multi-camera deployments.</p>
-            </a>
-            
-            <a href="#" class="integration-card">
-                <div class="integration-card__icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                    </svg>
+            </div>
+            <div class="pi-specs__column">
+                <div class="pi-specs__group">
+                    <h3 class="pi-specs__group-title">[Category 3]</h3>
+                    <dl class="pi-specs__list">
+                        <div class="pi-specs__item">
+                            <dt>[Spec Label]</dt>
+                            <dd>[Spec Value]</dd>
+                        </div>
+                        <div class="pi-specs__item">
+                            <dt>[Spec Label]</dt>
+                            <dd>[Spec Value]</dd>
+                        </div>
+                        <div class="pi-specs__item">
+                            <dt>[Spec Label]</dt>
+                            <dd>[Spec Value]</dd>
+                        </div>
+                    </dl>
                 </div>
-                <h3>Mobile Field Unit</h3>
-                <p>Portable handheld device with integrated display for on-the-go situational awareness.</p>
-            </a>
+                <div class="pi-specs__group">
+                    <h3 class="pi-specs__group-title">[Category 4]</h3>
+                    <dl class="pi-specs__list">
+                        <div class="pi-specs__item">
+                            <dt>[Spec Label]</dt>
+                            <dd>[Spec Value]</dd>
+                        </div>
+                        <div class="pi-specs__item">
+                            <dt>[Spec Label]</dt>
+                            <dd>[Spec Value]</dd>
+                        </div>
+                        <div class="pi-specs__item">
+                            <dt>[Spec Label]</dt>
+                            <dd>[Spec Value]</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="pi-specs__cta">
+            <button class="pi-specs__button">[CTA Button Text]</button>
         </div>
     </div>
 </section>
