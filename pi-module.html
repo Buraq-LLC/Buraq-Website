@@ -205,5 +205,28 @@ content="Learn how to integrate the Buraq AI Raspberry Pi module for edge AI pro
 </footer>
 
 <script type="module" src="main.js"></script>
+<script>
+// Check if hero animation has already played in this session
+if (sessionStorage.getItem('marqabHeroPlayed')) {
+    // Skip animation - show final state immediately
+    document.querySelector('.pi-hero__title-final').style.animation = 'none';
+    document.querySelector('.pi-hero__title-final').style.opacity = '1';
+    document.querySelector('.pi-hero__subtitle').style.animation = 'none';
+    document.querySelector('.pi-hero__subtitle').style.opacity = '1';
+    document.querySelectorAll('.pi-hero__product').forEach(product => {
+        product.style.animation = 'none';
+        if (product.classList.contains('pi-hero__product--left')) {
+            product.style.transform = 'translateY(80px)';
+        } else {
+            product.style.transform = 'translateY(-80px)';
+        }
+        product.style.opacity = '1';
+        product.style.filter = 'drop-shadow(0 0 40px rgba(59, 130, 246, 0.6)) drop-shadow(0 0 80px rgba(59, 130, 246, 0.4)) drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5))';
+    });
+} else {
+    // Mark animation as played for this session
+    sessionStorage.setItem('marqabHeroPlayed', 'true');
+}
+</script>
 </body>
 </html>

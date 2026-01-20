@@ -5151,32 +5151,39 @@ section {
 
 .pi-hero__product {
   position: absolute;
-  width: 45%;
-  max-width: 450px;
+  width: 55%;
+  max-width: 550px;
   height: auto;
   opacity: 0;
   filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
 }
 
 .pi-hero__product--left {
-  animation: explodeDown 2.5s ease-out 2s forwards;
+  animation: explodeDown 3.5s ease-out forwards;
 }
 
 .pi-hero__product--right {
-  animation: explodeUp 2.5s ease-out 2s forwards;
+  animation: explodeUp 3.5s ease-out forwards;
 }
 
 @keyframes explodeUp {
   0% {
     opacity: 0;
     transform: translateY(0) rotate(0deg);
+    filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
   }
-  20% {
+  15% {
     opacity: 1;
+  }
+  71% {
+    opacity: 1;
+    transform: translateY(-80px) rotate(0deg);
+    filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
   }
   100% {
     opacity: 1;
     transform: translateY(-80px) rotate(0deg);
+    filter: drop-shadow(0 0 40px rgba(59, 130, 246, 0.6)) drop-shadow(0 0 80px rgba(59, 130, 246, 0.4)) drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
   }
 }
 
@@ -5184,13 +5191,20 @@ section {
   0% {
     opacity: 0;
     transform: translateY(0) rotate(0deg);
+    filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
   }
-  20% {
+  15% {
     opacity: 1;
+  }
+  71% {
+    opacity: 1;
+    transform: translateY(80px) rotate(0deg);
+    filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
   }
   100% {
     opacity: 1;
     transform: translateY(80px) rotate(0deg);
+    filter: drop-shadow(0 0 40px rgba(59, 130, 246, 0.6)) drop-shadow(0 0 80px rgba(59, 130, 246, 0.4)) drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
   }
 }
 
@@ -5208,7 +5222,7 @@ section {
     0 0 36px rgba(59, 130, 246, 0.2),
     0 0 48px rgba(59, 130, 246, 0.1);
   opacity: 0;
-  animation: fadeInMarqab 1s ease-out 1s forwards;
+  animation: fadeInMarqab 1s ease-out 2.5s forwards;
 }
 
 @keyframes fadeInMarqab {
@@ -5244,7 +5258,7 @@ section {
   margin-bottom: 2rem;
   line-height: 1.7;
   opacity: 0;
-  animation: fadeInSubtitle 1s ease-out 2.5s forwards;
+  animation: fadeInSubtitle 1s ease-out 3.5s forwards;
 }
 
 @keyframes fadeInSubtitle {
