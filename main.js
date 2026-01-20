@@ -690,22 +690,29 @@
 
       if (newState === 'center') {
         this.header.classList.add('threats__header--center');
+        if (this.description) {
+          this.description.classList.remove('is-hidden');
+        }
       } else if (newState === 'top') {
         this.header.classList.add('threats__header--top');
+        if (this.description) {
+          this.description.classList.remove('is-hidden');
+        }
       } else if (newState === 'free') {
         this.header.classList.add('threats__header--free');
+        if (this.description) {
+          this.description.classList.add('is-hidden');
+        }
       }
     }
 
     setColorState(isRed) {
-      if (!this.title || !this.description) return;
+      if (!this.title) return;
 
       if (isRed) {
         this.title.classList.add('is-red');
-        this.description.classList.add('is-hidden');
       } else {
         this.title.classList.remove('is-red');
-        this.description.classList.remove('is-hidden');
       }
     }
   }
