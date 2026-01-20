@@ -456,8 +456,9 @@ body:has(.hero__intro-animation) .site-nav.visible {
 
 .site-nav__cta {
   padding: 0.5rem 1.5rem;
-  background: var(--accent-gradient);
+  background: transparent;
   color: white;
+  border: 2px solid white;
   border-radius: 8px;
   font-weight: 600;
   transition: all 0.3s ease;
@@ -465,8 +466,9 @@ body:has(.hero__intro-animation) .site-nav.visible {
 
 .site-nav__cta:hover {
   color: white !important;
+  background: rgba(255, 255, 255, 0.1);
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
 }
 
 .site-nav__toggle {
