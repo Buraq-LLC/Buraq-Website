@@ -5117,10 +5117,10 @@ section {
 
 /* Final state - normal page layout */
 .pi-hero__final {
-  max-width: 1200px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 2rem 2rem 3rem;
   text-align: center;
+  padding: 10rem 2rem 8rem;
   opacity: 1;
   position: relative;
   min-height: 100vh;
@@ -5128,7 +5128,6 @@ section {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transform: translateY(4rem);
   z-index: 1;
 }
 
@@ -5211,18 +5210,13 @@ section {
 }
 
 .pi-hero__title-final {
-  font-size: clamp(4.5rem, 12vw, 9rem);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 700;
-  line-height: 1.05;
-  color: #3b82f6;
-  letter-spacing: -0.04em;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.85);
   margin-bottom: 1rem;
-  transform: translateY(-6rem);
-  text-shadow: 
-    0 0 12px rgba(59, 130, 246, 0.6),
-    0 0 24px rgba(59, 130, 246, 0.4),
-    0 0 36px rgba(59, 130, 246, 0.2),
-    0 0 48px rgba(59, 130, 246, 0.1);
+  text-transform: uppercase;
   opacity: 0;
   animation: fadeInMarqab 1s ease-out 2.5s forwards;
 }
@@ -5253,12 +5247,12 @@ section {
 
 .pi-hero__subtitle {
   font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 300;
-  color: #ffffff;
-  margin-top: -5rem;
-  margin-bottom: 2rem;
   line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 700px;
+  margin: 0 auto 2rem;
   opacity: 0;
   animation: fadeInSubtitle 1s ease-out 3.5s forwards;
 }
