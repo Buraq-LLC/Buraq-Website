@@ -5166,7 +5166,7 @@ section {
   max-width: 900px;
   margin: 0 auto;
   text-align: center;
-  padding: 10rem 2rem 8rem;
+  padding: 2rem 2rem 1rem;
   opacity: 1;
   position: relative;
   min-height: 100vh;
@@ -5193,7 +5193,7 @@ section {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transform: translateY(-8rem);
+  transform: translateY(-4rem);
 }
 
 .pi-hero__product {
@@ -5206,11 +5206,11 @@ section {
 }
 
 .pi-hero__product--left {
-  animation: explodeDown 3.5s ease-out forwards;
+  animation: explodeDown 2s ease-out forwards;
 }
 
 .pi-hero__product--right {
-  animation: explodeUp 3.5s ease-out forwards;
+  animation: explodeUp 2s ease-out forwards;
 }
 
 @keyframes explodeUp {
@@ -5264,7 +5264,7 @@ section {
   margin-bottom: 1rem;
   text-transform: uppercase;
   opacity: 0;
-  animation: fadeInMarqab 1s ease-out 2.5s forwards;
+  animation: fadeInMarqab 0.6s ease-out 1s forwards;
 }
 
 @keyframes fadeInMarqab {
@@ -5300,7 +5300,7 @@ section {
   max-width: 700px;
   margin: 0 auto 2rem;
   opacity: 0;
-  animation: fadeInSubtitle 1s ease-out 3.5s forwards;
+  animation: fadeInSubtitle 0.6s ease-out 1.3s forwards;
 }
 
 @keyframes fadeInSubtitle {
@@ -5342,8 +5342,8 @@ section {
 
 /* Split Layout Section - Image Left, Content Right */
 .pi-split-section {
-  background: var(--bg-secondary);
-  padding: 8rem 0;
+  background: #000;
+  padding: 10rem 0;
 }
 
 .pi-split-section__layout {
@@ -5356,7 +5356,7 @@ section {
 }
 
 .pi-split-section__visual {
-  border-radius: 24px;
+  border-radius: 12px;
   overflow: hidden;
 }
 
@@ -5364,42 +5364,40 @@ section {
   width: 100%;
   height: 500px;
   background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.3);
-  transition: all 0.3s ease;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-}
-
-.pi-split-section__image-placeholder:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(59, 130, 246, 0.3);
-  transform: translateY(-10px);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
 }
 
 .pi-split-section__content {
-  padding-left: 2rem;
+  padding-left: 0;
+}
+
+.pi-split-section__content .section-eyebrow {
+  font-size: 1.0625rem;
+  margin-bottom: 1.5rem;
 }
 
 .pi-split-section__headline {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
   font-weight: 600;
   line-height: 1.1;
-  color: var(--text-primary);
-  margin: 1rem 0 1.5rem;
+  color: #fff;
+  margin: 0 0 1.5rem 0;
+  letter-spacing: -0.02em;
 }
 
 .pi-split-section__description {
-  font-size: 1.125rem;
-  line-height: 1.7;
-  color: var(--text-secondary);
-  margin-bottom: 3rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 2.5rem;
+  font-weight: 400;
 }
 
 .pi-split-section__features {
@@ -5411,53 +5409,115 @@ section {
 .pi-split-section__feature-item {
   display: flex;
   align-items: flex-start;
-  gap: 1.25rem;
-  padding: 1.5rem;
-  background: var(--bg-primary);
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  transition: all 0.3s ease;
-}
-
-.pi-split-section__feature-item:hover {
-  background: rgba(59, 130, 246, 0.03);
-  border-color: rgba(59, 130, 246, 0.2);
-  transform: translateX(4px);
+  gap: 1rem;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  border: none;
 }
 
 .pi-split-section__feature-icon {
-  flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 197, 253, 0.1));
-  border-radius: 12px;
-  color: var(--accent);
-}
-
-.pi-split-section__feature-icon svg {
-  width: 24px;
-  height: 24px;
+  display: none;
 }
 
 .pi-split-section__feature-text {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--text-primary);
-  font-weight: 500;
-  padding-top: 0.75rem;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 400;
+  padding-top: 0;
 }
 
 /* Centered Stacked Section */
 .pi-stacked-section {
-  background: var(--bg-primary);
-  padding: 8rem 0;
+  background: #000;
+  padding: 10rem 0;
 }
 
 .pi-stacked-section__content {
   max-width: 900px;
+  margin: 0 auto 4rem;
+  text-align: center;
+}
+
+.pi-stacked-section__content .section-eyebrow {
+  font-size: 1.0625rem;
+  margin-bottom: 1.5rem;
+}
+
+.pi-stacked-section__headline {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 600;
+  line-height: 1.05;
+  color: #fff;
+  margin: 0.5rem 0 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.pi-stacked-section__description {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 5rem;
+  font-weight: 400;
+}
+
+.pi-stacked-section__image-container {
+  max-width: 1400px;
+  margin: 0 auto 5rem;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.pi-stacked-section__image-placeholder {
+  width: 100%;
+  height: 600px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.pi-stacked-section__specs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.pi-stacked-section__spec-item {
+  padding: 3rem 2.5rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  text-align: left;
+  background: transparent;
+}
+
+.pi-stacked-section__spec-item:last-child {
+  border-right: none;
+}
+
+.pi-stacked-section__spec-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.pi-stacked-section__spec-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.3;
+}
   margin: 0 auto;
   text-align: center;
   margin-bottom: 4rem;
