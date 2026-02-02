@@ -23,38 +23,40 @@ name="description"
 content="Buraq AI: The first secure, AI-driven platform for advanced situational awareness, operational intelligence, and decision support to facilitate humanitarian operations in conflict zones." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<!-- Fonts: Inter (UI) + JetBrains Mono (Code/Data) -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-logo.png" />
 <link rel="stylesheet" href="styles.css" />
-<link rel="preconnect" href="https://www.gstatic.com" />
-<link rel="preconnect" href="https://www.google.com" />
 </head>
 <body>
-<div class="scroll-progress" aria-hidden="true"><span></span></div>
 
+<div class="noise-overlay"></div>
+<div class="cursor-dot" data-cursor-dot></div>
+<div class="cursor-outline" data-cursor-outline></div>
+
+<!-- NAVIGATION (Buraq HTML Structure, Aether Styling) -->
 <header class="site-nav" data-fixed>
 <div class="site-nav__inner">
-<a class="site-nav__brand" href="#hero" aria-label="Buraq AI home">
-<span class="site-nav__mark">
-<img src="assets/buraq-horse.png" alt="Buraq logo" width="40" height="40" />
-</span>
-<span class="site-nav__wordmark">Buraq AI</span>
+<a class="site-nav__brand hover-trigger" href="#hero" aria-label="Buraq AI home">
+    <span class="site-nav__mark">
+    <img src="assets/buraq-horse.png" alt="Buraq logo" width="40" height="40" />
+    </span>
+    <span class="site-nav__wordmark">Buraq AI</span>
 </a>
 <nav class="site-nav__links" aria-label="Main">
-<a href="#mission">Overview</a>
-<a href="#mission">Mission</a>
-<a href="#intelligence">Features</a>
-<a href="#extensions">Threats</a>
-<a href="#developers">Ethics</a>
-<a href="#contact">Contact</a>
+    <a href="#mission" class="hover-trigger">Overview</a>
+    <a href="#mission" class="hover-trigger">Mission</a>
+    <a href="#intelligence" class="hover-trigger">Features</a>
+    <a href="#extensions" class="hover-trigger">Threats</a>
+    <a href="#developers" class="hover-trigger">Ethics</a>
+    <a href="#contact" class="hover-trigger">Contact</a>
 </nav>
 <div class="site-nav__actions">
-<a class="site-nav__ghost" href="pi-module.html">Buraq Edge</a>
-<a class="site-nav__cta" href="#contact">Contact Us</a>
-<button class="site-nav__toggle" type="button" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
-<span></span>
-</button>
+    <a class="site-nav__ghost hover-trigger" href="pi-module.html">Buraq Edge</a>
+    <a class="site-nav__cta hover-trigger" href="#contact">Contact Us</a>
+    <button class="site-nav__toggle hover-trigger" type="button" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span></span>
+    </button>
 </div>
 </div>
 <nav id="mobileMenu" class="mobile-menu" aria-hidden="true">
@@ -69,475 +71,490 @@ content="Buraq AI: The first secure, AI-driven platform for advanced situational
 </nav>
 </header>
 
+<!-- HERO (Aether Grid/Raycast Typewriter + Buraq Content) -->
 <section class="hero" id="hero">
-<!-- Initial animation that plays first -->
+<!-- Aether Grid Background -->
+<div class="grid-bg"></div>
+
+<!-- Buraq Video (Blended) -->
 <video class="hero__intro-animation" autoplay muted playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback noplaybackrate" disableremoteplayback style="pointer-events: none;">
     <source src="assets/buraq-animation.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
 
-<!-- Hero content that appears after animation -->
 <div class="hero__container">
-    <div class="hero__content">
-        <div class="hero__supertitle">BURAQ AI</div>
-        <h1 class="hero__title"><span class="hero__title-highlight">AI-Powered Platform for Humanitarian Operations</span></h1>
-        
-        <p class="hero__description animate-on-scroll fade-in-up delay-200">
-            A next-generation platform built for protecting civilians, enforcing humanitarian operations, and prosecuting abusers.
-        </p>
-        
-        <div class="hero__cta-group animate-on-scroll fade-in-up delay-300">
-            <a class="btn btn--hero-primary" href="#contact">
-                Contact Us
-            </a>
-            <a class="btn btn--hero-ghost" href="#mission">
-                Learn More
-            </a>
-        </div>
-        
-        <div class="hero__features animate-on-scroll fade-in-up delay-400">
-            <div class="hero__feature-item">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-                <span>Global Coverage</span>
-            </div>
-            <div class="hero__feature-item">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-                <span>&lt;100ms Response</span>
-            </div>
-            <div class="hero__feature-item">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span>99.9% Uptime</span>
-            </div>
-            <div class="hero__feature-item">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-                <span>256-bit Encryption</span>
-            </div>
-            <div class="hero__feature-item">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span>24/7 Support</span>
-            </div>
+    <!-- Buraq Supertitle -->
+    <div class="hero__supertitle">BURAQ AI</div>
+    
+    <!-- Buraq Title -->
+    <h1 class="hero__title"><span class="hero__title-highlight">AI-Powered Platform for Humanitarian Operations</span></h1>
+    
+    <!-- Buraq Description -->
+    <p class="hero__description animate-on-scroll fade-in-up delay-200">
+        A next-generation platform built for protecting civilians, enforcing humanitarian operations, and prosecuting abusers.
+    </p>
+    
+    <!-- Aether / Raycast Typewriter Command Bar -->
+    <div class="command-bar hover-trigger">
+        <span class="kb-shortcut">⌘K</span>
+        <div class="typewriter">
+            <span id="typewriter-text"></span><span class="cursor-blink"></span>
         </div>
     </div>
     
-
+    <!-- Buraq CTAs -->
+    <div class="hero__cta-group animate-on-scroll fade-in-up delay-300">
+    <a class="btn btn--hero-primary hover-trigger" href="#contact">
+        Contact Us
+    </a>
+    <a class="btn btn--hero-ghost hover-trigger" href="#mission">
+        Learn More
+    </a>
+    </div>
+    
+    <!-- Buraq Features List -->
+    <div class="hero__features animate-on-scroll fade-in-up delay-400">
+    <div class="hero__feature-item hover-trigger">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+        <span>Global Coverage</span>
+    </div>
+    <div class="hero__feature-item hover-trigger">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+        <span>&lt;100ms Response</span>
+    </div>
+    <div class="hero__feature-item hover-trigger">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>99.9% Uptime</span>
+    </div>
+    <div class="hero__feature-item hover-trigger">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+        <span>256-bit Encryption</span>
+    </div>
+    <div class="hero__feature-item hover-trigger">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>24/7 Support</span>
+    </div>
+    </div>
 </div>
 </section>
 
-<!-- Mission/Why Buraq Section - Centered Full Width -->
+<!-- Mission Section (Bento Grid Style) -->
 <section class="mission" id="mission">
-    <div class="container">
-        <div class="mission__content">
-            <span class="section-eyebrow animate-on-scroll blur-in">Why Buraq?</span>
-            <h2 class="mission__title animate-on-scroll slide-up-scale delay-100">Purpose-built for protection.</h2>
-            <p class="mission__description animate-on-scroll fade-in-up delay-200">
-                Buraq AI was created to protect civilians and uphold human rights in the world's most challenging environments. This includes environments of asymmetric warfare, where traditional surveillance methods fall short. Our mission is to empower humanitarian operations and international justice with advanced, transparent, and ethical intelligence technology.
-            </p>
-            <div class="mission__features">
-                <div class="mission__feature-card animate-on-scroll scale-in stagger-1">
-                    <div class="mission__feature-number">01</div>
-                    <h4>Engineered to protect vulnerable populations and enable humanitarian response in crisis zones.</h4>
-                </div>
-                <div class="mission__feature-card animate-on-scroll scale-in stagger-2">
-                    <div class="mission__feature-number">02</div>
-                    <h4>Delivers verifiable, tamper-proof records for full transparency and legal accountability.</h4>
-                </div>
-                <div class="mission__feature-card animate-on-scroll scale-in stagger-3">
-                    <div class="mission__feature-number">03</div>
-                    <h4>Empowers teams with fast, responsible intelligence for complex operational decisions.</h4>
-                </div>
-                <div class="mission__feature-card animate-on-scroll scale-in stagger-4">
-                    <div class="mission__feature-number">04</div>
-                    <h4>Built to defend against information suppression and safeguard mission-critical data worldwide.</h4>
-                </div>
-            </div>
+<div class="container">
+    <div class="mission__content">
+    <span class="section-eyebrow animate-on-scroll blur-in">Why Buraq?</span>
+    <h2 class="mission__title animate-on-scroll slide-up-scale delay-100">Purpose-built for protection.</h2>
+    <p class="mission__description animate-on-scroll fade-in-up delay-200">
+        Buraq AI was created to protect civilians and uphold human rights in the world's most challenging environments. This includes environments of asymmetric warfare, where traditional surveillance methods fall short. Our mission is to empower humanitarian operations and international justice with advanced, transparent, and ethical intelligence technology.
+    </p>
+    <div class="mission__features">
+        <div class="mission__feature-card animate-on-scroll scale-in stagger-1 hover-trigger">
+        <div class="mission__feature-number">01</div>
+        <h4>Engineered to protect vulnerable populations and enable humanitarian response in crisis zones.</h4>
+        </div>
+        <div class="mission__feature-card animate-on-scroll scale-in stagger-2 hover-trigger">
+        <div class="mission__feature-number">02</div>
+        <h4>Delivers verifiable, tamper-proof records for full transparency and legal accountability.</h4>
+        </div>
+        <div class="mission__feature-card animate-on-scroll scale-in stagger-3 hover-trigger">
+        <div class="mission__feature-number">03</div>
+        <h4>Empowers teams with fast, responsible intelligence for complex operational decisions.</h4>
+        </div>
+        <div class="mission__feature-card animate-on-scroll scale-in stagger-4 hover-trigger">
+        <div class="mission__feature-number">04</div>
+        <h4>Built to defend against information suppression and safeguard mission-critical data worldwide.</h4>
         </div>
     </div>
+    </div>
+</div>
 </section>
 
 <!-- Unified Operations - Immersive Full Bleed -->
 <section class="feature-immersive" id="unified-operations">
-    <div class="feature-immersive__bg">
-        <video src="assets/demo1.mp4" autoplay loop muted playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback noplaybackrate" disableremoteplayback style="pointer-events: none;"></video>
-    </div>
-    <div class="feature-immersive__content animate-on-scroll blur-in delay-200">
-        <span class="section-eyebrow">Unified Operations</span>
-        <h2 class="feature-immersive__title">Mission control for ethical action.</h2>
-        <p class="feature-immersive__description">
-            Buraq AI unifies intelligence, planning, and response in a single platform designed for humanitarian impact. Empower your team with real-time situational awareness, collaborative tools, and advanced analytics—enabling fast, ethical decisions that protect lives and uphold international standards in the world’s most complex environments.
-        </p>
-    </div>
+<div class="feature-immersive__bg">
+    <video src="assets/demo1.mp4" autoplay loop muted playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback noplaybackrate" disableremoteplayback style="pointer-events: none;"></video>
+</div>
+<div class="feature-immersive__content animate-on-scroll blur-in delay-200">
+    <span class="section-eyebrow">Unified Operations</span>
+    <h2 class="feature-immersive__title">Mission control for ethical action.</h2>
+    <p class="feature-immersive__description">
+    Buraq AI unifies intelligence, planning, and response in a single platform designed for humanitarian impact. Empower your team with real-time situational awareness, collaborative tools, and advanced analytics—enabling fast, ethical decisions that protect lives and uphold international standards in the world’s most complex environments.
+    </p>
+</div>
 </section>
 
-<!-- Real-Time Monitoring - Split Layout -->
+<!-- Real-Time Monitoring - Split Layout (Light Mode) -->
 <section class="feature-compact" id="monitoring">
-    <div class="container">
-        <div class="feature-compact__split">
-            <div class="feature-compact__content">
-                <span class="section-eyebrow animate-on-scroll blur-in">Real-Time Monitoring</span>
-                <h3 class="feature-compact__title animate-on-scroll fade-in-right delay-100">Total awareness. Instant response.</h3>
-                <p class="feature-compact__body animate-on-scroll fade-in-right delay-200">
-                    Maintain a live operational picture and act on critical events as they unfold. Buraq AI delivers the clarity and speed needed to safeguard lives and drive mission success.
-                </p>
-                <div class="feature-compact__features">
-                    <div class="feature-compact__feature-item animate-on-scroll fade-in-right stagger-1">
-                        <span class="feature-compact__feature-text">Live situational feeds for rapid action</span>
-                    </div>
-                    <div class="feature-compact__feature-item animate-on-scroll fade-in-right stagger-2">
-                        <span class="feature-compact__feature-text">Automated alerts for threats and incidents</span>
-                    </div>
-                    <div class="feature-compact__feature-item animate-on-scroll fade-in-right stagger-3">
-                        <span class="feature-compact__feature-text">Seamless, secure data sharing across teams</span>
-                    </div>
-                </div>
-            </div>
-            <div class="feature-compact__visual animate-on-scroll slide-in-right delay-300">
-                <img src="assets/image5.png" alt="Real-time monitoring interface" />
-            </div>
+<div class="container">
+    <div class="feature-compact__split">
+    <div class="feature-compact__content">
+        <span class="section-eyebrow animate-on-scroll blur-in">Real-Time Monitoring</span>
+        <h3 class="feature-compact__title animate-on-scroll fade-in-right delay-100">Total awareness. Instant response.</h3>
+        <p class="feature-compact__body animate-on-scroll fade-in-right delay-200">
+        Maintain a live operational picture and act on critical events as they unfold. Buraq AI delivers the clarity and speed needed to safeguard lives and drive mission success.
+        </p>
+        <div class="feature-compact__features">
+        <div class="feature-compact__feature-item animate-on-scroll fade-in-right stagger-1">
+            <span class="feature-compact__feature-text">> Live situational feeds for rapid action</span>
+        </div>
+        <div class="feature-compact__feature-item animate-on-scroll fade-in-right stagger-2">
+            <span class="feature-compact__feature-text">> Automated alerts for threats and incidents</span>
+        </div>
+        <div class="feature-compact__feature-item animate-on-scroll fade-in-right stagger-3">
+            <span class="feature-compact__feature-text">> Seamless, secure data sharing across teams</span>
+        </div>
         </div>
     </div>
+    <div class="feature-compact__visual animate-on-scroll slide-in-right delay-300">
+        <img src="assets/image5.png" alt="Real-time monitoring interface" />
+    </div>
+    </div>
+</div>
 </section>
 
-<!-- Automated Detection - Centered Image with Floating Features -->
+<!-- Automated Detection - Centered Image (Dark Mode) -->
 <section class="feature-stacked" id="detection">
-    <div class="container">
-        <div class="feature-stacked__header">
-            <span class="section-eyebrow animate-on-scroll blur-in">Automated Detection</span>
-            <h2 class="feature-stacked__title animate-on-scroll slide-up-scale delay-100">Intelligence that never sleeps.</h2>
-        </div>
+<div class="container">
+    <div class="feature-stacked__header">
+    <span class="section-eyebrow animate-on-scroll blur-in">Automated Detection</span>
+    <h2 class="feature-stacked__title animate-on-scroll slide-up-scale delay-100">Intelligence that never sleeps.</h2>
+    </div>
+    
+    <div class="feature-stacked__showcase">
+    <div class="feature-stacked__image-container animate-on-scroll fade-in delay-200">
+        <img src="assets/image4.png" alt="Automated detection system" />
+    </div>
+    
+    <div class="feature-stacked__content">
+        <p class="feature-stacked__lead">Uncover hidden connections and critical threats in real time. Buraq AI harnesses advanced graph analytics to reveal complex relationships and spotlight urgent risks, empowering teams to respond with confidence in any environment.</p>
         
-        <div class="feature-stacked__showcase">
-            <div class="feature-stacked__image-container animate-on-scroll fade-in delay-200">
-                <img src="assets/image4.png" alt="Automated detection system" />
-            </div>
-            
-            <div class="feature-stacked__content">
-                <p class="feature-stacked__lead">Uncover hidden connections and critical threats in real time. Buraq AI harnesses advanced graph analytics to reveal complex relationships and spotlight urgent risks, empowering teams to respond with confidence in any environment.</p>
-                
-                <div class="feature-stacked__items">
-                    <div class="feature-item animate-on-scroll fade-in-up stagger-1">
-                        <span class="feature-item__text">Entity mapping and relationship tracking</span>
-                    </div>
-                    <div class="feature-item animate-on-scroll fade-in-up stagger-2">
-                        <span class="feature-item__text">Priority risk visualization and threat scoring</span>
-                    </div>
-                    <div class="feature-item animate-on-scroll fade-in-up stagger-3">
-                        <span class="feature-item__text">Adaptive pattern detection and anomaly alerts</span>
-                    </div>
-                </div>
-            </div>
+        <div class="feature-stacked__items">
+        <div class="feature-item animate-on-scroll fade-in-up stagger-1">
+            <span class="feature-item__text">Entity mapping and relationship tracking</span>
+        </div>
+        <div class="feature-item animate-on-scroll fade-in-up stagger-2">
+            <span class="feature-item__text">Priority risk visualization and threat scoring</span>
+        </div>
+        <div class="feature-item animate-on-scroll fade-in-up stagger-3">
+            <span class="feature-item__text">Adaptive pattern detection and anomaly alerts</span>
+        </div>
         </div>
     </div>
+    </div>
+</div>
 </section>
 
-<!-- Evidence Management - Alternating Cards -->
+<!-- Evidence Management - Alternating Cards (Dark Mode) -->
 <section class="feature-asymmetric" id="evidence">
-    <div class="container">
-        <div class="feature-asymmetric__header">
-            <span class="section-eyebrow animate-on-scroll blur-in">Evidence Management</span>
-            <h2 class="feature-asymmetric__title animate-on-scroll fade-in-up delay-100">Documentation you can trust.</h2>
+<div class="container">
+    <div class="feature-asymmetric__header">
+    <span class="section-eyebrow animate-on-scroll blur-in">Evidence Management</span>
+    <h2 class="feature-asymmetric__title animate-on-scroll fade-in-up delay-100">Documentation you can trust.</h2>
+    </div>
+    
+    <div class="feature-asymmetric__layout">
+    <div class="evidence-main-visual animate-on-scroll slide-in-left delay-200">
+        <img src="assets/image2.png" alt="Evidence management system" />
+    </div>
+    
+    <div class="evidence-features-list">
+        <div class="evidence-feature-item animate-on-scroll fade-in-right stagger-1 hover-trigger">
+        <div class="evidence-feature-item__number">01</div>
+        <div class="evidence-feature-item__content">
+            <h3>Secure Storage</h3>
+            <p>Maintain secure and reliable records of important events with encrypted capture and storage of records, supporting transparency and accountability.</p>
+        </div>
         </div>
         
-        <div class="feature-asymmetric__layout">
-            <div class="evidence-main-visual animate-on-scroll slide-in-left delay-200">
-                <img src="assets/image2.png" alt="Evidence management system" />
-            </div>
-            
-            <div class="evidence-features-list">
-                <div class="evidence-feature-item animate-on-scroll fade-in-right stagger-1">
-                    <div class="evidence-feature-item__number">01</div>
-                    <div class="evidence-feature-item__content">
-                        <h3>Secure Storage</h3>
-                        <p>Maintain secure and reliable records of important events with encrypted capture and storage of records, supporting transparency and accountability.</p>
-                    </div>
-                </div>
-                
-                <div class="evidence-feature-item animate-on-scroll fade-in-right stagger-2">
-                    <div class="evidence-feature-item__number">02</div>
-                    <div class="evidence-feature-item__content">
-                        <h3>Chronological Verification</h3>
-                        <p>Every record is time-stamped with cryptographic verification, ensuring chronological documentation that stands up to legal scrutiny.</p>
-                    </div>
-                </div>
-                
-                <div class="evidence-feature-item animate-on-scroll fade-in-right stagger-3">
-                    <div class="evidence-feature-item__number">03</div>
-                    <div class="evidence-feature-item__content">
-                        <h3>Export Ready</h3>
-                        <p>Automated export in standard formats for seamless integration with international justice systems and legal frameworks.</p>
-                    </div>
-                </div>
-            </div>
+        <div class="evidence-feature-item animate-on-scroll fade-in-right stagger-2 hover-trigger">
+        <div class="evidence-feature-item__number">02</div>
+        <div class="evidence-feature-item__content">
+            <h3>Chronological Verification</h3>
+            <p>Every record is time-stamped with cryptographic verification, ensuring chronological documentation that stands up to legal scrutiny.</p>
+        </div>
+        </div>
+        
+        <div class="evidence-feature-item animate-on-scroll fade-in-right stagger-3 hover-trigger">
+        <div class="evidence-feature-item__number">03</div>
+        <div class="evidence-feature-item__content">
+            <h3>Export Ready</h3>
+            <p>Automated export in standard formats for seamless integration with international justice systems and legal frameworks.</p>
+        </div>
         </div>
     </div>
+    </div>
+</div>
 </section>
 
-<!-- Data Intelligence - Overlapping Panels -->
+<!-- Data Intelligence - Overlapping Panels (Light Mode) -->
 <section class="feature-showcase" id="intelligence">
-    <div class="container">
-        <div class="feature-showcase__layout">
-            <div class="feature-showcase__content">
-                <span class="section-eyebrow animate-on-scroll blur-in">Data Intelligence</span>
-                <h2 class="feature-showcase__title animate-on-scroll fade-in-up delay-100">Insights that move you forward.</h2>
-                <p class="feature-showcase__description animate-on-scroll fade-in-up delay-200">Analyze diverse data sources to provide early insights and support proactive decision-making.</p>
-                
-                <div class="intelligence-features">
-                    <div class="intelligence-feature animate-on-scroll slide-in-right stagger-1">
-                        <div class="intelligence-feature__header">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                            <h3>Automated Analysis</h3>
-                        </div>
-                        <p>Uncover actionable insights instantly</p>
-                    </div>
-                    
-                    <div class="intelligence-feature animate-on-scroll slide-in-right stagger-2">
-                        <div class="intelligence-feature__header">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                            </svg>
-                            <h3>Multi-Source Correlation</h3>
-                        </div>
-                        <p>Connect information for complete picture</p>
-                    </div>
-                    
-                    <div class="intelligence-feature animate-on-scroll slide-in-right stagger-3">
-                        <div class="intelligence-feature__header">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                            </svg>
-                            <h3>Proactive Early-Warning</h3>
-                        </div>
-                        <p>Get timely alerts to anticipate risks</p>
-                    </div>
-                </div>
+<div class="container">
+    <div class="feature-showcase__layout">
+    <div class="feature-showcase__content">
+        <span class="section-eyebrow animate-on-scroll blur-in">Data Intelligence</span>
+        <h2 class="feature-showcase__title animate-on-scroll fade-in-up delay-100">Insights that move you forward.</h2>
+        <p class="feature-showcase__description animate-on-scroll fade-in-up delay-200">Analyze diverse data sources to provide early insights and support proactive decision-making.</p>
+        
+        <div class="intelligence-features">
+        <div class="intelligence-feature animate-on-scroll slide-in-right stagger-1 hover-trigger">
+            <div class="intelligence-feature__header">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <h3>Automated Analysis</h3>
             </div>
-            
-            <div class="feature-showcase__visual animate-on-scroll slide-in-left delay-300">
-                <div class="visual-layers">
-                    <div class="visual-layer visual-layer--back"></div>
-                    <div class="visual-layer visual-layer--main">
-                        <img src="assets/image13.png" alt="Data intelligence dashboard" />
-                    </div>
-                </div>
+            <p>Uncover actionable insights instantly</p>
+        </div>
+        
+        <div class="intelligence-feature animate-on-scroll slide-in-right stagger-2 hover-trigger">
+            <div class="intelligence-feature__header">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+            </svg>
+            <h3>Multi-Source Correlation</h3>
             </div>
+            <p>Connect information for complete picture</p>
+        </div>
+        
+        <div class="intelligence-feature animate-on-scroll slide-in-right stagger-3 hover-trigger">
+            <div class="intelligence-feature__header">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+            <h3>Proactive Early-Warning</h3>
+            </div>
+            <p>Get timely alerts to anticipate risks</p>
+        </div>
         </div>
     </div>
+    
+    <div class="feature-showcase__visual animate-on-scroll slide-in-left delay-300">
+        <div class="visual-layers">
+        <div class="visual-layer visual-layer--main">
+            <img src="assets/image13.png" alt="Data intelligence dashboard" />
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
 </section>
 
-<!-- Threats Section -->
+<!-- Threats Section (Palantir Dossier Style) -->
 <section class="threats" id="extensions">
 <div class="container">
-<header class="threats__header">
-<h2 class="threats__title">
-<span class="threats__title-part threats__title-priority">Priority </span>
-<span class="threats__title-part threats__title-threats">Threats</span>
-<span class="threats__title-part threats__title-to"> to International Peace</span>
-</h2>
-<p class="threats__description">Buraq AI focuses on documenting and analyzing violations by actors who pose significant threats to civilian populations and international security.</p>
-</header>
-<div class="threats__grid">
-<article class="threat-card" data-threat="idf">
-<div class="threat-card__header">
-<h3 class="threat-card__title">Israeli Defense Forces (IDF)</h3>
-<div class="threat-card__meta">
-<span class="meta-item"><strong>Country:</strong> Israel</span>
-<span class="meta-item"><strong>Leadership:</strong> Prime Minister Benjamin Netanyahu</span>
-</div>
-</div>
-<div class="threat-card__content">
-<p class="threat-card__intro">The IDF has been implicated in systematic violations of international humanitarian law, including disproportionate attacks on civilian infrastructure, collective punishment, and obstruction of humanitarian aid in occupied territories.</p>
-<ul class="threat-list">
-<li>Documented attacks on civilian populations in Gaza</li>
-<li>Destruction of critical infrastructure including hospitals and schools</li>
-<li>Blockades preventing humanitarian assistance</li>
-<li>Forced displacement and settlement expansion policies</li>
-</ul>
-</div>
-</article>
+    <header class="threats__header">
+    <h2 class="threats__title">
+        <span class="threats__title-part threats__title-priority">Priority </span>
+        <span class="threats__title-part threats__title-threats">Threats</span>
+        <span class="threats__title-part threats__title-to"> to International Peace</span>
+    </h2>
+    <p class="threats__description">Buraq AI focuses on documenting and analyzing violations by actors who pose significant threats to civilian populations and international security.</p>
+    </header>
+    <div class="threats__grid">
+    <article class="threat-card hover-trigger" data-threat="idf">
+        <div class="threat-card__header">
+        <h3 class="threat-card__title">Israeli Defense Forces (IDF)</h3>
+        <div class="threat-card__meta">
+            <span class="meta-item"><strong>Country:</strong> Israel</span><br>
+            <span class="meta-item"><strong>Leadership:</strong> Prime Minister Benjamin Netanyahu</span>
+        </div>
+        </div>
+        <div class="threat-card__content">
+        <p class="threat-card__intro">The IDF has been implicated in systematic violations of international humanitarian law, including disproportionate attacks on civilian infrastructure, collective punishment, and obstruction of humanitarian aid in occupied territories.</p>
+        <ul class="threat-list">
+            <li>Documented attacks on civilian populations in Gaza</li>
+            <li>Destruction of critical infrastructure including hospitals and schools</li>
+            <li>Blockades preventing humanitarian assistance</li>
+            <li>Forced displacement and settlement expansion policies</li>
+        </ul>
+        </div>
+    </article>
 
-<article class="threat-card" data-threat="rsf">
-<div class="threat-card__header">
-<h3 class="threat-card__title">Rapid Support Forces (RSF)</h3>
-<div class="threat-card__meta">
-<span class="meta-item"><strong>Country:</strong> Sudan</span>
-<span class="meta-item"><strong>Leadership:</strong> General Mohamed Hamdan Dagalo (Hemedti)</span>
-</div>
-</div>
-<div class="threat-card__content">
-<p class="threat-card__intro">The RSF paramilitary group has perpetrated widespread atrocities including ethnic cleansing, sexual violence, and mass displacement of civilian populations in Sudan's ongoing conflict.</p>
-<ul class="threat-list">
-<li>Ethnic cleansing campaigns in Darfur and Khartoum</li>
-<li>Systematic sexual violence as a weapon of war</li>
-<li>Attacks on refugee camps and humanitarian workers</li>
-<li>Blocking access to food, water, and medical supplies</li>
-</ul>
-</div>
-</article>
+    <article class="threat-card hover-trigger" data-threat="rsf">
+        <div class="threat-card__header">
+        <h3 class="threat-card__title">Rapid Support Forces (RSF)</h3>
+        <div class="threat-card__meta">
+            <span class="meta-item"><strong>Country:</strong> Sudan</span><br>
+            <span class="meta-item"><strong>Leadership:</strong> General Mohamed Hamdan Dagalo (Hemedti)</span>
+        </div>
+        </div>
+        <div class="threat-card__content">
+        <p class="threat-card__intro">The RSF paramilitary group has perpetrated widespread atrocities including ethnic cleansing, sexual violence, and mass displacement of civilian populations in Sudan's ongoing conflict.</p>
+        <ul class="threat-list">
+            <li>Ethnic cleansing campaigns in Darfur and Khartoum</li>
+            <li>Systematic sexual violence as a weapon of war</li>
+            <li>Attacks on refugee camps and humanitarian workers</li>
+            <li>Blocking access to food, water, and medical supplies</li>
+        </ul>
+        </div>
+    </article>
 
-<article class="threat-card" data-threat="hindutva">
-<div class="threat-card__header">
-<h3 class="threat-card__title">Hindutva Extremism</h3>
-<div class="threat-card__meta">
-<span class="meta-item"><strong>Country:</strong> India</span>
-<span class="meta-item"><strong>Leadership:</strong> Prime Minister Narendra Modi / BJP Government</span>
-</div>
-</div>
-<div class="threat-card__content">
-<p class="threat-card__intro">Hindutva ideology has fueled systematic persecution of religious minorities, particularly Muslims, through state-sanctioned violence, discriminatory policies, and the erosion of democratic institutions.</p>
-<ul class="threat-list">
-<li>Communal violence and mob lynchings targeting Muslims</li>
-<li>Discriminatory citizenship laws and policies</li>
-<li>Military occupation and human rights violations in Kashmir</li>
-<li>Suppression of dissent and persecution of activists</li>
-</ul>
-</div>
-</article>
-</div>
+    <article class="threat-card hover-trigger" data-threat="hindutva">
+        <div class="threat-card__header">
+        <h3 class="threat-card__title">Hindutva Extremism</h3>
+        <div class="threat-card__meta">
+            <span class="meta-item"><strong>Country:</strong> India</span><br>
+            <span class="meta-item"><strong>Leadership:</strong> Prime Minister Narendra Modi / BJP Government</span>
+        </div>
+        </div>
+        <div class="threat-card__content">
+        <p class="threat-card__intro">Hindutva ideology has fueled systematic persecution of religious minorities, particularly Muslims, through state-sanctioned violence, discriminatory policies, and the erosion of democratic institutions.</p>
+        <ul class="threat-list">
+            <li>Communal violence and mob lynchings targeting Muslims</li>
+            <li>Discriminatory citizenship laws and policies</li>
+            <li>Military occupation and human rights violations in Kashmir</li>
+            <li>Suppression of dissent and persecution of activists</li>
+        </ul>
+        </div>
+    </article>
+    </div>
 </div>
 </section>
 
+<!-- Ethics Section (Clean Light) -->
 <section class="ethics" id="developers">
 <div class="container">
-<header class="animate-on-scroll fade-in-up">
-<h2>Engineered for Responsibility</h2>
-<p>Buraq is engineered for responsible intelligence operations with built-in safeguards and accountability measures.</p>
-</header>
-<div class="ethics__grid">
-<article class="ethics-card animate-on-scroll fade-in-up stagger-1">
-<div class="ethics-card__icon">
-<img src="assets/icons/shield.svg" alt="Shield icon" />
-</div>
-<div class="ethics-card__content">
-<h3>Anti-Authoritarian Safeguards</h3>
-<p>Buraq's architecture prevents centralized misuse—ensuring mission data and AI inferences remain under operator control, not regime authority.</p>
-</div>
-</article>
-<article class="ethics-card animate-on-scroll fade-in-up stagger-2">
-<div class="ethics-card__icon">
-<img src="assets/icons/heart-hands.svg" alt="Humanitarian icon" />
-</div>
-<div class="ethics-card__content">
-<h3>Humanitarian Mission Support</h3>
-<p>Designed for civilian protection, Buraq enables ethical ISR deployments in humanitarian operations and conflict zones.</p>
-</div>
-</article>
-<article class="ethics-card animate-on-scroll fade-in-up stagger-3">
-<div class="ethics-card__icon">
-<img src="assets/icons/eye.svg" alt="Transparency icon" />
-</div>
-<div class="ethics-card__content">
-<h3>Transparent Accountability</h3>
-<p>Every action is logged and auditable, supporting international justice and protecting operators from unlawful orders or coercion.</p>
-</div>
-</article>
-</div>
+    <header class="animate-on-scroll fade-in-up">
+    <h2>Engineered for Responsibility</h2>
+    <p>Buraq is engineered for responsible intelligence operations with built-in safeguards and accountability measures.</p>
+    </header>
+    <div class="ethics__grid">
+    <article class="ethics-card animate-on-scroll fade-in-up stagger-1 hover-trigger">
+        <div class="ethics-card__icon">
+        <img src="assets/icons/shield.svg" alt="Shield icon" />
+        </div>
+        <div class="ethics-card__content">
+        <h3>Anti-Authoritarian Safeguards</h3>
+        <p>Buraq's architecture prevents centralized misuse—ensuring mission data and AI inferences remain under operator control, not regime authority.</p>
+        </div>
+    </article>
+    <article class="ethics-card animate-on-scroll fade-in-up stagger-2 hover-trigger">
+        <div class="ethics-card__icon">
+        <img src="assets/icons/heart-hands.svg" alt="Humanitarian icon" />
+        </div>
+        <div class="ethics-card__content">
+        <h3>Humanitarian Mission Support</h3>
+        <p>Designed for civilian protection, Buraq enables ethical ISR deployments in humanitarian operations and conflict zones.</p>
+        </div>
+    </article>
+    <article class="ethics-card animate-on-scroll fade-in-up stagger-3 hover-trigger">
+        <div class="ethics-card__icon">
+        <img src="assets/icons/eye.svg" alt="Transparency icon" />
+        </div>
+        <div class="ethics-card__content">
+        <h3>Transparent Accountability</h3>
+        <p>Every action is logged and auditable, supporting international justice and protecting operators from unlawful orders or coercion.</p>
+        </div>
+    </article>
+    </div>
 </div>
 </section>
 
+<!-- Contact Section (Dark) -->
 <section class="contact" id="contact">
 <div class="contact__inner">
-<div class="contact__copy animate-on-scroll fade-in-left">
-<h2>Let's talk deployments, partnerships, and access.</h2>
-<p>Share a bit about your mission and we'll coordinate a secure briefing tailored to your needs.</p>
-</div>
-<form id="inqForm" class="contact__form animate-on-scroll fade-in-right" novalidate>
-<div class="contact__fields">
-<label class="contact__field animate-on-scroll fade-in-up stagger-1">
-<span>First name*</span>
-<input type="text" name="firstName" autocomplete="given-name" required />
-</label>
-<label class="contact__field animate-on-scroll fade-in-up stagger-2">
-<span>Last name*</span>
-<input type="text" name="lastName" autocomplete="family-name" required />
-</label>
-<label class="contact__field animate-on-scroll fade-in-up stagger-3">
-<span>Business email*</span>
-<input type="email" name="email" autocomplete="email" required />
-</label>
-<label class="contact__field animate-on-scroll fade-in-up stagger-4">
-<span>Organization*</span>
-<input type="text" name="org" autocomplete="organization" required />
-</label>
-<label class="contact__field animate-on-scroll fade-in-up stagger-5">
-<span>Job title</span>
-<input type="text" name="title" autocomplete="organization-title" />
-</label>
-<label class="contact__field animate-on-scroll fade-in-up stagger-6">
-<span>Country*</span>
-<input type="text" name="country" autocomplete="country-name" required />
-</label>
-<label class="contact__field contact__field--full animate-on-scroll fade-in-up stagger-7">
-<span>Tell us about your operational challenges*</span>
-<textarea name="notes" rows="5" required></textarea>
-</label>
-</div>
-<div class="contact__captcha">
-<div class="g-recaptcha" data-sitekey="6Lf8SLwrAAAAADyqwKLrfs-_4kFu053sjEtz3N6_" data-theme="dark"></div>
-</div>
-<div class="contact__actions">
-<button type="submit" class="btn btn--primary">Submit inquiry</button>
-<p id="formMsg" class="contact__msg" role="status" aria-live="polite"></p>
-</div>
-</form>
+    <div class="contact__copy animate-on-scroll fade-in-left">
+    <h2>Let's talk deployments, partnerships, and access.</h2>
+    <p>Share a bit about your mission and we'll coordinate a secure briefing tailored to your needs.</p>
+    </div>
+    <form id="inqForm" class="contact__form animate-on-scroll fade-in-right" novalidate>
+    <div class="contact__fields">
+        <label class="contact__field animate-on-scroll fade-in-up stagger-1">
+        <span>First name*</span>
+        <input type="text" name="firstName" autocomplete="given-name" required />
+        </label>
+        <label class="contact__field animate-on-scroll fade-in-up stagger-2">
+        <span>Last name*</span>
+        <input type="text" name="lastName" autocomplete="family-name" required />
+        </label>
+        <label class="contact__field animate-on-scroll fade-in-up stagger-3">
+        <span>Business email*</span>
+        <input type="email" name="email" autocomplete="email" required />
+        </label>
+        <label class="contact__field animate-on-scroll fade-in-up stagger-4">
+        <span>Organization*</span>
+        <input type="text" name="org" autocomplete="organization" required />
+        </label>
+        <label class="contact__field animate-on-scroll fade-in-up stagger-5">
+        <span>Job title</span>
+        <input type="text" name="title" autocomplete="organization-title" />
+        </label>
+        <label class="contact__field animate-on-scroll fade-in-up stagger-6">
+        <span>Country*</span>
+        <input type="text" name="country" autocomplete="country-name" required />
+        </label>
+        <label class="contact__field contact__field--full animate-on-scroll fade-in-up stagger-7">
+        <span>Tell us about your operational challenges*</span>
+        <textarea name="notes" rows="5" required></textarea>
+        </label>
+    </div>
+    <div class="contact__captcha">
+        <div class="g-recaptcha" data-sitekey="6LfVEqAqAAAAABKqfY-C0Dcp-nOKvDZzuJQ7_9qk"></div>
+    </div>
+    <div class="contact__actions">
+        <button type="submit" class="btn btn--primary hover-trigger">Submit inquiry</button>
+        <p id="formMsg" class="contact__msg" role="status" aria-live="polite"></p>
+    </div>
+    </form>
 </div>
 </section>
 </main>
 
+<!-- EXACT FOOTER HTML (Styled for theme) -->
 <footer class="site-footer">
 <div class="site-footer__container">
-<div class="site-footer__top">
-<div class="site-footer__brand">
-<img src="assets/buraq-logo.png" alt="Buraq logo" width="40" height="40" />
-<span class="site-footer__wordmark">Buraq AI&trade;</span>
-</div>
-<div class="site-footer__content">
-<div class="site-footer__nav">
-<a href="#features">Features</a>
-<a href="#extensions">Threats</a>
-<a href="#developers">Ethics</a>
-<a href="#spotlight">Mission</a>
-<a href="#contact">Contact</a>
-</div>
-<div class="site-footer__social">
-<a href="https://www.instagram.com/buraqaiofficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-<rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-<line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-</svg>
-</a>
-<a href="https://www.linkedin.com/company/buraq-ai" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-<rect x="2" y="9" width="4" height="12"></rect>
-<circle cx="4" cy="4" r="2"></circle>
-</svg>
-</a>
-<a href="https://twitter.com/buraq_ai" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-<path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
-<path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
-</svg>
-</a>
-</div>
-</div>
-</div>
-<div class="site-footer__bottom">
-<span>© <span data-year></span> Buraq AI Inc. - All rights reserved</span>
-<a href="/terms-of-use">Terms of Use</a>
-<a href="/privacy-policy">Privacy Policy</a>
-</div>
+    <div class="site-footer__top">
+    <div class="site-footer__brand">
+        <img src="assets/buraq-logo.png" alt="Buraq logo" width="40" height="40" />
+        <span class="site-footer__wordmark">Buraq AI&trade;</span>
+    </div>
+    <div class="site-footer__content">
+        <div class="site-footer__nav">
+        <a href="#features">Features</a>
+        <a href="#extensions">Threats</a>
+        <a href="#developers">Ethics</a>
+        <a href="#spotlight">Mission</a>
+        <a href="#contact">Contact</a>
+        </div>
+        <div class="site-footer__social">
+        <a href="https://www.instagram.com/buraqaiofficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+        </a>
+        <a href="https://www.linkedin.com/company/buraq-ai" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+            <rect x="2" y="9" width="4" height="12"></rect>
+            <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+        </a>
+        <a href="https://twitter.com/buraq_ai" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+            <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+            </svg>
+        </a>
+        </div>
+    </div>
+    </div>
+    <div class="site-footer__bottom">
+    <span>© <span data-year></span> Buraq AI Inc. - All rights reserved</span>
+    <a href="terms-of-use.html">Terms of Use</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    </div>
 </div>
 </footer>
 
