@@ -67,7 +67,7 @@ class FirebaseConfigLoader {
     // However, we still want to avoid committing them to git
     
     return {
-      apiKey: this.getEnvVar('FIREBASE_API_KEY') || 'YOUR_API_KEY_HERE',
+      apiKey: this.getEnvVar('FIREBASE_API_KEY') || 'REDACTED_BURAQ_API_KEY',
       authDomain: this.getEnvVar('FIREBASE_AUTH_DOMAIN') || 'buraq-ai-2670c.firebaseapp.com',
       databaseURL: this.getEnvVar('FIREBASE_DATABASE_URL') || 'https://buraq-ai-2670c-default-rtdb.firebaseio.com',
       projectId: this.getEnvVar('FIREBASE_PROJECT_ID') || 'buraq-ai-2670c',
