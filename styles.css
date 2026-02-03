@@ -750,6 +750,7 @@ section {
   opacity: 0;
   pointer-events: none;
   transition: opacity 2s ease-in;
+  filter: brightness(0.7);
 }
 
 .hero__bg-video.visible {
@@ -5631,7 +5632,7 @@ section {
 .pi-stacked-section__spec-value {
   font-size: 1.5rem;
   font-weight: 600;
-  background: linear-gradient(135deg, var(--accent-orange) 0%, #ff8c42 100%);
+  background: var(--accent-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
