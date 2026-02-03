@@ -17,330 +17,217 @@
 <meta name="theme-color" content="#0a0a0f" />
 <link rel="manifest" href="manifest.json" />
 
-<title>MARQAB™ Edge Intelligence | Buraq AI</title>
+<title>Buraq AI | Pi Module Integration</title>
 <meta
 name="description"
-content="MARQAB™ - Buraq AI's Raspberry Pi 5 Edge Module for real-time AI processing in humanitarian operations. Deploy intelligence at the edge with zero cloud dependency." />
+content="Learn how to integrate the Buraq AI Raspberry Pi module for edge AI processing in humanitarian operations." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-logo.png" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-
-<div class="noise-overlay"></div>
-<div class="cursor-dot" data-cursor-dot></div>
-<div class="cursor-outline" data-cursor-outline></div>
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
 
 <header class="site-nav" data-fixed>
 <div class="site-nav__inner">
-<a class="site-nav__brand hover-trigger" href="index.html" aria-label="Buraq AI home">
-    <span class="site-nav__mark">
-    <img src="assets/buraq-horse.png" alt="Buraq logo" width="40" height="40" />
-    </span>
-    <span class="site-nav__wordmark">Buraq AI</span>
+<a class="site-nav__brand" href="index.html" aria-label="Buraq AI home">
+<span class="site-nav__mark">
+<img src="assets/buraq-horse.png" alt="Buraq logo" width="40" height="40" />
+</span>
+<span class="site-nav__wordmark">Buraq AI</span>
 </a>
 <nav class="site-nav__links" aria-label="Main">
-    <a href="index.html#mission" class="hover-trigger">Overview</a>
-    <a href="index.html#mission" class="hover-trigger">Mission</a>
-    <a href="index.html#intelligence" class="hover-trigger">Features</a>
-    <a href="index.html#extensions" class="hover-trigger">Threats</a>
-    <a href="index.html#developers" class="hover-trigger">Ethics</a>
-    <a href="index.html#contact" class="hover-trigger">Contact</a>
-</nav>
-<div class="site-nav__actions">
-    <a class="site-nav__ghost hover-trigger" href="index.html">Home</a>
-    <a class="site-nav__cta hover-trigger" href="index.html#contact">Contact Us</a>
-    <button class="site-nav__toggle hover-trigger" type="button" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
-    <span></span>
-    </button>
-</div>
-</div>
-<nav id="mobileMenu" class="mobile-menu" aria-hidden="true">
 <a href="index.html#mission">Overview</a>
 <a href="index.html#mission">Mission</a>
 <a href="index.html#intelligence">Features</a>
 <a href="index.html#extensions">Threats</a>
-<a href="index.html">Home</a>
+<a href="index.html#developers">Ethics</a>
+<a href="index.html#contact">Contact</a>
+</nav>
+<div class="site-nav__actions">
+<a class="site-nav__ghost" href="index.html">Home</a>
+<a class="site-nav__cta" href="index.html#contact">Contact Us</a>
+<button class="site-nav__toggle" type="button" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
+<span></span>
+</button>
+</div>
+</div>
+<nav id="mobileMenu" class="mobile-menu" aria-hidden="true">
+<a href="index.html#mission">Overview</a>
+<a href="index.html#spotlight">Mission</a>
+<a href="index.html#features">Capabilities</a>
+<a href="index.html#extensions">Threats</a>
+<a href="index.html#ai">Deployment</a>
 <a href="index.html#developers">Ethics</a>
 <a href="index.html#contact">Contact</a>
 </nav>
 </header>
 
-<!-- Hero Section - MARQAB Product -->
-<section class="hero" id="hero" style="min-height: 90vh; padding-top: 8rem;">
-<div class="grid-bg"></div>
-
-<div class="hero__container">
-    <div class="hero__supertitle animate-on-load">EDGE INTELLIGENCE</div>
-    
-    <h1 class="hero__title animate-on-load delay-1">
-        <span class="hero__title-highlight">MARQAB<sup style="font-size: 0.35em; margin-left: 0.2em;">™</sup></span>
-    </h1>
-    
-    <p class="hero__description animate-on-load delay-2">
-        Buraq AI's Raspberry Pi 5 Edge Module. Enterprise-grade AI processing in the field, with zero cloud dependency.
-    </p>
-    
-    <div class="pi-hero__products animate-on-load delay-3" style="display: flex; justify-content: center; align-items: center; gap: 4rem; margin: 4rem 0;">
-        <img src="assets/raspberrypimodel.png" alt="Raspberry Pi Module" class="pi-hero__product" style="width: 280px; height: auto; transform: translateY(20px) rotate(-5deg); filter: drop-shadow(0 20px 40px rgba(59, 130, 246, 0.4));">
-        <img src="assets/aihatmodel.png" alt="AI HAT Module" class="pi-hero__product" style="width: 280px; height: auto; transform: translateY(-20px) rotate(5deg); filter: drop-shadow(0 20px 40px rgba(59, 130, 246, 0.4));">
+<!-- Hero Section - Minimalist Product Focus -->
+<section class="pi-hero">
+    <div class="pi-hero__final">
+        <h1 class="pi-hero__title-final">MARQAB<sup style="font-size: 0.4em; margin-left: 0.1em; vertical-align: super; position: relative; top: -0.3em;">™</sup></h1>
+        <p class="pi-hero__subtitle">Buraq AI's Raspberry Pi 5 Edge Module, Ready for Deployment</p>
+        <div class="pi-hero__products">
+            <img src="assets/raspberrypimodel.png" alt="Raspberry Pi Module" class="pi-hero__product pi-hero__product--left">
+            <img src="assets/aihatmodel.png" alt="AI HAT Module" class="pi-hero__product pi-hero__product--right">
+        </div>
     </div>
-    
-    <div class="hero__cta-group animate-on-load delay-4">
-    <a class="btn btn--hero-primary hover-trigger" href="index.html#contact">
-        Request Demo
-    </a>
-    <a class="btn btn--hero-ghost hover-trigger" href="#specifications">
-        View Specs
-    </a>
-    </div>
-    
-    <div class="hero__features animate-on-load delay-4">
-    <div class="hero__feature-item hover-trigger">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-        </svg>
-        <span>On-Device AI</span>
-    </div>
-    <div class="hero__feature-item hover-trigger">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-        </svg>
-        <span>Zero Latency</span>
-    </div>
-    <div class="hero__feature-item hover-trigger">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-        </svg>
-        <span>Military Grade</span>
-    </div>
-    <div class="hero__feature-item hover-trigger">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-        </svg>
-        <span>Offline Ready</span>
-    </div>
-    <div class="hero__feature-item hover-trigger">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span>&lt;5 Min Setup</span>
-    </div>
-    </div>
-</div>
 </section>
 
-<!-- Main Content -->
-<main>
-
-<!-- Mission/Overview Section -->
-<section class="mission" id="overview">
-<div class="mission__content">
-    <span class="section-eyebrow animate-on-scroll blur-in">Edge Intelligence</span>
-    <div class="mission__grid">
-    <div class="mission__text">
-        <h2 class="animate-on-scroll fade-in-up">Intelligence at the edge. Power where you need it.</h2>
-        <p class="animate-on-scroll fade-in-up delay-100">
-        MARQAB™ brings enterprise-grade AI capabilities to the field. Process video feeds, analyze threats, and coordinate responses—all without relying on cloud connectivity. Built on Raspberry Pi 5 with specialized AI acceleration, MARQAB delivers real-time processing in the most demanding environments.
-        </p>
-    </div>
-    <div class="mission__features">
-        <div class="mission__feature-card animate-on-scroll fade-in-right stagger-1">
-        <div class="mission__feature-number">01</div>
-        <h4>On-Device AI Processing</h4>
-        </div>
-        <div class="mission__feature-card animate-on-scroll fade-in-right stagger-2">
-        <div class="mission__feature-number">02</div>
-        <h4>Real-Time Threat Detection</h4>
-        </div>
-        <div class="mission__feature-card animate-on-scroll fade-in-right stagger-3">
-        <div class="mission__feature-number">03</div>
-        <h4>Zero Cloud Dependency</h4>
-        </div>
-        <div class="mission__feature-card animate-on-scroll fade-in-right stagger-4">
-        <div class="mission__feature-number">04</div>
-        <h4>Military-Grade Construction</h4>
-        </div>
-    </div>
-    </div>
-</div>
-</section>
-
-<!-- Monitoring Section - Feature Compact -->
-<section class="feature-compact" id="capabilities">
-<div class="container">
-    <div class="feature-compact__split">
-    <div class="feature-compact__text-section">
-        <span class="section-eyebrow animate-on-scroll blur-in">Capabilities</span>
-        <h2 class="feature-compact__headline animate-on-scroll slide-up-scale">Built for the mission.</h2>
-        <p class="feature-compact__body animate-on-scroll fade-in-up delay-100">
-        Military-grade construction meets plug-and-play simplicity. Deploy in minutes, operate in extreme conditions, and maintain continuous surveillance with minimal power requirements.
-        </p>
-    </div>
-    <div class="feature-compact__visual animate-on-scroll scale-in delay-200">
-        <div style="width: 100%; height: 400px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.3);">
-        [Device Image Placeholder]
-        </div>
-    </div>
-    </div>
-    <div class="feature-compact__features">
-    <div class="feature-compact__feature-item animate-on-scroll fade-in-up stagger-1">
-        <span class="feature-compact__feature-text">Real-time video analysis with up to 4 camera inputs</span>
-    </div>
-    <div class="feature-compact__feature-item animate-on-scroll fade-in-up stagger-2">
-        <span class="feature-compact__feature-text">Onboard threat detection and classification</span>
-    </div>
-    <div class="feature-compact__feature-item animate-on-scroll fade-in-up stagger-3">
-        <span class="feature-compact__feature-text">Encrypted local storage with secure sync</span>
-    </div>
-    </div>
-</div>
-</section>
-
-<!-- Detection Section - Feature Stacked -->
-<section class="feature-stacked" id="specifications">
-<div class="container">
-    <div class="feature-stacked__header">
-    <span class="section-eyebrow animate-on-scroll blur-in">Technical Specifications</span>
-    <h2 class="feature-stacked__title animate-on-scroll slide-up-scale">Field-tested. Mission-ready.</h2>
-    </div>
-    <div class="feature-stacked__showcase">
-    <div class="feature-stacked__image-container animate-on-scroll scale-in">
-        <div style="width: 100%; height: 500px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.3);">
-        [Technical Specs Visual]
-        </div>
-    </div>
-    <p class="feature-stacked__lead animate-on-scroll fade-in-up">
-        Engineered for reliability in the world's most challenging environments.
-    </p>
-    <div class="feature-stacked__items">
-        <div class="feature-item animate-on-scroll fade-in-up stagger-1">
-        <span class="feature-item__text">Operating Temperature: -20°C to 60°C</span>
-        </div>
-        <div class="feature-item animate-on-scroll fade-in-up stagger-2">
-        <span class="feature-item__text">IP67 Waterproof & Dustproof</span>
-        </div>
-        <div class="feature-item animate-on-scroll fade-in-up stagger-3">
-        <span class="feature-item__text">Power Options: USB-C / PoE+ / Solar</span>
-        </div>
-    </div>
-    </div>
-</div>
-</section>
-
-<!-- Intelligence Section - Feature Showcase -->
-<section class="feature-showcase" id="integration">
-<div class="container">
-    <div class="feature-showcase__layout">
-    <div class="feature-showcase__header">
-        <span class="section-eyebrow animate-on-scroll blur-in">Seamless Integration</span>
-        <h2 class="feature-showcase__title animate-on-scroll slide-up-scale">Connects to your ecosystem.</h2>
-        <p class="feature-showcase__description animate-on-scroll fade-in-up delay-100">
-        MARQAB integrates seamlessly with Buraq AI's platform and third-party systems. Deploy standalone or as part of a networked surveillance grid.
-        </p>
-    </div>
-    <div class="intelligence-features">
-        <div class="intelligence-feature animate-on-scroll fade-in-up stagger-1">
-        <div class="intelligence-feature__header">
-            <h3>API Integration</h3>
-        </div>
-        <p>RESTful API and WebSocket support for custom integrations</p>
-        </div>
-        <div class="intelligence-feature animate-on-scroll fade-in-up stagger-2">
-        <div class="intelligence-feature__header">
-            <h3>Cloud Sync</h3>
-        </div>
-        <p>Optional encrypted synchronization with Buraq AI platform</p>
-        </div>
-        <div class="intelligence-feature animate-on-scroll fade-in-up stagger-3">
-        <div class="intelligence-feature__header">
-            <h3>Mesh Network</h3>
-        </div>
-        <p>Connect multiple units for distributed processing and coverage</p>
-        </div>
-    </div>
-    <div class="feature-showcase__visual animate-on-scroll scale-in delay-300">
-        <div class="visual-layers">
-        <div class="visual-layer visual-layer--back"></div>
-        <div class="visual-layer visual-layer--main">
-            <div style="width: 100%; height: 100%; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.3);">
-            [Integration Diagram]
+<!-- Split Layout Section - Image Left, Content Right -->
+<section class="pi-split-section" id="intelligence">
+    <div class="container">
+        <div class="pi-split-section__layout">
+            <div class="pi-split-section__visual animate-on-scroll slide-in-left delay-200">
+                <div class="pi-split-section__image-placeholder">
+                    <span>Image Placeholder</span>
+                </div>
+            </div>
+            <div class="pi-split-section__content">
+                <span class="section-eyebrow animate-on-scroll blur-in">Edge Intelligence</span>
+                <h2 class="pi-split-section__headline animate-on-scroll slide-up-scale delay-100">Intelligence at the edge.</h2>
+                <p class="pi-split-section__description animate-on-scroll fade-in-up delay-200">MARQAB brings enterprise-grade AI capabilities to the field. Process video feeds, analyze threats, and coordinate responses—all without relying on cloud connectivity.</p>
+                <div class="pi-split-section__features">
+                    <div class="pi-split-section__feature-item animate-on-scroll fade-in-right stagger-1">
+                        <div class="pi-split-section__feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                            </svg>
+                        </div>
+                        <span class="pi-split-section__feature-text">On-device AI processing</span>
+                    </div>
+                    <div class="pi-split-section__feature-item animate-on-scroll fade-in-right stagger-2">
+                        <div class="pi-split-section__feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                        </div>
+                        <span class="pi-split-section__feature-text">Real-time threat detection</span>
+                    </div>
+                    <div class="pi-split-section__feature-item animate-on-scroll fade-in-right stagger-3">
+                        <div class="pi-split-section__feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <span class="pi-split-section__feature-text">Zero cloud dependency</span>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- Centered Stacked Section - Image on Top -->
+<section class="pi-stacked-section" id="deployment">
+    <div class="container">
+        <div class="pi-stacked-section__content">
+            <span class="section-eyebrow animate-on-scroll blur-in">Built to Deploy</span>
+            <h2 class="pi-stacked-section__headline animate-on-scroll slide-up-scale delay-100">Built for the mission.</h2>
+            <p class="pi-stacked-section__description animate-on-scroll fade-in-up delay-200">Military-grade construction meets plug-and-play simplicity. Deploy in minutes, operate in extreme conditions, and maintain continuous surveillance with minimal power requirements.</p>
+        </div>
+        <div class="pi-stacked-section__image-container animate-on-scroll scale-in delay-300">
+            <div class="pi-stacked-section__image-placeholder">
+                <span>Image Placeholder</span>
+            </div>
+        </div>
+        <div class="pi-stacked-section__specs">
+            <div class="pi-stacked-section__spec-item animate-on-scroll fade-in-up stagger-1">
+                <div class="pi-stacked-section__spec-label">Operating Temp</div>
+                <div class="pi-stacked-section__spec-value">-20°C to 60°C</div>
+            </div>
+            <div class="pi-stacked-section__spec-item animate-on-scroll fade-in-up stagger-2">
+                <div class="pi-stacked-section__spec-label">Enclosure Rating</div>
+                <div class="pi-stacked-section__spec-value">IP67 Certified</div>
+            </div>
+            <div class="pi-stacked-section__spec-item animate-on-scroll fade-in-up stagger-3">
+                <div class="pi-stacked-section__spec-label">Power Options</div>
+                <div class="pi-stacked-section__spec-value">USB-C / PoE+</div>
+            </div>
+            <div class="pi-stacked-section__spec-item animate-on-scroll fade-in-up stagger-4">
+                <div class="pi-stacked-section__spec-label">Setup Time</div>
+                <div class="pi-stacked-section__spec-value">&lt;5 Minutes</div>
+            </div>
         </div>
     </div>
-    </div>
-</div>
 </section>
-
-<!-- Contact Section -->
-<section class="contact" id="contact">
-<div class="container">
-    <div class="contact__inner">
-    <div class="contact__copy animate-on-scroll fade-in-left">
-        <h2>Ready to deploy MARQAB™?</h2>
-        <p>Request a demo or speak with our technical team about integration requirements for your mission.</p>
-    </div>
-    <div class="contact__actions animate-on-scroll fade-in-right">
-        <a href="index.html#contact" class="btn btn--primary hover-trigger">Request Demo</a>
-        <a href="index.html#contact" class="btn btn--ghost hover-trigger">Contact Sales</a>
-    </div>
-    </div>
-</div>
-</section>
-
-</main>
 
 <footer class="site-footer">
 <div class="site-footer__container">
-    <div class="site-footer__top">
-    <div class="site-footer__brand">
-        <img src="assets/buraq-logo.png" alt="Buraq logo" width="40" height="40" />
-        <span class="site-footer__wordmark">Buraq AI&trade;</span>
-    </div>
-    <div class="site-footer__content">
-        <div class="site-footer__nav">
-        <a href="index.html#mission">Overview</a>
-        <a href="index.html#intelligence">Features</a>
-        <a href="index.html#extensions">Threats</a>
-        <a href="index.html#developers">Ethics</a>
-        <a href="index.html#contact">Contact</a>
-        </div>
-        <div class="site-footer__social">
-        <a href="https://www.instagram.com/buraqaiofficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-            </svg>
-        </a>
-        <a href="https://www.linkedin.com/company/buraq-ai" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-            <rect x="2" y="9" width="4" height="12"></rect>
-            <circle cx="4" cy="4" r="2"></circle>
-            </svg>
-        </a>
-        <a href="https://twitter.com/buraq_ai" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
-            <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
-            </svg>
-        </a>
-        </div>
-    </div>
-    </div>
-    <div class="site-footer__bottom">
-    <span>&copy; <span data-year></span> Buraq AI Inc. - All rights reserved</span>
-    <a href="terms-of-use.html">Terms of Use</a>
-    <a href="privacy-policy.html">Privacy Policy</a>
-    </div>
+<div class="site-footer__top">
+<div class="site-footer__brand">
+<img src="assets/buraq-logo.png" alt="Buraq logo" width="40" height="40" />
+<span class="site-footer__wordmark">Buraq AI&trade;</span>
+</div>
+<div class="site-footer__content">
+<div class="site-footer__nav">
+<a href="index.html#features">Features</a>
+<a href="index.html#extensions">Threats</a>
+<a href="index.html#developers">Ethics</a>
+<a href="index.html#spotlight">Mission</a>
+<a href="index.html#contact">Contact</a>
+</div>
+<div class="site-footer__social">
+<a href="https://www.instagram.com/buraqaiofficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+<line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+</svg>
+</a>
+<a href="https://www.linkedin.com/company/buraq-ai" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+<rect x="2" y="9" width="4" height="12"></rect>
+<circle cx="4" cy="4" r="2"></circle>
+</svg>
+</a>
+<a href="https://twitter.com/buraq_ai" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+<path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+</svg>
+</a>
+</div>
+</div>
+</div>
+<div class="site-footer__bottom">
+<span>&copy; <span data-year></span> Buraq AI Inc. - All rights reserved</span>
+<a href="/terms-of-use">Terms of Use</a>
+<a href="/privacy-policy">Privacy Policy</a>
+</div>
 </div>
 </footer>
 
-<script type="module" src="firebase-init.js"></script>
+<script type="module" src="main.js"></script>
+<script>
+// Check if hero animation has already played in this session
+if (sessionStorage.getItem('marqabHeroPlayed')) {
+    // Skip animation - show final state immediately
+    document.querySelector('.pi-hero__title-final').style.animation = 'none';
+    document.querySelector('.pi-hero__title-final').style.opacity = '1';
+    document.querySelector('.pi-hero__subtitle').style.animation = 'none';
+    document.querySelector('.pi-hero__subtitle').style.opacity = '1';
+    document.querySelectorAll('.pi-hero__product').forEach(product => {
+        product.style.animation = 'none';
+        if (product.classList.contains('pi-hero__product--left')) {
+            product.style.transform = 'translateY(80px)';
+        } else {
+            product.style.transform = 'translateY(-80px)';
+        }
+        product.style.opacity = '1';
+        product.style.filter = 'drop-shadow(0 0 40px rgba(59, 130, 246, 0.6)) drop-shadow(0 0 80px rgba(59, 130, 246, 0.4)) drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5))';
+    });
+} else {
+    // Mark animation as played for this session
+    sessionStorage.setItem('marqabHeroPlayed', 'true');
+}
+</script>
 <script type="module" src="main.js"></script>
 </body>
 </html>
