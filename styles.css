@@ -750,7 +750,7 @@ section {
   opacity: 0;
   pointer-events: none;
   transition: opacity 2s ease-in;
-  filter: brightness(0.7);
+  filter: brightness(0.5);
 }
 
 .hero__bg-video.visible {
