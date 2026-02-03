@@ -2082,7 +2082,7 @@ section {
 /* Data Intelligence - Overlapping Panels */
 .feature-showcase {
   background: #000;
-  padding: 10rem 0;
+  padding: 10rem 0 30rem 0;
   position: relative;
   overflow: hidden;
 }
@@ -2493,7 +2493,7 @@ section {
 /* Threats Section */
 .threats {
   background: var(--bg-primary);
-  padding: 12rem 0 3rem;
+  padding: 32rem 0 3rem;
   min-height: 200vh; /* Extended height for scroll-linked animation */
   position: relative;
 }
