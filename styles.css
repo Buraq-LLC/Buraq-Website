@@ -4277,6 +4277,7 @@ section {
   background-repeat: no-repeat;
   opacity: 0;
   z-index: 1;
+  filter: brightness(0.5);
 }
 
 /* When animation plays (first visit) */
