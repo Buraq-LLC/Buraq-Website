@@ -2198,7 +2198,7 @@ section {
   position: relative;
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto 9rem;
+  margin: -2rem auto 9rem;
 }
 
 .visual-layers {
