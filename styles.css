@@ -1,3 +1,18 @@
+/* Align bullet points with paragraph and maintain spacing/color */
+.pi-split-section__features-list--aligned {
+  margin-left: 0;
+  padding-left: 0;
+  list-style-position: inside;
+  color: #f3f4f6;
+  font-size: 1.1em;
+  font-family: inherit;
+  margin-top: 1.2em;
+  margin-bottom: 1.2em;
+}
+.pi-split-section__features-list--aligned li {
+  margin-bottom: 0.5em;
+  color: #f3f4f6;
+}
 /* Enhanced styles.css with Apple-like animations */
 
 /* Reset and Base Styles */
@@ -1032,7 +1047,7 @@ section {
   overflow: hidden;
   box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
   position: relative;
-  border: 1px solid var(--border);
+  border: none;
 }
 
 .device-frame__shimmer {
@@ -1093,7 +1108,7 @@ section {
   border-radius: 9999px;
   font-size: 0.9rem;
   font-weight: 500;
-  border: 1px solid var(--border);
+  border: none;
 }
 
 .device-frame__controls {
