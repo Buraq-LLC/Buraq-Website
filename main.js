@@ -716,6 +716,7 @@
     constructor() {
       this.explodedView = null;
       this.hasTriggered = false;
+      this.storageKey = 'buraq_module_exploded';
     }
 
     init() {
@@ -729,6 +730,17 @@
 
       log('Initializing Pi Module exploded view animation');
       
+      // Check if animation has already been triggered in this session
+      const wasExploded = sessionStorage.getItem(this.storageKey);
+      
+      if (wasExploded) {
+        // Skip animation, show exploded state immediately
+        log('Module was already exploded in this session, showing final state');
+        this.explodedView.classList.add('exploded');
+        this.hasTriggered = true;
+        return;
+      }
+      
       // Ensure it starts collapsed and hidden
       this.explodedView.classList.remove('exploded');
       
@@ -741,6 +753,8 @@
               log('Exploded view is visible, triggering animation');
               // First make it visible, then trigger explosion after fade in
               this.explodedView.classList.add('exploded');
+              // Save state to sessionStorage
+              sessionStorage.setItem(this.storageKey, 'true');
               log('Exploded view animation triggered - layers should pull apart now');
             }
           });
