@@ -26,30 +26,43 @@ content="Learn how to integrate Marqab for edge AI processing in humanitarian op
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-logo.png" />
+<link rel="stylesheet" href="styles.css" />
 <link rel="stylesheet" href="marqab-styles.css" />
 </head>
 <body>
-<div class="buraq-scroll-progress" aria-hidden="true"><span></span></div>
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
 
-<header class="buraq-nav" data-fixed>
-<div class="buraq-nav__container">
-<a class="buraq-nav__brand" href="index.html" aria-label="Buraq AI home">
-<span class="buraq-nav__logo">
+<header class="site-nav" data-fixed>
+<div class="site-nav__inner">
+<a class="site-nav__brand" href="index.html" aria-label="Buraq AI home">
+<span class="site-nav__mark">
 <img src="assets/buraq-horse.png" alt="Buraq logo" width="40" height="40" />
 </span>
-<span class="buraq-nav__wordmark">Buraq AI</span>
+<span class="site-nav__wordmark">Buraq AI</span>
 </a>
-<div class="buraq-nav__actions">
-<a class="buraq-nav__btn buraq-nav__btn--ghost" href="index.html">Home</a>
-<a class="buraq-nav__btn buraq-nav__btn--primary" href="index.html#contact">Contact Us</a>
-<button class="buraq-nav__toggle" type="button" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="site-nav__links" aria-label="Main">
+<a href="index.html#hero">Overview</a>
+<a href="index.html#mission">Mission</a>
+<a href="index.html#intelligence">Features</a>
+<a href="index.html#extensions">Threats</a>
+<a href="index.html#developers">Ethics</a>
+<a href="index.html#contact">Contact</a>
+</nav>
+<div class="site-nav__actions">
+<a class="site-nav__ghost" href="index.html#hero">Home</a>
+<a class="site-nav__cta" href="index.html#contact">Contact Us</a>
+<button class="site-nav__toggle" type="button" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
 <span></span>
 </button>
 </div>
 </div>
-<nav id="mobileMenu" class="buraq-mobile-menu" aria-hidden="true">
-<a href="index.html">Home</a>
-<a href="index.html#contact">Contact Us</a>
+<nav id="mobileMenu" class="mobile-menu" aria-hidden="true">
+<a href="index.html#hero">Overview</a>
+<a href="index.html#spotlight">Mission</a>
+<a href="index.html#features">Capabilities</a>
+<a href="index.html#extensions">Threats</a>
+<a href="index.html#developers">Ethics</a>
+<a href="index.html#contact">Contact</a>
 </nav>
 </header>
 
@@ -117,22 +130,22 @@ content="Learn how to integrate Marqab for edge AI processing in humanitarian op
     </div>
 </section>
 
-<footer class="buraq-footer">
-<div class="buraq-footer__container">
-<div class="buraq-footer__top">
-<div class="buraq-footer__brand">
+<footer class="site-footer">
+<div class="site-footer__container">
+<div class="site-footer__top">
+<div class="site-footer__brand">
 <img src="assets/buraq-logo.png" alt="Buraq logo" width="40" height="40" />
-<span class="buraq-footer__wordmark">Buraq AI&trade;</span>
+<span class="site-footer__wordmark">Buraq AI&trade;</span>
 </div>
-<div class="buraq-footer__content">
-<div class="buraq-footer__nav">
+<div class="site-footer__content">
+<div class="site-footer__nav">
 <a href="index.html#features">Features</a>
 <a href="index.html#extensions">Threats</a>
 <a href="index.html#developers">Ethics</a>
 <a href="index.html#spotlight">Mission</a>
 <a href="index.html#contact">Contact</a>
 </div>
-<div class="buraq-footer__social">
+<div class="site-footer__social">
 <a href="https://www.instagram.com/buraqaiofficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -156,15 +169,14 @@ content="Learn how to integrate Marqab for edge AI processing in humanitarian op
 </div>
 </div>
 </div>
-<div class="buraq-footer__bottom">
-<span>&copy; <span data-year></span> Buraq AI Inc. - All rights reserved</span>
+<div class="site-footer__bottom">
+<span>© <span data-year></span> Buraq AI Inc. - All rights reserved</span>
 <a href="/terms-of-use">Terms of Use</a>
 <a href="/privacy-policy">Privacy Policy</a>
 </div>
 </div>
 </footer>
 
-<script type="module" src="main.js"></script>
 <script>
 // Marqab Hero Animation Control - Only run once per session
 if (sessionStorage.getItem('marqabHeroPlayed')) {
@@ -184,9 +196,9 @@ if (sessionStorage.getItem('marqabHeroPlayed')) {
     products.forEach(product => {
         product.style.animation = 'none';
         if (product.classList.contains('marqab-hero__product--left')) {
-            product.style.transform = 'translate(-50%, calc(-50% + 40px))';
+            product.style.transform = 'translate(-50%, calc(-50% + 80px))';
         } else {
-            product.style.transform = 'translate(-50%, calc(-50% - 40px))';
+            product.style.transform = 'translate(-50%, calc(-50% - 80px))';
         }
         product.style.opacity = '1';
         product.style.filter = 'drop-shadow(0 0 40px rgba(59, 130, 246, 0.6)) drop-shadow(0 0 80px rgba(59, 130, 246, 0.4)) drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5))';
@@ -214,5 +226,6 @@ document.querySelectorAll('.buraq-animate').forEach(el => {
     observer.observe(el);
 });
 </script>
+<script type="module" src="main.js"></script>
 </body>
 </html>

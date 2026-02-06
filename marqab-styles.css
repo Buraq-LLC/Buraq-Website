@@ -171,15 +171,20 @@ a {
   display: flex;
   gap: 1rem;
   align-items: center;
+  position: relative;
+  z-index: 10;
 }
 
 .buraq-nav__btn {
-  padding: 0.5rem 1.25rem;
+  padding: 0.625rem 1.25rem;
   font-size: 0.9375rem;
   font-weight: 500;
   border-radius: 8px;
   transition: all 0.2s var(--buraq-transition);
   cursor: pointer;
+  text-decoration: none;
+  line-height: 1.2;
+  display: inline-block;
 }
 
 .buraq-nav__btn--ghost {
@@ -409,14 +414,12 @@ a {
 }
 
 .marqab-hero__product--left {
-  transform: translate(-50%, calc(-50% + 80px));
-  animation: marqab-product-left 1s var(--buraq-transition) 0.6s forwards;
+  animation: marqab-product-left 3.5s ease-out forwards;
   z-index: 1;
 }
 
 .marqab-hero__product--right {
-  transform: translate(-50%, calc(-50% - 80px));
-  animation: marqab-product-right 1s var(--buraq-transition) 0.6s forwards;
+  animation: marqab-product-right 3.5s ease-out forwards;
   z-index: 2;
 }
 
@@ -427,16 +430,44 @@ a {
 }
 
 @keyframes marqab-product-left {
-  to {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
+  }
+  15% {
+    opacity: 1;
+  }
+  71% {
     opacity: 1;
     transform: translate(-50%, calc(-50% + 80px));
+    filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, calc(-50% + 80px));
+    filter: drop-shadow(0 0 40px rgba(59, 130, 246, 0.6)) drop-shadow(0 0 80px rgba(59, 130, 246, 0.4)) drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
   }
 }
 
 @keyframes marqab-product-right {
-  to {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
+  }
+  15% {
+    opacity: 1;
+  }
+  71% {
     opacity: 1;
     transform: translate(-50%, calc(-50% - 80px));
+    filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, calc(-50% - 80px));
+    filter: drop-shadow(0 0 40px rgba(59, 130, 246, 0.6)) drop-shadow(0 0 80px rgba(59, 130, 246, 0.4)) drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
   }
 }
 
