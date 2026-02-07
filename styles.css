@@ -3095,28 +3095,231 @@ section {
 }
 
 @media (max-width: 768px) {
+  /* Navigation */
+  .site-nav {
+    padding: 0.75rem 0;
+  }
+  
+  .site-nav__inner {
+    padding: 0 1rem;
+  }
+  
+  .site-nav__brand {
+    font-size: 1.125rem;
+  }
+  
+  .site-nav__mark {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .site-nav__mark img {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .site-nav__links {
+    display: none;
+  }
+  
+  .site-nav__actions {
+    gap: 0.5rem;
+  }
+  
+  .site-nav__ghost,
+  .site-nav__cta {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+  
+  /* Footer */
   .site-footer {
     padding: 3rem 0 2rem;
   }
   
   .site-footer__top {
+    flex-direction: column;
     gap: 2rem;
     padding-bottom: 2rem;
   }
   
+  .site-footer__brand {
+    align-items: center;
+    text-align: center;
+  }
+  
+  .site-footer__content {
+    align-items: center;
+  }
+  
   .site-footer__nav {
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
+    text-align: center;
+  }
+  
+  .site-footer__social {
+    justify-content: center;
   }
   
   .site-footer__bottom {
     flex-direction: column;
-    align-items: flex-start;
+    text-align: center;
+    align-items: center;
     gap: 1rem;
   }
   
   .site-footer__bottom a {
     margin-left: 0;
+  }
+  
+  /* Mission Section */
+  .mission {
+    padding: 4rem 1.5rem;
+  }
+  
+  .mission__title {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+  }
+  
+  .mission__description {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+  
+  .mission__features {
+    grid-template-columns: 1fr;
+  }
+  
+  .mission__feature-card {
+    padding: 2rem 1.5rem;
+  }
+  
+  .mission__feature-card h4 {
+    font-size: 1.25rem;
+  }
+  
+  /* Feature Sections */
+  .feature-immersive {
+    min-height: 70vh;
+    padding: 4rem 1.5rem;
+  }
+  
+  .feature-immersive__title {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+  }
+  
+  .feature-immersive__description {
+    font-size: 1rem;
+    padding: 0 0.5rem;
+  }
+  
+  .feature-compact {
+    padding: 4rem 1.5rem;
+  }
+  
+  .feature-compact__title {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+    white-space: normal;
+  }
+  
+  .feature-compact__body {
+    font-size: 1rem;
+  }
+  
+  .feature-compact__features {
+    grid-template-columns: 1fr;
+    border: none;
+  }
+  
+  .feature-compact__feature-item {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 2rem 1.5rem;
+  }
+  
+  .feature-compact__feature-item:last-child {
+    border-bottom: none;
+  }
+  
+  .feature-stacked {
+    padding: 4rem 1.5rem;
+  }
+  
+  .feature-stacked__title {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+  }
+  
+  .feature-asymmetric {
+    padding: 4rem 1.5rem;
+  }
+  
+  .feature-asymmetric__title {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+  }
+  
+  /* Threats Section */
+  .threats {
+    padding: 6rem 1.5rem 4rem;
+    min-height: 300vh;
+  }
+  
+  .threats__header.is-top {
+    top: 70px;
+  }
+  
+  .threats__title {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+    flex-wrap: wrap;
+  }
+  
+  .threats__description {
+    font-size: 1rem;
+    padding: 0 0.5rem;
+  }
+  
+  .threats__grid {
+    flex-direction: column;
+    margin-top: 2rem;
+  }
+  
+  .threat-card {
+    padding: 1.5rem;
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
+  
+  .threat-card__title {
+    font-size: 1.375rem;
+  }
+  
+  .threat-card__intro {
+    font-size: 0.9375rem;
+  }
+  
+  /* CTA Section */
+  .cta-section {
+    padding: 4rem 1.5rem;
+  }
+  
+  .cta-section__title {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+  }
+  
+  .cta-section__description {
+    font-size: 1rem;
+  }
+  
+  .cta-section__actions {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .cta-section__actions .btn {
+    width: 100%;
   }
 }
 
@@ -4519,19 +4722,27 @@ section {
 /* Mobile responsive */
 @media (max-width: 768px) {
   .hero__content {
-    padding: 4rem 0 8rem;
+    padding: 12rem 1.5rem 8rem;
+  }
+
+  .hero__supertitle {
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+    margin-top: 3rem;
   }
 
   .hero__title {
-    font-size: 2.5rem;
+    font-size: clamp(1.5rem, 6vw, 2rem);
   }
 
   .hero__description {
-    font-size: 1.125rem;
+    font-size: 1rem;
+    padding: 0 1rem;
   }
 
   .hero__features {
     gap: 1rem;
+    flex-direction: column;
+    align-items: center;
   }
 
   .hero__feature-item {
@@ -4541,15 +4752,18 @@ section {
   .hero__cta-group {
     flex-direction: column;
     width: 100%;
+    max-width: 300px;
+    margin: 0 auto 3rem;
   }
 
   .btn--hero-primary,
   .btn--hero-ghost {
     width: 100%;
+    padding: 1rem 1.5rem;
   }
 
   .hero__curve {
-    height: 80px;
+    height: 60px;
   }
 }
 
@@ -5717,6 +5931,19 @@ section {
   .pi-hero {
     padding: 6rem 1.5rem 4rem;
   }
+  
+  .pi-hero__title-final {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+  }
+  
+  .pi-hero__subtitle {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+  
+  .pi-hero__products {
+    height: 450px;
+  }
 
   .pi-hero__badge {
     font-size: 0.6875rem;
@@ -5725,6 +5952,42 @@ section {
 
   .pi-hero__image-frame {
     border-radius: 16px;
+  }
+  
+  .pi-split-section {
+    padding: 4rem 1.5rem;
+  }
+  
+  .pi-split-section__headline {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+  }
+  
+  .pi-split-section__description {
+    font-size: 1rem;
+  }
+  
+  .pi-split-section__image-placeholder {
+    height: 300px;
+  }
+  
+  .pi-stacked-section {
+    padding: 4rem 1.5rem;
+  }
+  
+  .pi-stacked-section__headline {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+  }
+  
+  .pi-stacked-section__description {
+    font-size: 1rem;
+  }
+  
+  .pi-stacked-section__image-placeholder {
+    height: 350px;
+  }
+  
+  .pi-stacked-section__specs {
+    grid-template-columns: 1fr;
   }
 }
     gap: 1rem;
@@ -6053,6 +6316,15 @@ section {
     gap: 3rem;
   }
   
+  .marqab-intelligence__visual {
+    margin-left: 0;
+    transform: scale(1);
+  }
+  
+  .marqab-intelligence__content {
+    margin-left: 0;
+  }
+  
   .marqab-deployment__specs {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -6063,8 +6335,42 @@ section {
     padding: 6rem 1.5rem 3rem;
   }
   
+  .marqab-hero__title {
+    font-size: clamp(2.5rem, 8vw, 3.5rem);
+  }
+  
   .marqab-hero__subtitle {
     white-space: normal;
+    font-size: 1rem;
+  }
+  
+  .marqab-hero__products {
+    height: 350px;
+  }
+  
+  .marqab-intelligence {
+    padding: 4rem 1.5rem;
+  }
+  
+  .marqab-intelligence__title {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+    white-space: normal;
+  }
+  
+  .marqab-intelligence__description {
+    font-size: 1rem;
+  }
+  
+  .marqab-deployment {
+    padding: 4rem 1.5rem;
+  }
+  
+  .marqab-deployment__title {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+  }
+  
+  .marqab-deployment__description {
+    font-size: 1rem;
   }
   
   .marqab-deployment__specs {
@@ -6074,7 +6380,95 @@ section {
 }
 
 @media (max-width: 480px) {
+  /* Hero */
+  .hero__supertitle {
+    font-size: clamp(1.5rem, 10vw, 2rem);
+  }
+  
+  .hero__title {
+    font-size: clamp(1.25rem, 8vw, 1.75rem);
+  }
+  
+  .hero__description {
+    font-size: 0.9375rem;
+  }
+  
+  .hero__content {
+    padding: 5rem 1rem 6rem;
+  }
+  
+  /* Navigation */
+  .site-nav__ghost span {
+    display: none;
+  }
+  
+  .site-nav__ghost::after {
+    content: 'Edge';
+  }
+  
+  /* Mission and Features */
+  .mission__title,
+  .feature-immersive__title,
+  .feature-compact__title,
+  .feature-stacked__title,
+  .feature-asymmetric__title {
+    font-size: clamp(1.5rem, 8vw, 2rem);
+  }
+  
+  .mission__description,
+  .feature-immersive__description,
+  .feature-compact__body {
+    font-size: 0.9375rem;
+  }
+  
+  /* Threats */
+  .threats__title {
+    font-size: clamp(1.5rem, 8vw, 2rem);
+  }
+  
+  .threat-card {
+    padding: 1.25rem;
+  }
+  
+  /* Marqab */
+  .marqab-hero__title {
+    font-size: clamp(1.75rem, 9vw, 2.5rem);
+  }
+  
+  .marqab-hero__subtitle {
+    font-size: 0.9375rem;
+  }
+  
+  .marqab-hero__products {
+    height: 250px;
+  }
+  
+  .marqab-intelligence__title,
+  .marqab-deployment__title {
+    font-size: clamp(1.5rem, 8vw, 2rem);
+  }
+  
   .marqab-deployment__image img {
-    width: 80%;
+    width: 90%;
+  }
+  
+  /* PI Module */
+  .pi-hero__title-final {
+    font-size: clamp(1.5rem, 8vw, 2rem);
+  }
+  
+  .pi-split-section__headline,
+  .pi-stacked-section__headline {
+    font-size: clamp(1.5rem, 8vw, 2rem);
+  }
+  
+  .pi-hero__products {
+    height: 350px;
+  }
+  
+  /* Buttons */
+  .btn {
+    padding: 0.875rem 1.75rem;
+    font-size: 0.9375rem;
   }
 }
