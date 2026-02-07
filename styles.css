@@ -1368,6 +1368,8 @@ section {
   margin-bottom: 2.5rem;
   color: #fff;
   letter-spacing: -0.03em;
+  white-space: nowrap;
+  margin-left: -4rem;
 }
 
 .feature-immersive__description {
@@ -3900,6 +3902,9 @@ section {
   margin-bottom: 3rem;
   padding-bottom: 2rem;
   border-bottom: 1px solid var(--border);
+  /* Ensure legal sections are visible by default */
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 .legal-section:last-child {
