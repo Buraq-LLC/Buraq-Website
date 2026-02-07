@@ -5930,10 +5930,17 @@ section {
 
 .marqab-intelligence__visual {
   position: relative;
+  margin-left: -2.5rem;
+  transform: scale(0.92);
 }
 
 .marqab-intelligence__content {
   max-width: 580px;
+  margin-left: -4.5rem;
+}
+
+.marqab-intelligence__content .section-eyebrow {
+  font-size: 1.0625rem;
 }
 
 .marqab-intelligence__title {
@@ -5943,6 +5950,7 @@ section {
   margin-bottom: 1.5rem;
   letter-spacing: -0.02em;
   color: #fff;
+  white-space: nowrap;
 }
 
 .marqab-intelligence__description {
@@ -5973,6 +5981,10 @@ section {
   text-align: center;
   max-width: 800px;
   margin: 0 auto 3rem;
+}
+
+.marqab-deployment__content .section-eyebrow {
+  font-size: 1.0625rem;
 }
 
 .marqab-deployment__title {
