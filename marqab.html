@@ -3,205 +3,193 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
-<meta http-equiv="X-Content-Type-Options" content="nosniff" />
-<meta name="referrer" content="strict-origin-when-cross-origin" />
-
-<!-- iOS Meta Tags -->
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="Buraq AI" />
-<link rel="apple-touch-icon" href="assets/buraq-logo.png" />
-
-<!-- Android Meta Tags -->
-<meta name="mobile-web-app-capable" content="yes" />
-<meta name="theme-color" content="#0a0a0f" />
+<meta name="theme-color" content="#040507" />
 <link rel="manifest" href="manifest.json" />
-
 <title>Buraq AI | Marqab</title>
-<meta
-name="description"
-content="Learn how to integrate Marqab for edge AI processing in humanitarian operations." />
+<meta name="description" content="Marqab — Buraq AI's edge compute node for field-deployed intelligence in humanitarian operations." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-logo.png" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<div class="scroll-progress" aria-hidden="true"><span></span></div>
 
-<header class="site-nav" data-fixed>
-<div class="site-nav__inner">
-<a class="site-nav__brand" href="/" aria-label="Buraq AI home">
-<span class="site-nav__mark">
-<img src="assets/buraq-horse.png" alt="Buraq logo" width="40" height="40" />
-</span>
-<span class="site-nav__wordmark">Buraq AI</span>
-</a>
-<div class="site-nav__actions">
-<a class="site-nav__ghost" href="/"><span>Home</span></a>
-<a class="site-nav__cta" href="/#contact">Contact Us</a>
-<button class="site-nav__toggle" type="button" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
-<span></span>
-</button>
-</div>
-</div>
-<nav id="mobileMenu" class="mobile-menu" aria-hidden="true">
-<a href="/#mission">Overview</a>
-<a href="/#unified-operations">Mission</a>
-<a href="/#monitoring">Monitor</a>
-<a href="/#detection">Detection</a>
-<a href="/#evidence">Evidence</a>
-<a href="/#intelligence">Data</a>
-<a href="/#extensions">Threats</a>
-<a href="/#contact">Contact</a>
-</nav>
-</header>
+<div class="progress"><div class="progress__fill"></div></div>
 
-<!-- Hero Section - Minimalist Product Focus -->
+<nav id="nav">
+    <div class="nav-left">
+      <a class="logo" href="/">
+        <img src="assets/buraq-horse.png" width="16" height="16" alt="" />
+        Buraq AI
+      </a>
+    </div>
+    <ul class="nav-links"></ul>
+    <div class="nav-right">
+      <a href="/" class="btn-nav ghost">Home</a>
+      <a href="/#contact" class="btn-nav red">Contact Us</a>
+      <button class="nav__burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+        <span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <button class="drawer__close" aria-label="Close menu">✕</button>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/#contact">Contact Us</a>
+    </nav>
+  </div>
+  <div class="drawer__backdrop"></div>
+
+<!-- ─── HERO ─── -->
 <section class="marqab-hero">
-    <div class="marqab-hero__content">
-        <h1 class="marqab-hero__title">MARQAB<sup style="font-size: 0.4em; margin-left: 0.1em; vertical-align: super; position: relative; top: -0.3em; background: linear-gradient(135deg, #60a5fa, #1e40af); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">™</sup></h1>
-        <p class="marqab-hero__subtitle" style="animation: fade-in 1s ease-out 0.2s forwards; opacity: 0;">Buraq AI's edge compute node, ready for deployment</p>
-        <div class="marqab-hero__products">
-            <img src="assets/raspberrypimodel.png" alt="Raspberry Pi Module" class="marqab-hero__product marqab-hero__product--left">
-            <img src="assets/aihatmodel.png" alt="AI HAT Module" class="marqab-hero__product marqab-hero__product--right">
-        </div>
+  <div class="marqab-hero__content">
+    <p class="marqab-hero__eyebrow">Buraq AI Edge Platform</p>
+    <h1 class="marqab-hero__title">MARQAB<sup class="marqab-hero__tm">™</sup></h1>
+    <p class="marqab-hero__subtitle">Edge compute node, ready for field deployment.</p>
+    <div class="marqab-hero__products">
+      <img src="assets/raspberrypimodel.png" alt="Raspberry Pi Module" class="marqab-hero__product marqab-hero__product--left">
+      <img src="assets/aihatmodel.png" alt="AI HAT Module" class="marqab-hero__product marqab-hero__product--right">
     </div>
+  </div>
 </section>
 
-<!-- Split Layout Section - Image Left, Content Right -->
-<section class="marqab-intelligence" id="intelligence">
-    <div class="buraq-container">
-        <div class="marqab-intelligence__layout">
-            <div class="marqab-intelligence__visual animate-on-scroll slide-in-left delay-200">
-                <img src="assets/1766000514276.png" alt="Edge Intelligence" style="width: 100%; height: auto; border-radius: 24px;" />
-            </div>
-            <div class="marqab-intelligence__content">
-                <span class="section-eyebrow">Buraq Embedded Systems</span>
-                <h2 class="marqab-intelligence__title">Intelligence at the edge.</h2>
-                <p class="marqab-intelligence__description">Marqab brings enterprise-grade AI capabilities to the field through decentralized technology. Cheap and expendable, Marqab processes live sensor feeds, identifies threats, and coordinates responses across your entire team seamlessly.</p>
-                                <ul class="marqab-intelligence__features">
-                                    <li>Localized AI processing</li>
-                                    <li>Real-time threat detection</li>
-                                    <li>Low latency response</li>
-                                </ul>
-        </div>
+<!-- ─── INTELLIGENCE ─── -->
+<section class="marqab-intelligence">
+  <div class="buraq-container">
+    <div class="marqab-intelligence__layout">
+      <div class="marqab-intelligence__visual">
+        <img src="assets/1766000514276.png" alt="Marqab edge intelligence hardware" />
+      </div>
+      <div class="marqab-intelligence__content">
+        <span class="section-eyebrow">Buraq Embedded Systems</span>
+        <h2 class="marqab-intelligence__title">Intelligence at the edge.</h2>
+        <p class="marqab-intelligence__description">Marqab brings enterprise-grade AI capabilities to the field through decentralized technology. Cheap and expendable, Marqab processes live sensor feeds, identifies threats, and coordinates responses across your entire team seamlessly.</p>
+        <ul class="marqab-intelligence__features">
+          <li>Localized AI processing — no cloud dependency</li>
+          <li>Real-time threat detection and classification</li>
+          <li>Low-latency response under 100ms</li>
+          <li>Secure encrypted data relay to Buraq platform</li>
+        </ul>
+      </div>
     </div>
+  </div>
 </section>
 
-<!-- Centered Stacked Section - Image on Top -->
-<section class="marqab-deployment" id="deployment">
-    <div class="buraq-container">
-        <div class="marqab-deployment__content">
-            <span class="section-eyebrow">On Site Deployment</span>
-            <h2 class="marqab-deployment__title">Built for the mission.</h2>
-            <p class="marqab-deployment__description">Military-grade construction meets plug-and-play simplicity. Deploy in minutes, operate in extreme conditions, and maintain continuous situational awareness with minimal power requirements.</p>
-        </div>
-        <div class="marqab-deployment__image animate-on-scroll scale-in delay-300"> 
-            <img src="assets/marqab.png" alt="MARQAB Module" style="width: 50%; height: auto; border-radius: 24px; display: block; margin-left: auto; margin-right: auto;" />
-        </div>
-        <div class="marqab-deployment__specs">
-            <div class="marqab-deployment__spec animate-on-scroll fade-in-up stagger-1">
-                <div class="marqab-deployment__spec-label">Connectivity</div>
-                <div class="marqab-deployment__spec-value">Wi-Fi/Satellite</div>
-            </div>
-            <div class="marqab-deployment__spec animate-on-scroll fade-in-up stagger-2">
-                <div class="marqab-deployment__spec-label">Enclosure Rating</div>
-                <div class="marqab-deployment__spec-value">IP67 Certified</div>
-            </div>
-            <div class="marqab-deployment__spec animate-on-scroll fade-in-up stagger-3">
-                <div class="marqab-deployment__spec-label">Power Source</div>
-                <div class="marqab-deployment__spec-value">5V USB-C</div>
-            </div>
-            <div class="marqab-deployment__spec animate-on-scroll fade-in-up stagger-4">
-                <div class="marqab-deployment__spec-label">Setup Time</div>
-                <div class="marqab-deployment__spec-value">&lt;5 Minutes</div>
-            </div>
-        </div>
+<!-- ─── DEPLOYMENT ─── -->
+<section class="marqab-deployment">
+  <div class="buraq-container">
+    <div class="marqab-deployment__content">
+      <span class="section-eyebrow">On-Site Deployment</span>
+      <h2 class="marqab-deployment__title">Built for the mission.</h2>
+      <p class="marqab-deployment__description">Military-grade construction meets plug-and-play simplicity. Deploy in minutes, operate in extreme conditions, and maintain continuous situational awareness with minimal power requirements.</p>
     </div>
+    <div class="marqab-deployment__image">
+      <img src="assets/marqab.png" alt="MARQAB Module" />
+    </div>
+    <div class="marqab-deployment__specs">
+      <div class="marqab-deployment__spec">
+        <div class="marqab-deployment__spec-label">Connectivity</div>
+        <div class="marqab-deployment__spec-value">Wi-Fi / Satellite</div>
+      </div>
+      <div class="marqab-deployment__spec">
+        <div class="marqab-deployment__spec-label">Enclosure Rating</div>
+        <div class="marqab-deployment__spec-value">IP67 Certified</div>
+      </div>
+      <div class="marqab-deployment__spec">
+        <div class="marqab-deployment__spec-label">Power Source</div>
+        <div class="marqab-deployment__spec-value">5V USB-C</div>
+      </div>
+      <div class="marqab-deployment__spec">
+        <div class="marqab-deployment__spec-label">Setup Time</div>
+        <div class="marqab-deployment__spec-value">&lt;5 Minutes</div>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- ─── FOOTER ─── -->
 <footer class="site-footer">
-<div class="site-footer__container">
-<div class="site-footer__top">
-<div class="site-footer__brand">
-<img src="assets/buraq-logo.png" alt="Buraq logo" width="40" height="40" />
-<span class="site-footer__wordmark">Buraq AI&trade;</span>
-</div>
-<div class="site-footer__content">
-<div class="site-footer__nav">
-<a href="/#monitoring">Monitor</a>
-<a href="/#detection">Detection</a>
-<a href="/#evidence">Evidence</a>
-<a href="/#intelligence">Data</a>
-<a href="/#extensions">Threats</a>
-<a href="/#contact">Contact</a>
-</div>
-<div class="site-footer__social">
-<a href="https://www.instagram.com/buraqaiofficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-<rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-<line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-</svg>
-</a>
-<a href="https://www.linkedin.com/company/buraq-ai" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-<rect x="2" y="9" width="4" height="12"></rect>
-<circle cx="4" cy="4" r="2"></circle>
-</svg>
-</a>
-<a href="https://twitter.com/buraq_ai" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-<path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
-<path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
-</svg>
-</a>
-</div>
-</div>
-</div>
-<div class="site-footer__bottom">
-<span>© <span data-year></span> Buraq AI Inc. - All rights reserved</span>
-<a href="/terms-of-use">Terms of Use</a>
-<a href="/privacy-policy">Privacy Policy</a>
-</div>
-</div>
+  <div class="site-footer__container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <img src="assets/buraq-logo.png" alt="Buraq logo" width="28" height="28" />
+        <span class="site-footer__wordmark">Buraq AI&trade;</span>
+      </div>
+      <div class="site-footer__content">
+        <div class="site-footer__nav">
+          <a href="/#monitoring">Monitor</a>
+          <a href="/#detection">Detection</a>
+          <a href="/#evidence">Evidence</a>
+          <a href="/#intelligence">Data</a>
+          <a href="/#extensions">Threats</a>
+          <a href="/#contact">Contact</a>
+        </div>
+        <div class="site-footer__social">
+          <a href="https://www.instagram.com/buraqaiofficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/company/buraq-ai" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://twitter.com/buraq_ai" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733-16z"/><path d="M4 20l6.768-6.768m2.46-2.46l6.772-6.772"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <span>&copy; <span data-year></span> Buraq AI Inc. — All rights reserved</span>
+      <a href="/terms-of-use">Terms of Use</a>
+      <a href="/privacy-policy">Privacy Policy</a>
+    </div>
+  </div>
 </footer>
 
 <script>
-// Marqab Hero Animation Control - Only run once per session
-if (sessionStorage.getItem('marqabHeroPlayed')) {
-    // Skip animation - show final state immediately
-    const title = document.querySelector('.marqab-hero__title');
-    const subtitle = document.querySelector('.marqab-hero__subtitle');
-    const products = document.querySelectorAll('.marqab-hero__product');
-    
-    if (title) {
-        title.style.animation = 'none';
-        title.style.opacity = '1';
-    }
-    if (subtitle) {
-        subtitle.style.animation = 'none';
-        subtitle.style.opacity = '1';
-    }
-    products.forEach(product => {
-        product.style.animation = 'none';
-        if (product.classList.contains('marqab-hero__product--left')) {
-            product.style.transform = 'translate(-50%, calc(-50% + 80px))';
-        } else {
-            product.style.transform = 'translate(-50%, calc(-50% - 80px))';
-        }
-        product.style.opacity = '1';
-        product.style.filter = 'drop-shadow(0 0 40px rgba(59, 130, 246, 0.6)) drop-shadow(0 0 80px rgba(59, 130, 246, 0.4)) drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5))';
-    });
-} else {
-    // Mark animation as played for this session
-    sessionStorage.setItem('marqabHeroPlayed', 'true');
-}
+// Mobile drawer
+(function () {
+  var burger = document.querySelector('.nav__burger');
+  var drawer = document.getElementById('drawer');
+  var backdrop = document.querySelector('.drawer__backdrop');
+  var closeBtn = document.querySelector('.drawer__close');
+  if (!burger || !drawer) return;
+  var open = function () {
+    drawer.setAttribute('aria-hidden', 'false');
+    burger.setAttribute('aria-expanded', 'true');
+    backdrop.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  };
+  var close = function () {
+    drawer.setAttribute('aria-hidden', 'true');
+    burger.setAttribute('aria-expanded', 'false');
+    backdrop.classList.remove('is-open');
+    document.body.style.overflow = '';
+  };
+  burger.addEventListener('click', open);
+  closeBtn && closeBtn.addEventListener('click', close);
+  backdrop && backdrop.addEventListener('click', close);
+  drawer.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', close); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+})();
+
+// Scroll progress
+(function () {
+  var bar = document.querySelector('.progress__fill');
+  if (!bar) return;
+  window.addEventListener('scroll', function () {
+    var total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = total > 0 ? Math.min((window.scrollY / total) * 100, 100) + '%' : '0%';
+  }, { passive: true });
+})();
+
+// Footer year
+(function () {
+  var el = document.querySelector('[data-year]');
+  if (el) el.textContent = new Date().getFullYear();
+})();
 </script>
-<script type="module" src="main.js"></script>
 </body>
 </html>

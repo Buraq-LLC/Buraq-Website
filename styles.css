@@ -782,7 +782,7 @@ nav {
   font-size: clamp(2.2rem, 4.5vw, 3.8rem); font-weight: 700;
   letter-spacing: -0.035em; line-height: 1.08; margin-bottom: 16px;
 }
-.watchlist-header h2 em { font-style: normal; color: var(--blue); }
+.watchlist-header h2 em { font-style: normal; color: #ef4444; }
 .watchlist-header p { font-size: 1rem; color: var(--muted2); max-width: 560px; line-height: 1.72; }
 .watchlist-grid {
   display: grid; grid-template-columns: repeat(3,1fr);
@@ -790,13 +790,20 @@ nav {
   gap: 1px; background: var(--border);
   border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
 }
+@keyframes wcard-edge-flash {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(239,68,68,0), inset 0 0 0 1px rgba(239,68,68,0); }
+  50% { box-shadow: 0 0 18px 2px rgba(239,68,68,0.18), inset 0 0 0 1px rgba(239,68,68,0.35); }
+}
 .wcard {
   background: var(--bg2); padding: 36px 30px;
   position: relative; overflow: hidden; transition: background .25s;
+  animation: wcard-edge-flash 2.8s ease-in-out infinite;
 }
+.wcard:nth-child(2) { animation-delay: 0.9s; }
+.wcard:nth-child(3) { animation-delay: 1.8s; }
 .wcard::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--blue), transparent);
+  background: linear-gradient(90deg, transparent, #ef4444, transparent);
   opacity: 0; transition: opacity .3s;
 }
 .wcard:hover { background: var(--bg3); }
@@ -804,8 +811,8 @@ nav {
 .wcard__head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
 .wcard__tag {
   font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--blue); background: rgba(41,151,255,0.08);
-  border: 1px solid rgba(41,151,255,0.22); border-radius: 3px; padding: 3px 7px;
+  color: #ef4444; background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.28); border-radius: 3px; padding: 3px 7px;
 }
 .wcard__meta { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.04em; }
 .wcard h3 { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em; color: #fff; margin-bottom: 10px; }
@@ -818,7 +825,7 @@ nav {
 .wcard li::before {
   content: ''; position: absolute; left: 0; top: 8px;
   width: 4px; height: 4px; border-radius: 50%;
-  background: var(--blue); opacity: 0.4;
+  background: #ef4444; opacity: 0.5;
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -1079,4 +1086,289 @@ footer {
   .map-card { width: 130px; }
 
   .sys-platform-screen .hud-corner.tr { display: none; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MARQAB PAGE
+══════════════════════════════════════════════════════════════ */
+
+/* ── Scroll progress (marqab variant) ── */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; width: 100%; height: 4px;
+  z-index: 9999; pointer-events: none;
+  background: rgba(255,255,255,0.1);
+  box-shadow: 0 0 10px rgba(41,151,255,0.3);
+}
+.scroll-progress span {
+  display: block; height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--blue), #0077ed);
+  box-shadow: 0 0 8px rgba(41,151,255,0.5);
+}
+
+/* ── Site Nav ── */
+.site-nav {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(4,5,7,0.9);
+  border-bottom: 1px solid var(--border);
+}
+.site-nav__inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 64px;
+}
+.site-nav__brand {
+  display: flex; align-items: center; gap: 10px; text-decoration: none;
+}
+.site-nav__mark { display: flex; align-items: center; justify-content: center; }
+.site-nav__mark img { display: block; width: 32px; height: 32px; object-fit: contain; }
+.site-nav__wordmark { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; color: var(--text); }
+.site-nav__actions { display: flex; align-items: center; gap: 12px; }
+.site-nav__ghost {
+  font-size: 0.8rem; font-weight: 500;
+  color: var(--muted2); padding: 7px 16px;
+  border: 1px solid var(--border2); border-radius: 6px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.site-nav__ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.22); }
+.site-nav__cta {
+  font-size: 0.8rem; font-weight: 600;
+  color: #fff; background: #dc2626; padding: 8px 18px;
+  border-radius: 6px; transition: background 0.2s;
+}
+.site-nav__cta:hover { background: #b91c1c; }
+.site-nav__toggle {
+  display: none; flex-direction: column; justify-content: center; gap: 5px;
+  width: 36px; height: 36px; background: none; border: none; cursor: pointer;
+}
+.site-nav__toggle span {
+  display: block; width: 20px; height: 2px; background: var(--text); transition: all 0.25s;
+}
+.mobile-menu {
+  display: none;
+  position: absolute; top: 100%; left: 0; right: 0;
+  flex-direction: column;
+  background: rgba(4,5,7,0.98);
+  border-bottom: 1px solid var(--border);
+  z-index: 998;
+}
+.mobile-menu[aria-hidden="false"] { display: flex; }
+.mobile-menu a {
+  display: block; padding: 14px 24px; font-size: 0.875rem;
+  color: var(--muted2); border-bottom: 1px solid var(--border);
+  transition: color 0.2s;
+}
+.mobile-menu a:hover { color: var(--text); }
+
+/* ── Container & Eyebrow ── */
+.buraq-container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+.section-eyebrow {
+  display: block; font-family: var(--mono); font-size: 10px;
+  font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 16px;
+}
+
+/* ── Scroll-reveal extensions for marqab ── */
+.animate-on-scroll.slide-in-left {
+  transform: translateX(-40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.animate-on-scroll.scale-in {
+  transform: scale(0.92);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.animate-on-scroll.fade-in-up {
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+
+/* ── Marqab Hero ── */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes marqab-product-left {
+  0%   { opacity: 0; transform: translate(-50%, -50%); filter: drop-shadow(0 20px 60px rgba(0,0,0,0.5)); }
+  15%  { opacity: 1; }
+  71%  { opacity: 1; transform: translate(-50%, calc(-50% + 80px)); filter: drop-shadow(0 20px 60px rgba(0,0,0,0.5)); }
+  100% { opacity: 1; transform: translate(-50%, calc(-50% + 80px));
+         filter: drop-shadow(0 0 40px rgba(59,130,246,0.6)) drop-shadow(0 0 80px rgba(59,130,246,0.4)) drop-shadow(0 20px 60px rgba(0,0,0,0.5)); }
+}
+@keyframes marqab-product-right {
+  0%   { opacity: 0; transform: translate(-50%, -50%); filter: drop-shadow(0 20px 60px rgba(0,0,0,0.5)); }
+  15%  { opacity: 1; }
+  71%  { opacity: 1; transform: translate(-50%, calc(-50% - 80px)); filter: drop-shadow(0 20px 60px rgba(0,0,0,0.5)); }
+  100% { opacity: 1; transform: translate(-50%, calc(-50% - 80px));
+         filter: drop-shadow(0 0 40px rgba(59,130,246,0.6)) drop-shadow(0 0 80px rgba(59,130,246,0.4)) drop-shadow(0 20px 60px rgba(0,0,0,0.5)); }
+}
+.marqab-hero {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 8rem 2rem 4rem; position: relative; overflow: hidden;
+  background: var(--bg);
+}
+.marqab-hero::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 70% 50% at 50% 40%, rgba(41,151,255,0.07) 0%, transparent 70%);
+}
+.marqab-hero__content {
+  text-align: center; max-width: 1100px; margin: 0 auto; position: relative; z-index: 2;
+}
+.marqab-hero__eyebrow {
+  font-family: var(--mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 20px;
+}
+.marqab-hero__title {
+  font-size: clamp(4rem, 10vw, 8rem); font-weight: 900;
+  letter-spacing: 0.06em; line-height: 1; margin-bottom: 20px;
+  background: linear-gradient(135deg, #60a5fa 30%, #1e40af);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.marqab-hero__tm {
+  font-size: 0.35em; vertical-align: super; margin-left: 0.1em;
+  background: linear-gradient(135deg, #60a5fa, #1e40af);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.marqab-hero__subtitle {
+  font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+  color: var(--muted2); font-weight: 400; margin: 0 auto 56px;
+  font-family: var(--mono); letter-spacing: 0.04em;
+}
+.marqab-hero__products {
+  position: relative; height: 460px; margin: 0 auto; max-width: 680px;
+}
+.marqab-hero__product {
+  position: absolute; left: 50%; top: 50%;
+  width: clamp(200px, 26vw, 340px); height: auto;
+  opacity: 0;
+}
+.marqab-hero__product--left  { animation: marqab-product-left  3.5s ease-out forwards; z-index: 1; }
+.marqab-hero__product--right { animation: marqab-product-right 3.5s ease-out forwards; z-index: 2; }
+@media (prefers-reduced-motion: reduce) {
+  .marqab-hero__product { opacity: 1; animation: none; }
+  .marqab-hero__product--left  { transform: translate(-50%, calc(-50% + 80px)); }
+  .marqab-hero__product--right { transform: translate(-50%, calc(-50% - 80px)); }
+}
+
+/* ── Marqab Intelligence ── */
+.marqab-intelligence {
+  padding: 6rem 0; background: var(--bg2); border-top: 1px solid var(--border);
+}
+.marqab-intelligence__layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+}
+.marqab-intelligence__visual img {
+  width: 100%; height: auto; border-radius: 20px; display: block;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+}
+.marqab-intelligence__title {
+  font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
+  line-height: 1.08; margin-bottom: 1.2rem; letter-spacing: -0.03em; color: #fff;
+}
+.marqab-intelligence__description {
+  font-size: 1rem; line-height: 1.75; color: var(--muted2); margin-bottom: 2rem;
+}
+.marqab-intelligence__features { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.marqab-intelligence__features li {
+  font-size: 0.9rem; color: var(--muted2); padding-left: 20px; position: relative; line-height: 1.5;
+}
+.marqab-intelligence__features li::before {
+  content: ''; position: absolute; left: 0; top: 7px;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--blue);
+}
+
+/* ── Marqab Deployment ── */
+.marqab-deployment {
+  padding: 6rem 0; background: var(--bg); border-top: 1px solid var(--border);
+}
+.marqab-deployment__content { text-align: center; max-width: 700px; margin: 0 auto 3rem; }
+.marqab-deployment__title {
+  font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
+  line-height: 1.08; margin-bottom: 1.2rem; letter-spacing: -0.03em; color: #fff;
+}
+.marqab-deployment__description { font-size: 1rem; line-height: 1.75; color: var(--muted2); }
+.marqab-deployment__image {
+  margin: 0 auto 4rem; max-width: 480px; text-align: center;
+}
+.marqab-deployment__image img {
+  width: 80%; height: auto; border-radius: 20px; display: block;
+  margin: 0 auto;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+}
+.marqab-deployment__specs {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+  max-width: 900px; margin: 0 auto;
+}
+.marqab-deployment__spec {
+  background: var(--bg2); padding: 32px 24px; text-align: center;
+  transition: background 0.25s;
+}
+.marqab-deployment__spec:hover { background: var(--bg3); }
+.marqab-deployment__spec-label {
+  font-family: var(--mono); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 10px;
+}
+.marqab-deployment__spec-value { font-size: 1.1rem; font-weight: 700; color: #60a5fa; }
+
+/* ── Site Footer (marqab) ── */
+.site-footer {
+  background: var(--bg2); border-top: 1px solid var(--border); padding: 60px 0 28px;
+}
+.site-footer__container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+.site-footer__top {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 40px;
+  padding-bottom: 40px; border-bottom: 1px solid var(--border); margin-bottom: 24px;
+}
+.site-footer__brand { display: flex; align-items: center; gap: 12px; }
+.site-footer__brand img { width: 28px; height: 28px; opacity: 0.7; }
+.site-footer__wordmark { font-size: 0.9rem; font-weight: 700; color: var(--muted2); }
+.site-footer__content { display: flex; flex-direction: column; align-items: flex-end; gap: 20px; }
+.site-footer__nav { display: flex; gap: 24px; flex-wrap: wrap; justify-content: flex-end; }
+.site-footer__nav a {
+  font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase;
+  font-family: var(--mono); transition: color 0.2s;
+}
+.site-footer__nav a:hover { color: var(--text); }
+.site-footer__social { display: flex; gap: 16px; }
+.site-footer__social a { color: var(--muted); transition: color 0.2s; }
+.site-footer__social a:hover { color: var(--text); }
+.site-footer__social svg { width: 18px; height: 18px; display: block; }
+.site-footer__bottom {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; color: var(--muted);
+}
+.site-footer__bottom a { color: var(--muted); transition: color 0.2s; }
+.site-footer__bottom a:hover { color: var(--text); }
+
+/* ── Marqab Responsive ── */
+@media (max-width: 1024px) {
+  .marqab-intelligence__layout { grid-template-columns: 1fr; gap: 3rem; }
+  .marqab-deployment__specs { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 960px) {
+  .site-nav__inner { padding: 0 24px; }
+  .buraq-container { padding: 0 24px; }
+  .site-footer__container { padding: 0 24px; }
+  .site-footer__top { flex-direction: column; }
+  .site-footer__content { align-items: flex-start; }
+  .site-footer__nav { justify-content: flex-start; }
+}
+@media (max-width: 768px) {
+  .site-nav__toggle { display: flex; }
+  .site-nav__ghost { display: none; }
+  .marqab-hero { padding: 6rem 1.5rem 3rem; }
+  .marqab-hero__subtitle { white-space: normal; }
+  .marqab-hero__product { width: clamp(180px, 40vw, 280px); }
+  .marqab-deployment__specs { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+@media (max-width: 480px) {
+  .marqab-deployment__image img { width: 80% !important; }
 }
