@@ -27,8 +27,6 @@ function initNav() {
   const burger = $('.nav__burger');
   const drawer = $('#drawer');
   const backdrop = $('.drawer__backdrop');
-  const closeBtn = $('.drawer__close');
-
   if (!nav) return;
 
   // Scroll: add .is-scrolled for optional styling
@@ -39,18 +37,19 @@ function initNav() {
   const openDrawer = () => {
     drawer.setAttribute('aria-hidden', 'false');
     burger.setAttribute('aria-expanded', 'true');
-    backdrop.classList.add('is-open');
+    backdrop?.classList.add('is-open');
     document.body.style.overflow = 'hidden';
   };
   const closeDrawer = () => {
     drawer.setAttribute('aria-hidden', 'true');
     burger.setAttribute('aria-expanded', 'false');
-    backdrop.classList.remove('is-open');
+    backdrop?.classList.remove('is-open');
     document.body.style.overflow = '';
   };
 
   burger?.addEventListener('click', openDrawer);
-  closeBtn?.addEventListener('click', closeDrawer);
+  drawer?.addEventListener('click', e => { if (e.target.closest('.drawer__close')) closeDrawer(); });
+  $('.drawer__close')?.addEventListener('click', closeDrawer);
   backdrop?.addEventListener('click', closeDrawer);
   drawer?.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
 
