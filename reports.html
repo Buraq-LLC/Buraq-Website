@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
+<meta name="theme-color" content="#040507" />
+<link rel="manifest" href="manifest.json" />
+<title>Buraq AI | Intelligence Reports</title>
+<meta name="description" content="Buraq AI Reports — AI-generated intelligence reports from field operations, geospatial analysis, and threat monitoring." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-logo.png" />
+<link rel="stylesheet" href="styles.css?v=2" />
+</head>
+<body>
+
+<div class="progress"><div class="progress__fill"></div></div>
+
+<nav id="nav">
+  <div class="nav-left">
+    <a class="logo" href="/">
+      <img src="assets/buraq-horse.png" width="16" height="16" alt="" />
+      Buraq AI
+    </a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="/drones">Drones</a></li>
+    <li><a href="/evidence-vault">Evidence Vault</a></li>
+    <li><a href="/reports" aria-current="page">Reports</a></li>
+    <li><a href="/marqab">Edge</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="/#contact" class="btn-nav red">Contact Us</a>
+    <button class="nav__burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer__header">
+    <span class="drawer__label">Navigation</span>
+    <button class="drawer__close" aria-label="Close menu">✕</button>
+  </div>
+  <nav>
+    <a href="/drones">Drones</a>
+    <a href="/evidence-vault">Evidence Vault</a>
+    <a href="/reports" aria-current="page">Reports</a>
+    <a href="/marqab">Edge</a>
+    <a href="/#contact">Contact Us</a>
+  </nav>
+</div>
+<div class="drawer__backdrop" aria-hidden="true"></div>
+
+<!-- ─── HERO ─── -->
+<section class="reports-hero">
+  <div class="reports-hero__inner">
+    <div class="reports-hero__left">
+      <p class="reports-hero__label">Intelligence Reports</p>
+      <h1 class="reports-hero__title">
+        Verified<br/>
+        <em>Intelligence.</em><br/>
+        <span>Published.</span>
+      </h1>
+      <p class="reports-hero__sub">
+        AI-generated operational intelligence reports synthesized from field sensors, geospatial analysis, and open-source intelligence — verified, sourced, and ready for action.
+      </p>
+      <a class="reports-hero__cta" href="/#contact">Request Report Access →</a>
+    </div>
+    <div class="reports-hero__right">
+      <div class="reports-hero__stat-row">
+        <div class="reports-hero__stat">
+          <span class="reports-hero__stat-key">Report Frequency</span>
+          <span class="reports-hero__stat-val">Continuous</span>
+        </div>
+        <div class="reports-hero__stat">
+          <span class="reports-hero__stat-key">Intelligence Sources</span>
+          <span class="reports-hero__stat-val">Multi-layer</span>
+        </div>
+        <div class="reports-hero__stat">
+          <span class="reports-hero__stat-key">Verification</span>
+          <span class="reports-hero__stat-val">Cryptographic</span>
+        </div>
+        <div class="reports-hero__stat">
+          <span class="reports-hero__stat-key">Distribution</span>
+          <span class="reports-hero__stat-val">Secure & Restricted</span>
+        </div>
+        <div class="reports-hero__stat">
+          <span class="reports-hero__stat-key">Formats</span>
+          <span class="reports-hero__stat-val">PDF/A · XML · API</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── REPORTS INDEX ─── -->
+<section class="reports-index">
+  <div class="reports-index__inner">
+    <div class="reports-index__header">
+      <span class="label-mono reveal">Published Reports</span>
+      <h2 class="reveal reveal-d1">Latest Intelligence</h2>
+      <p class="reveal reveal-d2">Operational reports generated from Buraq AI's continuous monitoring, field sensor networks, and geospatial intelligence systems.</p>
+    </div>
+    <div class="reports-grid">
+
+      <article class="report-card reveal">
+        <div class="report-card__meta">
+          <span class="report-card__date">Mar 2025</span>
+          <span class="report-card__tag report-card__tag--threat">Threat Assessment</span>
+        </div>
+        <h3 class="report-card__title">Gaza Conflict: Infrastructure Destruction Patterns Q1 2025</h3>
+        <p class="report-card__excerpt">Systematic geospatial analysis of civilian infrastructure destruction in northern Gaza. Cross-referenced satellite imagery, drone telemetry, and verified ground reporting to document patterns of disproportionate force.</p>
+        <div class="report-card__footer">
+          <span class="report-card__byline">Buraq AI Field Analysis</span>
+          <span class="report-card__action">Read Report →</span>
+        </div>
+      </article>
+
+      <article class="report-card reveal reveal-d1">
+        <div class="report-card__meta">
+          <span class="report-card__date">Feb 2025</span>
+          <span class="report-card__tag report-card__tag--geospatial">Geospatial</span>
+        </div>
+        <h3 class="report-card__title">Sudan: RSF Troop Movements & Displacement Corridors</h3>
+        <p class="report-card__excerpt">Multi-source geospatial intelligence tracking Rapid Support Forces troop concentrations, displacement patterns, and aid blockade positions across Darfur and Khartoum State.</p>
+        <div class="report-card__footer">
+          <span class="report-card__byline">Buraq AI Geospatial Unit</span>
+          <span class="report-card__action">Read Report →</span>
+        </div>
+      </article>
+
+      <article class="report-card reveal reveal-d2">
+        <div class="report-card__meta">
+          <span class="report-card__date">Feb 2025</span>
+          <span class="report-card__tag report-card__tag--evidence">Evidence</span>
+        </div>
+        <h3 class="report-card__title">Documented IHL Violations: Hospital Strikes Verified Record</h3>
+        <p class="report-card__excerpt">Cryptographically verified documentation of strikes on protected medical facilities. Includes timestamped satellite before/after imagery, witness testimony metadata, and legal classification.</p>
+        <div class="report-card__footer">
+          <span class="report-card__byline">Evidence Vault Export</span>
+          <span class="report-card__action">Read Report →</span>
+        </div>
+      </article>
+
+      <article class="report-card reveal">
+        <div class="report-card__meta">
+          <span class="report-card__date">Jan 2025</span>
+          <span class="report-card__tag report-card__tag--intelligence">Intelligence</span>
+        </div>
+        <h3 class="report-card__title">Military Asset Identification: MENA Region Overview</h3>
+        <p class="report-card__excerpt">Comprehensive identification and classification of military assets across the Middle East and North Africa region. AI-generated asset registry with confidence scores, source attribution, and historical tracking.</p>
+        <div class="report-card__footer">
+          <span class="report-card__byline">Buraq AI Platform</span>
+          <span class="report-card__action">Read Report →</span>
+        </div>
+      </article>
+
+      <article class="report-card reveal reveal-d1">
+        <div class="report-card__meta">
+          <span class="report-card__date">Jan 2025</span>
+          <span class="report-card__tag report-card__tag--threat">Threat Assessment</span>
+        </div>
+        <h3 class="report-card__title">Early Warning Indicators: Escalation Risk Assessment Q1</h3>
+        <p class="report-card__excerpt">Predictive threat modeling based on troop movements, logistical patterns, and historical escalation signatures across five active conflict zones. Includes confidence intervals and recommended monitoring parameters.</p>
+        <div class="report-card__footer">
+          <span class="report-card__byline">Buraq AI Threat Monitor</span>
+          <span class="report-card__action">Read Report →</span>
+        </div>
+      </article>
+
+      <article class="report-card reveal reveal-d2">
+        <div class="report-card__meta">
+          <span class="report-card__date">Dec 2024</span>
+          <span class="report-card__tag report-card__tag--geospatial">Geospatial</span>
+        </div>
+        <h3 class="report-card__title">Settlement Expansion Mapping: West Bank 2024 Annual</h3>
+        <p class="report-card__excerpt">Annual geospatial analysis of settlement expansion in the occupied West Bank. Satellite-derived land use change detection, construction activity monitoring, and displacement impact modeling.</p>
+        <div class="report-card__footer">
+          <span class="report-card__byline">Buraq AI Geospatial Unit</span>
+          <span class="report-card__action">Read Report →</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── HOW REPORTS ARE GENERATED ─── -->
+<section class="reports-process">
+  <div class="reports-process__inner">
+    <div class="reports-process__header">
+      <span class="label-mono reveal">How It Works</span>
+      <h2 class="reveal reveal-d1">From raw data<br/>to verified intelligence.</h2>
+      <p class="reveal reveal-d2">Reports are not manually authored — they are synthesized by the Buraq AI platform from continuously updated, multi-source intelligence feeds and subject to cryptographic verification before publication.</p>
+    </div>
+    <div class="reports-process__steps">
+      <div class="reports-process-step reveal">
+        <div class="reports-process-step__num">01</div>
+        <div class="reports-process-step__content">
+          <h3>Multi-Source Data Aggregation</h3>
+          <p>The Buraq platform continuously ingests data from drone ISR feeds, satellite imagery, open-source intelligence, field sensors, and Marqab edge nodes. Data is normalized, deduplicated, and cross-referenced in real time.</p>
+          <div class="reports-process-step__tags">
+            <span class="sys-tag">Drone Feeds</span>
+            <span class="sys-tag">Satellite</span>
+            <span class="sys-tag">OSINT</span>
+            <span class="sys-tag">Field Sensors</span>
+          </div>
+        </div>
+      </div>
+      <div class="reports-process-step reveal reveal-d1">
+        <div class="reports-process-step__num">02</div>
+        <div class="reports-process-step__content">
+          <h3>AI Analysis & Pattern Detection</h3>
+          <p>Machine learning models analyze aggregated data for patterns, anomalies, and significant events. Entity relationships are mapped, threat levels are assessed, and geospatial intelligence is synthesized into coherent operational intelligence.</p>
+          <div class="reports-process-step__tags">
+            <span class="sys-tag">Graph Analytics</span>
+            <span class="sys-tag">Anomaly Detection</span>
+            <span class="sys-tag">Entity Mapping</span>
+          </div>
+        </div>
+      </div>
+      <div class="reports-process-step reveal reveal-d2">
+        <div class="reports-process-step__num">03</div>
+        <div class="reports-process-step__content">
+          <h3>Verification & Publication</h3>
+          <p>Reports are cryptographically signed before publication — every claim is traceable to its source record in the Evidence Vault. Access is controlled and distributed through secure channels to authorized organizations only.</p>
+          <div class="reports-process-step__tags">
+            <span class="sys-tag">Cryptographic Sign</span>
+            <span class="sys-tag">Evidence-Linked</span>
+            <span class="sys-tag">Controlled Access</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section class="reports-cta">
+  <div class="reports-cta__inner">
+    <span class="label-mono reveal">Access</span>
+    <h2 class="reveal reveal-d1">Request<br/><span>report access.</span></h2>
+    <p class="reveal reveal-d2">Buraq AI reports are distributed to humanitarian organizations, legal counsel, journalists, and accountability institutions operating in conflict zones. Access is reviewed and restricted.</p>
+    <div class="reports-cta__actions">
+      <a class="btn-hero primary" href="/#contact">Request Access →</a>
+      <a class="btn-hero outline" href="/evidence-vault">Evidence Vault</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/" class="footer-brand-name">
+        <img src="assets/buraq-logo.png" width="14" height="14" alt="" />
+        Buraq AI&trade;
+      </a>
+      <p>A next-generation platform built for protecting civilians, enforcing humanitarian operations, and prosecuting abusers worldwide.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/buraqaiofficial/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/buraq-ai" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="https://twitter.com/buraq_ai" target="_blank" rel="noopener" aria-label="X / Twitter">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733-16z"/><path d="M4 20l6.768-6.768m2.46-2.46l6.772-6.772"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Products</h4>
+      <ul>
+        <li><a href="/drones">Drones</a></li>
+        <li><a href="/evidence-vault">Evidence Vault</a></li>
+        <li><a href="/reports">Reports</a></li>
+        <li><a href="/marqab">Buraq Edge</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/terms-of-use">Terms of Use</a></li>
+        <li><a href="/privacy-policy">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; <span data-year></span> Buraq AI Inc. — All rights reserved</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var burger = document.querySelector('.nav__burger');
+  var drawer = document.getElementById('drawer');
+  var backdrop = document.querySelector('.drawer__backdrop');
+  if (!burger || !drawer) return;
+  var open = function () { drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); if(backdrop) backdrop.classList.add('is-open'); document.body.style.overflow='hidden'; };
+  var close = function () { drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); if(backdrop) backdrop.classList.remove('is-open'); document.body.style.overflow=''; };
+  burger.addEventListener('click', open);
+  drawer.addEventListener('click', function(e){ if(e.target.closest('.drawer__close')) close(); });
+  backdrop && backdrop.addEventListener('click', close);
+  drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+})();
+(function () {
+  var bar = document.querySelector('.progress__fill');
+  if (!bar) return;
+  window.addEventListener('scroll', function () {
+    var total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = total > 0 ? Math.min((window.scrollY/total)*100,100)+'%' : '0%';
+  }, { passive: true });
+})();
+(function () {
+  var el = document.querySelector('[data-year]');
+  if (el) el.textContent = new Date().getFullYear();
+})();
+(function () {
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('is-visible'); });
+    return;
+  }
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+})();
+</script>
+</body>
+</html>

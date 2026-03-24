@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-logo.png" />
-<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="styles.css?v=2" />
 </head>
 <body>
 
@@ -24,20 +24,30 @@
         Buraq AI
       </a>
     </div>
-    <ul class="nav-links"></ul>
+    <ul class="nav-links">
+      <li><a href="/drones">Drones</a></li>
+      <li><a href="/evidence-vault">Evidence Vault</a></li>
+      <li><a href="/reports">Reports</a></li>
+      <li><a href="/marqab" aria-current="page">Edge</a></li>
+    </ul>
     <div class="nav-right">
-      <a href="/" class="btn-nav ghost">Home</a>
       <a href="/#contact" class="btn-nav red">Contact Us</a>
       <button class="nav__burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
-        <span></span><span></span>
+        <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
 
   <div class="drawer" id="drawer" aria-hidden="true">
-    <button class="drawer__close" aria-label="Close menu">✕</button>
+    <div class="drawer__header">
+      <span class="drawer__label">Navigation</span>
+      <button class="drawer__close" aria-label="Close menu">✕</button>
+    </div>
     <nav>
-      <a href="/">Home</a>
+      <a href="/drones">Drones</a>
+      <a href="/evidence-vault">Evidence Vault</a>
+      <a href="/reports">Reports</a>
+      <a href="/marqab" aria-current="page">Edge</a>
       <a href="/#contact">Contact Us</a>
     </nav>
   </div>
@@ -111,40 +121,52 @@
 </section>
 
 <!-- ─── FOOTER ─── -->
-<footer class="site-footer">
-  <div class="site-footer__container">
-    <div class="site-footer__top">
-      <div class="site-footer__brand">
-        <img src="assets/buraq-logo.png" alt="Buraq logo" width="28" height="28" />
-        <span class="site-footer__wordmark">Buraq AI&trade;</span>
-      </div>
-      <div class="site-footer__content">
-        <div class="site-footer__nav">
-          <a href="/#monitoring">Monitor</a>
-          <a href="/#detection">Detection</a>
-          <a href="/#evidence">Evidence</a>
-          <a href="/#intelligence">Data</a>
-          <a href="/#extensions">Threats</a>
-          <a href="/#contact">Contact</a>
-        </div>
-        <div class="site-footer__social">
-          <a href="https://www.instagram.com/buraqaiofficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          </a>
-          <a href="https://www.linkedin.com/company/buraq-ai" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-          </a>
-          <a href="https://twitter.com/buraq_ai" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733-16z"/><path d="M4 20l6.768-6.768m2.46-2.46l6.772-6.772"/></svg>
-          </a>
-        </div>
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/" class="footer-brand-name">
+        <img src="assets/buraq-logo.png" width="14" height="14" alt="" />
+        Buraq AI&trade;
+      </a>
+      <p>A next-generation platform built for protecting civilians, enforcing humanitarian operations, and prosecuting abusers worldwide.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/buraqaiofficial/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/buraq-ai" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="https://twitter.com/buraq_ai" target="_blank" rel="noopener" aria-label="X / Twitter">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733-16z"/><path d="M4 20l6.768-6.768m2.46-2.46l6.772-6.772"/></svg>
+        </a>
       </div>
     </div>
-    <div class="site-footer__bottom">
-      <span>&copy; <span data-year></span> Buraq AI Inc. — All rights reserved</span>
-      <a href="/terms-of-use">Terms of Use</a>
-      <a href="/privacy-policy">Privacy Policy</a>
+    <div class="footer-col">
+      <h4>Products</h4>
+      <ul>
+        <li><a href="/drones">Drones</a></li>
+        <li><a href="/evidence-vault">Evidence Vault</a></li>
+        <li><a href="/reports">Reports</a></li>
+        <li><a href="/marqab">Buraq Edge</a></li>
+      </ul>
     </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/terms-of-use">Terms of Use</a></li>
+        <li><a href="/privacy-policy">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; <span data-year></span> Buraq AI Inc. — All rights reserved</span>
   </div>
 </footer>
 
@@ -154,22 +176,21 @@
   var burger = document.querySelector('.nav__burger');
   var drawer = document.getElementById('drawer');
   var backdrop = document.querySelector('.drawer__backdrop');
-  var closeBtn = document.querySelector('.drawer__close');
   if (!burger || !drawer) return;
   var open = function () {
     drawer.setAttribute('aria-hidden', 'false');
     burger.setAttribute('aria-expanded', 'true');
-    backdrop.classList.add('is-open');
+    if (backdrop) backdrop.classList.add('is-open');
     document.body.style.overflow = 'hidden';
   };
   var close = function () {
     drawer.setAttribute('aria-hidden', 'true');
     burger.setAttribute('aria-expanded', 'false');
-    backdrop.classList.remove('is-open');
+    if (backdrop) backdrop.classList.remove('is-open');
     document.body.style.overflow = '';
   };
   burger.addEventListener('click', open);
-  closeBtn && closeBtn.addEventListener('click', close);
+  drawer.addEventListener('click', function (e) { if (e.target.closest('.drawer__close')) close(); });
   backdrop && backdrop.addEventListener('click', close);
   drawer.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', close); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });

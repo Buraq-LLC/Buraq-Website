@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
+<meta name="theme-color" content="#020305" />
+<link rel="manifest" href="manifest.json" />
+<title>Buraq AI | Evidence Vault</title>
+<meta name="description" content="Buraq AI Evidence Vault — tamper-proof, cryptographically verified records for international accountability and legal proceedings." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-logo.png" />
+<link rel="stylesheet" href="styles.css?v=2" />
+</head>
+<body>
+
+<div class="progress"><div class="progress__fill"></div></div>
+
+<nav id="nav">
+  <div class="nav-left">
+    <a class="logo" href="/">
+      <img src="assets/buraq-horse.png" width="16" height="16" alt="" />
+      Buraq AI
+    </a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="/drones">Drones</a></li>
+    <li><a href="/evidence-vault" aria-current="page">Evidence Vault</a></li>
+    <li><a href="/reports">Reports</a></li>
+    <li><a href="/marqab">Edge</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="/#contact" class="btn-nav red">Contact Us</a>
+    <button class="nav__burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer__header">
+    <span class="drawer__label">Navigation</span>
+    <button class="drawer__close" aria-label="Close menu">✕</button>
+  </div>
+  <nav>
+    <a href="/drones">Drones</a>
+    <a href="/evidence-vault" aria-current="page">Evidence Vault</a>
+    <a href="/reports">Reports</a>
+    <a href="/marqab">Edge</a>
+    <a href="/#contact">Contact Us</a>
+  </nav>
+</div>
+<div class="drawer__backdrop" aria-hidden="true"></div>
+
+<!-- ─── HERO ─── -->
+<section class="vault-hero">
+  <div class="vault-hero__hash-bg" aria-hidden="true" id="hashBg"></div>
+  <div class="vault-hero__glow"></div>
+  <div class="vault-hero__content">
+    <div class="vault-hero__badge">
+      <span class="vault-hero__badge-dot"></span>
+      Buraq AI Evidence Management
+    </div>
+    <h1 class="vault-hero__title">EVIDENCE<br/>VAULT</h1>
+    <p class="vault-hero__sub">
+      Tamper-proof, cryptographically verified records — built to withstand international legal scrutiny and support justice proceedings worldwide.
+    </p>
+    <p class="vault-hero__hash" id="liveHash" aria-hidden="true">
+      sha256:a3f8c2e1b9d7... verifying chain integrity
+    </p>
+  </div>
+</section>
+
+<!-- ─── CHAIN OF CUSTODY ─── -->
+<section class="vault-chain">
+  <div class="vault-chain__inner">
+    <div class="vault-chain__header">
+      <span class="label-mono reveal">Chain of Custody</span>
+      <h2 class="reveal reveal-d1">From field capture<br/>to courtroom.</h2>
+      <p class="reveal reveal-d2">Every piece of evidence follows an unbroken, cryptographically verified chain from the moment of capture to legal submission — no gaps, no tampering possible.</p>
+    </div>
+    <div class="vault-chain__steps">
+      <div class="vault-step reveal">
+        <div class="vault-step__num">01</div>
+        <div class="vault-step__title">Capture</div>
+        <p class="vault-step__desc">Field sensors and operators capture events through Buraq-connected devices. Each capture is immediately hashed at the point of origin.</p>
+      </div>
+      <div class="vault-step reveal reveal-d1">
+        <div class="vault-step__num">02</div>
+        <div class="vault-step__title">Hash</div>
+        <p class="vault-step__desc">A SHA-256 cryptographic fingerprint is generated and appended to the record. Any subsequent modification invalidates the hash — making tampering detectable.</p>
+      </div>
+      <div class="vault-step reveal reveal-d2">
+        <div class="vault-step__num">03</div>
+        <div class="vault-step__title">Store</div>
+        <p class="vault-step__desc">Records are encrypted with AES-256 and stored across geographically distributed, air-gapped infrastructure with automated redundancy verification.</p>
+      </div>
+      <div class="vault-step reveal reveal-d3">
+        <div class="vault-step__num">04</div>
+        <div class="vault-step__title">Export</div>
+        <p class="vault-step__desc">Court-ready export in international standard formats — PDF/A, XML, and open-chain formats — with full chain of custody documentation attached.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FEATURES ─── -->
+<section class="vault-features">
+  <div class="vault-features__inner">
+    <div class="vault-features__left">
+      <span class="label-mono reveal">Core Capabilities</span>
+      <h2 class="reveal reveal-d1">Documentation<br/>you can <span>trust.</span></h2>
+      <p class="reveal reveal-d2">Every record is tamper-proof, time-stamped, and cryptographically verified — ready to stand up to international legal scrutiny and support justice proceedings worldwide.</p>
+      <a class="doctrine-link" href="/#contact">Request Access →</a>
+    </div>
+    <div class="vault-features__right">
+      <div class="doctrine-item reveal">
+        <div class="doctrine-item-head">
+          <div class="doctrine-item-num" style="color:#22c55e; border-color:rgba(34,197,94,0.3);">01</div>
+          <h4>Tamper-Proof Storage</h4>
+        </div>
+        <p>Every record is cryptographically sealed at the moment of creation. Any modification — even a single bit — is immediately detectable through hash verification.</p>
+      </div>
+      <div class="doctrine-item reveal reveal-d1">
+        <div class="doctrine-item-head">
+          <div class="doctrine-item-num" style="color:#22c55e; border-color:rgba(34,197,94,0.3);">02</div>
+          <h4>Chronological Verification</h4>
+        </div>
+        <p>Timestamps are anchored to independent, verifiable time sources. Every record in the Vault carries a provable creation time that cannot be backdated or altered.</p>
+      </div>
+      <div class="doctrine-item reveal reveal-d2">
+        <div class="doctrine-item-head">
+          <div class="doctrine-item-num" style="color:#22c55e; border-color:rgba(34,197,94,0.3);">03</div>
+          <h4>Access Control & Audit Trail</h4>
+        </div>
+        <p>Granular role-based access with a full immutable audit log of every read, export, and administrative action — every interaction is recorded and verifiable.</p>
+      </div>
+      <div class="doctrine-item reveal reveal-d3">
+        <div class="doctrine-item-head">
+          <div class="doctrine-item-num" style="color:#22c55e; border-color:rgba(34,197,94,0.3);">04</div>
+          <h4>Court-Ready Export</h4>
+        </div>
+        <p>Automated export in PDF/A, XML, and internationally recognized legal formats with complete chain of custody documentation — ready for submission to international tribunals.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TRUST METRICS ─── -->
+<div class="vault-metrics">
+  <div class="vault-metric reveal">
+    <div class="vault-metric__label">Encryption</div>
+    <div class="vault-metric__val">AES-256</div>
+    <div class="vault-metric__sub">End-to-end</div>
+  </div>
+  <div class="vault-metric reveal reveal-d1">
+    <div class="vault-metric__label">Tampering</div>
+    <div class="vault-metric__val">0%</div>
+    <div class="vault-metric__sub">Cryptographic guarantee</div>
+  </div>
+  <div class="vault-metric reveal reveal-d2">
+    <div class="vault-metric__label">Hash Algorithm</div>
+    <div class="vault-metric__val">SHA-256</div>
+    <div class="vault-metric__sub">FIPS 140-2 compliant</div>
+  </div>
+  <div class="vault-metric reveal reveal-d3">
+    <div class="vault-metric__label">Availability</div>
+    <div class="vault-metric__val">99.99%</div>
+    <div class="vault-metric__sub">Geo-distributed SLA</div>
+  </div>
+</div>
+
+<!-- ─── COMPLIANCE ─── -->
+<section class="vault-compliance">
+  <div class="vault-compliance__header">
+    <span class="label-mono reveal">Built for Accountability</span>
+    <h2 class="reveal reveal-d1">Designed for<br/>international justice.</h2>
+    <p class="reveal reveal-d2">Every architectural decision in the Evidence Vault is made with legal accountability as the primary constraint.</p>
+  </div>
+  <div class="vault-compliance__grid">
+    <div class="vault-card reveal">
+      <div class="vault-card__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+      </div>
+      <span class="vault-card__num">01</span>
+      <h4>Air-Gapped Backup</h4>
+      <p>Critical evidence is backed up to air-gapped infrastructure isolated from internet-accessible systems, preventing remote compromise or deletion.</p>
+    </div>
+    <div class="vault-card reveal reveal-d1">
+      <div class="vault-card__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+        </svg>
+      </div>
+      <span class="vault-card__num">02</span>
+      <h4>Cryptographic Verification</h4>
+      <p>SHA-256 hashing with Merkle tree structures ensures any modification to any record — however minor — is immediately and automatically detected.</p>
+    </div>
+    <div class="vault-card reveal reveal-d2">
+      <div class="vault-card__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+      </div>
+      <span class="vault-card__num">03</span>
+      <h4>International Legal Standards</h4>
+      <p>Record formats and metadata schemas align with ICC evidentiary standards, UN documentation protocols, and international humanitarian law requirements.</p>
+    </div>
+    <div class="vault-card reveal reveal-d3">
+      <div class="vault-card__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+          <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+        </svg>
+      </div>
+      <span class="vault-card__num">04</span>
+      <h4>Full Audit Trail</h4>
+      <p>Every interaction with every record — every read, export, share, and administrative action — is logged immutably and is itself subject to the same cryptographic verification.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/" class="footer-brand-name">
+        <img src="assets/buraq-logo.png" width="14" height="14" alt="" />
+        Buraq AI&trade;
+      </a>
+      <p>A next-generation platform built for protecting civilians, enforcing humanitarian operations, and prosecuting abusers worldwide.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/buraqaiofficial/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/buraq-ai" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="https://twitter.com/buraq_ai" target="_blank" rel="noopener" aria-label="X / Twitter">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733-16z"/><path d="M4 20l6.768-6.768m2.46-2.46l6.772-6.772"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Products</h4>
+      <ul>
+        <li><a href="/drones">Drones</a></li>
+        <li><a href="/evidence-vault">Evidence Vault</a></li>
+        <li><a href="/reports">Reports</a></li>
+        <li><a href="/marqab">Buraq Edge</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/terms-of-use">Terms of Use</a></li>
+        <li><a href="/privacy-policy">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; <span data-year></span> Buraq AI Inc. — All rights reserved</span>
+  </div>
+</footer>
+
+<script>
+// Nav drawer
+(function () {
+  var burger = document.querySelector('.nav__burger');
+  var drawer = document.getElementById('drawer');
+  var backdrop = document.querySelector('.drawer__backdrop');
+  if (!burger || !drawer) return;
+  var open = function () { drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); if(backdrop) backdrop.classList.add('is-open'); document.body.style.overflow='hidden'; };
+  var close = function () { drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); if(backdrop) backdrop.classList.remove('is-open'); document.body.style.overflow=''; };
+  burger.addEventListener('click', open);
+  drawer.addEventListener('click', function(e){ if(e.target.closest('.drawer__close')) close(); });
+  backdrop && backdrop.addEventListener('click', close);
+  drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+})();
+// Scroll progress
+(function () {
+  var bar = document.querySelector('.progress__fill');
+  if (!bar) return;
+  window.addEventListener('scroll', function () {
+    var total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = total > 0 ? Math.min((window.scrollY/total)*100,100)+'%' : '0%';
+  }, { passive: true });
+})();
+// Footer year
+(function () {
+  var el = document.querySelector('[data-year]');
+  if (el) el.textContent = new Date().getFullYear();
+})();
+// Scroll reveal
+(function () {
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('is-visible'); });
+    return;
+  }
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+})();
+// Animated hash background
+(function () {
+  var container = document.getElementById('hashBg');
+  if (!container) return;
+  var chars = '0123456789abcdef';
+  function randHash(len) {
+    var h = 'sha256:';
+    for (var i = 0; i < len; i++) h += chars[Math.floor(Math.random()*chars.length)];
+    return h;
+  }
+  var html = '';
+  for (var col = 0; col < 3; col++) {
+    html += '<div class="vault-hero__hash-col">';
+    for (var i = 0; i < 80; i++) html += randHash(52) + '<br/>';
+    html += '</div>';
+  }
+  container.innerHTML = html;
+  // Animate live hash display
+  var liveEl = document.getElementById('liveHash');
+  if (liveEl) {
+    setInterval(function () {
+      liveEl.textContent = randHash(48) + ' ✓ verified';
+    }, 2400);
+  }
+})();
+</script>
+</body>
+</html>

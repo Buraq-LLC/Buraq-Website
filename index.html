@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/png" href="assets/buraq-logo.png" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=2" />
 </head>
 <body>
 
@@ -21,43 +21,37 @@
   <!-- ─── NAV ─── -->
   <nav id="nav">
     <div class="nav-left">
-      <a class="logo" href="#hero">
+      <a class="logo" href="/">
         <img src="assets/buraq-horse.png" width="16" height="16" alt="" />
         Buraq AI
       </a>
     </div>
     <ul class="nav-links">
-      <li><a href="#mission">Overview</a></li>
-      <li><a href="#unified-operations">Mission</a></li>
-      <li><a href="#monitoring">Monitor</a></li>
-      <li><a href="#detection">Detection</a></li>
-      <li><a href="#evidence">Evidence</a></li>
-      <li><a href="#intelligence">Data</a></li>
-      <li><a href="#extensions">Threats</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="/drones">Drones</a></li>
+      <li><a href="/evidence-vault">Evidence Vault</a></li>
+      <li><a href="/reports">Reports</a></li>
+      <li><a href="/marqab">Edge</a></li>
     </ul>
     <div class="nav-right">
-      <a href="/marqab" class="btn-nav ghost">Buraq Edge</a>
       <a href="#contact" class="btn-nav red">Contact Us</a>
       <button class="nav__burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
-        <span></span><span></span>
+        <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
 
   <!-- ─── MOBILE DRAWER ─── -->
   <div class="drawer" id="drawer" aria-hidden="true">
-    <button class="drawer__close" aria-label="Close menu">✕</button>
+    <div class="drawer__header">
+      <span class="drawer__label">Navigation</span>
+      <button class="drawer__close" aria-label="Close menu">✕</button>
+    </div>
     <nav>
-      <a href="#mission">Overview</a>
-      <a href="#unified-operations">Mission</a>
-      <a href="#monitoring">Monitor</a>
-      <a href="#detection">Detection</a>
-      <a href="#evidence">Evidence</a>
-      <a href="#intelligence">Data</a>
-      <a href="#extensions">Threats</a>
-      <a href="/marqab">Buraq Edge</a>
-      <a href="#contact">Contact</a>
+      <a href="/drones">Drones</a>
+      <a href="/evidence-vault">Evidence Vault</a>
+      <a href="/reports">Reports</a>
+      <a href="/marqab">Edge</a>
+      <a href="#contact">Contact Us</a>
     </nav>
   </div>
   <div class="drawer__backdrop" aria-hidden="true"></div>
@@ -551,15 +545,11 @@
   <footer>
     <div class="footer-top">
       <div class="footer-brand">
-        <a href="#hero" class="footer-brand-name">
+        <a href="/" class="footer-brand-name">
           <img src="assets/buraq-logo.png" width="14" height="14" alt="" />
           Buraq AI&trade;
         </a>
         <p>A next-generation platform built for protecting civilians, enforcing humanitarian operations, and prosecuting abusers worldwide.</p>
-        <div class="footer-clearance">
-          <span class="nav-blink"></span>
-          SECURE PLATFORM
-        </div>
         <div class="footer-social">
           <a href="https://www.instagram.com/buraqaiofficial/" target="_blank" rel="noopener" aria-label="Instagram">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
@@ -573,23 +563,19 @@
         </div>
       </div>
       <div class="footer-col">
-        <h4>Platform</h4>
+        <h4>Products</h4>
         <ul>
-          <li><a href="#monitoring">Real-Time Monitor</a></li>
-          <li><a href="#detection">Auto Detection</a></li>
-          <li><a href="#evidence">Evidence Mgmt</a></li>
-          <li><a href="#intelligence">Data Intelligence</a></li>
+          <li><a href="/drones">Drones</a></li>
+          <li><a href="/evidence-vault">Evidence Vault</a></li>
+          <li><a href="/reports">Reports</a></li>
           <li><a href="/marqab">Buraq Edge</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Mission</h4>
+        <h4>Company</h4>
         <ul>
-          <li><a href="#mission">Why Buraq</a></li>
-          <li><a href="#unified-operations">Operations</a></li>
-          <li><a href="#developers">Responsibility</a></li>
-          <li><a href="#extensions">Threat Monitor</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/#contact">Contact</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -602,7 +588,6 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; <span data-year></span> Buraq AI Inc. — All rights reserved</span>
-      <span>SECURE // HUMANITARIAN // JUSTICE-FOCUSED</span>
     </div>
   </footer>
 
@@ -611,3 +596,4 @@
   <script src="main.js" defer></script>
 </body>
 </html>
+
