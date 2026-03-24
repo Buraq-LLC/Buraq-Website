@@ -23,41 +23,32 @@ function initProgress() {
 
 /* ─── NAV ───────────────────────────────────────────────────────── */
 function initNav() {
-  const nav    = $('#nav');
-  const burger = $('.nav__burger');
-  const drawer = $('#drawer');
-  const backdrop = $('.drawer__backdrop');
-  if (!nav) return;
+  const nav      = $('#topnav');
+  const burger   = $('.nav__burger');
+  const sidenav  = $('#sidenav');
+  const backdrop = $('.sidenav__backdrop');
+  if (!nav || !burger || !sidenav) return;
 
-  // Scroll: add .is-scrolled for optional styling
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('is-scrolled', window.scrollY > 60);
-  }, { passive: true });
-
-  const openDrawer = () => {
-    drawer.setAttribute('aria-hidden', 'false');
+  const open = () => {
+    sidenav.setAttribute('aria-hidden', 'false');
     burger.setAttribute('aria-expanded', 'true');
     backdrop?.classList.add('is-open');
     document.body.style.overflow = 'hidden';
   };
-  const closeDrawer = () => {
-    drawer.setAttribute('aria-hidden', 'true');
+  const close = () => {
+    sidenav.setAttribute('aria-hidden', 'true');
     burger.setAttribute('aria-expanded', 'false');
     backdrop?.classList.remove('is-open');
     document.body.style.overflow = '';
   };
 
-  burger?.addEventListener('click', () => {
-    const isOpen = drawer.getAttribute('aria-hidden') === 'false';
-    isOpen ? closeDrawer() : openDrawer();
+  burger.addEventListener('click', () => {
+    sidenav.getAttribute('aria-hidden') === 'false' ? close() : open();
   });
-  backdrop?.addEventListener('click', closeDrawer);
-  drawer?.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
-
-  // Close on Escape
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeDrawer();
-  });
+  document.querySelector('.sidenav__close')?.addEventListener('click', close);
+  backdrop?.addEventListener('click', close);
+  sidenav.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
 }
 
 /* ─── HERO ANIMATION ────────────────────────────────────────────── */
