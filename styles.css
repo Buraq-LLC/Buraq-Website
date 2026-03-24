@@ -160,6 +160,7 @@ nav {
   background: none;
 }
 .drawer > nav a:hover { color: var(--text); background: rgba(255,255,255,0.03); }
+.drawer > nav a[aria-current="page"] { color: var(--muted2); background: none; border: none; padding: 13px 24px; }
 .drawer__backdrop {
   position: fixed; top: 60px; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,.6);
   z-index: 599; opacity: 0; pointer-events: none; transition: opacity .3s;
