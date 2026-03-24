@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/png" href="assets/buraq-logo.png" />
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=6" />
 </head>
 <body>
 
@@ -20,38 +20,23 @@
 
   <!-- ─── NAV ─── -->
   <nav id="nav">
-    <div class="nav-left">
-      <a class="logo" href="/">
-        <img src="assets/buraq-horse.png" width="16" height="16" alt="" />
-        Buraq AI
-      </a>
-    </div>
-    <ul class="nav-links">
-      <li><a href="/drones">Drones</a></li>
-      <li><a href="/evidence-vault">Evidence Vault</a></li>
-      <li><a href="/reports">Reports</a></li>
-      <li><a href="/marqab">Edge</a></li>
-    </ul>
-    <div class="nav-right">
-      <a href="#contact" class="btn-nav red">Contact Us</a>
-      <button class="nav__burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
+    <a class="logo" href="/">
+      <img src="assets/buraq-horse.png" width="16" height="16" alt="" />
+      Buraq AI
+    </a>
+    <button class="nav__burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
-  <!-- ─── MOBILE DRAWER ─── -->
+  <!-- ─── SIDE DRAWER ─── -->
   <div class="drawer" id="drawer" aria-hidden="true">
-    <div class="drawer__header">
-      <span class="drawer__label">Navigation</span>
-      <button class="drawer__close" aria-label="Close menu">✕</button>
-    </div>
     <nav>
       <a href="/drones">Drones</a>
       <a href="/evidence-vault">Evidence Vault</a>
       <a href="/reports">Reports</a>
       <a href="/marqab">Edge</a>
-      <a href="#contact">Contact Us</a>
+      <a href="#contact" class="drawer__cta">Contact Us</a>
     </nav>
   </div>
   <div class="drawer__backdrop" aria-hidden="true"></div>

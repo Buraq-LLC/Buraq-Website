@@ -47,9 +47,10 @@ function initNav() {
     document.body.style.overflow = '';
   };
 
-  burger?.addEventListener('click', openDrawer);
-  drawer?.addEventListener('click', e => { if (e.target.closest('.drawer__close')) closeDrawer(); });
-  $('.drawer__close')?.addEventListener('click', closeDrawer);
+  burger?.addEventListener('click', () => {
+    const isOpen = drawer.getAttribute('aria-hidden') === 'false';
+    isOpen ? closeDrawer() : openDrawer();
+  });
   backdrop?.addEventListener('click', closeDrawer);
   drawer?.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
 
@@ -150,7 +151,7 @@ function initSmoothScroll() {
       const target = document.querySelector(id);
       if (!target) return;
       e.preventDefault();
-      const offset = 80; // account for fixed nav
+      const offset = 84; // account for fixed nav (64px) + breathing room
       const top = target.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top, behavior: 'smooth' });
     });

@@ -23,34 +23,40 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-logo.png" />
-<link rel="stylesheet" href="styles.css?v=3" />
+<link rel="stylesheet" href="styles.css?v=5" />
 </head>
 <body>
-<div class="scroll-progress" aria-hidden="true"><span></span></div>
+<div class="progress"><div class="progress__fill"></div></div>
 
-<header class="site-nav" data-fixed>
-<div class="site-nav__inner">
-<a class="site-nav__brand" href="/" aria-label="Buraq AI home">
-<span class="site-nav__mark">
-<img src="assets/buraq-horse.png" alt="Buraq logo" width="40" height="40" />
-</span>
-<span class="site-nav__wordmark">Buraq AI</span>
-</a>
-<nav class="site-nav__links" aria-label="Main">
-<a href="/#contact">Contact</a>
+<nav id="nav">
+  <a class="logo" href="/">
+    <img src="assets/buraq-horse.png" width="16" height="16" alt="" />
+    Buraq AI
+  </a>
+  <ul class="nav-links">
+    <li><a href="/drones">Drones</a></li>
+    <li><a href="/evidence-vault">Evidence Vault</a></li>
+    <li><a href="/reports">Reports</a></li>
+    <li><a href="/marqab">Edge</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="/#contact" class="btn-nav red">Contact Us</a>
+    <button class="nav__burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
-<div class="site-nav__actions">
-<a class="site-nav__ghost" href="/"><span>Home</span></a>
-<a class="site-nav__cta" href="/#contact">Contact Us</a>
-<button class="site-nav__toggle" type="button" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
-<span></span>
-</button>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+  <nav>
+    <a href="/drones">Drones</a>
+    <a href="/evidence-vault">Evidence Vault</a>
+    <a href="/reports">Reports</a>
+    <a href="/marqab">Edge</a>
+    <a href="/#contact" class="drawer__cta">Contact Us</a>
+  </nav>
 </div>
-</div>
-<nav id="mobileMenu" class="mobile-menu" aria-hidden="true">
-<a href="/#contact">Contact</a>
-</nav>
-</header>
+<div class="drawer__backdrop" aria-hidden="true"></div>
 
 <main>
 <section class="legal-hero">

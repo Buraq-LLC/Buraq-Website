@@ -11,19 +11,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-logo.png" />
-<link rel="stylesheet" href="styles.css?v=3" />
+<link rel="stylesheet" href="styles.css?v=5" />
 </head>
 <body>
 
 <div class="progress"><div class="progress__fill"></div></div>
 
 <nav id="nav">
-  <div class="nav-left">
-    <a class="logo" href="/">
-      <img src="assets/buraq-horse.png" width="16" height="16" alt="" />
-      Buraq AI
-    </a>
-  </div>
+  <a class="logo" href="/">
+    <img src="assets/buraq-horse.png" width="16" height="16" alt="" />
+    Buraq AI
+  </a>
   <ul class="nav-links">
     <li><a href="/drones">Drones</a></li>
     <li><a href="/evidence-vault">Evidence Vault</a></li>
@@ -39,16 +37,12 @@
 </nav>
 
 <div class="drawer" id="drawer" aria-hidden="true">
-  <div class="drawer__header">
-    <span class="drawer__label">Navigation</span>
-    <button class="drawer__close" aria-label="Close menu">✕</button>
-  </div>
   <nav>
     <a href="/drones">Drones</a>
     <a href="/evidence-vault">Evidence Vault</a>
-    <a href="/reports" aria-current="page">Reports</a>
+    <a href="/reports">Reports</a>
     <a href="/marqab">Edge</a>
-    <a href="/#contact">Contact Us</a>
+    <a href="/#contact" class="drawer__cta">Contact Us</a>
   </nav>
 </div>
 <div class="drawer__backdrop" aria-hidden="true"></div>
@@ -308,8 +302,9 @@
   if (!burger || !drawer) return;
   var open = function () { drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); if(backdrop) backdrop.classList.add('is-open'); document.body.style.overflow='hidden'; };
   var close = function () { drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); if(backdrop) backdrop.classList.remove('is-open'); document.body.style.overflow=''; };
-  burger.addEventListener('click', open);
-  drawer.addEventListener('click', function(e){ if(e.target.closest('.drawer__close')) close(); });
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function() { if(nav) nav.classList.toggle('is-scrolled', window.scrollY > 60); }, { passive: true });
+  burger.addEventListener('click', function() { drawer.getAttribute('aria-hidden') === 'false' ? close() : open(); });
   backdrop && backdrop.addEventListener('click', close);
   drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });

@@ -11,47 +11,41 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-logo.png" />
-<link rel="stylesheet" href="styles.css?v=3" />
+<link rel="stylesheet" href="styles.css?v=5" />
 </head>
 <body>
 
 <div class="progress"><div class="progress__fill"></div></div>
 
 <nav id="nav">
-    <div class="nav-left">
-      <a class="logo" href="/">
-        <img src="assets/buraq-horse.png" width="16" height="16" alt="" />
-        Buraq AI
-      </a>
-    </div>
-    <ul class="nav-links">
-      <li><a href="/drones">Drones</a></li>
-      <li><a href="/evidence-vault">Evidence Vault</a></li>
-      <li><a href="/reports">Reports</a></li>
-      <li><a href="/marqab" aria-current="page">Edge</a></li>
-    </ul>
-    <div class="nav-right">
-      <a href="/#contact" class="btn-nav red">Contact Us</a>
-      <button class="nav__burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
-
-  <div class="drawer" id="drawer" aria-hidden="true">
-    <div class="drawer__header">
-      <span class="drawer__label">Navigation</span>
-      <button class="drawer__close" aria-label="Close menu">✕</button>
-    </div>
-    <nav>
-      <a href="/drones">Drones</a>
-      <a href="/evidence-vault">Evidence Vault</a>
-      <a href="/reports">Reports</a>
-      <a href="/marqab" aria-current="page">Edge</a>
-      <a href="/#contact">Contact Us</a>
-    </nav>
+  <a class="logo" href="/">
+    <img src="assets/buraq-horse.png" width="16" height="16" alt="" />
+    Buraq AI
+  </a>
+  <ul class="nav-links">
+    <li><a href="/drones">Drones</a></li>
+    <li><a href="/evidence-vault">Evidence Vault</a></li>
+    <li><a href="/reports">Reports</a></li>
+    <li><a href="/marqab" aria-current="page">Edge</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="/#contact" class="btn-nav red">Contact Us</a>
+    <button class="nav__burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-  <div class="drawer__backdrop"></div>
+</nav>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+  <nav>
+    <a href="/drones">Drones</a>
+    <a href="/evidence-vault">Evidence Vault</a>
+    <a href="/reports">Reports</a>
+    <a href="/marqab">Edge</a>
+    <a href="/#contact" class="drawer__cta">Contact Us</a>
+  </nav>
+</div>
+<div class="drawer__backdrop" aria-hidden="true"></div>
 
 <!-- ─── HERO ─── -->
 <section class="marqab-hero">
@@ -189,8 +183,9 @@
     if (backdrop) backdrop.classList.remove('is-open');
     document.body.style.overflow = '';
   };
-  burger.addEventListener('click', open);
-  drawer.addEventListener('click', function (e) { if (e.target.closest('.drawer__close')) close(); });
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function() { if(nav) nav.classList.toggle('is-scrolled', window.scrollY > 60); }, { passive: true });
+  burger.addEventListener('click', function() { drawer.getAttribute('aria-hidden') === 'false' ? close() : open(); });
   backdrop && backdrop.addEventListener('click', close);
   drawer.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', close); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
