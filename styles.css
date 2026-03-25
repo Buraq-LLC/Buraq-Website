@@ -299,8 +299,8 @@ button { cursor: pointer; }
 .hero__title .line1 { display: block; color: #fff; }
 .hero__title .line2 {
   display: block;
-  -webkit-text-stroke: 1px rgba(255,255,255,0.22);
-  color: transparent; font-style: italic;
+  -webkit-text-stroke: 1px var(--blue);
+  color: transparent;
 }
 .hero__title .line3 { display: block; color: var(--blue); }
 
