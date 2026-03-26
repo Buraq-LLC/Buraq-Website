@@ -52,17 +52,13 @@
   <div class="vault-hero__hash-bg" aria-hidden="true" id="hashBg"></div>
   <div class="vault-hero__glow"></div>
   <div class="vault-hero__content">
-    <div class="vault-hero__badge">
-      <span class="vault-hero__badge-dot"></span>
-      Buraq AI Evidence Management
-    </div>
     <h1 class="vault-hero__title">EVIDENCE<br/>VAULT</h1>
     <p class="vault-hero__sub">
       Tamper-proof, cryptographically verified records — built to withstand international legal scrutiny and support justice proceedings worldwide.
     </p>
-    <p class="vault-hero__hash" id="liveHash" aria-hidden="true">
-      sha256:a3f8c2e1b9d7... verifying chain integrity
-    </p>
+    <div class="vault-hero__actions">
+      <a class="vault-hero__btn" href="#vault-access">Request Access to the Evidence Vault →</a>
+    </div>
   </div>
 </section>
 
@@ -111,28 +107,28 @@
     <div class="vault-features__right">
       <div class="doctrine-item reveal">
         <div class="doctrine-item-head">
-          <div class="doctrine-item-num" style="color:#22c55e; border-color:rgba(34,197,94,0.3);">01</div>
+          <div class="doctrine-item-num" style="color:#d4a017; border-color:rgba(212,160,23,0.3);">01</div>
           <h4>Tamper-Proof Storage</h4>
         </div>
         <p>Every record is cryptographically sealed at the moment of creation. Any modification — even a single bit — is immediately detectable through hash verification.</p>
       </div>
       <div class="doctrine-item reveal reveal-d1">
         <div class="doctrine-item-head">
-          <div class="doctrine-item-num" style="color:#22c55e; border-color:rgba(34,197,94,0.3);">02</div>
+          <div class="doctrine-item-num" style="color:#d4a017; border-color:rgba(212,160,23,0.3);">02</div>
           <h4>Chronological Verification</h4>
         </div>
         <p>Timestamps are anchored to independent, verifiable time sources. Every record in the Vault carries a provable creation time that cannot be backdated or altered.</p>
       </div>
       <div class="doctrine-item reveal reveal-d2">
         <div class="doctrine-item-head">
-          <div class="doctrine-item-num" style="color:#22c55e; border-color:rgba(34,197,94,0.3);">03</div>
+          <div class="doctrine-item-num" style="color:#d4a017; border-color:rgba(212,160,23,0.3);">03</div>
           <h4>Access Control & Audit Trail</h4>
         </div>
         <p>Granular role-based access with a full immutable audit log of every read, export, and administrative action — every interaction is recorded and verifiable.</p>
       </div>
       <div class="doctrine-item reveal reveal-d3">
         <div class="doctrine-item-head">
-          <div class="doctrine-item-num" style="color:#22c55e; border-color:rgba(34,197,94,0.3);">04</div>
+          <div class="doctrine-item-num" style="color:#d4a017; border-color:rgba(212,160,23,0.3);">04</div>
           <h4>Court-Ready Export</h4>
         </div>
         <p>Automated export in PDF/A, XML, and internationally recognized legal formats with complete chain of custody documentation — ready for submission to international tribunals.</p>
@@ -217,6 +213,51 @@
   </div>
 </section>
 
+<!-- ─── ACCESS CTA ─── -->
+<section class="vault-access" id="vault-access">
+  <div class="vault-access__inner">
+    <div class="vault-access__intro">
+      <span class="label-mono">Restricted Access</span>
+      <h2>Request access to<br/><span class="vault-access__highlight">the Evidence Vault.</span></h2>
+      <p class="vault-access__sub">The Evidence Vault is available to verified humanitarian organizations, legal teams, and international bodies. Submit your details and we'll coordinate a secure access briefing.</p>
+    </div>
+    <form class="vault-access__form" id="vaultAccessForm" novalidate>
+      <div class="vault-access__grid">
+        <label class="field">
+          <span>First name <em>*</em></span>
+          <input type="text" name="firstName" autocomplete="given-name" required placeholder="Jane" />
+        </label>
+        <label class="field">
+          <span>Last name <em>*</em></span>
+          <input type="text" name="lastName" autocomplete="family-name" required placeholder="Doe" />
+        </label>
+        <label class="field">
+          <span>Business email <em>*</em></span>
+          <input type="email" name="email" autocomplete="email" required placeholder="jane@org.com" />
+        </label>
+        <label class="field">
+          <span>Organization <em>*</em></span>
+          <input type="text" name="org" autocomplete="organization" required placeholder="Organization name" />
+        </label>
+        <label class="field">
+          <span>Job title</span>
+          <input type="text" name="title" autocomplete="organization-title" placeholder="Your role" />
+        </label>
+        <label class="field">
+          <span>Country <em>*</em></span>
+          <input type="text" name="country" autocomplete="country-name" required placeholder="Country" />
+        </label>
+        <label class="field field--full">
+          <span>How will you use the Evidence Vault? <em>*</em></span>
+          <textarea name="notes" rows="4" required placeholder="Describe your use case and organization's mission..."></textarea>
+        </label>
+      </div>
+      <button type="submit" class="vault-access__btn">Submit Access Request →</button>
+      <p id="vaultAccessMsg" class="connect__msg" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
 <!-- ─── FOOTER ─── -->
 <footer>
   <div class="footer-top">
@@ -295,7 +336,7 @@
 // Footer year
 (function () {
   var el = document.querySelector('[data-year]');
-  if (el) el.textContent = new Date().getFullYear();
+  if (el) el.textContent = '2025';
 })();
 // Scroll reveal
 (function () {
@@ -307,6 +348,45 @@
     entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-visible'); obs.unobserve(e.target); } });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+})();
+// Vault Access form
+(function () {
+  var form = document.getElementById('vaultAccessForm');
+  var msg  = document.getElementById('vaultAccessMsg');
+  if (!form || !msg) return;
+  var setMsg = function(text, color) { msg.textContent = text; msg.style.color = color; };
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    var btn = form.querySelector('.vault-access__btn');
+    if (btn) btn.disabled = true;
+    var raw = new FormData(form);
+    var data = {
+      firstName: (raw.get('firstName')||'').trim(),
+      lastName:  (raw.get('lastName')||'').trim(),
+      email:     (raw.get('email')||'').trim(),
+      org:       (raw.get('org')||'').trim(),
+      title:     (raw.get('title')||'').trim(),
+      country:   (raw.get('country')||'').trim(),
+      notes:     '[Evidence Vault Access] ' + (raw.get('notes')||'').trim(),
+    };
+    var required = ['firstName','lastName','email','org','country','notes'];
+    for (var k of required) {
+      if (!data[k]) { setMsg('Please fill in all required fields.','#ff453a'); if(btn) btn.disabled=false; return; }
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { setMsg('Please enter a valid email address.','#ff453a'); if(btn) btn.disabled=false; return; }
+    setMsg('Sending…','#22c55e');
+    try {
+      if (typeof window.saveInquiry !== 'function') throw new Error('Service unavailable. Please try again later.');
+      var result = await window.saveInquiry(data);
+      if (result && result.ok === false) throw new Error(result.error || 'Submission failed.');
+      setMsg('Request submitted. We\'ll be in touch shortly.','#22c55e');
+      form.reset();
+    } catch(err) {
+      setMsg(err.message || 'Something went wrong. Please try again.','#ff453a');
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  });
 })();
 // Animated hash background
 (function () {

@@ -215,7 +215,7 @@ function initForm() {
 /* ─── FOOTER YEAR ───────────────────────────────────────────────── */
 function initYear() {
   const el = $('[data-year]');
-  if (el) el.textContent = new Date().getFullYear();
+  if (el) el.textContent = '2025';
 }
 
 /* ─── BOOT ───────────────────────────────────────────────────────── */
