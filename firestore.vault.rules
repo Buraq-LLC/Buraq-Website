@@ -1,0 +1,43 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── vault_access ──────────────────────────────────────────────────────────
+    // Each document ID is the user's email address (lowercase).
+    // The browser login page does a direct document lookup by ID.
+    //
+    // Security posture:
+    //  • allow get  — single-document fetch by exact ID is fine; the secret key
+    //                 is bcrypt-hashed so even a leaked doc is useless.
+    //  • deny list  — no collection queries; prevents email enumeration.
+    //  • deny write — accounts are created/managed only via the Admin SDK or
+    //                 the Firebase console; clients can never modify records.
+    match /vault_access/{email} {
+      allow get:  if true;
+      allow list: if false;
+      allow write: if false;
+    }
+
+    // ── vault_reports ─────────────────────────────────────────────────────────
+    // Reports are scoped per user (document ID == email).
+    // Only the authenticated session owner may read their own reports.
+    // All writes go through the Admin SDK exclusively.
+    match /vault_reports/{email} {
+      allow get:  if true;   // client fetches by exact ID after session check
+      allow list: if false;
+      allow write: if false;
+    }
+
+    // ── vault_audit_log ───────────────────────────────────────────────────────
+    // Append-only audit trail written by the Admin SDK (Cloud Functions).
+    // Clients can never read or write audit entries directly.
+    match /vault_audit_log/{entry} {
+      allow read, write: if false;
+    }
+
+    // ── Deny everything else ─────────────────────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

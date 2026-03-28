@@ -23,34 +23,40 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-logo.png" />
-<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="styles.css?v=7" />
 </head>
 <body>
-<div class="scroll-progress" aria-hidden="true"><span></span></div>
+<div class="progress"><div class="progress__fill"></div></div>
 
-<header class="site-nav" data-fixed>
-<div class="site-nav__inner">
-<a class="site-nav__brand" href="/" aria-label="Buraq AI home">
-<span class="site-nav__mark">
-<img src="assets/buraq-horse.png" alt="Buraq logo" width="40" height="40" />
-</span>
-<span class="site-nav__wordmark">Buraq AI</span>
-</a>
-<nav class="site-nav__links" aria-label="Main">
-<a href="/#contact">Contact</a>
-</nav>
-<div class="site-nav__actions">
-<a class="site-nav__ghost" href="/"><span>Home</span></a>
-<a class="site-nav__cta" href="/#contact">Contact Us</a>
-<button class="site-nav__toggle" type="button" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
-<span></span>
-</button>
-</div>
-</div>
-<nav id="mobileMenu" class="mobile-menu" aria-hidden="true">
-<a href="/#contact">Contact</a>
-</nav>
+<header id="topnav">
+  <a class="logo" href="/">
+    <img src="assets/buraq-horse.png" width="16" height="16" alt="" />
+    Buraq AI
+  </a>
+  <button class="nav__burger" aria-label="Open menu" aria-expanded="false" aria-controls="sidenav">
+    <span></span><span></span><span></span>
+  </button>
 </header>
+
+<div class="sidenav" id="sidenav" aria-hidden="true">
+  <div class="sidenav__top"><button class="sidenav__close" aria-label="Close menu">&times;</button></div><div class="sidenav__links">
+    <a href="/drones">Drones</a>
+    <a href="/evidence-vault">Evidence Vault</a>
+    <a href="/reports">Reports</a>
+    <a href="/marqab">Edge</a>
+    <a href="/#contact" class="sidenav__cta">Contact Us</a>
+
+  </div>
+  <div class="sidenav__socials">
+    <p class="sidenav__socials-label">Follow Us</p>
+    <div class="sidenav__socials-row">
+      <a href="https://www.linkedin.com/company/buraq-ai" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.36 4.26 5.44v6.3zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"/></svg></a>
+      <a href="https://www.instagram.com/buraqaiofficial/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.241 1.308 3.608.058 1.265.07 1.645.07 4.851s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.241 1.246-3.608 1.308-1.265.058-1.645.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.241-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.974-.974 2.241-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.014 7.052.072 5.197.157 3.355.673 1.978 2.05.6 3.426.084 5.268 0 7.123-.014 8.403 0 8.812 0 12s.014 3.597.072 4.877c.085 1.855.6 3.697 1.978 5.073 1.376 1.377 3.218 1.893 5.073 1.978C8.332 23.986 8.741 24 12 24s3.668-.014 4.948-.072c1.855-.085 3.697-.6 5.073-1.978 1.377-1.376 1.893-3.218 1.978-5.073.058-1.28.072-1.689.072-4.877s-.014-3.597-.072-4.877c-.085-1.855-.6-3.697-1.978-5.073C20.645.673 18.803.157 16.948.072 15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+      <a href="https://twitter.com/buraq_ai" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    </div>
+  </div>
+</div>
+<div class="sidenav__backdrop" aria-hidden="true"></div>
 
 <main>
 <section class="legal-hero">
@@ -259,8 +265,9 @@ Email: info@buraq-ai.com</p>
 </div>
 </footer>
 
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script type="module" src="firebase-init.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="/__env.js"></script>
+  <script type="module" src="firebase-init.js"></script>
 <script type="module" src="main.js"></script>
 </body>
 </html>
