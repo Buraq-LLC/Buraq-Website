@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-logo.png" />
-<link rel="stylesheet" href="styles.css?v=7" />
+<link rel="stylesheet" href="styles.css?v=8" />
 </head>
 <body>
 
@@ -56,9 +56,6 @@
     <p class="vault-hero__sub">
       Tamper-proof, cryptographically verified records — built to withstand international legal scrutiny and support justice proceedings worldwide.
     </p>
-    <div class="vault-hero__actions">
-      <a class="vault-hero__btn" href="#vault-access">Request Access to the Evidence Vault →</a>
-    </div>
   </div>
 </section>
 
@@ -221,38 +218,15 @@
       <h2>Request access to<br/><span class="vault-access__highlight">the Evidence Vault.</span></h2>
       <p class="vault-access__sub">The Evidence Vault is available to verified humanitarian organizations, legal teams, and international bodies. Submit your details and we'll coordinate a secure access briefing.</p>
     </div>
-    <form class="vault-access__form" id="vaultAccessForm" novalidate>
-      <div class="vault-access__grid">
-        <label class="field">
-          <span>First name <em>*</em></span>
-          <input type="text" name="firstName" autocomplete="given-name" required placeholder="Jane" />
-        </label>
-        <label class="field">
-          <span>Last name <em>*</em></span>
-          <input type="text" name="lastName" autocomplete="family-name" required placeholder="Doe" />
-        </label>
-        <label class="field">
-          <span>Business email <em>*</em></span>
-          <input type="email" name="email" autocomplete="email" required placeholder="jane@org.com" />
-        </label>
-        <label class="field">
-          <span>Organization <em>*</em></span>
-          <input type="text" name="org" autocomplete="organization" required placeholder="Organization name" />
-        </label>
-        <label class="field">
-          <span>Job title</span>
-          <input type="text" name="title" autocomplete="organization-title" placeholder="Your role" />
-        </label>
-        <label class="field">
-          <span>Country <em>*</em></span>
-          <input type="text" name="country" autocomplete="country-name" required placeholder="Country" />
-        </label>
-        <label class="field field--full">
-          <span>How will you use the Evidence Vault? <em>*</em></span>
-          <textarea name="notes" rows="4" required placeholder="Describe your use case and organization's mission..."></textarea>
-        </label>
+    <form class="vault-access__form vault-access__form--email" id="vaultAccessForm" novalidate>
+      <label class="field field--full">
+        <span>Email address <em>*</em></span>
+        <input type="email" name="email" autocomplete="email" required placeholder="you@org.com" />
+      </label>
+      <div class="form__captcha">
+        <div class="g-recaptcha" data-sitekey="6Ldjp5osAAAAACrjYrXSa9uf_RKBseeNl1aP1dHp" data-theme="dark"></div>
       </div>
-      <button type="submit" class="vault-access__btn">Submit Access Request →</button>
+      <button type="submit" class="vault-access__btn">Request Access →</button>
       <p id="vaultAccessMsg" class="connect__msg" role="status" aria-live="polite"></p>
     </form>
   </div>
@@ -312,8 +286,8 @@
 // Nav drawer
 (function () {
   var burger = document.querySelector('.nav__burger');
-  var drawer = document.getElementById('drawer');
-  var backdrop = document.querySelector('.drawer__backdrop');
+  var drawer = document.getElementById('sidenav');
+  var backdrop = document.querySelector('.sidenav__backdrop');
   if (!burger || !drawer) return;
   var open = function () { drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); if(backdrop) backdrop.classList.add('is-open'); document.body.style.overflow='hidden'; };
   var close = function () { drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); if(backdrop) backdrop.classList.remove('is-open'); document.body.style.overflow=''; };
@@ -321,6 +295,8 @@
   window.addEventListener('scroll', function() { if(nav) nav.classList.toggle('is-scrolled', window.scrollY > 60); }, { passive: true });
   burger.addEventListener('click', function() { drawer.getAttribute('aria-hidden') === 'false' ? close() : open(); });
   backdrop && backdrop.addEventListener('click', close);
+  var closeBtn = drawer.querySelector('.sidenav__close');
+  closeBtn && closeBtn.addEventListener('click', close);
   drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
 })();
@@ -359,27 +335,16 @@
     e.preventDefault();
     var btn = form.querySelector('.vault-access__btn');
     if (btn) btn.disabled = true;
-    var raw = new FormData(form);
-    var data = {
-      firstName: (raw.get('firstName')||'').trim(),
-      lastName:  (raw.get('lastName')||'').trim(),
-      email:     (raw.get('email')||'').trim(),
-      org:       (raw.get('org')||'').trim(),
-      title:     (raw.get('title')||'').trim(),
-      country:   (raw.get('country')||'').trim(),
-      notes:     '[Evidence Vault Access] ' + (raw.get('notes')||'').trim(),
-    };
-    var required = ['firstName','lastName','email','org','country','notes'];
-    for (var k of required) {
-      if (!data[k]) { setMsg('Please fill in all required fields.','#ff453a'); if(btn) btn.disabled=false; return; }
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { setMsg('Please enter a valid email address.','#ff453a'); if(btn) btn.disabled=false; return; }
-    setMsg('Sending…','#22c55e');
+    var email = (new FormData(form).get('email') || '').trim();
+    if (!email) { setMsg('Please enter your email address.','#ff453a'); if(btn) btn.disabled=false; return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setMsg('Please enter a valid email address.','#ff453a'); if(btn) btn.disabled=false; return; }
+    if (!window.grecaptcha || !window.grecaptcha.getResponse()) { setMsg('Please complete the reCAPTCHA.','#ff453a'); if(btn) btn.disabled=false; return; }
+    setMsg('Sending…','#d4a017');
     try {
-      if (typeof window.saveInquiry !== 'function') throw new Error('Service unavailable. Please try again later.');
-      var result = await window.saveInquiry(data);
+      if (typeof window.saveVaultInquiry !== 'function') throw new Error('Service unavailable. Please try again later.');
+      var result = await window.saveVaultInquiry({ email: email });
       if (result && result.ok === false) throw new Error(result.error || 'Submission failed.');
-      setMsg('Request submitted. We\'ll be in touch shortly.','#22c55e');
+      setMsg('Request submitted. We\'ll be in touch shortly.','#d4a017');
       form.reset();
     } catch(err) {
       setMsg(err.message || 'Something went wrong. Please try again.','#ff453a');
@@ -414,5 +379,7 @@
   }
 })();
 </script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script type="module" src="firebase-vault-init.js"></script>
 </body>
 </html>

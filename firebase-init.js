@@ -219,9 +219,7 @@ class FirebaseManager {
       const docRef = await addDoc(collection(db, COLLECTION_NAME), {
         ...sanitizedPayload,
         createdAt: serverTimestamp(),
-        userAgent: this.sanitizeUserAgent(navigator.userAgent),
-        timestamp: Date.now(),
-        ipHash: await this.getClientFingerprint() // For abuse detection
+        _fingerprint: await this.getClientFingerprint()
       });
 
       console.log(`[Firebase] Inquiry saved with ID: ${docRef.id}`);

@@ -194,6 +194,12 @@ function initForm() {
       return;
     }
 
+    if (!window.grecaptcha || !window.grecaptcha.getResponse()) {
+      setMsg('Please complete the reCAPTCHA.', '#ff453a');
+      if (btn) btn.disabled = false;
+      return;
+    }
+
     setMsg('Sending…', '#2997ff');
 
     try {

@@ -143,6 +143,17 @@ button { cursor: pointer; }
 .sidenav__links a.sidenav__cta:hover {
   background: rgba(41,151,255,0.17); color: #fff;
 }
+.sidenav__links a.sidenav__cta--vault {
+  display: block; margin: 10px 20px 0;
+  padding: 13px 20px; border-radius: 5px;
+  border: 1px solid rgba(212,160,23,0.45);
+  color: #d4a017; text-align: center;
+  background: rgba(212,160,23,0.07);
+  font-size: 0.75rem;
+}
+.sidenav__links a.sidenav__cta--vault:hover {
+  background: rgba(212,160,23,0.17); color: #fff;
+}
 
 /* ── Sidenav socials ── */
 .sidenav__socials {
@@ -208,7 +219,8 @@ button { cursor: pointer; }
 /* AEGIS reticle */
 @keyframes reticle-fadein { from { opacity: 0; } to { opacity: 1; } }
 .reticle {
-  position: absolute; top: calc(50% - 12px); right: calc(8% - 14px);
+  position: absolute; top: calc(50% - 12px
+  ); right: calc(8% - 14px);
   transform: translateY(-55%);
   width: 500px; height: 500px;
   pointer-events: none; z-index: 2;
@@ -1828,7 +1840,7 @@ footer {
 }
 
 /* Vault hero button */
-.vault-hero__actions { margin-bottom: 32px; }
+.vault-hero__actions { margin-bottom: 32px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
 .vault-hero__btn {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 14px 28px; border-radius: 6px;
@@ -1840,6 +1852,13 @@ footer {
 .vault-hero__btn:hover {
   background: rgba(212,160,23,0.18); border-color: rgba(212,160,23,0.7);
   transform: translateY(-2px);
+}
+.vault-hero__btn--access {
+  background: rgba(41,151,255,0.1); color: #2997ff;
+  border-color: rgba(41,151,255,0.4);
+}
+.vault-hero__btn--access:hover {
+  background: rgba(41,151,255,0.18); border-color: rgba(41,151,255,0.7);
 }
 
 /* Vault Access CTA */
