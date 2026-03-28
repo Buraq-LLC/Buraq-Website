@@ -5,13 +5,16 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
+// Keys loaded at runtime from /__env.js (gitignored). Never hardcode here.
+const _e = (typeof window !== 'undefined' && window.__env) || {};
+if (!_e.EV_API_KEY) console.error('[Vault] __env.js not loaded — Firebase config missing');
 const VAULT_CONFIG = {
-  apiKey: "REDACTED_EVIDENCE_VAULT_KEY",
-  authDomain: "evidence-vault-5d16d.firebaseapp.com",
-  projectId: "evidence-vault-5d16d",
-  storageBucket: "evidence-vault-5d16d.firebasestorage.app",
-  messagingSenderId: "503997504949",
-  appId: "1:503997504949:web:7d57b5142f25ab120e0dfc"
+  apiKey:            _e.EV_API_KEY,
+  authDomain:        _e.EV_AUTH_DOMAIN,
+  projectId:         _e.EV_PROJECT_ID,
+  storageBucket:     _e.EV_STORAGE_BUCKET,
+  messagingSenderId: _e.EV_MESSAGING_SENDER_ID,
+  appId:             _e.EV_APP_ID,
 };
 
 const COLLECTION = 'emails';

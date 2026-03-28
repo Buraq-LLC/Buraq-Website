@@ -663,6 +663,7 @@ setInterval(()=>{document.getElementById('clock').textContent=new Date().toISOSt
   renderDash();renderEvidence(RECS);renderTeams();renderAnalytics();renderCompliance();renderUsers(USERS_DATA);renderAudit(AUDIT);
 })();
 </script>
+<script src="/__env.js"></script>
 <script type="module">
 import{doc,getDoc}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 import{db}from'/evidence-vault/access/firebase-client.js';
