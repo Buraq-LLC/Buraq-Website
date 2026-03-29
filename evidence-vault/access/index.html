@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evidence Vault — Secure Access | Buraq AI</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #040507;
+      --bg2:    #07080c;
+      --bg3:    #0b0d12;
+      --border: rgba(255,255,255,0.06);
+      --blue:   #2997ff;
+      --text:   #f0f2f7;
+      --muted:  #5a6272;
+      --muted2: #8892a4;
+    }
+
+    html { -webkit-font-smoothing: antialiased; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    /* ── Card ── */
+    .access-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px 36px 36px;
+    }
+
+    .access-card__logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .access-card__logo svg { flex-shrink: 0; }
+    .access-card__logo-name {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: .02em;
+      color: var(--text);
+    }
+
+    .access-card__eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+
+    .access-card__title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      margin-bottom: 6px;
+    }
+
+    .access-card__sub {
+      font-size: 13px;
+      color: var(--muted2);
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    /* ── Form ── */
+    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .field label { font-size: 12px; font-weight: 500; color: var(--muted2); }
+    .field input {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      transition: border-color .15s;
+      font-family: inherit;
+      width: 100%;
+    }
+    .field input:focus { border-color: var(--blue); }
+    .field input::placeholder { color: var(--muted); }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 13px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: .02em;
+      cursor: pointer;
+      transition: opacity .15s;
+      margin-top: 8px;
+    }
+    .submit-btn:hover { opacity: .88; }
+    .submit-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+    #loginMsg {
+      margin-top: 14px;
+      font-size: 13px;
+      min-height: 18px;
+      line-height: 1.45;
+    }
+
+    .access-card__footer {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
+    }
+    .access-card__footer a { color: var(--muted2); text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <!-- ── Login card ── -->
+  <div class="access-card" id="loginCard" style="display:none">
+
+    <!-- Logo -->
+    <div class="access-card__logo">
+      <img src="/assets/buraq-horse.png" alt="Buraq AI" width="28" height="28" style="object-fit:contain;" />
+      <span class="access-card__logo-name">Buraq AI</span>
+    </div>
+
+    <p class="access-card__eyebrow">Evidence Vault</p>
+    <h1 class="access-card__title">Secure Access</h1>
+    <p class="access-card__sub">Enter your credentials to access the Evidence Vault. Access is restricted to authorized parties only.</p>
+
+    <form id="loginForm" novalidate>
+      <div class="field">
+        <label for="email">Email address</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          autocomplete="email"
+          placeholder="you@org.com"
+          required
+        />
+      </div>
+      <div class="field">
+        <label for="secretKey">Secret key</label>
+        <input
+          type="password"
+          id="secretKey"
+          name="secretKey"
+          autocomplete="current-password"
+          placeholder="••••••••••••"
+          required
+        />
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">Access Vault →</button>
+      <p id="loginMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <p class="access-card__footer">
+      Unauthorized access is prohibited.<br/>
+      Need access? <a href="/evidence-vault">Request it here</a>.
+    </p>
+  </div>
+
+  <!-- ── Vault view (rendered in-place after login) ── -->
+  <div id="vaultView" style="display:none; width:100%; max-width:480px;"></div>
+
+  <script src="/__env.js"></script>
+  <script src="/evidence-vault/access/bcrypt.min.js"></script>
+  <script type="module" src="/evidence-vault/access/login.js"></script>
+</body>
+</html>
