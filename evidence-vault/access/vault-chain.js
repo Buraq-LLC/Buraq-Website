@@ -493,4 +493,16 @@
     },
   };
 
+  // Auto-init if sec-chain is already active when this script loads
+  document.addEventListener('DOMContentLoaded', function() {
+    const sec = document.getElementById('sec-chain');
+    const tier = document.querySelector('[data-sec="chain"].active') ?
+      (document.querySelector('.tier-pill') ?
+        document.querySelector('.tier-pill').textContent.trim().toLowerCase() : 'basic')
+      : null;
+    if (sec && sec.classList.contains('active')) {
+      global.VaultChain.init(tier || 'basic');
+    }
+  });
+
 })(window);
