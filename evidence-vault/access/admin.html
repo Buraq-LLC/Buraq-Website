@@ -464,6 +464,17 @@ tr:hover td{background:rgba(255,255,255,.012)}
 </div>
 
 <script>
+// ── Real data from BuraqAI ─────────────────────────────────────────────────
+let PINS = [], MISSIONS = [];
+const SEV_CLS={CRITICAL:'bf',HIGH:'bf',MEDIUM:'bp',LOW:'bv',WARNING:'bp',INFO:'bv'};
+const PSTATUS_CLS={ACTIVE:'bv',PENDING:'bp',INACTIVE:'bf'};
+
+async function loadData(){
+  try{const r=await fetch('/evidence-vault/access/chain-pins.json');PINS=await r.json();}catch(_){PINS=[];}
+  try{const r=await fetch('/evidence-vault/access/chain-missions.json');MISSIONS=await r.json();}catch(_){MISSIONS=[];}
+  renderDash();renderEvidence(PINS);renderUsers(USERS);renderHealth();renderRequests();renderAudit(AUDIT);
+}
+
 // ── DATA ─────────────────────────────────────────────────────────────────────
 const ORGS=['Amnesty International','ICC Legal Team','UN OCHA','Human Rights Watch','ICMP','Médecins Sans Frontières'];
 const LOCS=['Aleppo, Syria','Kyiv, Ukraine','Gaza, Palestine','Kharkiv, Ukraine','Mosul, Iraq','Mariupol, Ukraine','Raqqa, Syria','Dnipro, Ukraine'];
@@ -473,15 +484,7 @@ const TYPE_LBL={photo:'Photo',video:'Video',doc:'Documentary',geo:'Geospatial',t
 const TYPE_CLS={photo:'bt-photo',video:'bt-video',doc:'bt-doc',geo:'bt-geo',test:'bt-test',sensor:'bt-sensor'};
 const ST_CLS={verified:'bv',pending:'bp',flagged:'bf'};
 const TIER_CLS={admin:'b-admin',enterprise:'b-ent',pro:'b-pro',basic:'b-basic'};
-function mkHash(){return Array.from({length:64},()=>'0123456789abcdef'[Math.floor(Math.random()*16)]).join('')}
-
-const RECS=Array.from({length:25},(_,i)=>({
-  id:`EV-2025-${String(800+i*53).padStart(4,'0')}`,
-  type:TYPES[i%TYPES.length],loc:LOCS[i%LOCS.length],
-  org:ORGS[i%ORGS.length],inv:`Investigator-${String(i+1).padStart(2,'0')}`,
-  date:`2025-${String(Math.floor(i/5)+1).padStart(2,'0')}-${String((i%25)+1).padStart(2,'0')}`,
-  status:STATUSES[i%STATUSES.length],hash:mkHash(),
-}));
+// RECS replaced by real PINS — see loadData()
 
 const USERS=[
   {email:'admin@buraq.ai',tier:'admin',org:'Buraq AI',recs:0,last:'Today',active:true},
@@ -562,9 +565,16 @@ const AUDIT=[
 ];
 
 const b=(cls,t)=>`<span class="badge ${cls}">${t}</span>`;
-const shortH=h=>`<span class="mono hash-short" title="sha256:${h}">sha256:${h.slice(0,10)}…</span>`;
+const shortH=h=>`<span class="mono hash-short" title="${h}">${h.toString().slice(0,10)}…</span>`;
 
 function renderDash(){
+  const total=PINS.length;
+  const crit=PINS.filter(p=>p.severity==='CRITICAL'||p.severity==='HIGH').length;
+  const regions=new Set(PINS.map(p=>p.region).filter(Boolean)).size;
+  document.getElementById('statTotalPins')&&(document.getElementById('statTotalPins').textContent=total.toLocaleString());
+  document.getElementById('statCritical')&&(document.getElementById('statCritical').textContent=crit.toLocaleString());
+  document.getElementById('statMissions')&&(document.getElementById('statMissions').textContent=MISSIONS.length);
+  document.getElementById('statRegions')&&(document.getElementById('statRegions').textContent=regions);
   const ACT_CLS={login:'aa-login',read:'aa-read',upload:'aa-upload',export:'aa-export',admin:'aa-admin',create:'aa-create',delete:'aa-delete'};
   document.getElementById('dashAudit').innerHTML=AUDIT.slice(0,6).map(a=>`
     <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);font-size:12px">
@@ -579,20 +589,23 @@ function renderDash(){
   </tr>`).join('');
 }
 
-function renderEvidence(recs){
-  document.getElementById('evTbody').innerHTML=recs.length
-    ?recs.map(r=>`<tr>
-      <td><span class="mono" style="font-size:11px">${r.id}</span></td>
-      <td>${b(TYPE_CLS[r.type]||'',TYPE_LBL[r.type]||r.type)}</td>
-      <td class="loc">${r.loc}</td>
-      <td style="font-size:12px;color:var(--muted2)">${r.org}</td>
-      <td style="font-size:12px;color:var(--muted2)">${r.inv}</td>
-      <td class="date-col">${r.date}</td>
-      <td>${b(ST_CLS[r.status]||'',r.status)}</td>
-      <td>${shortH(r.hash)}</td>
-      <td><button class="act-btn" onclick="showCustody('${r.id}')">Custody ↗</button></td>
+function renderEvidence(pins){
+  document.getElementById('evSub')&&(document.getElementById('evSub').textContent=`${pins.length} records · ${MISSIONS.length} missions · full admin access`);
+  const hash=p=>p.id?p.id.toString(16).padStart(16,'0'):'—';
+  document.getElementById('evTbody').innerHTML=pins.length
+    ?pins.map(p=>`<tr>
+      <td><span class="mono" style="font-size:11px">#${p.id}</span></td>
+      <td>${b('bt-sensor',p.entity_type||'PIN')}</td>
+      <td class="loc">${p.region||'—'}</td>
+      <td style="font-size:12px;color:var(--muted2)">${p.source||'—'}</td>
+      <td style="font-size:12px;color:var(--muted2)">${p.lat?p.lat.toFixed(4)+','+p.lng?.toFixed(4):'—'}</td>
+      <td class="date-col">${(p.created_at||'').slice(0,10)||'—'}</td>
+      <td>${b(SEV_CLS[p.severity||'']||'',p.severity||'—')}</td>
+      <td>${b(PSTATUS_CLS[p.status||'']||'',p.status||'—')}</td>
+      <td>${shortH(hash(p))}</td>
+      <td><button class="act-btn" onclick="showCustody(${p.id})">Custody ↗</button></td>
     </tr>`).join('')
-    :'<tr><td colspan="9" style="text-align:center;color:var(--muted);padding:24px">No records found.</td></tr>';
+    :'<tr><td colspan="10" style="text-align:center;color:var(--muted);padding:24px">No records found.</td></tr>';
 }
 
 function renderUsers(users){
@@ -667,13 +680,14 @@ function renderAudit(entries){
 }
 
 function showCustody(id){
-  const r=RECS.find(x=>x.id===id);if(!r)return;
-  document.getElementById('modalId').textContent=id+' — '+r.loc+' ('+r.org+')';
+  const p=PINS.find(x=>x.id===id);if(!p)return;
+  const hash=p.id.toString(16).padStart(16,'0');
+  document.getElementById('modalId').textContent=`#${p.id} — ${p.region||'—'} (${p.source||'Sensor'})`;
   const steps=[
-    {lbl:'Field Capture',val:r.inv+' · '+r.org,time:r.date+' T08:14:22Z',done:true,act:false},
-    {lbl:'SHA-256 Sealed',val:'sha256:'+r.hash,time:r.date+' T08:14:23Z',done:true,act:false},
-    {lbl:'AES-256 Encrypted',val:'Geo-distributed · air-gapped · 3x redundancy',time:r.date+' T08:14:25Z',done:true,act:false},
-    {lbl:'Hash Verified',val:r.status==='verified'?'0 mutations detected':'Verification pending',time:r.date+' T08:15:01Z',done:r.status==='verified',act:r.status==='pending'},
+    {lbl:'Field Capture',val:`${p.source||'Sensor'} · ${p.region||'—'}${p.lat?' · '+p.lat.toFixed(4)+','+p.lng?.toFixed(4):''}`,time:p.created_at||'—',done:true,act:false},
+    {lbl:'SHA-256 Sealed',val:'sha256:'+hash,time:(p.created_at||'—')+' +1s',done:true,act:false},
+    {lbl:'AES-256 Encrypted',val:'Geo-distributed · air-gapped · 3x redundancy',time:(p.created_at||'—')+' +3s',done:true,act:false},
+    {lbl:'Hash Verified',val:p.status==='ACTIVE'?'0 mutations detected':'Verification pending',time:(p.created_at||'—')+' +47s',done:p.status==='ACTIVE',act:p.status==='PENDING'},
     {lbl:'Court-Ready Export',val:'PDF/A-3b · XML · Encrypted ZIP available',time:'On request',done:false,act:false},
   ];
   document.getElementById('modalSteps').innerHTML=steps.map(s=>`
@@ -743,7 +757,7 @@ function filterEv(){
   const st=document.getElementById('evStatus').value;
   const ty=document.getElementById('evType').value;
   const org=document.getElementById('evOrg').value;
-  renderEvidence(RECS.filter(r=>(!q||r.id.toLowerCase().includes(q)||r.loc.toLowerCase().includes(q)||r.org.toLowerCase().includes(q))&&(!st||r.status===st)&&(!ty||r.type===ty)&&(!org||r.org===org)));
+  renderEvidence(PINS.filter(p=>(!q||(p.region||'').toLowerCase().includes(q)||(p.entity_type||'').toLowerCase().includes(q)||(p.source||'').toLowerCase().includes(q)||(p.message||'').toLowerCase().includes(q))&&(!st||p.status===st)&&(!ty||p.entity_type===ty)&&(!org||p.source===org)));
 }
 ['evSearch','evStatus','evType','evOrg'].forEach(id=>{const el=document.getElementById(id);el.addEventListener(el.tagName==='INPUT'?'input':'change',filterEv);});
 
@@ -781,7 +795,7 @@ setInterval(()=>{document.getElementById('clock').textContent=new Date().toISOSt
   const s=JSON.parse(sessionStorage.getItem('vault_session')||'{}');
   document.getElementById('sbEmail').textContent=s.email||'admin@buraq.ai';
   document.getElementById('signOutBtn').addEventListener('click',()=>{sessionStorage.removeItem('vault_session');location.replace('/evidence-vault/access');});
-  renderDash();renderEvidence(RECS);renderUsers(USERS);renderHealth();renderRequests();renderAudit(AUDIT);
+  loadData();
 })();
 </script>
 

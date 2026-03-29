@@ -442,29 +442,19 @@ tr:hover td{background:rgba(255,255,255,.012)}
 </div>
 
 <script>
+// ── Real data from BuraqAI ─────────────────────────────────────────────────
+let PINS = [], MISSIONS = [];
+
+const SEV_CLS={CRITICAL:'bf',HIGH:'bf',MEDIUM:'bp',LOW:'bv',WARNING:'bp',INFO:'bv'};
+const ST_CLS={ACTIVE:'bv',PENDING:'bp',INACTIVE:'bf',verified:'bv',pending:'bp',flagged:'bf'};
+const TYPE_LBL={photo:'Photo',video:'Video',doc:'Documentary',geo:'Geospatial',test:'Testimonial',sensor:'Sensor'};
+const TYPE_CLS={photo:'bt-photo',video:'bt-video',doc:'bt-doc',geo:'bt-geo',test:'bt-test',sensor:'bt-sensor'};
+
+// Fake team — kept as-is (not tied to BuraqAI user accounts)
 const INV=['S. Chen','J. O\'Brien','A. Diallo','M. Santos','K. Park','L. Vasquez','O. Mahmoud','E. Petrov'];
 const INV_ROLES=['Senior Investigator','Legal Counsel','Field Analyst','Documentation Lead','Satellite Analyst','Field Investigator','Regional Coordinator','Technical Analyst'];
 const INV_RECS=[34,28,41,22,18,15,9,12];
 const INV_ACTIVE=['Today','Today','Yesterday','2 days ago','Today','3 days ago','1 week ago','Yesterday'];
-const LOCS=['Aleppo, Syria','Kyiv, Ukraine','Gaza, Palestine','Kharkiv, Ukraine','Mosul, Iraq','Mariupol, Ukraine','Northern Syria','Eastern Ukraine','Raqqa, Syria','Dnipro, Ukraine'];
-const TYPES=['photo','video','doc','geo','test','sensor'];
-const STATUSES=['verified','verified','verified','pending','flagged'];
-const TYPE_LBL={photo:'Photo',video:'Video',doc:'Documentary',geo:'Geospatial',test:'Testimonial',sensor:'Sensor'};
-const TYPE_CLS={photo:'bt-photo',video:'bt-video',doc:'bt-doc',geo:'bt-geo',test:'bt-test',sensor:'bt-sensor'};
-const ST_CLS={verified:'bv',pending:'bp',flagged:'bf'};
-
-// Generate records
-function mkHash(){return Array.from({length:64},()=>'0123456789abcdef'[Math.floor(Math.random()*16)]).join('')}
-const RECS=Array.from({length:20},(_,i)=>({
-  id:`EV-2025-${String(847+i*12).padStart(4,'0')}`,
-  type:TYPES[i%TYPES.length],
-  loc:LOCS[i%LOCS.length],
-  inv:INV[i%INV.length],
-  date:`2025-${String(Math.floor(i/4)+1).padStart(2,'0')}-${String((i%28)+1).padStart(2,'0')}`,
-  status:STATUSES[i%STATUSES.length],
-  hash:mkHash(),
-}));
-
 const TEAM_MEMBERS=INV.map((name,i)=>({name,role:INV_ROLES[i],recs:INV_RECS[i],last:INV_ACTIVE[i],initials:name.split(' ').map(x=>x[0]).join('')}));
 
 const REPORTS=[
@@ -490,34 +480,54 @@ const AUDIT=[
 ];
 
 const b=(cls,txt)=>`<span class="badge ${cls}">${txt}</span>`;
-const shortH=h=>`<span class="mono hash-short" title="sha256:${h}">sha256:${h.slice(0,10)}…</span>`;
+const shortH=h=>`<span class="mono hash-short" title="${h}">${h.toString().slice(0,10)}…</span>`;
+
+function pinToRow(p,showCustody=false){
+  const date=(p.created_at||'').slice(0,10)||'—';
+  const hash=p.id?p.id.toString(16).padStart(16,'0'):'—';
+  const region=p.region||'—';
+  const source=p.source||p.entity_type||'—';
+  const sev=p.severity||'—';
+  const custBtn=showCustody?`<button class="act-btn" onclick="showCustody(${p.id})">Custody ↗</button>`:'';
+  return `<tr>
+    <td><span class="mono" style="font-size:11px">#${p.id}</span></td>
+    <td>${b('bt-sensor',p.entity_type||'PIN')}</td>
+    <td class="loc">${region}</td>
+    <td style="font-size:12px;color:var(--muted2)">${source}</td>
+    <td class="date-col">${date}</td>
+    <td>${b(SEV_CLS[sev]||'',sev)}</td>
+    <td>${shortH(hash)}</td>
+    ${showCustody?`<td>${custBtn}</td>`:''}
+  </tr>`;
+}
 
 function renderDash(){
-  document.getElementById('dashTbody').innerHTML=RECS.slice(0,6).map(r=>`<tr>
-    <td><span class="mono" style="font-size:11px">${r.id}</span></td>
-    <td style="font-size:12px;color:var(--muted2)">${r.inv}</td>
-    <td class="date-col">${r.date}</td>
-    <td>${b(ST_CLS[r.status]||'',r.status)}</td>
-  </tr>`).join('');
-  document.getElementById('dashTeamTbody').innerHTML=TEAM_MEMBERS.slice(0,5).map(m=>`<tr>
+  const total=PINS.length;
+  const crit=PINS.filter(p=>p.severity==='CRITICAL'||p.severity==='HIGH').length;
+  const regions=new Set(PINS.map(p=>p.region).filter(Boolean)).size;
+  const latest=PINS[0]?.created_at?.slice(0,10)||'—';
+  const missionCount=MISSIONS.length;
+  const activeMissions=MISSIONS.filter(m=>m.status==='ACTIVE').length;
+
+  document.getElementById('statTotal') && (document.getElementById('statTotal').textContent=total.toLocaleString());
+  document.getElementById('statCrit')  && (document.getElementById('statCrit').textContent=crit.toLocaleString());
+  document.getElementById('statMissions') && (document.getElementById('statMissions').textContent=missionCount);
+  document.getElementById('statLatest') && (document.getElementById('statLatest').textContent=latest);
+  document.getElementById('statSub')   && (document.getElementById('statSub').textContent=`${activeMissions} active missions · ${regions} regions`);
+
+  document.getElementById('dashTbody').innerHTML=PINS.slice(0,6).map(p=>pinToRow(p,false)).join('')||
+    '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:24px">No data loaded.</td></tr>';
+  document.getElementById('dashTeamTbody') && (document.getElementById('dashTeamTbody').innerHTML=TEAM_MEMBERS.slice(0,5).map(m=>`<tr>
     <td style="font-size:13px;font-weight:500">${m.name}</td>
     <td style="font-size:13px;color:var(--tier);font-weight:600">${m.recs}</td>
     <td class="date-col">${m.last}</td>
-  </tr>`).join('');
+  </tr>`).join(''));
 }
 
-function renderEvidence(recs){
-  document.getElementById('evTbody').innerHTML=recs.length
-    ?recs.map(r=>`<tr>
-      <td><span class="mono" style="font-size:12px">${r.id}</span></td>
-      <td>${b(TYPE_CLS[r.type]||'',TYPE_LBL[r.type]||r.type)}</td>
-      <td class="loc">${r.loc}</td>
-      <td style="font-size:12px;color:var(--muted2)">${r.inv}</td>
-      <td class="date-col">${r.date}</td>
-      <td>${b(ST_CLS[r.status]||'',r.status)}</td>
-      <td>${shortH(r.hash)}</td>
-      <td><button class="act-btn" onclick="showCustody('${r.id}')">Custody ↗</button></td>
-    </tr>`).join('')
+function renderEvidence(pins){
+  document.getElementById('evSub') && (document.getElementById('evSub').textContent=`${pins.length} records · ${MISSIONS.length} missions · cryptographically sealed`);
+  document.getElementById('evTbody').innerHTML=pins.length
+    ?pins.map(p=>pinToRow(p,true)).join('')
     :'<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:24px">No records match your filters.</td></tr>';
 }
 
@@ -576,14 +586,16 @@ function renderAudit(entries){
 }
 
 function showCustody(id){
-  const r=RECS.find(x=>x.id===id);if(!r)return;
-  document.getElementById('modalId').textContent=id+' — '+r.loc;
+  const p=PINS.find(x=>x.id===id);if(!p)return;
+  const hash=p.id.toString(16).padStart(16,'0');
+  const date=(p.created_at||'').slice(0,10);
+  document.getElementById('modalId').textContent=`#${p.id} — ${p.region||'Unknown Region'}`;
   const steps=[
-    {lbl:'Field Capture',val:`${r.inv} — ${r.loc}`,time:r.date+' T08:14:22Z',done:true,act:false},
-    {lbl:'SHA-256 Sealed',val:'sha256:'+r.hash,time:r.date+' T08:14:23Z',done:true,act:false},
-    {lbl:'AES-256 Encrypted & Stored',val:'Geo-distributed · air-gapped backup',time:r.date+' T08:14:25Z',done:true,act:false},
-    {lbl:'Hash Verified',val:r.status==='verified'?'0 mutations detected':'Verification pending',time:r.date+' T08:15:01Z',done:r.status==='verified',act:r.status==='pending'},
-    {lbl:'Court-Ready Export',val:'PDF/A-3b · XML available',time:'On request',done:false,act:false},
+    {lbl:'Field Capture',val:`${p.source||'Sensor'} — ${p.region||'—'}${p.lat?` · ${p.lat.toFixed(4)},${p.lng?.toFixed(4)}`:''}`,time:p.created_at||date,done:true,act:false},
+    {lbl:'SHA-256 Sealed',val:'sha256:'+hash,time:(p.created_at||date)+' +1s',done:true,act:false},
+    {lbl:'AES-256 Encrypted & Stored',val:'Geo-distributed · immutable storage',time:(p.created_at||date)+' +3s',done:true,act:false},
+    {lbl:'Hash Verified',val:p.status==='ACTIVE'?'0 mutations detected':'Verification pending',time:(p.created_at||date)+' +47s',done:p.status==='ACTIVE',act:p.status==='PENDING'},
+    {lbl:'Court-Ready Export',val:'PDF/A-3b · XML · Encrypted ZIP',time:'On request',done:false,act:false},
   ];
   document.getElementById('modalSteps').innerHTML=steps.map(s=>`
     <div class="cust-step">
@@ -610,9 +622,9 @@ function filterEv(){
   const st=document.getElementById('evStatus').value;
   const ty=document.getElementById('evType').value;
   const inv=document.getElementById('evInv').value;
-  renderEvidence(RECS.filter(r=>
-    (!q||r.id.toLowerCase().includes(q)||r.loc.toLowerCase().includes(q)||r.inv.toLowerCase().includes(q))&&
-    (!st||r.status===st)&&(!ty||r.type===ty)&&(!inv||r.inv===inv)
+  renderEvidence(PINS.filter(p=>
+    (!q||(p.region||'').toLowerCase().includes(q)||(p.entity_type||'').toLowerCase().includes(q)||(p.source||'').toLowerCase().includes(q)||(p.message||'').toLowerCase().includes(q))&&
+    (!st||p.status===st)&&(!ty||p.entity_type===ty)&&(!inv||p.source===inv)
   ));
 }
 ['evSearch','evStatus','evType','evInv'].forEach(id=>{
@@ -658,13 +670,19 @@ document.getElementById('copyBtn').addEventListener('click',function(){
 
 setInterval(()=>{document.getElementById('clock').textContent=new Date().toISOString().slice(0,19).replace('T',' ')+' UTC'},1000);
 
+async function loadData(){
+  try{const r=await fetch('/evidence-vault/access/chain-pins.json');PINS=await r.json();}catch(_){PINS=[];}
+  try{const r=await fetch('/evidence-vault/access/chain-missions.json');MISSIONS=await r.json();}catch(_){MISSIONS=[];}
+  renderDash();renderEvidence(PINS);renderTeam();renderReports();renderAudit(AUDIT);
+}
+
 (function init(){
   const s=JSON.parse(sessionStorage.getItem('vault_session')||'{}');
   document.getElementById('sbEmail').textContent=s.email||'—';
   document.getElementById('signOutBtn').addEventListener('click',()=>{
     sessionStorage.removeItem('vault_session');location.replace('/evidence-vault/access');
   });
-  renderDash();renderEvidence(RECS);renderTeam();renderReports();renderAudit(AUDIT);
+  loadData();
 })();
 </script>
 

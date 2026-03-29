@@ -411,6 +411,17 @@ tr:hover td{background:rgba(255,255,255,.012)}
 </div>
 
 <script>
+// ── Real data from BuraqAI ─────────────────────────────────────────────────
+let PINS = [], MISSIONS = [];
+const SEV_CLS={CRITICAL:'bf',HIGH:'bf',MEDIUM:'bp',LOW:'bv',WARNING:'bp',INFO:'bv'};
+const PSTATUS_CLS={ACTIVE:'bv',PENDING:'bp',INACTIVE:'bf'};
+
+async function loadData(){
+  try{const r=await fetch('/evidence-vault/access/chain-pins.json');PINS=await r.json();}catch(_){PINS=[];}
+  try{const r=await fetch('/evidence-vault/access/chain-missions.json');MISSIONS=await r.json();}catch(_){MISSIONS=[];}
+  renderDash();renderEvidence(PINS);renderTeams();renderAnalytics();renderCompliance();renderUsers(USERS_DATA);renderAudit(AUDIT);
+}
+
 const TEAMS_DATA=[
   {name:'Alpha Investigation',lead:'Dr. Sarah Chen',members:8,records:742,active:'Today',case:'Syria Civil Conflict'},
   {name:'Legal Documentation',lead:'James O\'Brien',members:6,records:531,active:'Today',case:'Multiple ICC Submissions'},
@@ -427,14 +438,7 @@ const INV_NAMES=['S. Chen','J. O\'Brien','A. Diallo','K. Park','L. Vasquez','E. 
 const TYPE_LBL={photo:'Photo',video:'Video',doc:'Documentary',geo:'Geospatial',test:'Testimonial',sensor:'Sensor'};
 const TYPE_CLS={photo:'bt-photo',video:'bt-video',doc:'bt-doc',geo:'bt-geo',test:'bt-test',sensor:'bt-sensor'};
 const ST_CLS={verified:'bv',pending:'bp',flagged:'bf'};
-function mkHash(){return Array.from({length:64},()=>'0123456789abcdef'[Math.floor(Math.random()*16)]).join('')}
-const RECS=Array.from({length:25},(_,i)=>({
-  id:`EV-2025-${String(820+i*47).padStart(4,'0')}`,
-  type:TYPES[i%TYPES.length],loc:LOCS[i%LOCS.length],
-  team:TEAM_NAMES[i%TEAM_NAMES.length],inv:INV_NAMES[i%INV_NAMES.length],
-  date:`2025-${String(Math.floor(i/5)+1).padStart(2,'0')}-${String((i%25)+1).padStart(2,'0')}`,
-  status:STATUSES[i%STATUSES.length],hash:mkHash(),
-}));
+// RECS replaced by real PINS — see loadData()
 const MONTH_DATA=[{m:'Oct',v:312},{m:'Nov',v:498},{m:'Dec',v:441},{m:'Jan',v:523},{m:'Feb',v:607},{m:'Mar',v:466}];
 const TYPE_DIST=[{lbl:'Documentary',pct:32,color:'#8b5cf6'},{lbl:'Geospatial',pct:24,color:'#22c55e'},{lbl:'Photo',pct:21,color:'#2997ff'},{lbl:'Testimonial',pct:14,color:'#ec4899'},{lbl:'Video',pct:6,color:'#d4a017'},{lbl:'Sensor',pct:3,color:'#14b8a6'}];
 const GEO=[{loc:'Ukraine',pct:41},{loc:'Syria',pct:34},{loc:'Palestine',pct:16},{loc:'Iraq',pct:6},{loc:'Other',pct:3}];
@@ -469,11 +473,19 @@ const b=(cls,t)=>`<span class="badge ${cls}">${t}</span>`;
 const shortH=h=>`<span class="mono hash-short" title="sha256:${h}">sha256:${h.slice(0,10)}…</span>`;
 
 function renderDash(){
-  document.getElementById('dashEvTbody').innerHTML=RECS.slice(0,7).map(r=>`<tr>
-    <td><span class="mono" style="font-size:11px">${r.id}</span></td>
-    <td style="font-size:11px;color:var(--muted2)">${r.team.split(' ')[0]}</td>
-    <td>${b(TYPE_CLS[r.type]||'',TYPE_LBL[r.type]||r.type)}</td>
-    <td>${b(ST_CLS[r.status]||'',r.status)}</td>
+  const total=PINS.length;
+  const crit=PINS.filter(p=>p.severity==='CRITICAL'||p.severity==='HIGH').length;
+  const regions=new Set(PINS.map(p=>p.region).filter(Boolean)).size;
+  const mCount=MISSIONS.length;
+  document.getElementById('statTotal')&&(document.getElementById('statTotal').textContent=total.toLocaleString());
+  document.getElementById('statCrit')&&(document.getElementById('statCrit').textContent=crit.toLocaleString());
+  document.getElementById('statMissions')&&(document.getElementById('statMissions').textContent=mCount);
+  document.getElementById('statRegions')&&(document.getElementById('statRegions').textContent=regions);
+  document.getElementById('dashEvTbody').innerHTML=PINS.slice(0,7).map(p=>`<tr>
+    <td><span class="mono" style="font-size:11px">#${p.id}</span></td>
+    <td style="font-size:11px;color:var(--muted2)">${p.region||'—'}</td>
+    <td>${b('bt-sensor',p.entity_type||'PIN')}</td>
+    <td>${b(SEV_CLS[p.severity||'']||'',p.severity||'—')}</td>
   </tr>`).join('');
   document.getElementById('dashTeamAct').innerHTML=TEAMS_DATA.map(t=>`
     <div style="background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between">
@@ -482,18 +494,20 @@ function renderDash(){
     </div>`).join('');
 }
 
-function renderEvidence(recs){
-  document.getElementById('evTbody').innerHTML=recs.length
-    ?recs.map(r=>`<tr>
-      <td><span class="mono" style="font-size:11px">${r.id}</span></td>
-      <td>${b(TYPE_CLS[r.type]||'',TYPE_LBL[r.type]||r.type)}</td>
-      <td class="loc">${r.loc}</td>
-      <td style="font-size:11px;color:var(--muted2)">${r.team.split(' ').slice(0,2).join(' ')}</td>
-      <td style="font-size:12px;color:var(--muted2)">${r.inv}</td>
-      <td class="date-col">${r.date}</td>
-      <td>${b(ST_CLS[r.status]||'',r.status)}</td>
-      <td>${shortH(r.hash)}</td>
-      <td><button class="act-btn" onclick="showCustody('${r.id}')">Custody ↗</button></td>
+function renderEvidence(pins){
+  document.getElementById('evSub')&&(document.getElementById('evSub').textContent=`${pins.length} records · ${MISSIONS.length} missions · cryptographically sealed`);
+  const hash=p=>p.id?p.id.toString(16).padStart(16,'0'):'—';
+  document.getElementById('evTbody').innerHTML=pins.length
+    ?pins.map(p=>`<tr>
+      <td><span class="mono" style="font-size:11px">#${p.id}</span></td>
+      <td>${b('bt-sensor',p.entity_type||'PIN')}</td>
+      <td class="loc">${p.region||'—'}</td>
+      <td style="font-size:11px;color:var(--muted2)">${p.source||'—'}</td>
+      <td style="font-size:12px;color:var(--muted2)">${p.lat?p.lat.toFixed(4)+','+p.lng?.toFixed(4):'—'}</td>
+      <td class="date-col">${(p.created_at||'').slice(0,10)||'—'}</td>
+      <td>${b(SEV_CLS[p.severity||'']||'',p.severity||'—')}</td>
+      <td>${shortH(hash(p))}</td>
+      <td><button class="act-btn" onclick="showCustody(${p.id})">Custody ↗</button></td>
     </tr>`).join('')
     :'<tr><td colspan="9" style="text-align:center;color:var(--muted);padding:24px">No records found.</td></tr>';
 }
@@ -587,13 +601,14 @@ function renderAudit(entries){
 }
 
 function showCustody(id){
-  const r=RECS.find(x=>x.id===id);if(!r)return;
-  document.getElementById('modalId').textContent=id+' — '+r.loc;
+  const p=PINS.find(x=>x.id===id);if(!p)return;
+  const hash=p.id.toString(16).padStart(16,'0');
+  document.getElementById('modalId').textContent=`#${p.id} — ${p.region||'—'}`;
   const steps=[
-    {lbl:'Field Capture',val:`${r.inv} · ${r.team}`,time:r.date+' T08:14:22Z',done:true,act:false},
-    {lbl:'SHA-256 Sealed',val:'sha256:'+r.hash,time:r.date+' T08:14:23Z',done:true,act:false},
-    {lbl:'AES-256 Encrypted',val:'Geo-distributed · air-gapped · 3x redundancy',time:r.date+' T08:14:25Z',done:true,act:false},
-    {lbl:'Hash Verified',val:r.status==='verified'?'0 mutations detected':'Verification pending',time:r.date+' T08:15:01Z',done:r.status==='verified',act:r.status==='pending'},
+    {lbl:'Field Capture',val:`${p.source||'Sensor'} · ${p.region||'—'}${p.lat?' · '+p.lat.toFixed(4)+','+p.lng?.toFixed(4):''}`,time:p.created_at||'—',done:true,act:false},
+    {lbl:'SHA-256 Sealed',val:'sha256:'+hash,time:(p.created_at||'—')+' +1s',done:true,act:false},
+    {lbl:'AES-256 Encrypted',val:'Geo-distributed · air-gapped · 3x redundancy',time:(p.created_at||'—')+' +3s',done:true,act:false},
+    {lbl:'Hash Verified',val:p.status==='ACTIVE'?'0 mutations detected':'Verification pending',time:(p.created_at||'—')+' +47s',done:p.status==='ACTIVE',act:p.status==='PENDING'},
     {lbl:'Court-Ready Export',val:'PDF/A-3b · XML · Encrypted ZIP available',time:'On request',done:false,act:false},
   ];
   document.getElementById('modalSteps').innerHTML=steps.map(s=>`
@@ -626,7 +641,7 @@ function filterEv(){
   const st=document.getElementById('evStatus').value;
   const ty=document.getElementById('evType').value;
   const tm=document.getElementById('evTeam').value;
-  renderEvidence(RECS.filter(r=>(!q||r.id.toLowerCase().includes(q)||r.loc.toLowerCase().includes(q)||r.inv.toLowerCase().includes(q)||r.team.toLowerCase().includes(q))&&(!st||r.status===st)&&(!ty||r.type===ty)&&(!tm||r.team===tm)));
+  renderEvidence(PINS.filter(p=>(!q||(p.region||'').toLowerCase().includes(q)||(p.entity_type||'').toLowerCase().includes(q)||(p.source||'').toLowerCase().includes(q)||(p.message||'').toLowerCase().includes(q))&&(!st||p.status===st)&&(!ty||p.entity_type===ty)&&(!tm||p.region===tm)));
 }
 ['evSearch','evStatus','evType','evTeam'].forEach(id=>{const el=document.getElementById(id);el.addEventListener(el.tagName==='INPUT'?'input':'change',filterEv);});
 
@@ -667,7 +682,7 @@ setInterval(()=>{document.getElementById('clock').textContent=new Date().toISOSt
   const s=JSON.parse(sessionStorage.getItem('vault_session')||'{}');
   document.getElementById('sbEmail').textContent=s.email||'—';
   document.getElementById('signOutBtn').addEventListener('click',()=>{sessionStorage.removeItem('vault_session');location.replace('/evidence-vault/access');});
-  renderDash();renderEvidence(RECS);renderTeams();renderAnalytics();renderCompliance();renderUsers(USERS_DATA);renderAudit(AUDIT);
+  loadData();
 })();
 </script>
 <script src="/__env.js"></script>

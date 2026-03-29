@@ -218,7 +218,7 @@ tr:hover td{background:rgba(255,255,255,.012)}
     <span class="tier-pill">Basic</span>
   </div>
   <nav class="sb-nav">
-    <button class="nav-btn" data-sec="dashboard">
+    <button class="nav-btn active" data-sec="dashboard">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
       Dashboard
     </button>
@@ -239,7 +239,7 @@ tr:hover td{background:rgba(255,255,255,.012)}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
       Audit Log
     </button>
-    <button class="nav-btn active" data-sec="chain">
+    <button class="nav-btn" data-sec="chain">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
       Evidence Chain
     </button>
@@ -405,7 +405,7 @@ tr:hover td{background:rgba(255,255,255,.012)}
     </section>
 
     <!-- ══ EVIDENCE CHAIN ══ -->
-    <section id="sec-chain" class="section active"></section>
+    <section id="sec-chain" class="section"></section>
 
   </div><!-- /content -->
 </main>
@@ -574,7 +574,7 @@ setInterval(()=>{document.getElementById('clock').textContent=new Date().toISOSt
     sessionStorage.removeItem('vault_session');location.replace('/evidence-vault/access');
   });
   loadPins();
-  nav('chain');
+  nav('dashboard');
 })();
 </script>
 
