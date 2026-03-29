@@ -239,6 +239,10 @@ tr:hover td{background:rgba(255,255,255,.012)}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
       Audit Log
     </button>
+    <button class="nav-btn" data-sec="chain">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      Evidence Chain
+    </button>
   </nav>
   <div class="sb-foot">
     <div class="stor-label"><span>Storage</span><span id="storTxt">4.2 / 50 GB</span></div>
@@ -401,6 +405,9 @@ tr:hover td{background:rgba(255,255,255,.012)}
       <div class="audit-wrap" id="auditWrap"></div>
     </section>
 
+    <!-- ══ EVIDENCE CHAIN ══ -->
+    <section id="sec-chain" class="section"></section>
+
   </div><!-- /content -->
 </main>
 </div><!-- /layout -->
@@ -512,13 +519,14 @@ function showCustody(id){
 }
 
 // ── Nav ───────────────────────────────────────────────────────────────────────
-const TITLES={dashboard:'Dashboard',evidence:'My Evidence',submit:'Submit Evidence',export:'Export',audit:'Audit Log'};
+const TITLES={dashboard:'Dashboard',evidence:'My Evidence',submit:'Submit Evidence',export:'Export',audit:'Audit Log',chain:'Evidence Chain'};
 function nav(name){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('sec-'+name).classList.add('active');
+  document.getElementById('sec-'+name)?.classList.add('active');
   document.querySelector(`[data-sec="${name}"]`)?.classList.add('active');
   document.getElementById('pgTitle').textContent=TITLES[name]||name;
+  if(name==='chain'&&window.VaultChain)window.VaultChain.init('basic');
 }
 document.querySelectorAll('.nav-btn').forEach(btn=>btn.addEventListener('click',()=>nav(btn.dataset.sec)));
 
@@ -602,6 +610,7 @@ setInterval(()=>{document.getElementById('clock').textContent=new Date().toISOSt
 
 <!-- Firestore session polling -->
 <script src="/__env.js"></script>
+<script src="/evidence-vault/access/vault-chain.js"></script>
 <script type="module">
 import{doc,getDoc}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 import{db}from'/evidence-vault/access/firebase-client.js';
