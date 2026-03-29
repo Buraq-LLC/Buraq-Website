@@ -126,22 +126,19 @@
     return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
   }
 
-  // ─── FETCH ───────────────────────────────────────────────────────────────────
-  async function apiFetch(path) {
+  // ─── FETCH STATIC JSON ───────────────────────────────────────────────────────
+  const BASE = '/evidence-vault/access';
+  async function fetchJSON(file) {
     try {
       const ctrl = new AbortController();
       const tid = setTimeout(() => ctrl.abort(), 9000);
-      const r = await fetch(`${_api}${path}`, { signal: ctrl.signal });
+      const r = await fetch(`${BASE}/${file}`, { signal: ctrl.signal });
       clearTimeout(tid);
-      if (!r.ok) return [];
+      if (!r.ok) return null;
       const j = await r.json();
-      if (Array.isArray(j)) return j;
-      for (const k of ['pins', 'logs', 'missions', 'items', 'results', 'data']) {
-        if (Array.isArray(j[k])) return j[k];
-      }
-      return [];
+      return Array.isArray(j) ? j : null;
     } catch {
-      return null; // null = network failure
+      return null;
     }
   }
 
@@ -158,17 +155,12 @@
     let netErr = false;
 
     if (caps.sources.includes('pins')) {
-      const r = await apiFetch(`/api/pins?limit=${caps.maxRec}`);
+      const r = await fetchJSON('chain-pins.json');
       if (r === null) netErr = true;
       else r.forEach(x => raw.push({ _src: 'pin', ...x }));
     }
-    if (caps.sources.includes('logs')) {
-      const r = await apiFetch('/api/logs?limit=50');
-      if (r === null) netErr = true;
-      else r.forEach(x => raw.push({ _src: 'log', ...x }));
-    }
     if (caps.sources.includes('missions')) {
-      const r = await apiFetch('/api/missions?limit=20');
+      const r = await fetchJSON('chain-missions.json');
       if (r === null) netErr = true;
       else r.forEach(x => raw.push({ _src: 'mission', ...x }));
     }
