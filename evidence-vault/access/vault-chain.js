@@ -150,35 +150,41 @@
     _chain = [];
     setUI('loading');
 
-    const caps = CAPS[_tier] || CAPS.basic;
-    const raw  = [];
-    let netErr = false;
+    try {
+      const caps = CAPS[_tier] || CAPS.basic;
+      const raw  = [];
+      let netErr = false;
 
-    if (caps.sources.includes('pins')) {
-      const r = await fetchJSON('chain-pins.json');
-      if (r === null) netErr = true;
-      else r.forEach(x => raw.push({ _src: 'pin', ...x }));
+      if (caps.sources.includes('pins')) {
+        const r = await fetchJSON('chain-pins.json');
+        if (r === null) netErr = true;
+        else r.forEach(x => raw.push({ _src: 'pin', ...x }));
+      }
+      if (caps.sources.includes('missions')) {
+        const r = await fetchJSON('chain-missions.json');
+        if (r === null) netErr = true;
+        else r.forEach(x => raw.push({ _src: 'mission', ...x }));
+      }
+
+      if (netErr && raw.length === 0) { setUI('error'); _busy = false; return; }
+      if (raw.length === 0)           { setUI('empty'); _busy = false; return; }
+
+      // Sort oldest-first for hash chaining, cap to maxRec
+      raw.sort((a, b) =>
+        new Date(a.created_at || a.start_time || 0) -
+        new Date(b.created_at || b.start_time || 0)
+      );
+      raw.splice(caps.maxRec);
+
+      _chain = await buildChain(raw); // returns newest-first for display
+      _ready = true;
+      _busy  = false;
+      renderChain();
+    } catch (err) {
+      console.error('[VaultChain] load error:', err);
+      setUI('error');
+      _busy = false;
     }
-    if (caps.sources.includes('missions')) {
-      const r = await fetchJSON('chain-missions.json');
-      if (r === null) netErr = true;
-      else r.forEach(x => raw.push({ _src: 'mission', ...x }));
-    }
-
-    if (netErr && raw.length === 0) { setUI('error'); _busy = false; return; }
-    if (raw.length === 0)           { setUI('empty'); _busy = false; return; }
-
-    // Sort oldest-first for hash chaining, cap to maxRec
-    raw.sort((a, b) =>
-      new Date(a.created_at || a.start_time || 0) -
-      new Date(b.created_at || b.start_time || 0)
-    );
-    raw.splice(caps.maxRec);
-
-    _chain = await buildChain(raw); // returns newest-first for display
-    _ready = true;
-    _busy  = false;
-    renderChain();
   }
 
   // ─── BUILD CHAIN ─────────────────────────────────────────────────────────────

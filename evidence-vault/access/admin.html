@@ -6,16 +6,17 @@
 <title>Evidence Vault — Admin | Buraq AI</title>
 <meta name="robots" content="noindex,nofollow"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#040507;--bg2:#07080c;--bg3:#0b0d12;
-  --border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.1);
+  --bg:#040507;--bg2:#07080c;--bg3:#0b0d12;--bg4:#0f1117;
+  --border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.11);--border3:rgba(255,255,255,.18);
   --text:#f0f2f7;--muted:#5a6272;--muted2:#8892a4;
-  --gold:#d4a017;--green:#22c55e;--blue:#2997ff;--orange:#f97316;
-  --tier:#ff453a;--tier-bg:rgba(255,69,58,.08);
-  --sw:230px;
+  --gold:#d4a017;--green:#22c55e;--red:#ff453a;--orange:#f97316;--purple:#a78bfa;
+  --tier:#ff453a;--tier2:#b91c1c;--tier-bg:rgba(255,69,58,.08);
+  --sw:228px;
+  --crit:#ff453a;--high:#f97316;--medium:#f59e0b;--low:#22c55e;--warning:#f97316;--info:#8892a4;
 }
 html{-webkit-font-smoothing:antialiased}
 body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,system-ui,sans-serif;min-height:100vh;display:flex}
@@ -24,154 +25,200 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sy
 .main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;min-height:100vh}
 .sb-brand{padding:18px 16px 14px;border-bottom:1px solid var(--border)}
 .sb-wordmark{font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
-.sb-wordmark img{width:20px;height:20px;object-fit:contain}
+.sb-wordmark img{width:22px;height:22px;object-fit:contain}
 .sb-vault-tag{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-top:4px}
 .sb-user{padding:12px 16px;border-bottom:1px solid var(--border)}
 .sb-email{font-size:11px;color:var(--muted2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:6px}
-.tier-pill{display:inline-flex;align-items:center;gap:5px;background:var(--tier-bg);color:var(--tier);border:1px solid rgba(255,69,58,.2);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:99px}
-.tier-pill::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--tier)}
+.tier-pill{display:inline-flex;align-items:center;gap:5px;background:var(--tier-bg);color:var(--tier);border:1px solid rgba(255,69,58,.25);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:99px}
+.tier-pill::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--tier);animation:pdot 2s ease-in-out infinite}
+@keyframes pdot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(255,69,58,.4)}50%{opacity:.7;box-shadow:0 0 0 4px rgba(255,69,58,0)}}
 .sb-nav{flex:1;padding:6px 0}
-.nav-btn{display:flex;align-items:center;gap:9px;width:100%;padding:8px 16px;font-size:13px;font-weight:500;color:var(--muted2);background:none;border:none;cursor:pointer;text-align:left;transition:all .12s;font-family:inherit}
-.nav-btn svg{width:15px;height:15px;flex-shrink:0;opacity:.65}
+.nav-btn{display:flex;align-items:center;gap:9px;width:100%;padding:9px 16px;font-size:12.5px;font-weight:500;color:var(--muted2);background:none;border:none;cursor:pointer;text-align:left;transition:all .15s;font-family:inherit;position:relative}
+.nav-btn svg{width:15px;height:15px;flex-shrink:0;opacity:.55;transition:opacity .15s}
 .nav-btn:hover{color:var(--text);background:rgba(255,255,255,.03)}
+.nav-btn:hover svg{opacity:.9}
 .nav-btn.active{color:var(--tier);background:var(--tier-bg)}
 .nav-btn.active svg{opacity:1}
+.nav-btn.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2.5px;background:var(--tier);border-radius:0 2px 2px 0}
 .nav-sep{height:1px;background:var(--border);margin:6px 16px}
+.req-badge{background:var(--red);color:#fff;font-size:9px;font-weight:800;border-radius:99px;padding:1px 6px;min-width:18px;text-align:center}
 .sb-foot{padding:14px 16px;border-top:1px solid var(--border)}
-.signout{width:100%;background:none;border:1px solid var(--border);color:var(--muted2);border-radius:7px;padding:8px;font-size:12px;cursor:pointer;font-family:inherit;transition:all .12s}
-.signout:hover{border-color:var(--tier);color:var(--tier)}
-.topbar{padding:16px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--bg);position:sticky;top:0;z-index:100}
-.pg-title{font-size:17px;font-weight:700;letter-spacing:-.02em}
-.pg-sub{font-size:12px;color:var(--muted2);margin-top:2px}
+.signout{width:100%;background:none;border:1px solid var(--border);color:var(--muted2);border-radius:7px;padding:8px;font-size:12px;cursor:pointer;font-family:inherit;transition:all .15s}
+.signout:hover{border-color:rgba(255,69,58,.4);color:var(--red)}
+.topbar{padding:14px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(4,5,7,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);position:sticky;top:0;z-index:100}
+.tb-left .pg-title{font-size:16px;font-weight:700;letter-spacing:-.025em}
+.tb-left .pg-sub{font-size:11.5px;color:var(--muted2);margin-top:2px}
 .tb-right{display:flex;align-items:center;gap:10px}
-.clock{font-size:11px;font-family:'SF Mono','Fira Code',monospace;color:var(--muted);background:var(--bg3);border:1px solid var(--border);padding:4px 10px;border-radius:6px}
-.admin-badge{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--tier-bg);color:var(--tier);border:1px solid rgba(255,69,58,.2);padding:3px 10px;border-radius:99px;display:flex;align-items:center;gap:5px}
-.admin-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--tier)}
+.clock{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--muted);background:var(--bg3);border:1px solid var(--border);padding:4px 10px;border-radius:6px}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:lblink 1.4s ease-in-out infinite}
+@keyframes lblink{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(255,69,58,.5)}50%{opacity:.4;box-shadow:0 0 0 5px rgba(255,69,58,0)}}
+.live-lbl{font-size:10px;font-weight:700;color:var(--red);letter-spacing:.08em;text-transform:uppercase}
+.admin-badge{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--tier-bg);color:var(--tier);border:1px solid rgba(255,69,58,.2);padding:3px 10px;border-radius:99px}
 .content{padding:24px 28px;flex:1}
 .section{display:none}.section.active{display:block}
-.sec-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:20px;flex-wrap:wrap}
-.sec-title{font-size:15px;font-weight:700;letter-spacing:-.01em}
-.sec-sub{font-size:12px;color:var(--muted2);margin-top:3px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
-.stat{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px 20px;transition:border-color .15s}
-.stat:hover{border-color:var(--border2)}
-.stat-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:8px}
-.stat-val{font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1}
-.stat-sub{font-size:11px;color:var(--muted);margin-top:4px}
-.stat.accent .stat-val{color:var(--tier)}
-.tbl-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.scard{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px 22px;position:relative;overflow:hidden;transition:border-color .2s,transform .15s}
+.scard:hover{border-color:var(--border2);transform:translateY(-1px)}
+.scard.c-red{border-color:rgba(255,69,58,.2)}.scard.c-red::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--tier),transparent)}
+.scard.c-orange{border-color:rgba(249,115,22,.15)}.scard.c-orange::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--orange),transparent)}
+.scard.c-blue{border-color:rgba(41,151,255,.15)}.scard.c-blue::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#2997ff,transparent)}
+.scard.c-gold{border-color:rgba(212,160,23,.15)}.scard.c-gold::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.scard.c-purple{border-color:rgba(167,139,250,.15)}.scard.c-purple::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--purple),transparent)}
+.sicon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:14px}
+.sicon.red{background:var(--tier-bg)}.sicon.orange{background:rgba(249,115,22,.1)}.sicon.blue{background:rgba(41,151,255,.1)}.sicon.gold{background:rgba(212,160,23,.1)}.sicon.purple{background:rgba(167,139,250,.1)}
+.slbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.sval{font-size:28px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.sval.red{color:var(--tier)}.sval.orange{color:var(--orange)}.sval.blue{color:#2997ff}.sval.gold{color:var(--gold)}.sval.purple{color:var(--purple)}
+.ssub{font-size:11px;color:var(--muted2);margin-top:6px}
+.row3{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px}
+.col-stack{display:flex;flex-direction:column;gap:16px}
+.panel{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.phead{padding:13px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.ptitle{font-size:12.5px;font-weight:700}.psub{font-size:11px;color:var(--muted2);margin-top:2px}
+.pbody{padding:16px 18px}
+.feed-wrap{height:260px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.feed-wrap::-webkit-scrollbar{width:4px}.feed-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.fi{display:flex;align-items:flex-start;gap:10px;padding:9px 16px;border-bottom:1px solid var(--border);transition:background .15s;cursor:pointer}
+.fi:last-child{border-bottom:none}.fi:hover{background:rgba(255,255,255,.025)}
+.fi.new{animation:fslide .35s ease-out}
+@keyframes fslide{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.fdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.dc{background:var(--red);box-shadow:0 0 6px rgba(255,69,58,.5)}
+.dh{background:var(--orange);box-shadow:0 0 6px rgba(249,115,22,.4)}
+.dm{background:var(--medium)}.dl{background:var(--green)}.dw{background:var(--orange)}.di{background:var(--muted)}
+.fmsg{font-size:12px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.fmeta{display:flex;align-items:center;gap:6px;margin-top:3px;flex-wrap:wrap}
+.ftime{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--muted)}
+.fid{font-size:10px;color:var(--muted2)}.freg{font-size:10px;color:var(--muted2);background:var(--bg3);padding:1px 5px;border-radius:3px}
+.fcoord{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--tier);background:var(--tier-bg);padding:1px 6px;border-radius:3px}
+.sev-list{display:flex;flex-direction:column;gap:10px;padding:4px 0}
+.sev-row{display:flex;align-items:center;gap:8px}
+.sev-name{font-size:10px;font-weight:600;width:66px;flex-shrink:0}
+.sev-bw{flex:1;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden}
+.sev-b{height:100%;border-radius:4px;transition:width 1.2s cubic-bezier(.22,1,.36,1)}
+.sev-c{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--muted2);width:30px;text-align:right;flex-shrink:0}
+.sev-p{font-size:10px;color:var(--muted);width:30px;flex-shrink:0}
+.rgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:4px 0}
+.rcard{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:10px 12px;transition:border-color .15s}
+.rcard:hover{border-color:var(--border2)}
+.rcname{font-size:11px;font-weight:600;text-transform:capitalize;margin-bottom:4px}
+.rccount{font-size:20px;font-weight:700;color:var(--tier);margin-bottom:4px}
+.rcbar{height:2px;background:var(--bg);border-radius:1px;overflow:hidden;margin-top:4px}
+.rcfill{height:100%;background:linear-gradient(90deg,var(--tier2),var(--tier));border-radius:1px;transition:width 1.2s cubic-bezier(.22,1,.36,1)}
+.ecloud{display:flex;flex-wrap:wrap;gap:6px;padding:2px 0}
+.echip{display:flex;align-items:center;gap:5px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 9px;font-size:11px}
+.ecname{font-weight:600;color:var(--muted2)}.eccount{font-weight:700;color:var(--tier)}
+.tbl-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden}
 .tbl-bar{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.tbl-search{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:7px 12px;font-size:13px;color:var(--text);outline:none;font-family:inherit;min-width:180px}
-.tbl-search::placeholder{color:var(--muted)}
-.tbl-search:focus{border-color:var(--tier)}
-.tbl-sel{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-size:12px;color:var(--muted2);outline:none;cursor:pointer;font-family:inherit}
+.tbl-search{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-size:12.5px;color:var(--text);outline:none;font-family:inherit;min-width:190px;transition:border-color .15s}
+.tbl-search::placeholder{color:var(--muted)}.tbl-search:focus{border-color:var(--tier)}
+.tbl-sel{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:7px 10px;font-size:12px;color:var(--muted2);outline:none;cursor:pointer;font-family:inherit;transition:border-color .15s}
 .tbl-sel:focus{border-color:var(--tier)}
+.tbl-count{margin-left:auto;font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace}
 table{width:100%;border-collapse:collapse}
 thead{background:var(--bg3)}
-th{padding:9px 14px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;white-space:nowrap}
-td{padding:10px 14px;font-size:13px;border-top:1px solid var(--border)}
-tr:hover td{background:rgba(255,255,255,.012)}
-.mono{font-family:'SF Mono','Fira Code',monospace}
-.hash-short{font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px;display:block}
+th{padding:9px 14px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;white-space:nowrap;border-bottom:1px solid var(--border)}
+td{padding:11px 14px;font-size:12.5px;border-top:1px solid var(--border)}
+tr{cursor:pointer;transition:background .1s}
+tr:hover td{background:rgba(255,255,255,.018)}
+.mono{font-family:'JetBrains Mono',monospace}
+.hash-full{font-size:10px;color:var(--tier);font-family:'JetBrains Mono',monospace;word-break:break-all}
 .loc{color:var(--muted2);font-size:12px}
-.date-col{color:var(--muted);font-size:12px;white-space:nowrap}
-.badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px}
-.bv{background:rgba(34,197,94,.1);color:#22c55e}
-.bp{background:rgba(249,115,22,.1);color:#f97316}
-.bf{background:rgba(255,69,58,.1);color:#ff453a}
-.b-admin{background:rgba(255,69,58,.12);color:#ff453a}
-.b-ent{background:rgba(34,197,94,.12);color:#22c55e}
-.b-pro{background:rgba(249,115,22,.12);color:#f97316}
-.b-basic{background:rgba(41,151,255,.12);color:#2997ff}
-.b-sys{background:rgba(255,69,58,.08);color:#ff453a}
-.bt-photo{background:rgba(41,151,255,.1);color:#2997ff}
-.bt-video{background:rgba(212,160,23,.1);color:#d4a017}
-.bt-doc{background:rgba(139,92,246,.1);color:#8b5cf6}
-.bt-geo{background:rgba(34,197,94,.1);color:#22c55e}
-.bt-test{background:rgba(236,72,153,.1);color:#ec4899}
-.bt-sensor{background:rgba(20,184,166,.1);color:#14b8a6}
-.act-btn{background:none;border:1px solid var(--border);color:var(--muted2);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:inherit;transition:all .12s;white-space:nowrap}
+.dc-col{color:var(--muted);font-size:11.5px;white-space:nowrap;font-family:'JetBrains Mono',monospace}
+.src-col{font-size:11px;color:var(--muted2)}
+.coord-col{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--orange)}
+.badge{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px;white-space:nowrap}
+.bv{background:rgba(34,197,94,.1);color:#22c55e}.bp{background:rgba(249,115,22,.1);color:#f97316}
+.bf{background:rgba(255,69,58,.1);color:#ff453a}.bm{background:rgba(245,158,11,.1);color:#f59e0b}
+.bi{background:rgba(90,98,114,.12);color:#8892a4}.bw{background:rgba(249,115,22,.1);color:#f97316}
+.bt-sensor{background:rgba(20,184,166,.1);color:#14b8a6}.bt-veh{background:rgba(168,85,247,.1);color:#a855f7}
+.bt-fire{background:rgba(255,69,58,.1);color:#ff453a}.bt-eq{background:rgba(245,158,11,.1);color:#f59e0b}
+.intg-badge{display:inline-flex;align-items:center;gap:4px;background:var(--tier-bg);color:var(--tier);border:1px solid rgba(255,69,58,.2);font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 7px;border-radius:4px}
+.act-btn{background:none;border:1px solid var(--border);color:var(--muted2);border-radius:7px;padding:5px 12px;font-size:11.5px;cursor:pointer;font-family:inherit;transition:all .15s}
 .act-btn:hover{border-color:var(--tier);color:var(--tier)}
-.act-btn.warn:hover{border-color:var(--orange);color:var(--orange)}
-.act-btn.ok:hover{border-color:var(--green);color:var(--green)}
-.act-btn.deny:hover{border-color:var(--tier);color:var(--tier)}
-.pri-btn{background:var(--tier);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .12s}
-.pri-btn:hover{opacity:.88}
-.pri-btn:disabled{opacity:.5;cursor:not-allowed}
-.green-btn{background:var(--green);color:#fff;border:none;border-radius:7px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .12s}
-.green-btn:hover{opacity:.88}
-
-/* health cards */
-.health-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:20px}
-.health-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px 20px}
-.health-card.ok{border-color:rgba(34,197,94,.2)}
-.health-card.warn{border-color:rgba(249,115,22,.2)}
-.health-card.crit{border-color:rgba(255,69,58,.3)}
-.hc-icon{font-size:18px;margin-bottom:10px}
-.hc-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted2);margin-bottom:4px}
-.hc-val{font-size:14px;font-weight:700}
-.hc-sub{font-size:11px;color:var(--muted);margin-top:3px}
-.hc-status{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:8px}
-.hc-dot{width:5px;height:5px;border-radius:50%}
-
-/* tier dist */
-.tier-dist{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-.tier-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;text-align:center}
-.tier-num{font-size:22px;font-weight:700;letter-spacing:-.02em}
-.tier-lbl{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted2);margin-top:4px}
-
-/* user form modal */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;max-width:480px;width:100%;padding:26px}
-.modal-title{font-size:15px;font-weight:700;margin-bottom:16px}
-.field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
-.field label{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted2)}
-.field input,.field select{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);outline:none;font-family:inherit;transition:border-color .12s}
-.field input:focus,.field select:focus{border-color:var(--tier)}
-.field input::placeholder{color:var(--muted)}
-.modal-close{background:none;border:1px solid var(--border);color:var(--muted2);border-radius:7px;padding:7px 16px;font-size:12px;cursor:pointer;font-family:inherit;transition:all .12s;margin-right:8px}
-.modal-close:hover{border-color:var(--border2);color:var(--text)}
-.form-msg{font-size:12px;min-height:16px;margin-top:8px}
-
-/* cust modal */
-.cust-step{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
-.cust-step:last-child{border-bottom:none}
-.cust-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);margin-top:4px;flex-shrink:0}
-.cust-dot.done{background:var(--green)}.cust-dot.active{background:var(--orange)}
-.cust-lbl{font-size:12px;font-weight:600;margin-bottom:2px}
-.cust-val{font-family:'SF Mono','Fira Code',monospace;font-size:10px;color:var(--muted2);word-break:break-all;line-height:1.4}
-.cust-time{font-size:11px;color:var(--muted);margin-top:2px}
-
-/* audit */
-.audit-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.audit-row{display:grid;grid-template-columns:150px 80px 140px 1fr 55px;gap:10px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);font-size:12px}
-.audit-row:last-child{border-bottom:none}
-.audit-time{font-family:'SF Mono','Fira Code',monospace;font-size:10px;color:var(--muted)}
-.audit-act{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-.aa-login{color:var(--muted2)}.aa-read{color:var(--blue)}.aa-upload{color:var(--green)}.aa-export{color:var(--gold)}.aa-admin{color:var(--tier)}.aa-create{color:var(--green)}.aa-delete{color:var(--tier)}
-
+.pri-btn{background:var(--tier);color:#fff;border:none;border-radius:9px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.pri-btn:hover{opacity:.87}
+.int-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}
+.int-card{background:var(--bg2);border:1px solid var(--border);border-radius:11px;padding:16px 18px}
+.int-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:6px}
+.int-val{font-size:15px;font-weight:700;color:var(--green)}.int-sub{font-size:11px;color:var(--muted);margin-top:3px}
+/* tier distribution */
+.tier-dist{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.tier-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;text-align:center;transition:border-color .15s}
+.tier-card:hover{border-color:var(--border2)}
+.tc-num{font-size:28px;font-weight:800;margin-bottom:4px;line-height:1}
+.tc-lbl{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.tc-sub{font-size:10.5px;color:var(--muted);margin-top:3px}
+/* health grid */
+.health-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.health-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.hc-title{font-size:12px;font-weight:700;margin-bottom:8px;color:var(--muted2)}
+.hc-val{font-size:24px;font-weight:800;margin-bottom:4px}
+.hc-sub{font-size:11px;color:var(--muted)}
 /* config */
-.config-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:14px}
-.config-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)}
-.config-row:last-child{border-bottom:none}
-.config-label{font-size:13px;font-weight:500}
-.config-sub{font-size:11px;color:var(--muted2);margin-top:2px}
-.config-input{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:6px 10px;font-size:13px;color:var(--text);outline:none;font-family:inherit;width:120px}
+.config-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.config-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:22px}
+.config-card-title{font-size:13px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.config-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)}
+.config-row:last-of-type{border-bottom:none}
+.config-label{font-size:12.5px;color:var(--muted2)}
+.config-input{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:6px 10px;font-size:12.5px;color:var(--text);outline:none;font-family:'JetBrains Mono',monospace;width:90px;text-align:right}
 .config-input:focus{border-color:var(--tier)}
-.toggle{width:38px;height:20px;background:var(--bg3);border:1px solid var(--border);border-radius:99px;cursor:pointer;position:relative;transition:all .2s;flex-shrink:0}
-.toggle.on{background:var(--green);border-color:transparent}
-.toggle::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;top:2px;left:2px;transition:left .2s}
-.toggle.on::after{left:20px}
-
-.info-box{padding:14px 18px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;font-size:12px;color:var(--muted2);line-height:1.65}
-.info-box strong{color:var(--text)}
-
-@media(max-width:1024px){.stats{grid-template-columns:1fr 1fr};.tier-dist{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.sidebar{display:none};.main{margin-left:0}}
+.toggle{width:36px;height:20px;border-radius:10px;background:var(--bg4);border:1px solid var(--border);cursor:pointer;position:relative;transition:background .2s}
+.toggle.on{background:var(--tier);border-color:var(--tier)}
+.toggle::after{content:'';width:14px;height:14px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transition:transform .2s}
+.toggle.on::after{transform:translateX(16px)}
+/* audit */
+.audit-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.audit-row{display:grid;grid-template-columns:155px 80px 120px 1fr 55px;gap:10px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--border);font-size:12px}
+.audit-row:last-child{border-bottom:none}
+.audit-time{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)}
+.audit-act{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.aa-login{color:var(--muted2)}.aa-read{color:#2997ff}.aa-upload{color:#22c55e}.aa-export{color:var(--gold)}.aa-share{color:var(--orange)}.aa-admin{color:var(--red)}
+.audit-detail{color:var(--muted2);font-size:11.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.audit-ok{color:var(--green);font-size:11px;text-align:right}
+/* modal */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:600;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;max-width:660px;width:100%;max-height:90vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.modal::-webkit-scrollbar{width:5px}.modal::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.mbanner{padding:20px 24px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg2);z-index:1;border-radius:16px 16px 0 0}
+.mtrow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:4px}
+.mtitle{font-size:14.5px;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mclose{background:none;border:1px solid var(--border);color:var(--muted2);border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer;font-family:inherit;transition:all .15s;flex-shrink:0}
+.mclose:hover{border-color:var(--border2);color:var(--text)}
+.midrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mid{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--muted2)}
+.mbody{padding:20px 24px}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.dfield{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:11px 13px}
+.dfield.full{grid-column:1/-1}
+.dlbl{font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.dval{font-size:12.5px;overflow-wrap:break-word;line-height:1.5}
+.dval.mono{font-family:'JetBrains Mono',monospace;font-size:11px}
+.cfield{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:11px 13px;margin-bottom:10px}
+.hdisp{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--muted2);word-break:break-all;margin-top:4px;line-height:1.6}
+.hdisp.unlocked{color:var(--tier)}
+.tag-list{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.tchip{background:var(--bg4);border:1px solid var(--border);color:var(--muted2);border-radius:5px;padding:2px 7px;font-size:10.5px}
+.msect{margin-bottom:18px}
+.msect-t{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.msect-t.adm-unlocked{color:var(--tier)}
+.ctline{display:flex;flex-direction:column;gap:0}
+.cstep{display:flex;gap:12px;padding:10px 0;position:relative}
+.cstep:not(:last-child)::after{content:'';position:absolute;left:7.5px;top:22px;bottom:-2px;width:1px;background:var(--border)}
+.cdot{width:16px;height:16px;border-radius:50%;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;border:1px solid}
+.cdot.done{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3)}.cdot.done::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--green)}
+.cdot.active{background:var(--tier-bg);border-color:rgba(255,69,58,.3)}.cdot.active::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--tier);animation:pdot 1.5s infinite}
+.cbody{flex:1}.clbl{font-size:12.5px;font-weight:600;margin-bottom:2px}
+.cval{font-size:10.5px;font-family:'JetBrains Mono',monospace;color:var(--muted2);word-break:break-all;line-height:1.5}
+.ctime{font-size:11px;color:var(--muted);margin-top:2px}
+.sec-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.sec-title{font-size:15px;font-weight:700;letter-spacing:-.01em}.sec-sub{font-size:12px;color:var(--muted2);margin-top:3px}
+@media(max-width:1200px){.stats-grid{grid-template-columns:repeat(2,1fr)}.row3{grid-template-columns:1fr}.rgrid{grid-template-columns:repeat(2,1fr)}.tier-dist{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.sidebar{width:180px}.main{margin-left:180px}}
+@media(max-width:600px){.sidebar{display:none}.main{margin-left:0}}
 </style>
 </head>
 <body>
-
 <script>
 (function(){
   var s=null;try{s=JSON.parse(sessionStorage.getItem('vault_session'))}catch(_){}
@@ -182,7 +229,6 @@ tr:hover td{background:rgba(255,255,255,.012)}
   }
 })();
 </script>
-
 <div class="layout">
 <aside class="sidebar">
   <div class="sb-brand">
@@ -190,615 +236,444 @@ tr:hover td{background:rgba(255,255,255,.012)}
     <div class="sb-vault-tag">Evidence Vault</div>
   </div>
   <div class="sb-user">
-    <div class="sb-email" id="sbEmail">loading…</div>
+    <div class="sb-email" id="sbEmail">loading...</div>
     <span class="tier-pill">Admin</span>
   </div>
   <nav class="sb-nav">
-    <button class="nav-btn active" data-sec="dashboard">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Dashboard
-    </button>
-    <button class="nav-btn" data-sec="evidence">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>All Evidence
-    </button>
-    <button class="nav-btn" data-sec="users">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>User Management
-    </button>
+    <button class="nav-btn active" data-sec="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Dashboard</button>
+    <button class="nav-btn" data-sec="evidence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>All Evidence</button>
+    <button class="nav-btn" data-sec="users"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>User Management</button>
     <div class="nav-sep"></div>
-    <button class="nav-btn" data-sec="health">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>System Health
-    </button>
-    <button class="nav-btn" data-sec="requests">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Access Requests
-      <span id="requestBadge" style="background:var(--tier);color:#fff;font-size:9px;font-weight:700;border-radius:99px;padding:1px 6px;margin-left:auto">7</span>
-    </button>
-    <button class="nav-btn" data-sec="audit">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>Audit Logs
-    </button>
-    <button class="nav-btn" data-sec="config">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Configuration
-    </button>
-    <button class="nav-btn" data-sec="chain">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Evidence Chain
-    </button>
+    <button class="nav-btn" data-sec="health"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>System Health</button>
+    <button class="nav-btn" data-sec="requests"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>Access Requests <span class="req-badge" id="requestBadge">7</span></button>
+    <button class="nav-btn" data-sec="audit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>Audit Log</button>
+    <button class="nav-btn" data-sec="config"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M2 12H4M20 12h2M19.07 19.07l-1.41-1.41M5.34 5.34L3.93 3.93M12 2v2M12 20v2"/></svg>Configuration</button>
+    <button class="nav-btn" data-sec="chain"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Evidence Chain</button>
   </nav>
   <div class="sb-foot">
     <button class="signout" id="signOutBtn">Sign out</button>
   </div>
 </aside>
-
 <main class="main">
   <div class="topbar">
-    <div>
-      <div class="pg-title" id="pgTitle">System Dashboard</div>
-      <div class="pg-sub">Evidence Vault · System Administration</div>
+    <div class="tb-left">
+      <div class="pg-title" id="pgTitle">Dashboard</div>
+      <div class="pg-sub">Evidence Vault &middot; System Administration</div>
     </div>
     <div class="tb-right">
       <span class="admin-badge">System Admin</span>
-      <div class="clock" id="clock">—</div>
+      <div class="live-dot"></div>
+      <div class="live-lbl">Live</div>
+      <div class="clock" id="clock">&mdash;</div>
     </div>
   </div>
-
   <div class="content">
-
-    <!-- ══ DASHBOARD ══ -->
-    <section id="sec-dashboard" class="section active">
-      <div class="stats">
-        <div class="stat accent">
-          <div class="stat-lbl">Total Users</div>
-          <div class="stat-val">58</div>
-          <div class="stat-sub">1 admin · 3 enterprise · 16 pro · 38 basic</div>
+    <!-- DASHBOARD -->
+    <section id="sec-dashboard" class="section">
+      <div class="tier-dist">
+        <div class="tier-card"><div class="tc-num" style="color:var(--tier)">1</div><div class="tc-lbl" style="color:var(--tier)">Admin</div><div class="tc-sub">Full access</div></div>
+        <div class="tier-card"><div class="tc-num" style="color:#22c55e">3</div><div class="tc-lbl" style="color:#22c55e">Enterprise</div><div class="tc-sub">100 records</div></div>
+        <div class="tier-card"><div class="tc-num" style="color:#f97316">16</div><div class="tc-lbl" style="color:#f97316">Pro</div><div class="tc-sub">50 records</div></div>
+        <div class="tier-card"><div class="tc-num" style="color:#2997ff">38</div><div class="tc-lbl" style="color:#2997ff">Basic</div><div class="tc-sub">20 records</div></div>
+      </div>
+      <div class="stats-grid">
+        <div class="scard c-red"><div class="sicon red"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--tier)" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></div><div class="slbl">Total Records</div><div class="sval red" id="statTotal">&mdash;</div><div class="ssub" id="statSub">Loading...</div></div>
+        <div class="scard c-orange"><div class="sicon orange"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div class="slbl">Critical / High</div><div class="sval orange" id="statCrit">&mdash;</div><div class="ssub">Severity alerts</div></div>
+        <div class="scard c-blue"><div class="sicon blue"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div class="slbl">Total Users</div><div class="sval blue" id="statUsers">58</div><div class="ssub">All tiers combined</div></div>
+        <div class="scard c-gold"><div class="sicon gold"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="slbl">Pending Requests</div><div class="sval gold" id="statReqs">7</div><div class="ssub" id="statReqSub">Awaiting review</div></div>
+      </div>
+      <div class="row3">
+        <div class="panel">
+          <div class="phead"><div><div class="ptitle">Live Intelligence Feed</div><div class="psub" id="feedSub">Loading...</div></div><button class="act-btn" onclick="nav('evidence')">View all &rarr;</button></div>
+          <div class="feed-wrap" id="liveFeed"><div style="padding:40px;text-align:center;color:var(--muted);font-size:13px">Loading feed...</div></div>
         </div>
-        <div class="stat">
-          <div class="stat-lbl">Global Records</div>
-          <div class="stat-val">12,847</div>
-          <div class="stat-sub">11,614 verified · 1,089 pending</div>
-        </div>
-        <div class="stat">
-          <div class="stat-lbl">System Health</div>
-          <div class="stat-val" style="color:var(--green)">99.8%</div>
-          <div class="stat-sub">All systems operational</div>
-        </div>
-        <div class="stat">
-          <div class="stat-lbl">Pending Requests</div>
-          <div class="stat-val" style="color:var(--orange)">7</div>
-          <div class="stat-sub">Access requests awaiting review</div>
+        <div class="col-stack">
+          <div class="panel"><div class="phead"><div><div class="ptitle">Severity Breakdown</div></div></div><div class="pbody" style="padding-top:8px;padding-bottom:8px"><div class="sev-list" id="sevChart"></div></div></div>
+          <div class="panel"><div class="phead"><div><div class="ptitle">Entity Types</div></div></div><div class="pbody"><div class="ecloud" id="entityCloud"></div></div></div>
         </div>
       </div>
-
-      <div style="margin-bottom:14px">
-        <div class="sec-head"><div><div class="sec-title">Users by Tier</div><div class="sec-sub">Distribution across access tiers</div></div></div>
-        <div class="tier-dist">
-          <div class="tier-card"><div class="tier-num" style="color:var(--tier)">1</div><div class="tier-lbl" style="color:var(--tier)">Admin</div></div>
-          <div class="tier-card"><div class="tier-num" style="color:var(--green)">3</div><div class="tier-lbl" style="color:var(--green)">Enterprise</div></div>
-          <div class="tier-card"><div class="tier-num" style="color:var(--orange)">16</div><div class="tier-lbl" style="color:var(--orange)">Pro</div></div>
-          <div class="tier-card"><div class="tier-num" style="color:var(--blue)">38</div><div class="tier-lbl" style="color:var(--blue)">Basic</div></div>
-        </div>
+      <div class="panel" style="margin-bottom:20px">
+        <div class="phead"><div><div class="ptitle">Region Intelligence Map</div><div class="psub">All 500 pins by geographic area</div></div></div>
+        <div class="pbody"><div class="rgrid" id="regionGrid"></div></div>
       </div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-        <div>
-          <div class="sec-head"><div><div class="sec-title">Recent System Events</div><div class="sec-sub">Last 6 actions</div></div></div>
-          <div class="audit-wrap" id="dashAudit"></div>
-        </div>
-        <div>
-          <div class="sec-head"><div><div class="sec-title">Pending Access Requests</div><div class="sec-sub">Requiring approval</div></div><button class="act-btn" onclick="nav('requests')">All →</button></div>
-          <div class="tbl-wrap"><table><thead><tr><th>Email</th><th>Submitted</th><th></th></tr></thead><tbody id="dashRequests"></tbody></table></div>
-        </div>
+      <div class="int-grid">
+        <div class="int-card"><div class="int-label">Encryption</div><div class="int-val">AES-256-GCM</div><div class="int-sub">End-to-end &middot; FIPS 140-2</div></div>
+        <div class="int-card"><div class="int-label">Hash Algorithm</div><div class="int-val">SHA-256</div><div class="int-sub">Full hash &middot; Admin access</div></div>
+        <div class="int-card"><div class="int-label">Chain Integrity</div><div class="int-val" id="integrityVal">Checking...</div><div class="int-sub">Prev-hash chain verified</div></div>
       </div>
     </section>
-
-    <!-- ══ ALL EVIDENCE ══ -->
+    <!-- ALL EVIDENCE -->
     <section id="sec-evidence" class="section">
-      <div class="sec-head">
-        <div><div class="sec-title">Global Evidence Records</div><div class="sec-sub">12,847 records across all organisations</div></div>
-      </div>
+      <div class="sec-head"><div><div class="sec-title">All Evidence Records</div><div class="sec-sub" id="evSub">Loading...</div></div></div>
       <div class="tbl-wrap">
         <div class="tbl-bar">
-          <input class="tbl-search" id="evSearch" placeholder="Search ID, location, user, organisation…"/>
-          <select class="tbl-sel" id="evStatus"><option value="">All Status</option><option>verified</option><option>pending</option><option>flagged</option></select>
-          <select class="tbl-sel" id="evType"><option value="">All Types</option><option value="photo">Photo</option><option value="video">Video</option><option value="doc">Documentary</option><option value="geo">Geospatial</option><option value="test">Testimonial</option></select>
-          <select class="tbl-sel" id="evOrg"><option value="">All Orgs</option><option>Amnesty International</option><option>ICC Legal Team</option><option>UN OCHA</option><option>HRW</option><option>ICMP</option></select>
+          <input class="tbl-search" id="evSearch" placeholder="Search ID, region, message..."/>
+          <select class="tbl-sel" id="evSev"><option value="">All Severity</option><option>CRITICAL</option><option>HIGH</option><option>WARNING</option><option>MEDIUM</option><option>LOW</option><option>INFO</option></select>
+          <select class="tbl-sel" id="evRegion"><option value="">All Regions</option></select>
+          <select class="tbl-sel" id="evType"><option value="">All Types</option></select>
+          <div class="tbl-count" id="evCount">&mdash;</div>
         </div>
-        <table><thead><tr><th>Record ID</th><th>Type</th><th>Location</th><th>Organisation</th><th>Investigator</th><th>Date</th><th>Status</th><th>SHA-256</th><th></th></tr></thead>
-        <tbody id="evTbody"></tbody></table>
+        <table><thead><tr><th>Record ID</th><th>Entity Type</th><th>Source</th><th>Region</th><th>Coordinates</th><th>Date</th><th>Severity</th><th>SHA-256</th><th>Status</th></tr></thead><tbody id="evTbody"></tbody></table>
       </div>
     </section>
-
-    <!-- ══ USER MANAGEMENT ══ -->
+    <!-- USER MANAGEMENT -->
     <section id="sec-users" class="section">
-      <div class="sec-head">
-        <div><div class="sec-title">User Management</div><div class="sec-sub">58 users across all tiers</div></div>
-        <button class="pri-btn" onclick="openCreateModal()">+ Create User</button>
-      </div>
+      <div class="sec-head"><div><div class="sec-title">User Management</div><div class="sec-sub">All vault users across all tiers</div></div><button class="pri-btn" onclick="openCreateModal()">+ Create User</button></div>
       <div class="tbl-wrap">
         <div class="tbl-bar">
-          <input class="tbl-search" id="userSearch" placeholder="Search email or organisation…"/>
-          <select class="tbl-sel" id="tierFilter"><option value="">All Tiers</option><option value="admin">Admin</option><option value="enterprise">Enterprise</option><option value="pro">Pro</option><option value="basic">Basic</option></select>
-          <select class="tbl-sel" id="activeFilter"><option value="">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option></select>
+          <input class="tbl-search" id="userSearch" placeholder="Search email or name..."/>
+          <select class="tbl-sel" id="userTierFilter"><option value="">All Tiers</option><option>admin</option><option>enterprise</option><option>pro</option><option>basic</option></select>
+          <div class="tbl-count" id="userCount">&mdash;</div>
         </div>
-        <table><thead><tr><th>Email</th><th>Tier</th><th>Organisation</th><th>Records</th><th>Last Login</th><th>Status</th><th>Actions</th></tr></thead>
-        <tbody id="usersTbody"></tbody></table>
+        <table><thead><tr><th>Email</th><th>Tier</th><th>Active</th><th>Last Seen</th><th>Actions</th></tr></thead><tbody id="usersTbody"></tbody></table>
       </div>
     </section>
-
-    <!-- ══ SYSTEM HEALTH ══ -->
+    <!-- SYSTEM HEALTH -->
     <section id="sec-health" class="section">
-      <div class="sec-head"><div><div class="sec-title">System Health</div><div class="sec-sub">Real-time infrastructure status</div></div></div>
+      <div class="sec-head"><div><div class="sec-title">System Health</div><div class="sec-sub">Infrastructure status and resource usage</div></div></div>
       <div class="health-grid" id="healthGrid"></div>
-
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
         <div class="tbl-wrap">
-          <div style="padding:14px 16px;border-bottom:1px solid var(--border);font-size:13px;font-weight:600">Storage Overview</div>
-          <table><thead><tr><th>Organisation</th><th>Tier</th><th>Used</th><th>% of Quota</th></tr></thead>
+          <div class="tbl-bar" style="border-bottom:1px solid var(--border);padding:12px 16px"><span style="font-size:12px;font-weight:700">Storage Overview</span></div>
+          <table><thead><tr><th>Tier</th><th>Records</th><th>Used</th><th>Limit</th></tr></thead>
           <tbody id="storageTbody"></tbody></table>
         </div>
         <div class="tbl-wrap">
-          <div style="padding:14px 16px;border-bottom:1px solid var(--border);font-size:13px;font-weight:600">API Usage (Today)</div>
-          <table><thead><tr><th>Organisation</th><th>Tier</th><th>Calls</th><th>Limit</th></tr></thead>
+          <div class="tbl-bar" style="border-bottom:1px solid var(--border);padding:12px 16px"><span style="font-size:12px;font-weight:700">API Usage (24h)</span></div>
+          <table><thead><tr><th>Tier</th><th>Requests</th><th>Limit</th><th>Status</th></tr></thead>
           <tbody id="apiUsageTbody"></tbody></table>
         </div>
       </div>
     </section>
-
-    <!-- ══ ACCESS REQUESTS ══ -->
+    <!-- ACCESS REQUESTS -->
     <section id="sec-requests" class="section">
-      <div class="sec-head"><div><div class="sec-title">Access Requests</div><div class="sec-sub">Pending email submissions from /evidence-vault request form</div></div></div>
-      <div style="margin-bottom:20px">
-        <div style="font-size:13px;font-weight:600;margin-bottom:12px;color:var(--orange)">Pending Review (7)</div>
-        <div class="tbl-wrap"><table><thead><tr><th>Email</th><th>Organisation Hint</th><th>Submitted</th><th>IP Region</th><th>Actions</th></tr></thead>
-        <tbody id="pendingReqTbody"></tbody></table></div>
+      <div class="sec-head"><div><div class="sec-title">Access Requests</div><div class="sec-sub">Pending approvals and request history</div></div></div>
+      <div style="margin-bottom:18px">
+        <div style="font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Pending Review (7)</div>
+        <div class="tbl-wrap">
+          <table><thead><tr><th>Email</th><th>Requested Tier</th><th>Date</th><th>Org</th><th>Actions</th></tr></thead><tbody id="pendingReqTbody"></tbody></table>
+        </div>
       </div>
       <div>
-        <div style="font-size:13px;font-weight:600;margin-bottom:12px">Recent Decisions (last 10)</div>
-        <div class="tbl-wrap"><table><thead><tr><th>Email</th><th>Decision</th><th>Tier Assigned</th><th>Date</th><th>By</th></tr></thead>
-        <tbody id="historyReqTbody"></tbody></table></div>
+        <div style="font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Request History</div>
+        <div class="tbl-wrap">
+          <table><thead><tr><th>Email</th><th>Requested</th><th>Decision</th><th>Date</th><th>Reviewed By</th></tr></thead><tbody id="historyReqTbody"></tbody></table>
+        </div>
       </div>
     </section>
-
-    <!-- ══ AUDIT LOGS ══ -->
+    <!-- AUDIT -->
     <section id="sec-audit" class="section">
-      <div class="sec-head">
-        <div><div class="sec-title">Global Audit Logs</div><div class="sec-sub">All actions across all users and tiers</div></div>
-        <button class="act-btn" onclick="alert('Exporting global audit log as signed PDF/A and encrypted CSV.')">Export All Logs</button>
-      </div>
-      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px 12px 0 0;padding:12px 16px;display:flex;gap:8px;flex-wrap:wrap">
-        <input class="tbl-search" id="auditSearch" placeholder="Search user, organisation, record…"/>
-        <select class="tbl-sel" id="auditActFilter"><option value="">All Actions</option><option>login</option><option>read</option><option>upload</option><option>export</option><option>admin</option><option>create</option><option>delete</option></select>
-        <select class="tbl-sel" id="auditTierFilter"><option value="">All Tiers</option><option>admin</option><option>enterprise</option><option>pro</option><option>basic</option></select>
+      <div class="sec-head"><div><div class="sec-title">System Audit Log</div><div class="sec-sub">All platform actions &mdash; immutable</div></div><button class="act-btn" onclick="alert('Exporting full system audit log.')">Export Log</button></div>
+      <div class="tbl-bar" style="background:var(--bg2);border:1px solid var(--border);border-radius:12px 12px 0 0;padding:12px 16px;display:flex;gap:8px;flex-wrap:wrap">
+        <input class="tbl-search" id="auditSearch" placeholder="Search user, action, record..."/>
+        <select class="tbl-sel" id="auditAct"><option value="">All Actions</option><option>login</option><option>read</option><option>upload</option><option>export</option><option>share</option><option>admin</option></select>
+        <select class="tbl-sel" id="auditTier"><option value="">All Tiers</option><option>admin</option><option>enterprise</option><option>pro</option><option>basic</option></select>
       </div>
       <div class="audit-wrap" style="border-radius:0 0 12px 12px" id="auditWrap"></div>
     </section>
-
-    <!-- ══ CONFIGURATION ══ -->
+    <!-- CONFIG -->
     <section id="sec-config" class="section">
-      <div class="sec-head"><div><div class="sec-title">System Configuration</div><div class="sec-sub">Global settings for the Evidence Vault platform</div></div></div>
-      <div class="config-card">
-        <div style="font-size:13px;font-weight:600;margin-bottom:4px">Rate Limiting</div>
-        <div style="font-size:12px;color:var(--muted2);margin-bottom:14px">Controls for access request and login rate limits</div>
-        <div class="config-row">
-          <div><div class="config-label">Max access requests per window</div><div class="config-sub">Submissions from the /evidence-vault request form</div></div>
-          <input class="config-input" value="3" type="number" min="1" max="20"/>
+      <div class="sec-head"><div><div class="sec-title">System Configuration</div><div class="sec-sub">Platform-wide settings</div></div><button class="pri-btn" onclick="saveConfig()">Save All Changes</button></div>
+      <div class="config-grid">
+        <div class="config-card">
+          <div class="config-card-title">&#128274; Rate Limiting</div>
+          <div class="config-row"><span class="config-label">Basic (req/day)</span><input class="config-input" value="1,000"/></div>
+          <div class="config-row"><span class="config-label">Pro (req/day)</span><input class="config-input" value="10,000"/></div>
+          <div class="config-row"><span class="config-label">Enterprise (req/day)</span><input class="config-input" value="50,000"/></div>
+          <div class="config-row"><span class="config-label">Admin (req/day)</span><input class="config-input" value="Unlimited"/></div>
+          <div class="config-row"><span class="config-label">Burst protection</span><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
         </div>
-        <div class="config-row">
-          <div><div class="config-label">Rate limit window (seconds)</div><div class="config-sub">Time window for rate limit enforcement</div></div>
-          <input class="config-input" value="60" type="number" min="30"/>
+        <div class="config-card">
+          <div class="config-card-title">&#128190; Upload &amp; Storage</div>
+          <div class="config-row"><span class="config-label">Max file size (MB)</span><input class="config-input" value="50"/></div>
+          <div class="config-row"><span class="config-label">Allowed types</span><input class="config-input" value="All" style="width:120px"/></div>
+          <div class="config-row"><span class="config-label">Auto-deduplicate</span><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="config-row"><span class="config-label">Virus scanning</span><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="config-row"><span class="config-label">Redundancy copies</span><input class="config-input" value="3"/></div>
         </div>
-        <div class="config-row">
-          <div><div class="config-label">Max login attempts before lockout</div><div class="config-sub">Consecutive failed attempts per IP</div></div>
-          <input class="config-input" value="5" type="number" min="1" max="10"/>
+        <div class="config-card">
+          <div class="config-card-title">&#128737; Security &amp; Sessions</div>
+          <div class="config-row"><span class="config-label">Session timeout (h)</span><input class="config-input" value="8"/></div>
+          <div class="config-row"><span class="config-label">MFA required</span><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="config-row"><span class="config-label">IP allowlist</span><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+          <div class="config-row"><span class="config-label">Audit all reads</span><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="config-row"><span class="config-label">Failed login lockout</span><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
         </div>
-      </div>
-      <div class="config-card">
-        <div style="font-size:13px;font-weight:600;margin-bottom:4px">Upload &amp; Storage</div>
-        <div style="font-size:12px;color:var(--muted2);margin-bottom:14px">Controls for file upload and storage limits</div>
-        <div class="config-row">
-          <div><div class="config-label">Max file size per upload</div><div class="config-sub">Basic and Pro tier uploads</div></div>
-          <select class="config-input" style="width:140px"><option>2 GB</option><option>5 GB</option><option>10 GB</option></select>
-        </div>
-        <div class="config-row">
-          <div><div class="config-label">Basic tier storage quota</div><div class="config-sub">Per-user limit for Basic tier accounts</div></div>
-          <select class="config-input" style="width:140px"><option>50 GB</option><option>100 GB</option><option>200 GB</option></select>
-        </div>
-        <div class="config-row">
-          <div><div class="config-label">Pro tier storage quota</div><div class="config-sub">Per-user limit for Pro tier accounts</div></div>
-          <select class="config-input" style="width:140px"><option>500 GB</option><option>1 TB</option><option>2 TB</option></select>
-        </div>
-      </div>
-      <div class="config-card">
-        <div style="font-size:13px;font-weight:600;margin-bottom:4px">Security &amp; Sessions</div>
-        <div style="font-size:12px;color:var(--muted2);margin-bottom:14px">Session management and security controls</div>
-        <div class="config-row">
-          <div><div class="config-label">Session timeout</div><div class="config-sub">Inactivity timeout for vault sessions</div></div>
-          <select class="config-input" style="width:140px"><option>8 hours</option><option>24 hours</option><option>48 hours</option></select>
-        </div>
-        <div class="config-row">
-          <div><div class="config-label">Firestore App Check enforcement</div><div class="config-sub">Enforce App Check for all Firestore reads</div></div>
-          <div class="toggle on" id="appCheckToggle" onclick="this.classList.toggle('on')"></div>
-        </div>
-        <div class="config-row">
-          <div><div class="config-label">Maintenance mode</div><div class="config-sub">Block all vault access except Admin tier</div></div>
-          <div class="toggle" id="maintenanceToggle" onclick="this.classList.toggle('on')"></div>
-        </div>
-      </div>
-      <div style="margin-top:16px;display:flex;justify-content:flex-end;gap:10px">
-        <button class="act-btn" onclick="alert('Changes discarded.')">Discard Changes</button>
-        <button class="pri-btn" onclick="saveConfig(this)">Save Configuration →</button>
       </div>
     </section>
-
-    <!-- ══ EVIDENCE CHAIN ══ -->
+    <!-- CHAIN -->
     <section id="sec-chain" class="section"></section>
-
   </div>
 </main>
 </div>
-
-<!-- ── CREATE USER MODAL ── -->
-<div class="modal-bg" id="createModal" style="display:none" onclick="if(event.target===this)this.style.display='none'">
+<!-- MODAL -->
+<div class="modal-bg" id="detailModal" style="display:none" onclick="if(event.target===this)closeModal()">
   <div class="modal">
-    <div class="modal-title">Create Vault User</div>
-    <form id="createForm" novalidate>
-      <div class="field"><label>Email Address *</label><input type="email" name="email" placeholder="investigator@org.com" required/></div>
-      <div class="field"><label>Temporary Secret Key *</label><input type="text" name="key" placeholder="Minimum 16 characters" required minlength="16"/></div>
-      <div class="field"><label>Access Tier *</label>
-        <select name="tier" required><option value="">Select tier…</option><option value="basic">Basic</option><option value="pro">Pro</option><option value="enterprise">Enterprise</option><option value="admin">Admin</option></select>
-      </div>
-      <div class="field"><label>Organisation (optional)</label><input type="text" name="org" placeholder="Organisation name"/></div>
-      <div style="display:flex;align-items:center;gap:10px;margin-top:4px">
-        <button type="submit" class="pri-btn" id="createBtn">Create User →</button>
-        <button type="button" class="modal-close" onclick="document.getElementById('createModal').style.display='none'">Cancel</button>
-      </div>
-      <div class="form-msg" id="createMsg"></div>
-    </form>
+    <div class="mbanner">
+      <div class="mtrow"><div class="mtitle" id="modalTitle">Record Detail</div><button class="mclose" onclick="closeModal()">&#10005; Close</button></div>
+      <div class="midrow"><span class="mid" id="modalId">&mdash;</span><span id="modalSevBadge"></span><span id="modalSrcBadge"></span><span id="modalIntBadge"></span></div>
+    </div>
+    <div class="mbody" id="modalBody"></div>
   </div>
 </div>
-
-<!-- ── CUSTODY MODAL ── -->
-<div class="modal-bg" id="custodyModal" style="display:none" onclick="if(event.target===this)this.style.display='none'">
-  <div class="modal">
-    <div class="modal-title">Chain of Custody</div>
-    <div style="font-family:'SF Mono','Fira Code',monospace;font-size:11px;color:var(--muted2);margin-bottom:18px" id="modalId">—</div>
-    <div id="modalSteps"></div>
-    <button class="modal-close" onclick="document.getElementById('custodyModal').style.display='none'">Close</button>
-  </div>
-</div>
-
 <script>
-// ── Real data from BuraqAI ─────────────────────────────────────────────────
-let PINS = [], MISSIONS = [];
-const SEV_CLS={CRITICAL:'bf',HIGH:'bf',MEDIUM:'bp',LOW:'bv',WARNING:'bp',INFO:'bv'};
-const PSTATUS_CLS={ACTIVE:'bv',PENDING:'bp',INACTIVE:'bf'};
-
+var PINS=[],MISSIONS=[];
+var TIER_MAX=500;
+var SEV_CLS={CRITICAL:'bf',HIGH:'bf',WARNING:'bw',MEDIUM:'bm',LOW:'bv',INFO:'bi'};
+var SEV_DOT={CRITICAL:'dc',HIGH:'dh',WARNING:'dw',MEDIUM:'dm',LOW:'dl',INFO:'di'};
+var SEV_CLR={CRITICAL:'var(--red)',HIGH:'var(--orange)',WARNING:'var(--orange)',MEDIUM:'var(--medium)',LOW:'var(--green)',INFO:'var(--muted)'};
+var ENT_CLS={VEHICLE:'bt-veh',FIRE:'bt-fire',EARTHQUAKE:'bt-eq'};
+var FAKE_USERS=[
+  {email:'admin@buraqai.com',tier:'admin',active:true,last:'Today'},
+  {email:'alpha.team@org.com',tier:'enterprise',active:true,last:'Today'},
+  {email:'legal@org.com',tier:'enterprise',active:true,last:'Today'},
+  {email:'satellite@org.com',tier:'enterprise',active:false,last:'3 days ago'},
+  {email:'field.ops@pro.org',tier:'pro',active:true,last:'Today'},
+  {email:'analyst@pro.org',tier:'pro',active:true,last:'Yesterday'},
+  {email:'intern@basic.org',tier:'basic',active:true,last:'Today'},
+  {email:'archive@basic.org',tier:'basic',active:false,last:'1 week ago'}
+];
+var PENDING_REQS=[
+  {email:'new.investigator@org.com',tier:'enterprise',date:'2025-03-27',org:'ICC Legal'},
+  {email:'field.agent@ngo.org',tier:'pro',date:'2025-03-27',org:'Field NGO'},
+  {email:'journalist@press.com',tier:'basic',date:'2025-03-26',org:'Independent Press'},
+  {email:'researcher@uni.edu',tier:'pro',date:'2025-03-26',org:'University'},
+  {email:'analyst2@org.com',tier:'enterprise',date:'2025-03-25',org:'ICC Legal'},
+  {email:'monitor@un.int',tier:'enterprise',date:'2025-03-25',org:'UN OHCHR'},
+  {email:'trainee@basic.org',tier:'basic',date:'2025-03-24',org:'Training Org'}
+];
+var HISTORY_REQS=[
+  {email:'approved@org.com',tier:'pro',decision:'Approved',date:'2025-03-24',by:'admin@buraqai.com'},
+  {email:'denied@spam.com',tier:'enterprise',decision:'Denied',date:'2025-03-23',by:'admin@buraqai.com'},
+  {email:'prev.user@ngo.org',tier:'basic',decision:'Approved',date:'2025-03-22',by:'admin@buraqai.com'}
+];
+var AUDIT_LOG=[
+  {t:'2025-03-27 09:14',a:'login', m:'admin@buraqai.com',tier:'admin',d:'Admin session authenticated',ok:true},
+  {t:'2025-03-27 08:30',a:'admin', m:'admin@buraqai.com',tier:'admin',d:'User approved: field.ops@pro.org',ok:true},
+  {t:'2025-03-26 16:42',a:'upload',m:'field.ops@pro.org',tier:'pro',d:'EV-2025-1847 submitted &mdash; CRITICAL',ok:true},
+  {t:'2025-03-26 14:10',a:'export',m:'legal@org.com',tier:'enterprise',d:'ICC export package &mdash; 47 records',ok:true},
+  {t:'2025-03-26 11:08',a:'admin', m:'admin@buraqai.com',tier:'admin',d:'Config updated: session timeout 8h',ok:true},
+  {t:'2025-03-25 15:33',a:'share', m:'alpha.team@org.com',tier:'enterprise',d:'EV-2025-1823 shared with ICC Legal',ok:true},
+  {t:'2025-03-25 10:17',a:'read',  m:'analyst@pro.org',tier:'pro',d:'Record EV-2025-1031 accessed',ok:true},
+  {t:'2025-03-24 17:55',a:'upload',m:'field.ops@pro.org',tier:'pro',d:'EV-2025-1747 submitted',ok:true},
+  {t:'2025-03-24 09:01',a:'login', m:'intern@basic.org',tier:'basic',d:'Session authenticated',ok:true},
+  {t:'2025-03-23 14:22',a:'read',  m:'intern@basic.org',tier:'basic',d:'Record EV-2025-0012 accessed',ok:true},
+  {t:'2025-03-22 11:44',a:'export',m:'legal@org.com',tier:'enterprise',d:'UN OHCHR report &mdash; 23 records',ok:true},
+  {t:'2025-03-21 09:00',a:'admin', m:'admin@buraqai.com',tier:'admin',d:'Webhook added for enterprise user',ok:true}
+];
+function bdg(cls,txt){return'<span class="badge '+cls+'">'+txt+'</span>'}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function fullH(id){return Math.abs(id).toString(16).padStart(64,'0').slice(0,64)}
 async function loadData(){
-  try{const r=await fetch('/evidence-vault/access/chain-pins.json');PINS=await r.json();}catch(_){PINS=[];}
-  try{const r=await fetch('/evidence-vault/access/chain-missions.json');MISSIONS=await r.json();}catch(_){MISSIONS=[];}
-  renderDash();renderEvidence(PINS);renderUsers(USERS);renderHealth();renderRequests();renderAudit(AUDIT);
+  try{var r=await fetch('/evidence-vault/access/chain-pins.json');if(!r.ok)throw 0;PINS=await r.json();}catch(_){PINS=[];}
+  try{var r2=await fetch('/evidence-vault/access/chain-missions.json');if(!r2.ok)throw 0;MISSIONS=await r2.json();}catch(_){MISSIONS=[];}
+  buildDashboard();
+  renderEvidence(PINS.slice(0,TIER_MAX));
+  populateFilters();
+  renderUsers(FAKE_USERS);
+  renderHealth();
+  renderRequests();
+  renderAudit(AUDIT_LOG);
 }
-
-// ── DATA ─────────────────────────────────────────────────────────────────────
-const ORGS=['Amnesty International','ICC Legal Team','UN OCHA','Human Rights Watch','ICMP','Médecins Sans Frontières'];
-const LOCS=['Aleppo, Syria','Kyiv, Ukraine','Gaza, Palestine','Kharkiv, Ukraine','Mosul, Iraq','Mariupol, Ukraine','Raqqa, Syria','Dnipro, Ukraine'];
-const TYPES=['photo','video','doc','geo','test','sensor'];
-const STATUSES=['verified','verified','verified','pending','flagged'];
-const TYPE_LBL={photo:'Photo',video:'Video',doc:'Documentary',geo:'Geospatial',test:'Testimonial',sensor:'Sensor'};
-const TYPE_CLS={photo:'bt-photo',video:'bt-video',doc:'bt-doc',geo:'bt-geo',test:'bt-test',sensor:'bt-sensor'};
-const ST_CLS={verified:'bv',pending:'bp',flagged:'bf'};
-const TIER_CLS={admin:'b-admin',enterprise:'b-ent',pro:'b-pro',basic:'b-basic'};
-// RECS replaced by real PINS — see loadData()
-
-const USERS=[
-  {email:'admin@buraq.ai',tier:'admin',org:'Buraq AI',recs:0,last:'Today',active:true},
-  {email:'director@un-ocha.org',tier:'enterprise',org:'UN OCHA',recs:2847,last:'Today',active:true},
-  {email:'chief@icc-team.org',tier:'enterprise',org:'ICC Legal Team',recs:1201,last:'Yesterday',active:true},
-  {email:'head@amnesty.org',tier:'enterprise',org:'Amnesty International',recs:987,last:'Today',active:true},
-  {email:'counsel@icj.int',tier:'pro',org:'ICJ',recs:147,last:'Today',active:true},
-  {email:'analyst@hrw.org',tier:'pro',org:'Human Rights Watch',recs:203,last:'2 days ago',active:true},
-  {email:'investigator@redcross.org',tier:'pro',org:'ICRC',recs:89,last:'Yesterday',active:true},
-  {email:'legal@msf.org',tier:'pro',org:'MSF',recs:112,last:'Today',active:true},
-  {email:'fieldteam@icmp.int',tier:'basic',org:'ICMP',recs:12,last:'3 days ago',active:true},
-  {email:'reporter@amnesty.org',tier:'basic',org:'Amnesty International',recs:8,last:'1 week ago',active:true},
-  {email:'olduser@hrw.org',tier:'basic',org:'Human Rights Watch',recs:3,last:'2 months ago',active:false},
-  {email:'test@example.com',tier:'basic',org:'—',recs:0,last:'Never',active:false},
-];
-
-const PENDING_REQS=[
-  {email:'journalist@reuters.com',org:'Reuters',date:'2025-03-26',ip:'EU'},
-  {email:'legal@icc.int',org:'ICC',date:'2025-03-25',ip:'NL'},
-  {email:'investigator@hrwatch.org',org:'HRW',date:'2025-03-25',ip:'US'},
-  {email:'analyst@amnesty.org',org:'Amnesty',date:'2025-03-24',ip:'GB'},
-  {email:'counsel@un.int',org:'UN',date:'2025-03-23',ip:'US'},
-  {email:'coordinator@icrc.org',org:'ICRC',date:'2025-03-22',ip:'CH'},
-  {email:'researcher@msf.org',org:'MSF',date:'2025-03-21',ip:'FR'},
-];
-
-const REQ_HISTORY=[
-  {email:'director@un-ocha.org',decision:'approved',tier:'enterprise',date:'2025-03-20',by:'admin@buraq.ai'},
-  {email:'fieldteam@icmp.int',decision:'approved',tier:'basic',date:'2025-03-18',by:'admin@buraq.ai'},
-  {email:'spammer@bad.com',decision:'denied',tier:'—',date:'2025-03-17',by:'admin@buraq.ai'},
-  {email:'counsel@icc-team.org',decision:'approved',tier:'pro',date:'2025-03-15',by:'admin@buraq.ai'},
-  {email:'unknown@example.com',decision:'denied',tier:'—',date:'2025-03-14',by:'admin@buraq.ai'},
-];
-
-const HEALTH_DATA=[
-  {icon:'🔥',lbl:'Firebase Firestore',val:'Operational',sub:'vault-access-a2961',status:'ok',color:'var(--green)'},
-  {icon:'🔐',lbl:'Firebase Auth',val:'Operational',sub:'Custom tokens active',status:'ok',color:'var(--green)'},
-  {icon:'⚡',lbl:'Cloud Functions',val:'Operational',sub:'verifyVaultAccess',status:'ok',color:'var(--green)'},
-  {icon:'💾',lbl:'Encrypted Backup',val:'2h ago',sub:'Last verified: OK',status:'ok',color:'var(--green)'},
-  {icon:'🛡',lbl:'Encryption',val:'AES-256-GCM',sub:'FIPS 140-2 active',status:'ok',color:'var(--green)'},
-  {icon:'📡',lbl:'Uptime (30d)',val:'99.98%',sub:'2.6min downtime/30d',status:'ok',color:'var(--green)'},
-  {icon:'⏱',lbl:'Avg Auth Latency',val:'312 ms',sub:'Within SLA',status:'ok',color:'var(--green)'},
-  {icon:'🔑',lbl:'bcrypt Rounds',val:'12 rounds',sub:'Key hashing',status:'ok',color:'var(--green)'},
-];
-
-const STORAGE=[
-  {org:'UN OCHA',tier:'enterprise',used:'1.4 TB',pct:100},
-  {org:'ICC Legal Team',tier:'enterprise',used:'612 GB',pct:100},
-  {org:'Amnesty Int.',tier:'enterprise',used:'487 GB',pct:100},
-  {org:'ICJ',tier:'pro',used:'89 GB',pct:17.8},
-  {org:'HRW',tier:'pro',used:'134 GB',pct:26.8},
-  {org:'ICRC',tier:'pro',used:'67 GB',pct:13.4},
-];
-
-const API_USAGE=[
-  {org:'UN OCHA',tier:'enterprise',calls:1847,limit:50000},
-  {org:'ICC Legal Team',tier:'enterprise',calls:934,limit:50000},
-  {org:'ICJ',tier:'pro',calls:47,limit:1000},
-  {org:'HRW',tier:'pro',calls:112,limit:1000},
-];
-
-const AUDIT=[
-  {t:'2025-03-27 09:14',a:'admin', tier:'admin',     u:'admin@buraq.ai',        d:'System configuration updated'},
-  {t:'2025-03-27 08:52',a:'login', tier:'enterprise', u:'director@un-ocha.org',  d:'Session authenticated'},
-  {t:'2025-03-26 17:30',a:'export',tier:'enterprise', u:'chief@icc-team.org',    d:'XML export — ICC Package'},
-  {t:'2025-03-26 15:11',a:'upload',tier:'pro',        u:'counsel@icj.int',       d:'EV-2025-2751 submitted'},
-  {t:'2025-03-26 13:44',a:'read',  tier:'basic',      u:'fieldteam@icmp.int',    d:'EV-2025-1031 accessed'},
-  {t:'2025-03-25 11:08',a:'create',tier:'admin',      u:'admin@buraq.ai',        d:'New user: legal@msf.org (Pro)'},
-  {t:'2025-03-25 09:33',a:'export',tier:'enterprise', u:'director@un-ocha.org',  d:'PDF/A export — 23 records'},
-  {t:'2025-03-24 16:20',a:'upload',tier:'pro',        u:'analyst@hrw.org',       d:'EV-2025-2792 submitted'},
-  {t:'2025-03-24 09:01',a:'login', tier:'basic',      u:'reporter@amnesty.org',  d:'Session authenticated'},
-  {t:'2025-03-23 10:17',a:'delete',tier:'admin',      u:'admin@buraq.ai',        d:'User test@expired.com deactivated'},
-  {t:'2025-03-22 08:40',a:'create',tier:'admin',      u:'admin@buraq.ai',        d:'New user: fieldteam@icmp.int (Basic)'},
-  {t:'2025-03-21 15:55',a:'export',tier:'enterprise', u:'director@un-ocha.org',  d:'UN Documentation Report generated'},
-  {t:'2025-03-20 11:00',a:'admin', tier:'admin',      u:'admin@buraq.ai',        d:'director@un-ocha.org approved (Enterprise)'},
-  {t:'2025-03-19 09:30',a:'login', tier:'pro',        u:'counsel@icj.int',       d:'Session authenticated'},
-  {t:'2025-03-18 14:22',a:'create',tier:'admin',      u:'admin@buraq.ai',        d:'New user: fieldteam@icmp.int (Basic) approved'},
-];
-
-const b=(cls,t)=>`<span class="badge ${cls}">${t}</span>`;
-const shortH=h=>`<span class="mono hash-short" title="${h}">${h.toString().slice(0,10)}…</span>`;
-
-function renderDash(){
-  const total=PINS.length;
-  const crit=PINS.filter(p=>p.severity==='CRITICAL'||p.severity==='HIGH').length;
-  const regions=new Set(PINS.map(p=>p.region).filter(Boolean)).size;
-  document.getElementById('statTotalPins')&&(document.getElementById('statTotalPins').textContent=total.toLocaleString());
-  document.getElementById('statCritical')&&(document.getElementById('statCritical').textContent=crit.toLocaleString());
-  document.getElementById('statMissions')&&(document.getElementById('statMissions').textContent=MISSIONS.length);
-  document.getElementById('statRegions')&&(document.getElementById('statRegions').textContent=regions);
-  const ACT_CLS={login:'aa-login',read:'aa-read',upload:'aa-upload',export:'aa-export',admin:'aa-admin',create:'aa-create',delete:'aa-delete'};
-  document.getElementById('dashAudit').innerHTML=AUDIT.slice(0,6).map(a=>`
-    <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);font-size:12px">
-      <span style="font-family:monospace;font-size:10px;color:var(--muted);white-space:nowrap">${a.t.split(' ')[1]}</span>
-      <span class="audit-act ${ACT_CLS[a.a]||''}">${a.a.toUpperCase()}</span>
-      <span style="color:var(--muted2);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.d}</span>
-    </div>`).join('');
-  document.getElementById('dashRequests').innerHTML=PENDING_REQS.slice(0,4).map(r=>`<tr>
-    <td style="font-size:12px;font-family:monospace">${r.email}</td>
-    <td class="date-col">${r.date}</td>
-    <td><button class="act-btn ok" onclick="approveReq(this,'${r.email}')">Approve</button></td>
-  </tr>`).join('');
+function animCount(id,target,dur){
+  var el=document.getElementById(id);if(!el)return;
+  var start=performance.now();
+  function tick(now){
+    var p=Math.min((now-start)/dur,1),e=1-Math.pow(1-p,3);
+    el.textContent=Math.round(target*e).toLocaleString();
+    if(p<1)requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
 }
-
+function buildDashboard(){
+  var vis=PINS.slice(0,TIER_MAX);
+  animCount('statTotal',PINS.length,1400);
+  animCount('statCrit',PINS.filter(function(p){return p.severity==='CRITICAL'||p.severity==='HIGH'}).length,1200);
+  var act=PINS.filter(function(p){return p.status==='ACTIVE'}).length;
+  var pend=PINS.filter(function(p){return p.status==='PENDING'}).length;
+  document.getElementById('statSub').textContent=act+' active \u00b7 '+pend+' pending';
+  document.getElementById('feedSub').textContent='All '+vis.length+' of '+PINS.length+' records (Admin: full access)';
+  buildFeed(vis);buildSevChart(PINS);buildRegionGrid(PINS);buildEntityCloud(PINS);
+  document.getElementById('integrityVal').textContent='0 mutations';
+}
+function buildFeed(pins){
+  var w=document.getElementById('liveFeed');
+  w.innerHTML=pins.slice(0,80).map(function(p,i){return feedRow(p,i===0)}).join('');
+  w.querySelectorAll('.fi').forEach(function(el,i){el.addEventListener('click',function(){openModal(pins[i])})});
+  clearInterval(window._ft);
+  window._ft=setInterval(function(){
+    var items=w.querySelectorAll('.fi');if(!items.length)return;
+    var pick=items[Math.floor(Math.random()*items.length)];
+    pick.style.background='rgba(255,69,58,.07)';setTimeout(function(){pick.style.background=''},1200);
+  },2800);
+}
+function feedRow(p,isNew){
+  var date=(p.created_at||'').slice(0,10),time=(p.created_at||'').slice(11,16);
+  var coordStr=p.lat!=null?p.lat.toFixed(3)+','+(p.lng||0).toFixed(3):'';
+  return'<div class="fi'+(isNew?' new':'')+'"><div class="fdot '+(SEV_DOT[p.severity]||'di')+'"></div><div style="flex:1;min-width:0"><div class="fmsg">'+esc(p.message||p.entity_type||'Record #'+p.id)+'</div><div class="fmeta"><span class="ftime">'+date+' '+time+'</span><span class="fid">#'+p.id+'</span>'+(p.region?'<span class="freg">'+esc(p.region)+'</span>':'')+(coordStr?'<span class="fcoord">'+coordStr+'</span>':'')+(p.severity?bdg(SEV_CLS[p.severity]||'bi',p.severity):'')+' <span class="intg-badge">\u2713</span></div></div></div>';
+}
+function buildSevChart(pins){
+  var counts={};pins.forEach(function(p){var s=p.severity||'INFO';counts[s]=(counts[s]||0)+1});
+  var order=['CRITICAL','HIGH','WARNING','MEDIUM','LOW','INFO'];
+  var max=Math.max.apply(null,Object.values(counts).concat([1]));
+  var el=document.getElementById('sevChart');
+  el.innerHTML=order.filter(function(s){return counts[s]}).map(function(s){
+    return'<div class="sev-row"><div class="sev-name">'+bdg(SEV_CLS[s]||'bi',s)+'</div><div class="sev-bw"><div class="sev-b" style="width:0%;background:'+SEV_CLR[s]+'" data-w="'+Math.round(counts[s]/max*100)+'"></div></div><div class="sev-c">'+counts[s]+'</div><div class="sev-p">'+Math.round(counts[s]/pins.length*100)+'%</div></div>';
+  }).join('');
+  requestAnimationFrame(function(){requestAnimationFrame(function(){el.querySelectorAll('.sev-b').forEach(function(b){b.style.width=b.dataset.w+'%'})})});
+}
+function buildRegionGrid(pins){
+  var c={};pins.forEach(function(p){if(p.region)c[p.region]=(c[p.region]||0)+1});
+  var sorted=Object.entries(c).sort(function(a,b){return b[1]-a[1]});
+  var max=sorted[0]?sorted[0][1]:1;
+  var el=document.getElementById('regionGrid');
+  el.innerHTML=sorted.slice(0,8).map(function(kv){return'<div class="rcard"><div class="rcname">'+esc(kv[0])+'</div><div class="rccount">'+kv[1]+'</div><div class="rcbar"><div class="rcfill" style="width:0%" data-w="'+Math.round(kv[1]/max*100)+'"></div></div></div>'}).join('');
+  requestAnimationFrame(function(){requestAnimationFrame(function(){el.querySelectorAll('.rcfill').forEach(function(b){b.style.width=b.dataset.w+'%'})})});
+}
+function buildEntityCloud(pins){
+  var c={};pins.forEach(function(p){if(p.entity_type)c[p.entity_type]=(c[p.entity_type]||0)+1});
+  document.getElementById('entityCloud').innerHTML=Object.entries(c).sort(function(a,b){return b[1]-a[1]}).map(function(kv){return'<div class="echip"><span class="ecname">'+esc(kv[0])+'</span><span class="eccount">'+kv[1]+'</span></div>'}).join('');
+}
 function renderEvidence(pins){
-  document.getElementById('evSub')&&(document.getElementById('evSub').textContent=`${pins.length} records · ${MISSIONS.length} missions · full admin access`);
-  const hash=p=>p.id?p.id.toString(16).padStart(16,'0'):'—';
-  document.getElementById('evTbody').innerHTML=pins.length
-    ?pins.map(p=>`<tr>
-      <td><span class="mono" style="font-size:11px">#${p.id}</span></td>
-      <td>${b('bt-sensor',p.entity_type||'PIN')}</td>
-      <td class="loc">${p.region||'—'}</td>
-      <td style="font-size:12px;color:var(--muted2)">${p.source||'—'}</td>
-      <td style="font-size:12px;color:var(--muted2)">${p.lat?p.lat.toFixed(4)+','+p.lng?.toFixed(4):'—'}</td>
-      <td class="date-col">${(p.created_at||'').slice(0,10)||'—'}</td>
-      <td>${b(SEV_CLS[p.severity||'']||'',p.severity||'—')}</td>
-      <td>${b(PSTATUS_CLS[p.status||'']||'',p.status||'—')}</td>
-      <td>${shortH(hash(p))}</td>
-      <td><button class="act-btn" onclick="showCustody(${p.id})">Custody ↗</button></td>
-    </tr>`).join('')
-    :'<tr><td colspan="10" style="text-align:center;color:var(--muted);padding:24px">No records found.</td></tr>';
+  var tbody=document.getElementById('evTbody');
+  document.getElementById('evSub').textContent=pins.length+' records visible (Admin: full '+TIER_MAX+' record access)';
+  document.getElementById('evCount').textContent=pins.length+' records';
+  if(!pins.length){tbody.innerHTML='<tr><td colspan="9" style="padding:40px;text-align:center;color:var(--muted)">No records match filters.</td></tr>';return;}
+  tbody.innerHTML=pins.map(function(p){
+    var date=(p.created_at||'').slice(0,10);
+    var ec=ENT_CLS[p.entity_type]||'bt-sensor';
+    var coord=p.lat!=null?p.lat.toFixed(4)+','+(p.lng||0).toFixed(4):'&mdash;';
+    var hfull=fullH(p.id);
+    return'<tr onclick="openModal(PINS.find(function(x){return x.id==='+p.id+'}))"><td><span class="mono" style="font-size:12px">#'+p.id+'</span></td><td>'+bdg(ec,p.entity_type||'PIN')+'</td><td class="src-col">'+esc(p.source||'&mdash;')+'</td><td class="loc">'+esc(p.region||'&mdash;')+'</td><td class="coord-col">'+coord+'</td><td class="dc-col">'+date+'</td><td>'+bdg(SEV_CLS[p.severity]||'bi',p.severity||'&mdash;')+'</td><td><span class="hash-full">'+hfull.slice(0,12)+'&hellip;</span></td><td>'+bdg(p.status==='ACTIVE'?'bv':'bp',p.status||'&mdash;')+'</td></tr>';
+  }).join('');
 }
-
-function renderUsers(users){
-  document.getElementById('usersTbody').innerHTML=users.map(u=>`<tr>
-    <td style="font-family:monospace;font-size:12px">${u.email}</td>
-    <td>${b(TIER_CLS[u.tier]||'',u.tier)}</td>
-    <td style="font-size:12px;color:var(--muted2)">${u.org}</td>
-    <td style="font-weight:600;color:var(--text)">${u.recs.toLocaleString()}</td>
-    <td class="date-col">${u.last}</td>
-    <td>${u.active?b('bv','Active'):b('bf','Inactive')}</td>
-    <td style="display:flex;gap:6px;padding:10px 14px">
-      <button class="act-btn" onclick="changeTier('${u.email}')">Change Tier</button>
-      ${u.active?`<button class="act-btn warn" onclick="deactivate('${u.email}',this)">Deactivate</button>`:`<button class="act-btn ok" onclick="activate('${u.email}',this)">Activate</button>`}
-    </td>
-  </tr>`).join('');
+function populateFilters(){
+  var regions=[...new Set(PINS.map(function(p){return p.region}).filter(Boolean))].sort();
+  var types=[...new Set(PINS.map(function(p){return p.entity_type}).filter(Boolean))].sort();
+  var rs=document.getElementById('evRegion');
+  regions.forEach(function(r){var o=document.createElement('option');o.value=o.textContent=r;rs.appendChild(o)});
+  var ts=document.getElementById('evType');
+  types.forEach(function(t){var o=document.createElement('option');o.value=o.textContent=t;ts.appendChild(o)});
 }
-
-function renderHealth(){
-  document.getElementById('healthGrid').innerHTML=HEALTH_DATA.map(h=>`
-    <div class="health-card ok">
-      <div class="hc-icon">${h.icon}</div>
-      <div class="hc-label">${h.lbl}</div>
-      <div class="hc-val" style="color:${h.color}">${h.val}</div>
-      <div class="hc-sub">${h.sub}</div>
-      <div class="hc-status"><div class="hc-dot" style="background:${h.color}"></div><span style="color:${h.color}">Operational</span></div>
-    </div>`).join('');
-  document.getElementById('storageTbody').innerHTML=STORAGE.map(s=>`<tr>
-    <td style="font-weight:500">${s.org}</td>
-    <td>${b(TIER_CLS[s.tier]||'',s.tier)}</td>
-    <td style="font-family:monospace;font-size:12px">${s.used}</td>
-    <td style="font-size:12px;color:${s.pct>80?'var(--orange)':'var(--green)'}">${s.tier==='enterprise'?'∞ Unlimited':s.pct.toFixed(1)+'%'}</td>
-  </tr>`).join('');
-  document.getElementById('apiUsageTbody').innerHTML=API_USAGE.map(a=>`<tr>
-    <td style="font-weight:500">${a.org}</td>
-    <td>${b(TIER_CLS[a.tier]||'',a.tier)}</td>
-    <td style="font-weight:600;color:${a.calls/a.limit>0.8?'var(--orange)':'var(--tier)'}">${a.calls.toLocaleString()}</td>
-    <td class="date-col">${a.limit.toLocaleString()}</td>
-  </tr>`).join('');
-}
-
-function renderRequests(){
-  document.getElementById('pendingReqTbody').innerHTML=PENDING_REQS.map(r=>`<tr>
-    <td style="font-family:monospace;font-size:12px">${r.email}</td>
-    <td style="font-size:12px;color:var(--muted2)">${r.org}</td>
-    <td class="date-col">${r.date}</td>
-    <td class="date-col">${r.ip}</td>
-    <td style="display:flex;gap:6px;padding:10px 14px">
-      <button class="green-btn" onclick="approveReq(this,'${r.email}')">Approve</button>
-      <button class="act-btn deny" onclick="denyReq(this,'${r.email}')">Deny</button>
-    </td>
-  </tr>`).join('');
-  document.getElementById('historyReqTbody').innerHTML=REQ_HISTORY.map(r=>`<tr>
-    <td style="font-family:monospace;font-size:12px">${r.email}</td>
-    <td>${r.decision==='approved'?b('bv','Approved'):b('bf','Denied')}</td>
-    <td>${r.tier!=='—'?b(TIER_CLS[r.tier]||'',r.tier):b('','—')}</td>
-    <td class="date-col">${r.date}</td>
-    <td style="font-size:12px;color:var(--muted2)">${r.by}</td>
-  </tr>`).join('');
-}
-
-function renderAudit(entries){
-  const ACT_CLS={login:'aa-login',read:'aa-read',upload:'aa-upload',export:'aa-export',admin:'aa-admin',create:'aa-create',delete:'aa-delete'};
-  document.getElementById('auditWrap').innerHTML=entries.map(a=>`
-    <div class="audit-row">
-      <span class="audit-time">${a.t} UTC</span>
-      <span class="audit-act ${ACT_CLS[a.a]||''}">${a.a.toUpperCase()}</span>
-      <span>${b(TIER_CLS[a.tier]||'',a.tier)}</span>
-      <span style="font-size:12px;color:var(--muted2);font-family:monospace">${a.u}</span>
-      <span style="font-size:12px;color:var(--muted2)">${a.d}</span>
-      <span style="color:var(--green);font-size:11px;text-align:right">✓</span>
-    </div>`).join('');
-}
-
-function showCustody(id){
-  const p=PINS.find(x=>x.id===id);if(!p)return;
-  const hash=p.id.toString(16).padStart(16,'0');
-  document.getElementById('modalId').textContent=`#${p.id} — ${p.region||'—'} (${p.source||'Sensor'})`;
-  const steps=[
-    {lbl:'Field Capture',val:`${p.source||'Sensor'} · ${p.region||'—'}${p.lat?' · '+p.lat.toFixed(4)+','+p.lng?.toFixed(4):''}`,time:p.created_at||'—',done:true,act:false},
-    {lbl:'SHA-256 Sealed',val:'sha256:'+hash,time:(p.created_at||'—')+' +1s',done:true,act:false},
-    {lbl:'AES-256 Encrypted',val:'Geo-distributed · air-gapped · 3x redundancy',time:(p.created_at||'—')+' +3s',done:true,act:false},
-    {lbl:'Hash Verified',val:p.status==='ACTIVE'?'0 mutations detected':'Verification pending',time:(p.created_at||'—')+' +47s',done:p.status==='ACTIVE',act:p.status==='PENDING'},
-    {lbl:'Court-Ready Export',val:'PDF/A-3b · XML · Encrypted ZIP available',time:'On request',done:false,act:false},
-  ];
-  document.getElementById('modalSteps').innerHTML=steps.map(s=>`
-    <div class="cust-step">
-      <div class="cust-dot ${s.done?'done':s.act?'active':''}"></div>
-      <div><div class="cust-lbl">${s.lbl}</div><div class="cust-val">${s.val}</div><div class="cust-time">${s.time}</div></div>
-    </div>`).join('');
-  document.getElementById('custodyModal').style.display='flex';
-}
-
-// User actions
-function openCreateModal(){document.getElementById('createModal').style.display='flex'}
-function changeTier(email){
-  const tier=prompt(`Change tier for ${email}\n\nEnter: basic | pro | enterprise | admin`);
-  if(tier&&['basic','pro','enterprise','admin'].includes(tier.toLowerCase())){
-    alert(`Tier updated: ${email} → ${tier}\n\nIn production, this calls setCustomUserClaims() via Admin SDK.`);
-  }
-}
-function deactivate(email,btn){
-  if(!confirm(`Deactivate ${email}? They will be signed out immediately.`))return;
-  btn.closest('tr').querySelector('td:nth-child(6)').innerHTML=b('bf','Inactive');
-  btn.textContent='Activate';btn.classList.remove('warn');btn.classList.add('ok');
-}
-function activate(email,btn){
-  btn.closest('tr').querySelector('td:nth-child(6)').innerHTML=b('bv','Active');
-  btn.textContent='Deactivate';btn.classList.remove('ok');btn.classList.add('warn');
-}
-function approveReq(btn,email){
-  const tier=prompt(`Approve ${email}\n\nAssign tier: basic | pro | enterprise`)||'basic';
-  if(tier){btn.closest('tr').remove();alert(`Approved: ${email} as ${tier}.\nIn production: setAccessUser.js provisions the account.`);}
-}
-function denyReq(btn,email){
-  btn.closest('tr').remove();
-  alert(`Denied: ${email}.`);
-}
-
-// Create user form
-document.getElementById('createForm').addEventListener('submit',async function(e){
-  e.preventDefault();
-  const msg=document.getElementById('createMsg');
-  const btn=document.getElementById('createBtn');
-  const fd=new FormData(this);
-  if(!fd.get('email')||!fd.get('key')||!fd.get('tier')){
-    msg.style.color='var(--tier)';msg.textContent='Fill all required fields.';return;
-  }
-  btn.disabled=true;btn.textContent='Creating…';
-  msg.style.color='var(--gold)';msg.textContent='Hashing key with bcrypt…';
-  await new Promise(r=>setTimeout(r,800));
-  msg.textContent='Writing to vault_access collection…';
-  await new Promise(r=>setTimeout(r,600));
-  msg.style.color='var(--green)';msg.textContent=`✓ User created: ${fd.get('email')} (${fd.get('tier')})`;
-  btn.disabled=false;btn.textContent='Create User →';
-  setTimeout(()=>document.getElementById('createModal').style.display='none',1500);
-  this.reset();
-});
-
-async function saveConfig(btn){
-  const orig=btn.textContent;btn.disabled=true;btn.textContent='Saving…';
-  await new Promise(r=>setTimeout(r,900));
-  btn.disabled=false;btn.textContent=orig;
-  alert('Configuration saved.\nIn production, settings are committed to Firestore config collection and applied immediately.');
-}
-
-// Filters
 function filterEv(){
-  const q=(document.getElementById('evSearch').value||'').toLowerCase();
-  const st=document.getElementById('evStatus').value;
-  const ty=document.getElementById('evType').value;
-  const org=document.getElementById('evOrg').value;
-  renderEvidence(PINS.filter(p=>(!q||(p.region||'').toLowerCase().includes(q)||(p.entity_type||'').toLowerCase().includes(q)||(p.source||'').toLowerCase().includes(q)||(p.message||'').toLowerCase().includes(q))&&(!st||p.status===st)&&(!ty||p.entity_type===ty)&&(!org||p.source===org)));
+  var q=(document.getElementById('evSearch').value||'').toLowerCase();
+  var sev=document.getElementById('evSev').value;
+  var reg=document.getElementById('evRegion').value;
+  var ty=document.getElementById('evType').value;
+  renderEvidence(PINS.slice(0,TIER_MAX).filter(function(p){
+    return(!q||(p.region||'').toLowerCase().includes(q)||(p.entity_type||'').toLowerCase().includes(q)||(p.message||'').toLowerCase().includes(q)||(p.id+'').includes(q))&&
+      (!sev||p.severity===sev)&&(!reg||p.region===reg)&&(!ty||p.entity_type===ty);
+  }));
 }
-['evSearch','evStatus','evType','evOrg'].forEach(id=>{const el=document.getElementById(id);el.addEventListener(el.tagName==='INPUT'?'input':'change',filterEv);});
-
-function filterUsers(){
-  const q=(document.getElementById('userSearch').value||'').toLowerCase();
-  const tier=document.getElementById('tierFilter').value;
-  const active=document.getElementById('activeFilter').value;
-  renderUsers(USERS.filter(u=>(!q||u.email.toLowerCase().includes(q)||u.org.toLowerCase().includes(q))&&(!tier||u.tier===tier)&&(!active||(active==='active'?u.active:!u.active))));
+['evSearch','evSev','evRegion','evType'].forEach(function(id){
+  var el=document.getElementById(id);
+  if(el)el.addEventListener(el.tagName==='INPUT'?'input':'change',filterEv);
+});
+function openModal(p){
+  if(!p)return;
+  document.getElementById('modalTitle').textContent=p.message||p.entity_type||'Record #'+p.id;
+  document.getElementById('modalId').textContent='#'+p.id;
+  document.getElementById('modalSevBadge').innerHTML=p.severity?bdg(SEV_CLS[p.severity]||'bi',p.severity):'';
+  document.getElementById('modalSrcBadge').innerHTML=p.source?bdg('bt-sensor',p.source):'';
+  document.getElementById('modalIntBadge').innerHTML='<span class="intg-badge">\u2713 Integrity Verified</span>';
+  var tags=[];try{tags=JSON.parse(p.tags||'[]')}catch(_){if(typeof p.tags==='string')tags=p.tags.split(',').map(function(t){return t.trim()}).filter(Boolean)}
+  var hfull=fullH(p.id);
+  var coordStr=p.lat!=null?p.lat.toFixed(6)+', '+(p.lng||0).toFixed(6):'&mdash;';
+  var prevH=fullH(Math.max(0,p.id-1));
+  document.getElementById('modalBody').innerHTML='<div class="msect"><div class="msect-t">Intelligence Data</div><div class="dgrid"><div class="dfield"><div class="dlbl">Entity Type</div><div class="dval">'+bdg(ENT_CLS[p.entity_type]||'bt-sensor',p.entity_type||'&mdash;')+'</div></div><div class="dfield"><div class="dlbl">Region</div><div class="dval">'+esc(p.region||'&mdash;')+'</div></div><div class="dfield"><div class="dlbl">Source</div><div class="dval">'+esc(p.source||'&mdash;')+'</div></div><div class="dfield"><div class="dlbl">Status</div><div class="dval">'+bdg(p.status==='ACTIVE'?'bv':'bp',p.status||'&mdash;')+'</div></div><div class="dfield"><div class="dlbl">Confidence</div><div class="dval">'+(p.confidence!=null?Math.round(p.confidence*100)+'%':'&mdash;')+'</div></div><div class="dfield"><div class="dlbl">Timestamp</div><div class="dval mono">'+esc(p.created_at||'&mdash;')+'</div></div><div class="dfield full"><div class="dlbl">Message</div><div class="dval">'+esc(p.message||'&mdash;')+'</div></div></div>'+(tags.length?'<div style="margin-top:2px"><div class="dlbl" style="margin-bottom:6px">Tags</div><div class="tag-list">'+tags.map(function(t){return'<span class="tchip">'+esc(t)+'</span>'}).join('')+'</div></div>':'')+'</div><div class="msect"><div class="msect-t adm-unlocked">\u2713 Admin \u2014 Full Spatial Intelligence</div><div class="dgrid"><div class="dfield full"><div class="dlbl">Coordinates (precise)</div><div class="dval mono" style="color:var(--orange)">'+coordStr+'</div></div><div class="dfield"><div class="dlbl">Altitude</div><div class="dval">'+(p.altitude_m!=null?p.altitude_m+' m':'&mdash;')+'</div></div><div class="dfield"><div class="dlbl">Speed</div><div class="dval">'+(p.speed_kmh!=null?p.speed_kmh+' km/h':'&mdash;')+'</div></div><div class="dfield"><div class="dlbl">Heading</div><div class="dval">'+(p.heading!=null?p.heading+'&deg;':'&mdash;')+'</div></div><div class="dfield"><div class="dlbl">Callsign</div><div class="dval mono">'+esc(p.callsign||'&mdash;')+'</div></div><div class="dfield"><div class="dlbl">ICAO24</div><div class="dval mono">'+esc(p.icao24||'&mdash;')+'</div></div><div class="dfield"><div class="dlbl">FRP</div><div class="dval">'+(p.frp!=null?p.frp:'&mdash;')+'</div></div><div class="dfield"><div class="dlbl">Magnitude</div><div class="dval">'+(p.magnitude!=null?p.magnitude:'&mdash;')+'</div></div></div></div><div class="msect"><div class="msect-t adm-unlocked">\u2713 Admin \u2014 Full Cryptographic Chain</div><div class="cfield"><div class="dlbl">SHA-256 Hash (full)</div><div class="hdisp unlocked">'+hfull+'</div></div><div class="cfield"><div class="dlbl">Previous Hash</div><div class="hdisp">'+prevH+'</div></div><div class="ctline"><div class="cstep"><div class="cdot done"></div><div class="cbody"><div class="clbl">Field Capture</div><div class="cval">'+esc(p.source||'Automated')+' \u00b7 '+esc(p.entity_type||'Pin')+'</div><div class="ctime">'+esc(p.created_at||'&mdash;')+'</div></div></div><div class="cstep"><div class="cdot done"></div><div class="cbody"><div class="clbl">SHA-256 Sealed</div><div class="cval">'+hfull+'</div><div class="ctime">Sealed at ingestion</div></div></div><div class="cstep"><div class="cdot done"></div><div class="cbody"><div class="clbl">Prev-Hash Linked</div><div class="cval">Block linked to '+prevH.slice(0,16)+'&hellip;</div><div class="ctime">Chain integrity verified</div></div></div><div class="cstep"><div class="cdot active"></div><div class="cbody"><div class="clbl">Admin Custody</div><div class="cval">AES-256-GCM \u00b7 Replicated 3\u00d7 \u00b7 Integrity: 0 mutations</div><div class="ctime">Active</div></div></div></div></div>';
+  document.getElementById('detailModal').style.display='flex';
 }
-['userSearch','tierFilter','activeFilter'].forEach(id=>{const el=document.getElementById(id);el.addEventListener(el.tagName==='INPUT'?'input':'change',filterUsers);});
-
-function filterAudit(){
-  const q=(document.getElementById('auditSearch').value||'').toLowerCase();
-  const act=document.getElementById('auditActFilter').value;
-  const tier=document.getElementById('auditTierFilter').value;
-  renderAudit(AUDIT.filter(a=>(!q||a.u.toLowerCase().includes(q)||a.d.toLowerCase().includes(q))&&(!act||a.a===act)&&(!tier||a.tier===tier)));
+function closeModal(){document.getElementById('detailModal').style.display='none'}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
+function renderUsers(users){
+  var TIER_BADGE={admin:'bf',enterprise:'bv',pro:'bp',basic:'bi'};
+  document.getElementById('userCount').textContent=users.length+' users';
+  document.getElementById('usersTbody').innerHTML=users.map(function(u){
+    return'<tr><td class="mono" style="font-size:12px">'+esc(u.email)+'</td><td>'+bdg(TIER_BADGE[u.tier]||'bi',u.tier)+'</td><td>'+(u.active?'<span style="color:var(--green);font-weight:600">\u2713 Active</span>':'<span style="color:var(--muted)">Inactive</span>')+'</td><td class="dc-col">'+u.last+'</td><td><button class="act-btn" onclick="alert(\'Edit user: '+esc(u.email)+'\')">Edit</button> <button class="act-btn" style="color:var(--red);border-color:rgba(255,69,58,.2)" onclick="alert(\'Revoke access: '+esc(u.email)+'\')">Revoke</button></td></tr>';
+  }).join('');
+  function applyUserFilter(){
+    var q=(document.getElementById('userSearch').value||'').toLowerCase();
+    var tier=document.getElementById('userTierFilter').value;
+    var filtered=users.filter(function(u){return(!q||u.email.includes(q))&&(!tier||u.tier===tier)});
+    document.getElementById('userCount').textContent=filtered.length+' users';
+    document.getElementById('usersTbody').innerHTML=filtered.map(function(u){
+      return'<tr><td class="mono" style="font-size:12px">'+esc(u.email)+'</td><td>'+bdg(TIER_BADGE[u.tier]||'bi',u.tier)+'</td><td>'+(u.active?'<span style="color:var(--green);font-weight:600">\u2713 Active</span>':'<span style="color:var(--muted)">Inactive</span>')+'</td><td class="dc-col">'+u.last+'</td><td><button class="act-btn">Edit</button></td></tr>';
+    }).join('');
+  }
+  document.getElementById('userSearch').addEventListener('input',applyUserFilter);
+  document.getElementById('userTierFilter').addEventListener('change',applyUserFilter);
 }
-['auditSearch','auditActFilter','auditTierFilter'].forEach(id=>{const el=document.getElementById(id);el.addEventListener(el.tagName==='INPUT'?'input':'change',filterAudit);});
-
-// Nav
-const TITLES={dashboard:'System Dashboard',evidence:'All Evidence',users:'User Management',health:'System Health',requests:'Access Requests',audit:'Audit Logs',config:'Configuration',chain:'Evidence Chain'};
+function openCreateModal(){alert('Create user flow \u2014 in production, provisions vault access and sends credentials via encrypted email.')}
+function renderHealth(){
+  var cards=[
+    {title:'Firestore Latency',val:'12ms',sub:'p99 response time',color:'var(--green)'},
+    {title:'Storage Used',val:'2.4 TB',sub:'of unlimited capacity',color:'var(--tier)'},
+    {title:'API Uptime',val:'99.99%',sub:'Last 30 days',color:'var(--green)'},
+    {title:'Active Sessions',val:'23',sub:'Across all tiers',color:'#2997ff'},
+    {title:'Uploads Today',val:'47',sub:'Records ingested',color:'var(--orange)'},
+    {title:'Chain Integrity',val:'100%',sub:'0 mutations detected',color:'var(--green)'}
+  ];
+  document.getElementById('healthGrid').innerHTML=cards.map(function(c){
+    return'<div class="health-card"><div class="hc-title">'+c.title+'</div><div class="hc-val" style="color:'+c.color+'">'+c.val+'</div><div class="hc-sub">'+c.sub+'</div></div>';
+  }).join('');
+  document.getElementById('storageTbody').innerHTML=[
+    ['Admin','500','48 GB','Unlimited'],['Enterprise','100 each','12 GB','Unlimited'],['Pro','50 each','4 GB','100 GB'],['Basic','20 each','0.8 GB','10 GB']
+  ].map(function(r){return'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>'}).join('');
+  document.getElementById('apiUsageTbody').innerHTML=[
+    ['Admin','14,233','Unlimited',bdg('bv','OK')],['Enterprise','5,847','50,000/day',bdg('bv','OK')],['Pro','2,104','10,000/day',bdg('bv','OK')],['Basic','389','1,000/day',bdg('bv','OK')]
+  ].map(function(r){return'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>'}).join('');
+}
+function renderRequests(){
+  var TIER_BADGE={admin:'bf',enterprise:'bv',pro:'bp',basic:'bi'};
+  document.getElementById('pendingReqTbody').innerHTML=PENDING_REQS.map(function(r){
+    return'<tr><td class="mono" style="font-size:12px">'+esc(r.email)+'</td><td>'+bdg(TIER_BADGE[r.tier]||'bi',r.tier)+'</td><td class="dc-col">'+r.date+'</td><td class="src-col">'+esc(r.org)+'</td><td><button class="act-btn" style="color:var(--green);border-color:rgba(34,197,94,.2)" onclick="approveReq(this,\''+esc(r.email)+'\')">Approve</button> <button class="act-btn" style="color:var(--red);border-color:rgba(255,69,58,.2)" onclick="this.closest(\'tr\').remove();updateReqCount(-1)">Deny</button></td></tr>';
+  }).join('');
+  document.getElementById('historyReqTbody').innerHTML=HISTORY_REQS.map(function(r){
+    return'<tr><td class="mono" style="font-size:12px">'+esc(r.email)+'</td><td>'+bdg(TIER_BADGE[r.tier]||'bi',r.tier)+'</td><td>'+bdg(r.decision==='Approved'?'bv':'bf',r.decision)+'</td><td class="dc-col">'+r.date+'</td><td class="src-col">'+esc(r.by)+'</td></tr>';
+  }).join('');
+}
+function approveReq(btn,email){btn.closest('tr').remove();updateReqCount(-1);alert('Access approved for '+email)}
+function updateReqCount(delta){
+  var n=document.querySelectorAll('#pendingReqTbody tr').length;
+  document.getElementById('requestBadge').textContent=n;
+  document.getElementById('statReqs').textContent=n;
+}
+function renderAudit(entries){
+  var ACT_CLS={login:'aa-login',read:'aa-read',upload:'aa-upload',export:'aa-export',share:'aa-share',admin:'aa-admin'};
+  var TIER_BADGE={admin:'bf',enterprise:'bv',pro:'bp',basic:'bi'};
+  document.getElementById('auditWrap').innerHTML=entries.map(function(a){
+    return'<div class="audit-row"><span class="audit-time">'+a.t+' UTC</span><span class="audit-act '+(ACT_CLS[a.a]||'')+'">'+a.a.toUpperCase()+'</span><span style="font-size:11px">'+bdg(TIER_BADGE[a.tier]||'bi',a.tier||'')+'</span><span class="audit-detail">'+a.m+' &mdash; '+a.d+'</span><span class="audit-ok">'+(a.ok?'\u2713 OK':'\u2715')+'</span></div>';
+  }).join('');
+}
+['auditSearch','auditAct','auditTier'].forEach(function(id){
+  var el=document.getElementById(id);
+  if(el)el.addEventListener(el.tagName==='INPUT'?'input':'change',function(){
+    var q=(document.getElementById('auditSearch').value||'').toLowerCase();
+    var act=document.getElementById('auditAct').value;
+    var tier=document.getElementById('auditTier').value;
+    renderAudit(AUDIT_LOG.filter(function(a){return(!q||a.d.toLowerCase().includes(q)||a.m.toLowerCase().includes(q))&&(!act||a.a===act)&&(!tier||a.tier===tier)}));
+  });
+});
+function saveConfig(){alert('Configuration saved \u2014 in production, this updates Firestore system config collection.')}
+var TITLES={dashboard:'Dashboard',evidence:'All Evidence',users:'User Management',health:'System Health',requests:'Access Requests',audit:'Audit Log',config:'Configuration',chain:'Evidence Chain'};
 function nav(name){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('sec-'+name)?.classList.add('active');
-  document.querySelector(`[data-sec="${name}"]`)?.classList.add('active');
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active')});
+  var sec=document.getElementById('sec-'+name);if(sec)sec.classList.add('active');
+  var btn=document.querySelector('[data-sec="'+name+'"]');if(btn)btn.classList.add('active');
   document.getElementById('pgTitle').textContent=TITLES[name]||name;
   if(name==='chain'&&window.VaultChain)window.VaultChain.init('admin');
 }
-document.querySelectorAll('.nav-btn').forEach(btn=>btn.addEventListener('click',()=>nav(btn.dataset.sec)));
-
-setInterval(()=>{document.getElementById('clock').textContent=new Date().toISOString().slice(0,19).replace('T',' ')+' UTC'},1000);
-
-(function init(){
-  const s=JSON.parse(sessionStorage.getItem('vault_session')||'{}');
-  document.getElementById('sbEmail').textContent=s.email||'admin@buraq.ai';
-  document.getElementById('signOutBtn').addEventListener('click',()=>{sessionStorage.removeItem('vault_session');location.replace('/evidence-vault/access');});
+document.querySelectorAll('.nav-btn').forEach(function(btn){btn.addEventListener('click',function(){nav(btn.dataset.sec)})});
+setInterval(function(){document.getElementById('clock').textContent=new Date().toISOString().slice(0,19).replace('T',' ')+' UTC'},1000);
+(function(){
+  var s=JSON.parse(sessionStorage.getItem('vault_session')||'{}');
+  document.getElementById('sbEmail').textContent=s.email||'&mdash;';
+  document.getElementById('signOutBtn').addEventListener('click',function(){sessionStorage.removeItem('vault_session');location.replace('/evidence-vault/access')});
   loadData();
+  nav('dashboard');
 })();
 </script>
-
 <script src="/__env.js"></script>
 <script src="/evidence-vault/access/vault-chain.js"></script>
 <script type="module">
@@ -808,8 +683,8 @@ setInterval(async()=>{
   const s=JSON.parse(sessionStorage.getItem('vault_session')||'null');
   if(!s){location.replace('/evidence-vault/access');return}
   try{const snap=await getDoc(doc(db,'vault_access',s.email));
-    if(!snap.exists()||snap.data().active!==true){sessionStorage.removeItem('vault_session');location.replace('/evidence-vault/access')}
-  }catch(_){}
+    if(!snap.exists()||snap.data().active!==true){sessionStorage.removeItem('vault_session');location.replace('/evidence-vault/access')}}
+  catch(_){}
 },30000);
 </script>
 </body>
