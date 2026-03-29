@@ -73,8 +73,8 @@ firebase-credentials.json
 service-account-key.json
 firebase-config.js
 
-# Runtime environment variables — contains API keys, NEVER commit
-__env.js
+# Runtime environment variables
+# __env.js is committed — Firebase web API keys are client-side identifiers, not secrets
 
 # Backup files with potential credentials
 *.backup
