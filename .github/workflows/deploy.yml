@@ -1,0 +1,65 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate __env.js from secrets
+        run: |
+          cat > __env.js <<EOF
+          window.__env = {
+            FIREBASE_API_KEY:              '${{ secrets.FIREBASE_API_KEY }}',
+            FIREBASE_AUTH_DOMAIN:          '${{ secrets.FIREBASE_AUTH_DOMAIN }}',
+            FIREBASE_DATABASE_URL:         '${{ secrets.FIREBASE_DATABASE_URL }}',
+            FIREBASE_PROJECT_ID:           '${{ secrets.FIREBASE_PROJECT_ID }}',
+            FIREBASE_STORAGE_BUCKET:       '${{ secrets.FIREBASE_STORAGE_BUCKET }}',
+            FIREBASE_MESSAGING_SENDER_ID:  '${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}',
+            FIREBASE_APP_ID:               '${{ secrets.FIREBASE_APP_ID }}',
+            FIREBASE_MEASUREMENT_ID:       '${{ secrets.FIREBASE_MEASUREMENT_ID }}',
+            VAULT_API_KEY:                 '${{ secrets.VAULT_API_KEY }}',
+            VAULT_AUTH_DOMAIN:             '${{ secrets.VAULT_AUTH_DOMAIN }}',
+            VAULT_PROJECT_ID:              '${{ secrets.VAULT_PROJECT_ID }}',
+            VAULT_STORAGE_BUCKET:          '${{ secrets.VAULT_STORAGE_BUCKET }}',
+            VAULT_MESSAGING_SENDER_ID:     '${{ secrets.VAULT_MESSAGING_SENDER_ID }}',
+            VAULT_APP_ID:                  '${{ secrets.VAULT_APP_ID }}',
+            EV_API_KEY:                    '${{ secrets.EV_API_KEY }}',
+            EV_AUTH_DOMAIN:                '${{ secrets.EV_AUTH_DOMAIN }}',
+            EV_PROJECT_ID:                 '${{ secrets.EV_PROJECT_ID }}',
+            EV_STORAGE_BUCKET:             '${{ secrets.EV_STORAGE_BUCKET }}',
+            EV_MESSAGING_SENDER_ID:        '${{ secrets.EV_MESSAGING_SENDER_ID }}',
+            EV_APP_ID:                     '${{ secrets.EV_APP_ID }}',
+            VAULT_BURAQAI_API:             '${{ secrets.VAULT_BURAQAI_API }}',
+          };
+          EOF
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
