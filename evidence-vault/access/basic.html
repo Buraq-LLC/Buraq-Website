@@ -218,7 +218,7 @@ tr:hover td{background:rgba(255,255,255,.012)}
     <span class="tier-pill">Basic</span>
   </div>
   <nav class="sb-nav">
-    <button class="nav-btn active" data-sec="dashboard">
+    <button class="nav-btn" data-sec="dashboard">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
       Dashboard
     </button>
@@ -239,7 +239,7 @@ tr:hover td{background:rgba(255,255,255,.012)}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
       Audit Log
     </button>
-    <button class="nav-btn" data-sec="chain">
+    <button class="nav-btn active" data-sec="chain">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
       Evidence Chain
     </button>
@@ -266,36 +266,36 @@ tr:hover td{background:rgba(255,255,255,.012)}
   <div class="content">
 
     <!-- ══ DASHBOARD ══ -->
-    <section id="sec-dashboard" class="section active">
+    <section id="sec-dashboard" class="section">
       <div class="stats">
         <div class="stat accent">
           <div class="stat-lbl">Total Records</div>
-          <div class="stat-val">12</div>
-          <div class="stat-sub">8 verified · 3 pending · 1 flagged</div>
+          <div class="stat-val" id="statTotal">—</div>
+          <div class="stat-sub" id="statSub">Loading…</div>
         </div>
         <div class="stat">
-          <div class="stat-lbl">Storage Used</div>
-          <div class="stat-val" style="font-size:22px">4.2 GB</div>
-          <div class="stat-sub">of 50 GB allocated</div>
+          <div class="stat-lbl">Critical / High</div>
+          <div class="stat-val" id="statCrit" style="color:var(--red)">—</div>
+          <div class="stat-sub">Severity alerts</div>
         </div>
         <div class="stat">
-          <div class="stat-lbl">Days Active</div>
-          <div class="stat-val">47</div>
-          <div class="stat-sub">Since 2025-02-08</div>
+          <div class="stat-lbl">Regions</div>
+          <div class="stat-val" id="statRegions">—</div>
+          <div class="stat-sub">Unique regions tracked</div>
         </div>
         <div class="stat">
-          <div class="stat-lbl">Last Session</div>
-          <div class="stat-val" style="font-size:18px">Today</div>
-          <div class="stat-sub">Session active now</div>
+          <div class="stat-lbl">Latest Record</div>
+          <div class="stat-val" id="statLatest" style="font-size:14px">—</div>
+          <div class="stat-sub">Most recent pin</div>
         </div>
       </div>
 
       <div class="sec-head">
-        <div><div class="sec-title">Recent Evidence</div><div class="sec-sub">5 most recent records</div></div>
-        <button class="act-btn" onclick="nav('evidence')">View all 12 →</button>
+        <div><div class="sec-title">Recent Evidence</div><div class="sec-sub" id="dashSub">Loading from BuraqAI…</div></div>
+        <button class="act-btn" onclick="nav('evidence')">View all →</button>
       </div>
       <div class="tbl-wrap">
-        <table><thead><tr><th>Record ID</th><th>Type</th><th>Location</th><th>Date</th><th>Status</th><th>SHA-256</th></tr></thead>
+        <table><thead><tr><th>Record ID</th><th>Type</th><th>Region</th><th>Date</th><th>Severity</th><th>SHA-256</th></tr></thead>
         <tbody id="dashTbody"></tbody></table>
       </div>
 
@@ -309,8 +309,7 @@ tr:hover td{background:rgba(255,255,255,.012)}
     <!-- ══ EVIDENCE ══ -->
     <section id="sec-evidence" class="section">
       <div class="sec-head">
-        <div><div class="sec-title">My Evidence Records</div><div class="sec-sub">12 records · cryptographically sealed</div></div>
-        <button class="pri-btn" onclick="nav('submit')">+ Submit New</button>
+        <div><div class="sec-title">My Evidence Records</div><div class="sec-sub" id="evSub">Loading from BuraqAI…</div></div>
       </div>
       <div class="tbl-wrap">
         <div class="tbl-bar">
@@ -406,7 +405,7 @@ tr:hover td{background:rgba(255,255,255,.012)}
     </section>
 
     <!-- ══ EVIDENCE CHAIN ══ -->
-    <section id="sec-chain" class="section"></section>
+    <section id="sec-chain" class="section active"></section>
 
   </div><!-- /content -->
 </main>
@@ -423,99 +422,69 @@ tr:hover td{background:rgba(255,255,255,.012)}
 </div>
 
 <script>
-// ── DATA ──────────────────────────────────────────────────────────────────────
-const RECS=[
-  {id:'EV-2025-0847',type:'photo', loc:'Aleppo, Syria',     date:'2025-01-12',status:'verified',hash:'a3f8c1e2b7d4f9a0e5c3b8d2f1a6e9c4b7f2d5a8c1e3b6f9d2a5c8e1b4f7d0a3f6',size:'12.4 MB',desc:'Residential collapse — structural damage consistent with munitions impact, 14 images.'},
-  {id:'EV-2025-0901',type:'doc',   loc:'Kyiv, Ukraine',     date:'2025-01-15',status:'verified',hash:'b6d2e8f4a1c9e6d3b0f7a4c1e8d5b2f9a6c3e0d7b4f1a8c5e2d9b6f3a0c7e4d1b8',size:'2.1 MB', desc:'Hospital admission records — 47 civilian casualties, 2025-01-14, WHO certified.'},
-  {id:'EV-2025-0923',type:'test',  loc:'Gaza, Palestine',   date:'2025-01-18',status:'pending', hash:'c9e5f1d7b3a8f4d0c6e2b9f5a1d8c4e0b7f3a9c5e1d8b4f0a6c2e9d5b1f7a3c8e4',size:'0.4 MB', desc:'Testimonial — displaced family, forced evacuation from northern district, 3 witnesses.'},
-  {id:'EV-2025-0934',type:'geo',   loc:'Kharkiv, Ukraine',  date:'2025-01-22',status:'verified',hash:'d2f6a8c4e1b9f5a7c3e0d8b2f4a6c8e5d1b7f3a9c5e2d0b6f8a4c0e7d3b9f5a1c7',size:'48.7 MB',desc:'Satellite imagery — coordinates of shelled infrastructure, cross-referenced incident reports.'},
-  {id:'EV-2025-0956',type:'video', loc:'Aleppo, Syria',     date:'2025-01-25',status:'verified',hash:'e5a1c7f3d9b5e2a8f4d0c6e3b9f5a2d8c4e1b7f3a9d5c1e8b4f0a6c2e9d5b1f7a3',size:'234 MB', desc:'24-second footage — market incident, timestamp verified via camera metadata.'},
-  {id:'EV-2025-0978',type:'doc',   loc:'Gaza, Palestine',   date:'2025-01-28',status:'flagged', hash:'f8d4b0e6a2c8f4d1b7e3a9c5f1d8b4e0a6c2f8d5b1e7a3c9f5d2b8e4a0c6f2d9b5',size:'1.8 MB', desc:'Flagged — source authentication pending. Submitted for independent review.'},
-  {id:'EV-2025-1002',type:'test',  loc:'Mosul, Iraq',       date:'2025-02-01',status:'pending', hash:'a1c7e3d9f5b1a8c4e0d6b2f8a4c0e7d3b9f5a1c7e3d9b5a2c8f4d0b6e2a8c4f0d7',size:'0.3 MB', desc:'Witness testimony — civil infrastructure targeting, 3 corroborating accounts awaiting notarisation.'},
-  {id:'EV-2025-1019',type:'photo', loc:'Mariupol, Ukraine', date:'2025-02-03',status:'verified',hash:'b4e0d6a2c8f4d1b7e3a9c5f1d8b4e0a6c2f8d5b1e7a3c9f5d2b8e4a0c6f2d9b5a1',size:'84.2 MB',desc:'Aerial photography batch — port infrastructure damage assessment, 31 images.'},
-  {id:'EV-2025-1031',type:'sensor',loc:'Northern Syria',    date:'2025-02-08',status:'verified',hash:'c7f3a9d5b1e7a3c9f5d2b8e4a0c6f2d9b5a1c7e3d9f5b1a8c4e0d6b2f8a4c0e7d3',size:'0.8 MB', desc:'Seismic sensor log — corroborates blast event at recorded coordinates, sub-second accuracy.'},
-  {id:'EV-2025-1047',type:'geo',   loc:'Eastern Ukraine',   date:'2025-02-14',status:'verified',hash:'d0b6e2a8c4f0d7b3e9a5c1f7d4b0e6a2c8f4d1b7e3a9c5f1d8b4e0a6c2f8d5b1e7',size:'112 MB', desc:'Multispectral satellite analysis — thermal signatures post-incident, classified coordinates redacted.'},
-  {id:'EV-2025-1058',type:'photo', loc:'Aleppo, Syria',     date:'2025-02-19',status:'pending', hash:'e3a9c5f1d8b4e0a6c2f8d5b1e7a3c9f5d2b8e4a0c6f2d9b5a1c7e3d9f5b1a8c4e0',size:'56.1 MB',desc:'Field documentation batch — 14 images from investigation site, pending chain-of-custody verification.'},
-  {id:'EV-2025-1072',type:'doc',   loc:'Gaza, Palestine',   date:'2025-02-24',status:'verified',hash:'f6d2b8e4a0c6f2d9b5a1c7e3d9f5b1a8c4e0d6b2f8a4c0e7d3b9f5a1c7e3d9b5a2',size:'3.4 MB', desc:'Medical facility incident report — WHO cross-reference, 18-page formal documentation.'},
-];
+// ── REAL DATA from BuraqAI ────────────────────────────────────────────────────
+let PINS = [];
 
-const AUDIT=[
-  {t:'2025-03-27 09:14',a:'login', d:'Session authenticated — Basic tier',    ok:true},
-  {t:'2025-03-26 16:42',a:'read',  d:'Record EV-2025-1072 accessed',           ok:true},
-  {t:'2025-03-26 16:40',a:'read',  d:'Record EV-2025-1058 accessed',           ok:true},
-  {t:'2025-03-25 11:08',a:'export',d:'PDF/A export — 4 records',              ok:true},
-  {t:'2025-03-24 14:33',a:'upload',d:'EV-2025-1072 submitted',                ok:true},
-  {t:'2025-03-22 10:17',a:'read',  d:'Record EV-2025-1047 accessed',           ok:true},
-  {t:'2025-03-20 15:55',a:'upload',d:'EV-2025-1058 submitted',                ok:true},
-  {t:'2025-03-19 09:01',a:'login', d:'Session authenticated',                  ok:true},
-  {t:'2025-03-18 17:22',a:'read',  d:'Record EV-2025-1047 accessed',           ok:true},
-  {t:'2025-03-17 11:44',a:'upload',d:'EV-2025-1047 submitted',                ok:true},
-  {t:'2025-03-15 08:30',a:'export',d:'PDF/A export — 8 records',              ok:true},
-  {t:'2025-03-14 14:20',a:'login', d:'Session authenticated',                  ok:true},
-];
+async function loadPins() {
+  try {
+    const r = await fetch('/evidence-vault/access/chain-pins.json');
+    PINS = await r.json();
+  } catch(_) { PINS = []; }
+  renderDash();
+  renderEvidence(PINS);
+}
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
-const TYPE_LBL={photo:'Photo',video:'Video',doc:'Documentary',geo:'Geospatial',test:'Testimonial',sensor:'Sensor'};
-const TYPE_CLS={photo:'bt-photo',video:'bt-video',doc:'bt-doc',geo:'bt-geo',test:'bt-test',sensor:'bt-sensor'};
-const ST_CLS={verified:'bv',pending:'bp',flagged:'bf'};
+const SEV_CLS={CRITICAL:'bf',HIGH:'bf',MEDIUM:'bp',LOW:'bv',WARNING:'bp',INFO:'bv'};
 const b=(cls,txt)=>`<span class="badge ${cls}">${txt}</span>`;
-const shortH=h=>`<span class="mono hash-short" title="sha256:${h}">sha256:${h.slice(0,10)}…</span>`;
+const shortH=h=>`<span class="mono hash-short" title="${h}">${h.slice(0,10)}…</span>`;
 
-function recRow(r,actions=true){
+function pinRow(p, short=false) {
+  const date = (p.created_at||'').slice(0,10);
+  const hash = p.id ? p.id.toString(16).padStart(8,'0') : '—';
+  if(short) return `<tr>
+    <td><span class="mono" style="font-size:12px">#${p.id}</span></td>
+    <td>${b('bt-sensor', p.entity_type||'PIN')}</td>
+    <td class="loc">${p.region||'—'}</td>
+    <td class="date-col">${date}</td>
+    <td>${b(SEV_CLS[p.severity]||'', p.severity||'—')}</td>
+    <td>${shortH(p.id.toString())}</td>
+  </tr>`;
   return `<tr>
-    <td><span class="mono" style="font-size:12px">${r.id}</span></td>
-    <td>${b(TYPE_CLS[r.type]||'',TYPE_LBL[r.type]||r.type)}</td>
-    <td class="loc">${r.loc}</td>
-    <td class="date-col">${r.date}</td>
-    <td>${b(ST_CLS[r.status]||'',r.status)}</td>
-    <td>${shortH(r.hash)}</td>
-    ${actions?`<td class="date-col">${r.size}</td><td><button class="act-btn" onclick="showCustody('${r.id}')">Custody ↗</button></td>`:''}
+    <td><span class="mono" style="font-size:12px">#${p.id}</span></td>
+    <td>${b('bt-sensor', p.entity_type||'PIN')}</td>
+    <td class="loc">${p.region||'—'}</td>
+    <td class="date-col">${date}</td>
+    <td>${b(SEV_CLS[p.severity]||'', p.severity||'—')}</td>
+    <td>${shortH(p.id.toString())}</td>
+    <td class="date-col">${p.source||'—'}</td>
   </tr>`;
 }
 
-// ── Render ────────────────────────────────────────────────────────────────────
-function renderDash(){
-  document.getElementById('dashTbody').innerHTML=
-    RECS.slice(-5).reverse().map(r=>recRow(r,false)).join('');
-}
-function renderEvidence(recs){
-  const tbody=document.getElementById('evTbody');
-  tbody.innerHTML=recs.length
-    ?recs.map(r=>recRow(r)).join('')
-    :'<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:24px">No records match your filters.</td></tr>';
-}
-function renderAudit(){
-  const ACT_CLS={login:'aa-login',read:'aa-read',upload:'aa-upload',export:'aa-export'};
-  document.getElementById('auditWrap').innerHTML=
-    AUDIT.map(a=>`<div class="audit-row">
-      <span class="audit-time">${a.t} UTC</span>
-      <span class="audit-act ${ACT_CLS[a.a]||''}">${a.a.toUpperCase()}</span>
-      <span class="audit-detail">${a.d}</span>
-      <span class="audit-ok">${a.ok?'✓ OK':'✗ FAIL'}</span>
-    </div>`).join('');
+function renderDash() {
+  const total = PINS.length;
+  const crit  = PINS.filter(p=>p.severity==='CRITICAL'||p.severity==='HIGH').length;
+  const regions = new Set(PINS.map(p=>p.region).filter(Boolean)).size;
+  const latest = PINS[0]?.created_at?.slice(0,10) || '—';
+  const verified = PINS.filter(p=>p.status==='ACTIVE').length;
+  const pending  = PINS.filter(p=>p.status==='PENDING').length;
+
+  document.getElementById('statTotal').textContent   = total.toLocaleString();
+  document.getElementById('statSub').textContent     = `${verified} active · ${pending} pending`;
+  document.getElementById('statCrit').textContent    = crit.toLocaleString();
+  document.getElementById('statRegions').textContent = regions;
+  document.getElementById('statLatest').textContent  = latest;
+  document.getElementById('dashSub').textContent     = `${Math.min(5,total)} most recent of ${total} records`;
+
+  document.getElementById('dashTbody').innerHTML = PINS.slice(0,5).map(p=>pinRow(p,true)).join('') ||
+    '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px">No records loaded.</td></tr>';
 }
 
-// ── Chain of Custody ─────────────────────────────────────────────────────────
-function showCustody(id){
-  const r=RECS.find(x=>x.id===id);if(!r)return;
-  document.getElementById('modalId').textContent=id+' — '+r.loc;
-  const steps=[
-    {lbl:'Field Capture',  val:r.desc.slice(0,80)+'…',       time:r.date+' T08:14:22Z',done:true,act:false},
-    {lbl:'SHA-256 Sealed', val:'sha256:'+r.hash,              time:r.date+' T08:14:23Z',done:true,act:false},
-    {lbl:'AES-256 Encrypted & Stored',val:'Geo-distributed · air-gapped backup · 3x redundancy',time:r.date+' T08:14:25Z',done:true,act:false},
-    {lbl:'Hash Verified',  val:r.status==='verified'?'Hash matches stored value — 0 mutations detected':'Verification pending',time:r.date+' T08:15:01Z',done:r.status==='verified',act:r.status==='pending'},
-    {lbl:'Court-Ready Export',val:'PDF/A-3b with custody manifest available on demand',time:'On request',done:false,act:false},
-  ];
-  document.getElementById('modalSteps').innerHTML=steps.map(s=>`
-    <div class="cust-step">
-      <div class="cust-dot ${s.done?'done':s.act?'active':''}"></div>
-      <div class="cust-body">
-        <div class="cust-lbl">${s.lbl}</div>
-        <div class="cust-val">${s.val}</div>
-        <div class="cust-time">${s.time}</div>
-      </div>
-    </div>`).join('');
-  document.getElementById('custodyModal').style.display='flex';
+function renderEvidence(pins) {
+  const tbody = document.getElementById('evTbody');
+  document.getElementById('evSub').textContent = `${pins.length} records · cryptographically sealed`;
+  tbody.innerHTML = pins.length
+    ? pins.map(p=>pinRow(p)).join('')
+    : '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:24px">No records match your filters.</td></tr>';
 }
 
 // ── Nav ───────────────────────────────────────────────────────────────────────
@@ -535,9 +504,9 @@ function filterEv(){
   const q=(document.getElementById('evSearch').value||'').toLowerCase();
   const st=document.getElementById('evStatus').value;
   const ty=document.getElementById('evType').value;
-  renderEvidence(RECS.filter(r=>
-    (!q||r.id.toLowerCase().includes(q)||r.loc.toLowerCase().includes(q)||r.desc.toLowerCase().includes(q))&&
-    (!st||r.status===st)&&(!ty||r.type===ty)
+  renderEvidence(PINS.filter(p=>
+    (!q||(p.region||'').toLowerCase().includes(q)||(p.entity_type||'').toLowerCase().includes(q)||(p.message||'').toLowerCase().includes(q))&&
+    (!st||p.status===st)&&(!ty||p.entity_type===ty)
   ));
 }
 document.getElementById('evSearch').addEventListener('input',filterEv);
@@ -604,7 +573,8 @@ setInterval(()=>{document.getElementById('clock').textContent=new Date().toISOSt
   document.getElementById('signOutBtn').addEventListener('click',()=>{
     sessionStorage.removeItem('vault_session');location.replace('/evidence-vault/access');
   });
-  renderDash();renderEvidence(RECS);renderAudit();
+  loadPins();
+  nav('chain');
 })();
 </script>
 
