@@ -57,7 +57,9 @@ button { cursor: pointer; }
   position: fixed; top: 0; left: 0; right: 0; z-index: 500;
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 28px; height: 60px;
-  background: #040507;
+  background: rgba(4,5,7,0.5);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(255,255,255,0.07);
 }
 
@@ -938,17 +940,21 @@ button { cursor: pointer; }
    CONTACT / FINAL CTA
 ══════════════════════════════════════════════════════════════ */
 .final-cta {
-  padding: 160px 48px; text-align: center;
+  padding: 120px 48px; text-align: left;
   position: relative; overflow: hidden;
 }
 .final-cta-bg {
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(41,151,255,0.09) 0%, transparent 65%);
+  background: radial-gradient(ellipse 60% 50% at 30% 50%, rgba(41,151,255,0.09) 0%, transparent 65%);
 }
-.final-cta-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
-.final-cta-inner > .label-mono { margin-bottom: 32px; display: block; }
+.final-cta-inner {
+  position: relative; z-index: 1;
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+}
+.final-cta-left > .label-mono { margin-bottom: 32px; display: block; }
 .final-cta h2 {
-  font-size: clamp(2.5rem, 6vw, 5.5rem); font-weight: 700;
+  font-size: clamp(2.5rem, 4.5vw, 5rem); font-weight: 700;
   letter-spacing: -0.045em; line-height: 1.0; margin-bottom: 24px;
 }
 .dim {
@@ -968,7 +974,7 @@ button { cursor: pointer; }
 .final-cta h2 .accent-line { display: block; color: var(--blue); }
 .final-cta-sub {
   font-family: var(--mono); font-size: 0.85rem; letter-spacing: 0.04em;
-  color: var(--muted); max-width: 420px; margin: 0 auto 48px; line-height: 1.7;
+  color: var(--muted); max-width: 420px; margin: 0 0 0; line-height: 1.7;
 }
 
 /* contact form */
@@ -1103,7 +1109,8 @@ footer {
   .principles-section { padding: 80px 24px; }
   .principles-grid { grid-template-columns: 1fr 1fr; }
 
-  .final-cta { padding: 100px 24px; }
+  .final-cta { padding: 80px 24px; }
+  .final-cta-inner { grid-template-columns: 1fr; gap: 48px; }
   .form__grid { grid-template-columns: 1fr; }
 
   .map-intel { padding: 80px 24px; }
