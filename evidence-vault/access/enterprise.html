@@ -463,11 +463,7 @@ function buildDashboard(){
   buildSevChart(PINS);buildEntityCloud(PINS);
   document.getElementById('integrityVal').textContent='0 mutations';
 }
-function feedRow(p,isNew){
-  var date=(p.created_at||'').slice(0,10),time=(p.created_at||'').slice(11,16);
-  var coordStr=p.lat!=null?p.lat.toFixed(3)+','+(p.lng||0).toFixed(3):'';
-  return'<div class="fi'+(isNew?' new':'')+'"><div class="fdot '+(SEV_DOT[p.severity]||'di')+'"></div><div style="flex:1;min-width:0"><div class="fmsg">'+esc(p.message||p.entity_type||'Record #'+p.id)+'</div><div class="fmeta"><span class="ftime">'+date+' '+time+'</span><span class="fid">#'+p.id+'</span>'+(p.region?'<span class="freg">'+esc(p.region)+'</span>':'')+(coordStr?'<span class="fcoord">'+coordStr+'</span>':'')+(p.severity?bdg(SEV_CLS[p.severity]||'bi',p.severity):'')+' <span class="intg-badge">\u2713 Verified</span></div></div></div>';
-}
+
 function buildSevChart(pins){
   var counts={};pins.forEach(function(p){var s=p.severity||'INFO';counts[s]=(counts[s]||0)+1});
   var order=['CRITICAL','HIGH','WARNING','MEDIUM','LOW','INFO'];

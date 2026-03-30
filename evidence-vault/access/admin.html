@@ -282,19 +282,9 @@ tr:hover td{background:rgba(255,255,255,.018)}
         <div class="scard c-gold"><div class="sicon gold"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="slbl">Pending Requests</div><div class="sval gold" id="statReqs">7</div><div class="ssub" id="statReqSub">Awaiting review</div></div>
       </div>
       <div class="row3">
-        <div class="panel">
-          <div class="phead"><div><div class="ptitle">Live Intelligence Feed</div><div class="psub" id="feedSub">Loading...</div></div><button class="act-btn" onclick="nav('evidence')">View all &rarr;</button></div>
-          <div class="feed-wrap" id="liveFeed"><div style="padding:40px;text-align:center;color:var(--muted);font-size:13px">Loading feed...</div></div>
-        </div>
-        <div class="col-stack">
-          <div class="panel"><div class="phead"><div><div class="ptitle">Severity Breakdown</div></div></div><div class="pbody" style="padding-top:8px;padding-bottom:8px"><div class="sev-list" id="sevChart"></div></div></div>
-          <div class="panel"><div class="phead"><div><div class="ptitle">Entity Types</div></div></div><div class="pbody"><div class="ecloud" id="entityCloud"></div></div></div>
-        </div>
-      </div>
-      <div class="panel" style="margin-bottom:20px">
-        <div class="phead"><div><div class="ptitle">Region Intelligence Map</div><div class="psub">All 500 pins by geographic area</div></div></div>
-        <div class="pbody"><div class="rgrid" id="regionGrid"></div></div>
-      </div>
+        <div class="panel"><div class="phead"><div><div class="ptitle">Severity Breakdown</div></div></div><div class="pbody" style="padding-top:8px;padding-bottom:8px"><div class="sev-list" id="sevChart"></div></div></div>
+        <div class="panel"><div class="phead"><div><div class="ptitle">Entity Types</div><div class="psub">Distinct categories in chain</div></div><button class="act-btn" onclick="nav('chain')">View Chain &rarr;</button></div><div class="pbody"><div class="ecloud" id="entityCloud"></div></div></div>
+      </div></div>
       <div class="int-grid">
         <div class="int-card"><div class="int-label">Encryption</div><div class="int-val">AES-256-GCM</div><div class="int-sub">End-to-end &middot; FIPS 140-2</div></div>
         <div class="int-card"><div class="int-label">Hash Algorithm</div><div class="int-val">SHA-256</div><div class="int-sub">Full hash &middot; Admin access</div></div>
@@ -454,26 +444,10 @@ function buildDashboard(){
   var act=PINS.filter(function(p){return p.status==='ACTIVE'}).length;
   var pend=PINS.filter(function(p){return p.status==='PENDING'}).length;
   document.getElementById('statSub').textContent=act+' active \u00b7 '+pend+' pending';
-  document.getElementById('feedSub').textContent='All '+vis.length+' of '+PINS.length+' records (Admin: full access)';
-  buildFeed(vis);buildSevChart(PINS);buildRegionGrid(PINS);buildEntityCloud(PINS);
+  buildSevChart(PINS);buildEntityCloud(PINS);
   document.getElementById('integrityVal').textContent='0 mutations';
 }
-function buildFeed(pins){
-  var w=document.getElementById('liveFeed');
-  w.innerHTML=pins.slice(0,80).map(function(p,i){return feedRow(p,i===0)}).join('');
-  w.querySelectorAll('.fi').forEach(function(el,i){el.addEventListener('click',function(){openModal(pins[i])})});
-  clearInterval(window._ft);
-  window._ft=setInterval(function(){
-    var items=w.querySelectorAll('.fi');if(!items.length)return;
-    var pick=items[Math.floor(Math.random()*items.length)];
-    pick.style.background='rgba(255,69,58,.07)';setTimeout(function(){pick.style.background=''},1200);
-  },2800);
-}
-function feedRow(p,isNew){
-  var date=(p.created_at||'').slice(0,10),time=(p.created_at||'').slice(11,16);
-  var coordStr=p.lat!=null?p.lat.toFixed(3)+','+(p.lng||0).toFixed(3):'';
-  return'<div class="fi'+(isNew?' new':'')+'"><div class="fdot '+(SEV_DOT[p.severity]||'di')+'"></div><div style="flex:1;min-width:0"><div class="fmsg">'+esc(p.message||p.entity_type||'Record #'+p.id)+'</div><div class="fmeta"><span class="ftime">'+date+' '+time+'</span><span class="fid">#'+p.id+'</span>'+(p.region?'<span class="freg">'+esc(p.region)+'</span>':'')+(coordStr?'<span class="fcoord">'+coordStr+'</span>':'')+(p.severity?bdg(SEV_CLS[p.severity]||'bi',p.severity):'')+' <span class="intg-badge">\u2713</span></div></div></div>';
-}
+
 function buildSevChart(pins){
   var counts={};pins.forEach(function(p){var s=p.severity||'INFO';counts[s]=(counts[s]||0)+1});
   var order=['CRITICAL','HIGH','WARNING','MEDIUM','LOW','INFO'];
@@ -484,14 +458,7 @@ function buildSevChart(pins){
   }).join('');
   requestAnimationFrame(function(){requestAnimationFrame(function(){el.querySelectorAll('.sev-b').forEach(function(b){b.style.width=b.dataset.w+'%'})})});
 }
-function buildRegionGrid(pins){
-  var c={};pins.forEach(function(p){if(p.region)c[p.region]=(c[p.region]||0)+1});
-  var sorted=Object.entries(c).sort(function(a,b){return b[1]-a[1]});
-  var max=sorted[0]?sorted[0][1]:1;
-  var el=document.getElementById('regionGrid');
-  el.innerHTML=sorted.slice(0,8).map(function(kv){return'<div class="rcard"><div class="rcname">'+esc(kv[0])+'</div><div class="rccount">'+kv[1]+'</div><div class="rcbar"><div class="rcfill" style="width:0%" data-w="'+Math.round(kv[1]/max*100)+'"></div></div></div>'}).join('');
-  requestAnimationFrame(function(){requestAnimationFrame(function(){el.querySelectorAll('.rcfill').forEach(function(b){b.style.width=b.dataset.w+'%'})})});
-}
+
 function buildEntityCloud(pins){
   var c={};pins.forEach(function(p){if(p.entity_type)c[p.entity_type]=(c[p.entity_type]||0)+1});
   document.getElementById('entityCloud').innerHTML=Object.entries(c).sort(function(a,b){return b[1]-a[1]}).map(function(kv){return'<div class="echip"><span class="ecname">'+esc(kv[0])+'</span><span class="eccount">'+kv[1]+'</span></div>'}).join('');
