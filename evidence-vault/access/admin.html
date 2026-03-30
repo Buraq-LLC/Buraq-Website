@@ -241,7 +241,6 @@ tr:hover td{background:rgba(255,255,255,.018)}
   </div>
   <nav class="sb-nav">
     <button class="nav-btn active" data-sec="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Dashboard</button>
-    <button class="nav-btn" data-sec="evidence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>All Evidence</button>
     <button class="nav-btn" data-sec="users"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>User Management</button>
     <div class="nav-sep"></div>
     <button class="nav-btn" data-sec="health"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>System Health</button>
@@ -303,19 +302,6 @@ tr:hover td{background:rgba(255,255,255,.018)}
       </div>
     </section>
     <!-- ALL EVIDENCE -->
-    <section id="sec-evidence" class="section">
-      <div class="sec-head"><div><div class="sec-title">All Evidence Records</div><div class="sec-sub" id="evSub">Loading...</div></div></div>
-      <div class="tbl-wrap">
-        <div class="tbl-bar">
-          <input class="tbl-search" id="evSearch" placeholder="Search ID, region, message..."/>
-          <select class="tbl-sel" id="evSev"><option value="">All Severity</option><option>CRITICAL</option><option>HIGH</option><option>WARNING</option><option>MEDIUM</option><option>LOW</option><option>INFO</option></select>
-          <select class="tbl-sel" id="evRegion"><option value="">All Regions</option></select>
-          <select class="tbl-sel" id="evType"><option value="">All Types</option></select>
-          <div class="tbl-count" id="evCount">&mdash;</div>
-        </div>
-        <table><thead><tr><th>Record ID</th><th>Entity Type</th><th>Source</th><th>Region</th><th>Coordinates</th><th>Date</th><th>Severity</th><th>SHA-256</th><th>Status</th></tr></thead><tbody id="evTbody"></tbody></table>
-      </div>
-    </section>
     <!-- USER MANAGEMENT -->
     <section id="sec-users" class="section">
       <div class="sec-head"><div><div class="sec-title">User Management</div><div class="sec-sub">All vault users across all tiers</div></div><button class="pri-btn" onclick="openCreateModal()">+ Create User</button></div>
@@ -423,30 +409,7 @@ var SEV_CLS={CRITICAL:'bf',HIGH:'bf',WARNING:'bw',MEDIUM:'bm',LOW:'bv',INFO:'bi'
 var SEV_DOT={CRITICAL:'dc',HIGH:'dh',WARNING:'dw',MEDIUM:'dm',LOW:'dl',INFO:'di'};
 var SEV_CLR={CRITICAL:'var(--red)',HIGH:'var(--orange)',WARNING:'var(--orange)',MEDIUM:'var(--medium)',LOW:'var(--green)',INFO:'var(--muted)'};
 var ENT_CLS={VEHICLE:'bt-veh',FIRE:'bt-fire',EARTHQUAKE:'bt-eq'};
-var FAKE_USERS=[
-  {email:'admin@buraqai.com',tier:'admin',active:true,last:'Today'},
-  {email:'alpha.team@org.com',tier:'enterprise',active:true,last:'Today'},
-  {email:'legal@org.com',tier:'enterprise',active:true,last:'Today'},
-  {email:'satellite@org.com',tier:'enterprise',active:false,last:'3 days ago'},
-  {email:'field.ops@pro.org',tier:'pro',active:true,last:'Today'},
-  {email:'analyst@pro.org',tier:'pro',active:true,last:'Yesterday'},
-  {email:'intern@basic.org',tier:'basic',active:true,last:'Today'},
-  {email:'archive@basic.org',tier:'basic',active:false,last:'1 week ago'}
-];
-var PENDING_REQS=[
-  {email:'new.investigator@org.com',tier:'enterprise',date:'2025-03-27',org:'ICC Legal'},
-  {email:'field.agent@ngo.org',tier:'pro',date:'2025-03-27',org:'Field NGO'},
-  {email:'journalist@press.com',tier:'basic',date:'2025-03-26',org:'Independent Press'},
-  {email:'researcher@uni.edu',tier:'pro',date:'2025-03-26',org:'University'},
-  {email:'analyst2@org.com',tier:'enterprise',date:'2025-03-25',org:'ICC Legal'},
-  {email:'monitor@un.int',tier:'enterprise',date:'2025-03-25',org:'UN OHCHR'},
-  {email:'trainee@basic.org',tier:'basic',date:'2025-03-24',org:'Training Org'}
-];
-var HISTORY_REQS=[
-  {email:'approved@org.com',tier:'pro',decision:'Approved',date:'2025-03-24',by:'admin@buraqai.com'},
-  {email:'denied@spam.com',tier:'enterprise',decision:'Denied',date:'2025-03-23',by:'admin@buraqai.com'},
-  {email:'prev.user@ngo.org',tier:'basic',decision:'Approved',date:'2025-03-22',by:'admin@buraqai.com'}
-];
+// Users and requests loaded live from Firestore — see loadFirestoreData()
 var AUDIT_LOG=[
   {t:'2025-03-27 09:14',a:'login', m:'admin@buraqai.com',tier:'admin',d:'Admin session authenticated',ok:true},
   {t:'2025-03-27 08:30',a:'admin', m:'admin@buraqai.com',tier:'admin',d:'User approved: field.ops@pro.org',ok:true},
@@ -470,10 +433,9 @@ async function loadData(){
   buildDashboard();
   renderEvidence(PINS.slice(0,TIER_MAX));
   populateFilters();
-  renderUsers(FAKE_USERS);
   renderHealth();
-  renderRequests();
   renderAudit(AUDIT_LOG);
+  // Live Firestore data loaded separately via ES module
 }
 function animCount(id,target,dur){
   var el=document.getElementById(id);if(!el)return;
@@ -623,20 +585,27 @@ function renderHealth(){
     ['Admin','14,233','Unlimited',bdg('bv','OK')],['Enterprise','5,847','50,000/day',bdg('bv','OK')],['Pro','2,104','10,000/day',bdg('bv','OK')],['Basic','389','1,000/day',bdg('bv','OK')]
   ].map(function(r){return'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>'}).join('');
 }
-function renderRequests(){
+function renderRequests(pending,history){
+  pending=pending||[];history=history||[];
   var TIER_BADGE={admin:'bf',enterprise:'bv',pro:'bp',basic:'bi'};
-  document.getElementById('pendingReqTbody').innerHTML=PENDING_REQS.map(function(r){
-    return'<tr><td class="mono" style="font-size:12px">'+esc(r.email)+'</td><td>'+bdg(TIER_BADGE[r.tier]||'bi',r.tier)+'</td><td class="dc-col">'+r.date+'</td><td class="src-col">'+esc(r.org)+'</td><td><button class="act-btn" style="color:var(--green);border-color:rgba(34,197,94,.2)" onclick="approveReq(this,\''+esc(r.email)+'\')">Approve</button> <button class="act-btn" style="color:var(--red);border-color:rgba(255,69,58,.2)" onclick="this.closest(\'tr\').remove();updateReqCount(-1)">Deny</button></td></tr>';
-  }).join('');
-  document.getElementById('historyReqTbody').innerHTML=HISTORY_REQS.map(function(r){
-    return'<tr><td class="mono" style="font-size:12px">'+esc(r.email)+'</td><td>'+bdg(TIER_BADGE[r.tier]||'bi',r.tier)+'</td><td>'+bdg(r.decision==='Approved'?'bv':'bf',r.decision)+'</td><td class="dc-col">'+r.date+'</td><td class="src-col">'+esc(r.by)+'</td></tr>';
-  }).join('');
+  document.getElementById('pendingReqTbody').innerHTML=pending.length?pending.map(function(r){
+    var date=r.submittedAt?(r.submittedAt.seconds?new Date(r.submittedAt.seconds*1000):new Date(r.submittedAt)).toLocaleDateString():(r.date||'\u2014');
+    return'<tr><td class="mono" style="font-size:12px">'+esc(r.email||r.name||'\u2014')+'</td><td>'+bdg(TIER_BADGE[r.tier]||'bi',r.tier||'\u2014')+'</td><td class="dc-col">'+date+'</td><td class="src-col">'+esc(r.organization||r.org||'\u2014')+'</td><td><button class="act-btn" style="color:var(--green);border-color:rgba(34,197,94,.2)" onclick="approveReq(this,\''+esc(r.email)+'\',\''+esc(r.docId||'')+'\')">Approve</button> <button class="act-btn" style="color:var(--red);border-color:rgba(255,69,58,.2)" onclick="denyReq(this,\''+esc(r.email)+'\',\''+esc(r.docId||'')+'\')">Deny</button></td></tr>';
+  }).join(''):'<tr><td colspan="5" style="padding:30px;text-align:center;color:var(--muted)">No pending requests.</td></tr>';
+  document.getElementById('historyReqTbody').innerHTML=history.length?history.map(function(r){
+    var date=r.submittedAt?(r.submittedAt.seconds?new Date(r.submittedAt.seconds*1000):new Date(r.submittedAt)).toLocaleDateString():(r.date||'\u2014');
+    return'<tr><td class="mono" style="font-size:12px">'+esc(r.email||'\u2014')+'</td><td>'+bdg(TIER_BADGE[r.tier]||'bi',r.tier||'\u2014')+'</td><td>'+bdg(r.status==='approved'?'bv':'bf',r.status||'\u2014')+'</td><td class="dc-col">'+date+'</td><td class="src-col">'+esc(r.reviewedBy||'\u2014')+'</td></tr>';
+  }).join(''):'<tr><td colspan="5" style="padding:30px;text-align:center;color:var(--muted)">No history yet.</td></tr>';
+  updateReqCount();
 }
-function approveReq(btn,email){btn.closest('tr').remove();updateReqCount(-1);alert('Access approved for '+email)}
-function updateReqCount(delta){
-  var n=document.querySelectorAll('#pendingReqTbody tr').length;
-  document.getElementById('requestBadge').textContent=n;
+function approveReq(btn,email,docId){btn.closest('tr').remove();updateReqCount();alert('Approved: '+email+'\n\nIn production this updates the Firestore vault_access doc and marks the request as approved.');}
+function denyReq(btn,email,docId){btn.closest('tr').remove();updateReqCount();alert('Denied: '+email);}
+function updateReqCount(){
+  var rows=document.querySelectorAll('#pendingReqTbody tr');
+  var n=(rows.length===1&&rows[0].querySelector('td[colspan]'))?0:rows.length;
+  document.getElementById('requestBadge').textContent=n||'';
   document.getElementById('statReqs').textContent=n;
+  document.getElementById('statReqSub').textContent=n?'Awaiting review':'No pending requests';
 }
 function renderAudit(entries){
   var ACT_CLS={login:'aa-login',read:'aa-read',upload:'aa-upload',export:'aa-export',share:'aa-share',admin:'aa-admin'};
@@ -655,7 +624,7 @@ function renderAudit(entries){
   });
 });
 function saveConfig(){alert('Configuration saved \u2014 in production, this updates Firestore system config collection.')}
-var TITLES={dashboard:'Dashboard',evidence:'All Evidence',users:'User Management',health:'System Health',requests:'Access Requests',audit:'Audit Log',config:'Configuration',chain:'Evidence Chain'};
+var TITLES={dashboard:'Dashboard',users:'User Management',health:'System Health',requests:'Access Requests',audit:'Audit Log',config:'Configuration',chain:'Evidence Chain'};
 function nav(name){
   document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
   document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active')});
@@ -672,19 +641,88 @@ setInterval(function(){document.getElementById('clock').textContent=new Date().t
   document.getElementById('signOutBtn').addEventListener('click',function(){sessionStorage.removeItem('vault_session');location.replace('/evidence-vault/access')});
   loadData();
   nav('dashboard');
+  // Expose to ES module
+  window.renderUsers=renderUsers;
+  window.renderRequests=renderRequests;
 })();
 </script>
 <script src="/__env.js"></script>
 <script src="/evidence-vault/access/vault-chain.js"></script>
 <script type="module">
-import{doc,getDoc}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
-import{db}from'/evidence-vault/access/firebase-client.js';
+import{initializeApp,getApps}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import{getFirestore,doc,getDoc,getDocs,collection,query,where}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const _e=(typeof window!=='undefined'&&window.__env)||{};
+
+// vault-access-a2961: user accounts
+const vaultApp=getApps().find(a=>a.name==='vault')||initializeApp({apiKey:_e.VAULT_API_KEY,authDomain:_e.VAULT_AUTH_DOMAIN,projectId:_e.VAULT_PROJECT_ID,storageBucket:_e.VAULT_STORAGE_BUCKET,messagingSenderId:_e.VAULT_MESSAGING_SENDER_ID,appId:_e.VAULT_APP_ID},'vault');
+const vaultDb=getFirestore(vaultApp);
+
+// evidence-vault-5d16d: access request emails
+const evApp=getApps().find(a=>a.name==='ev')||initializeApp({apiKey:_e.EV_API_KEY,authDomain:_e.EV_AUTH_DOMAIN,projectId:_e.EV_PROJECT_ID,storageBucket:_e.EV_STORAGE_BUCKET,messagingSenderId:_e.EV_MESSAGING_SENDER_ID,appId:_e.EV_APP_ID},'ev');
+const evDb=getFirestore(evApp);
+
+async function loadFirestoreData(){
+  // ── 1. Load all vault_access users ──────────────────────────────────────────
+  try{
+    const snap=await getDocs(collection(vaultDb,'vault_access'));
+    const users=[];
+    const tierCounts={admin:0,enterprise:0,pro:0,basic:0};
+    snap.forEach(d=>{
+      const u={email:d.id,...d.data()};
+      u.tier=u.tierAccess||u.tier||'basic';
+      users.push(u);
+      if(tierCounts[u.tier]!==undefined)tierCounts[u.tier]++;
+      else tierCounts.basic++;
+    });
+    // Update tier distribution cards
+    const tc=document.querySelectorAll('.tier-dist .tc-num');
+    if(tc[0])tc[0].textContent=tierCounts.admin;
+    if(tc[1])tc[1].textContent=tierCounts.enterprise;
+    if(tc[2])tc[2].textContent=tierCounts.pro;
+    if(tc[3])tc[3].textContent=tierCounts.basic;
+    // Update total users stat
+    const total=users.length;
+    document.getElementById('statUsers').textContent=total;
+    // Render user table
+    window.renderUsers(users);
+  }catch(err){console.error('[Admin] vault_access load error:',err);}
+
+  // ── 2. Load access requests from emails collection ───────────────────────
+  try{
+    const snap=await getDocs(collection(evDb,'emails'));
+    const pending=[],history=[];
+    snap.forEach(d=>{
+      const r={docId:d.id,...d.data()};
+      if(r.status==='approved'||r.status==='denied')history.push(r);
+      else pending.push(r);
+    });
+    // Sort newest first
+    pending.sort((a,b)=>{
+      const ta=a.submittedAt?(a.submittedAt.seconds||0):0;
+      const tb=b.submittedAt?(b.submittedAt.seconds||0):0;
+      return tb-ta;
+    });
+    history.sort((a,b)=>{
+      const ta=a.submittedAt?(a.submittedAt.seconds||0):0;
+      const tb=b.submittedAt?(b.submittedAt.seconds||0):0;
+      return tb-ta;
+    });
+    window.renderRequests(pending,history);
+  }catch(err){console.error('[Admin] emails load error:',err);window.renderRequests([],[]);}
+}
+
+loadFirestoreData();
+
+// ── Session polling (keep-alive check every 30s) ──────────────────────────
+// Use same vault app instance already initialised above
 setInterval(async()=>{
   const s=JSON.parse(sessionStorage.getItem('vault_session')||'null');
   if(!s){location.replace('/evidence-vault/access');return}
-  try{const snap=await getDoc(doc(db,'vault_access',s.email));
-    if(!snap.exists()||snap.data().active!==true){sessionStorage.removeItem('vault_session');location.replace('/evidence-vault/access')}}
-  catch(_){}
+  try{
+    const snap=await getDoc(doc(vaultDb,'vault_access',s.email));
+    if(!snap.exists()||snap.data().active!==true){sessionStorage.removeItem('vault_session');location.replace('/evidence-vault/access')}
+  }catch(_){}
 },30000);
 </script>
 </body>

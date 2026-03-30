@@ -72,7 +72,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sy
 .sval.blue{color:var(--tier)}.sval.red{color:var(--red)}.sval.green{color:var(--green)}.sval.gold{color:var(--gold)}
 .ssub{font-size:11px;color:var(--muted2);margin-top:6px}
 /* layout rows */
-.row3{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px}
+.row3{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
 .col-stack{display:flex;flex-direction:column;gap:16px}
 /* panel */
 .panel{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden}
@@ -260,14 +260,6 @@ tr:hover td{background:rgba(255,255,255,.018)}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
       Dashboard
     </button>
-    <button class="nav-btn" data-sec="evidence">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      Intelligence Records
-    </button>
-    <button class="nav-btn" data-sec="submit">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      Submit Evidence
-    </button>
     <div class="nav-sep"></div>
     <button class="nav-btn" data-sec="export">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -334,86 +326,21 @@ tr:hover td{background:rgba(255,255,255,.018)}
 
       <div class="row3">
         <div class="panel">
-          <div class="phead">
-            <div><div class="ptitle">Live Intelligence Feed</div><div class="psub" id="feedSub">Loading…</div></div>
-            <button class="act-btn" onclick="nav('evidence')">View all →</button>
-          </div>
-          <div class="feed-wrap" id="liveFeed">
-            <div style="padding:40px;text-align:center;color:var(--muted);font-size:13px">Loading feed…</div>
+          <div class="phead"><div><div class="ptitle">Severity Breakdown</div></div></div>
+          <div class="pbody" style="padding-top:8px;padding-bottom:8px">
+            <div class="sev-list" id="sevChart"></div>
           </div>
         </div>
-        <div class="col-stack">
-          <div class="panel">
-            <div class="phead"><div><div class="ptitle">Severity Breakdown</div></div></div>
-            <div class="pbody" style="padding-top:8px;padding-bottom:8px">
-              <div class="sev-list" id="sevChart"></div>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="phead"><div><div class="ptitle">Entity Types</div></div></div>
-            <div class="pbody"><div class="ecloud" id="entityCloud"></div></div>
-          </div>
+        <div class="panel">
+          <div class="phead"><div><div class="ptitle">Entity Types</div></div></div>
+          <div class="pbody"><div class="ecloud" id="entityCloud"></div></div>
         </div>
-      </div>
-
-      <div class="panel" style="margin-bottom:20px">
-        <div class="phead"><div><div class="ptitle">Region Intelligence Map</div><div class="psub">Pins by geographic area</div></div></div>
-        <div class="pbody"><div class="rgrid" id="regionGrid"></div></div>
       </div>
 
       <div class="int-grid">
         <div class="int-card"><div class="int-label">Encryption</div><div class="int-val">AES-256-GCM</div><div class="int-sub">End-to-end · FIPS 140-2</div></div>
         <div class="int-card"><div class="int-label">Hash Algorithm</div><div class="int-val">SHA-256</div><div class="int-sub">Tamper-evident sealing</div></div>
         <div class="int-card"><div class="int-label">Tampering Detected</div><div class="int-val">0 incidents</div><div class="int-sub">All hashes verified</div></div>
-      </div>
-    </section>
-
-    <!-- EVIDENCE -->
-    <section id="sec-evidence" class="section">
-      <div class="sec-head">
-        <div><div class="sec-title">Intelligence Records</div><div class="sec-sub" id="evSub">Loading…</div></div>
-      </div>
-      <div class="tbl-wrap">
-        <div class="tbl-bar">
-          <input class="tbl-search" id="evSearch" placeholder="Search ID, region, message…"/>
-          <select class="tbl-sel" id="evSev"><option value="">All Severity</option><option>CRITICAL</option><option>HIGH</option><option>WARNING</option><option>MEDIUM</option><option>LOW</option><option>INFO</option></select>
-          <select class="tbl-sel" id="evRegion"><option value="">All Regions</option></select>
-          <select class="tbl-sel" id="evType"><option value="">All Types</option></select>
-          <div class="tbl-count" id="evCount">—</div>
-        </div>
-        <table>
-          <thead><tr><th>Record ID</th><th>Entity Type</th><th>Source</th><th>Region</th><th>Date</th><th>Severity</th><th>Hash</th></tr></thead>
-          <tbody id="evTbody"></tbody>
-        </table>
-      </div>
-      <div class="upgrade-notice">
-        <strong>Basic Tier:</strong> 20 most recent records. <strong>Coordinates, altitude, speed, heading & full hash</strong> unlocked on Pro+. Click any row to view details.
-      </div>
-    </section>
-
-    <!-- SUBMIT -->
-    <section id="sec-submit" class="section">
-      <div class="sec-head"><div><div class="sec-title">Submit Evidence</div><div class="sec-sub">Files are hashed and encrypted immediately upon upload</div></div></div>
-      <div class="form-card">
-        <div class="form-sec-title">Evidence File</div>
-        <div class="upload-zone" id="uploadZone"><div class="upload-icon">↑</div><p>Drop file here or click to select</p><span>JPG · PNG · MP4 · MOV · PDF · DOC · MAX 2 GB</span></div>
-        <div class="upload-file-info" id="fileInfo"></div>
-        <input type="file" id="fileInput" style="display:none" accept="image/*,video/*,.pdf,.doc,.docx"/>
-      </div>
-      <div class="form-card">
-        <div class="form-sec-title">Evidence Metadata</div>
-        <form id="submitForm" novalidate>
-          <div class="fgrid">
-            <div class="field"><label>Evidence Type *</label><select name="type" required><option value="">Select…</option><option value="photo">Visual — Photograph</option><option value="video">Visual — Video</option><option value="doc">Documentary</option><option value="geo">Geospatial / Satellite</option><option value="test">Testimonial</option><option value="sensor">Sensor Data</option></select></div>
-            <div class="field"><label>Capture Date *</label><input type="date" name="captureDate" required/></div>
-            <div class="field"><label>Location *</label><input type="text" name="location" placeholder="City, Country" required/></div>
-            <div class="field"><label>Coordinates (optional)</label><input type="text" name="coords" placeholder="lat, lon"/></div>
-            <div class="field full"><label>Description *</label><textarea name="description" placeholder="Describe the evidence…" required></textarea></div>
-            <div class="field"><label>Source / Operator</label><input type="text" name="source" placeholder="Device model or operator ID"/></div>
-            <div class="field"><label>Classification</label><select name="classification"><option value="unclassified">Unclassified</option><option value="restricted">Restricted</option><option value="confidential">Confidential</option></select></div>
-          </div>
-          <div class="form-row"><button type="submit" class="pri-btn" id="submitBtn">Submit to Vault →</button><div class="form-msg" id="submitMsg"></div></div>
-        </form>
       </div>
     </section>
 
@@ -469,8 +396,6 @@ async function loadPins(){
   try{const r=await fetch('/evidence-vault/access/chain-pins.json');if(!r.ok)throw 0;PINS=await r.json();}
   catch(_){PINS=[];}
   buildDashboard();
-  renderEvidence(PINS.slice(0,TIER_MAX));
-  populateFilters();
 }
 
 // ─── COUNTER ANIMATION ────────────────────────────────────────────────────────
@@ -499,42 +424,11 @@ function buildDashboard(){
   const active=PINS.filter(p=>p.status==='ACTIVE').length;
   const pending=PINS.filter(p=>p.status==='PENDING').length;
   document.getElementById('statSub').textContent=`${active} active · ${pending} pending`;
-  document.getElementById('feedSub').textContent=`${vis.length} of ${PINS.length} records (Basic tier)`;
-  buildFeed(vis);
   buildSevChart(PINS);
-  buildRegionGrid(PINS);
   buildEntityCloud(PINS);
   buildAudit();
 }
 
-// ─── LIVE FEED ────────────────────────────────────────────────────────────────
-function buildFeed(pins){
-  const w=document.getElementById('liveFeed');
-  w.innerHTML=pins.map((p,i)=>feedRow(p,i===0)).join('');
-  w.querySelectorAll('.fi').forEach((el,i)=>el.addEventListener('click',()=>openModal(pins[i])));
-  clearInterval(window._ft);
-  window._ft=setInterval(()=>{
-    const items=w.querySelectorAll('.fi');if(!items.length)return;
-    const pick=items[Math.floor(Math.random()*items.length)];
-    pick.style.background='rgba(41,151,255,.07)';
-    setTimeout(()=>{pick.style.background=''},1200);
-  },2800);
-}
-function feedRow(p,isNew){
-  const date=(p.created_at||'').slice(0,10),time=(p.created_at||'').slice(11,16);
-  return`<div class="fi${isNew?' new':''}">
-    <div class="fdot ${SEV_DOT[p.severity]||'di'}"></div>
-    <div style="flex:1;min-width:0">
-      <div class="fmsg">${esc(p.message||p.entity_type||'Record #'+p.id)}</div>
-      <div class="fmeta">
-        <span class="ftime">${date} ${time}</span>
-        <span class="fid">#${p.id}</span>
-        ${p.region?`<span class="freg">${esc(p.region)}</span>`:''}
-        ${p.severity?bdg(SEV_CLS[p.severity]||'bi',p.severity):''}
-      </div>
-    </div>
-  </div>`;
-}
 
 // ─── SEVERITY CHART ───────────────────────────────────────────────────────────
 function buildSevChart(pins){
@@ -554,22 +448,6 @@ function buildSevChart(pins){
   }));
 }
 
-// ─── REGION GRID ──────────────────────────────────────────────────────────────
-function buildRegionGrid(pins){
-  const c={};pins.forEach(p=>{if(p.region)c[p.region]=(c[p.region]||0)+1});
-  const sorted=Object.entries(c).sort((a,b)=>b[1]-a[1]);
-  const max=sorted[0]?.[1]||1;
-  const el=document.getElementById('regionGrid');
-  el.innerHTML=sorted.slice(0,8).map(([r,n])=>`
-    <div class="rcard">
-      <div class="rcname">${esc(r)}</div>
-      <div class="rccount">${n}</div>
-      <div class="rcbar"><div class="rcfill" style="width:0%" data-w="${Math.round(n/max*100)}"></div></div>
-    </div>`).join('');
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    el.querySelectorAll('.rcfill').forEach(b=>b.style.width=b.dataset.w+'%');
-  }));
-}
 
 // ─── ENTITY CLOUD ─────────────────────────────────────────────────────────────
 function buildEntityCloud(pins){
@@ -578,50 +456,7 @@ function buildEntityCloud(pins){
     .map(([e,n])=>`<div class="echip"><span class="ecname">${esc(e)}</span><span class="eccount">${n}</span></div>`).join('');
 }
 
-// ─── EVIDENCE TABLE ───────────────────────────────────────────────────────────
-function renderEvidence(pins){
-  const tbody=document.getElementById('evTbody');
-  document.getElementById('evSub').textContent=`${pins.length} records visible · ${TIER_MAX} max on Basic tier`;
-  document.getElementById('evCount').textContent=`${pins.length} records`;
-  if(!pins.length){tbody.innerHTML='<tr><td colspan="7" style="padding:40px;text-align:center;color:var(--muted)">No records match filters.</td></tr>';return;}
-  tbody.innerHTML=pins.map(p=>{
-    const date=(p.created_at||'').slice(0,10);
-    const ec=ENT_CLS[p.entity_type]||'bt-sensor';
-    return`<tr onclick="openModal(PINS.find(x=>x.id===${p.id}))">
-      <td><span class="mono" style="font-size:12px">#${p.id}</span></td>
-      <td>${bdg(ec,p.entity_type||'PIN')}</td>
-      <td class="src-col">${esc(p.source||'—')}</td>
-      <td class="loc">${esc(p.region||'—')}</td>
-      <td class="dc-col">${date}</td>
-      <td>${bdg(SEV_CLS[p.severity]||'bi',p.severity||'—')}</td>
-      <td>${shortH(p.id)}</td>
-    </tr>`;
-  }).join('');
-}
 
-function populateFilters(){
-  const regions=[...new Set(PINS.map(p=>p.region).filter(Boolean))].sort();
-  const types=[...new Set(PINS.map(p=>p.entity_type).filter(Boolean))].sort();
-  const rs=document.getElementById('evRegion');
-  regions.forEach(r=>{const o=document.createElement('option');o.value=o.textContent=r;rs.appendChild(o)});
-  const ts=document.getElementById('evType');
-  types.forEach(t=>{const o=document.createElement('option');o.value=o.textContent=t;ts.appendChild(o)});
-}
-
-function filterEv(){
-  const q=(document.getElementById('evSearch').value||'').toLowerCase();
-  const sev=document.getElementById('evSev').value;
-  const reg=document.getElementById('evRegion').value;
-  const ty=document.getElementById('evType').value;
-  renderEvidence(PINS.slice(0,TIER_MAX).filter(p=>
-    (!q||(p.region||'').toLowerCase().includes(q)||(p.entity_type||'').toLowerCase().includes(q)||(p.message||'').toLowerCase().includes(q)||(p.id+'').includes(q))&&
-    (!sev||p.severity===sev)&&(!reg||p.region===reg)&&(!ty||p.entity_type===ty)
-  ));
-}
-['evSearch','evSev','evRegion','evType'].forEach(id=>{
-  const el=document.getElementById(id);
-  if(el)el.addEventListener(el.tagName==='INPUT'?'input':'change',filterEv);
-});
 
 // ─── MODAL ────────────────────────────────────────────────────────────────────
 function openModal(p){
@@ -690,7 +525,7 @@ function buildAudit(){
 }
 
 // ─── NAV ──────────────────────────────────────────────────────────────────────
-const TITLES={dashboard:'Dashboard',evidence:'Intelligence Records',submit:'Submit Evidence',export:'Export',audit:'Audit Log',chain:'Evidence Chain'};
+const TITLES={dashboard:'Dashboard',export:'Export',audit:'Audit Log',chain:'Evidence Chain'};
 function nav(name){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));

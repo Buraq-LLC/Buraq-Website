@@ -22,7 +22,7 @@
       maxRec:        20,
     },
     pro: {
-      sources:       ['pins', 'missions'],
+      sources:       ['pins'],
       showCoords:    true,
       showImages:    true,
       showHash:      true,
@@ -32,7 +32,7 @@
       maxRec:        50,
     },
     enterprise: {
-      sources:       ['pins', 'missions', 'logs'],
+      sources:       ['pins'],
       showCoords:    true,
       showImages:    true,
       showHash:      true,
@@ -42,7 +42,7 @@
       maxRec:        100,
     },
     admin: {
-      sources:       ['pins', 'missions', 'logs'],
+      sources:       ['pins'],
       showCoords:    true,
       showImages:    true,
       showHash:      true,
@@ -127,7 +127,18 @@
   }
 
   // ─── FETCH STATIC JSON ───────────────────────────────────────────────────────
-  const BASE = '/evidence-vault/access';
+  // Capture script src at parse time (document.currentScript is only valid then)
+  const _scriptSrc = (document.currentScript && document.currentScript.src) || '';
+  function jsonBase() {
+    if (_scriptSrc) {
+      return _scriptSrc.substring(0, _scriptSrc.lastIndexOf('/'));
+    }
+    // fallback: derive from current page path
+    const p = location.pathname;
+    const dir = p.substring(0, p.lastIndexOf('/'));
+    return (dir || '/evidence-vault/access');
+  }
+  const BASE = jsonBase();
   async function fetchJSON(file) {
     try {
       const ctrl = new AbortController();
@@ -157,17 +168,21 @@
 
       if (caps.sources.includes('pins')) {
         const r = await fetchJSON('chain-pins.json');
-        if (r === null) netErr = true;
+        if (r === null) { console.warn('[VaultChain] chain-pins.json failed, BASE=', BASE); netErr = true; }
         else r.forEach(x => raw.push({ _src: 'pin', ...x }));
       }
       if (caps.sources.includes('missions')) {
         const r = await fetchJSON('chain-missions.json');
-        if (r === null) netErr = true;
+        if (r === null) { console.warn('[VaultChain] chain-missions.json failed'); netErr = true; }
         else r.forEach(x => raw.push({ _src: 'mission', ...x }));
       }
 
-      if (netErr && raw.length === 0) { setUI('error'); _busy = false; return; }
-      if (raw.length === 0)           { setUI('empty'); _busy = false; return; }
+      // Only show error if we got zero records from any source
+      if (raw.length === 0) {
+        setUI(netErr ? 'error' : 'empty');
+        _busy = false;
+        return;
+      }
 
       // Sort oldest-first for hash chaining, cap to maxRec
       raw.sort((a, b) =>
@@ -223,13 +238,13 @@
       const q      = (filter.q      || '').toLowerCase();
       const sev    = filter.sev     || '';
       const region = filter.region  || '';
-      const type   = filter.type    || '';
+      const entType = filter.entType || '';
       blocks = blocks.filter(b => {
         const d = b.data;
         if (q && !JSON.stringify(d).toLowerCase().includes(q)) return false;
         if (sev    && d.severity !== sev)    return false;
         if (region && d.region   !== region) return false;
-        if (type   && b.src      !== type)   return false;
+        if (entType && d.entity_type !== entType) return false;
         return true;
       });
     }
@@ -255,10 +270,10 @@
     const { idx, src, data, hash, prevHash } = block;
     const ts     = new Date(data.created_at || data.start_time || Date.now())
       .toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
-    const srcLbl = { pin: 'PIN', log: 'LOG', mission: 'MISSION' }[src] || src.toUpperCase();
-    const srcCls = { pin: 'bt-photo', log: 'bt-doc', mission: 'bt-test' }[src] || 'bt-sensor';
+    const entLbl = data.entity_type || 'PIN';
+    const entCls = { VEHICLE: 'bt-veh', FIRE: 'bt-fire', EARTHQUAKE: 'bt-eq', PERSON: 'bt-sensor', VESSEL: 'bt-photo', AIRCRAFT: 'bt-test' }[data.entity_type] || 'bt-sensor';
     const sevCls = { CRITICAL: 'bf', HIGH: 'bf', MEDIUM: 'bp', LOW: 'bv', INFO: 'bv' }[data.severity || ''] || '';
-    const title  = esc(data.message || data.name || data.entity_type || `Record #${idx}`);
+    const title  = esc(data.entity_type || data.message || data.name || `Record #${idx}`);
 
     let hashHTML = '';
     if (caps.showHash) {
@@ -279,7 +294,7 @@
 <div class="c-block" id="vcb-${idx}">
   <div class="c-head">
     <div class="c-meta">
-      <span class="badge ${srcCls}">${srcLbl}</span>
+      <span class="badge ${entCls}">${entLbl}</span>
       <span style="font-size:10px;color:var(--muted)">#${idx}</span>
       ${data.severity ? `<span class="badge ${sevCls}">${esc(data.severity)}</span>` : ''}
     </div>
@@ -324,7 +339,11 @@
         if (data.frp         != null) f('Fire Power', data.frp + ' MW');
         if (data.magnitude   != null) f('Magnitude', data.magnitude);
       }
-      if (data.tags && data.tags.length) f('Tags', data.tags.join(', '));
+      if (data.tags) {
+        let tagsArr = data.tags;
+        if (typeof tagsArr === 'string') { try { tagsArr = JSON.parse(tagsArr); } catch(_) { tagsArr = tagsArr.split(',').map(t => t.trim()).filter(Boolean); } }
+        if (Array.isArray(tagsArr) && tagsArr.length) f('Tags', tagsArr.join(', '));
+      }
     } else if (src === 'log') {
       f('Level', data.level);
       if (caps.showPrevHash && data.hash_record) {
@@ -391,19 +410,11 @@
     } else if (state === 'error') {
       wrap.innerHTML = `<div class="chain-empty">
         <span style="font-size:28px;color:var(--red)">⚠</span>
-        <span style="font-weight:600;color:var(--red)">Cannot reach BuraqAI</span>
+        <span style="font-weight:600;color:var(--red)">Failed to load chain data</span>
         <span style="font-size:12px;color:var(--muted);max-width:400px;text-align:center">
-          Ensure BuraqAI is running at
-          <code style="font-family:monospace;background:var(--bg3);padding:1px 5px;border-radius:4px">${esc(_api)}</code>
-          with CORS enabled for this origin.
+          Could not fetch evidence records. Check your network connection and try again.
         </span>
         <button class="act-btn" style="margin-top:4px" onclick="window.VaultChain.reload()">↻ Retry</button>
-        <div style="margin-top:10px;padding:12px 18px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;font-size:11px;color:var(--muted2);max-width:440px;line-height:1.65">
-          <strong style="color:var(--text)">Setup:</strong> Add
-          <code style="font-family:monospace">window.__env.VAULT_BURAQAI_API = "http://your-api-host"</code>
-          to <code style="font-family:monospace">__env.js</code>, then enable
-          <code style="font-family:monospace">flask-cors</code> in BuraqAI for this origin.
-        </div>
       </div>`;
     }
   }
@@ -411,7 +422,6 @@
   // ─── SECTION SCAFFOLD ────────────────────────────────────────────────────────
   function buildSection(tier) {
     const caps = CAPS[tier] || CAPS.basic;
-    const hasSrcFilter = caps.sources.length > 1;
     const intBadge = caps.showIntegrity
       ? '<span id="vcIntegrity" class="chain-ibadge ci-pend"><span style="font-size:8px">●</span> Verifying…</span>'
       : '';
@@ -419,12 +429,12 @@
 <div class="sec-head">
   <div>
     <div class="sec-title">Evidence Chain</div>
-    <div class="sec-sub">Live hash-linked records from BuraqAI · <span id="vcCount">—</span></div>
+    <div class="sec-sub">Entity records · SHA-256 hash-linked · <span id="vcCount">—</span></div>
   </div>
   <div style="display:flex;align-items:center;gap:8px">${intBadge}</div>
 </div>
 <div class="chain-toolbar">
-  <input class="tbl-search" id="vcQ" placeholder="Search records…" style="min-width:160px"/>
+  <input class="tbl-search" id="vcQ" placeholder="Search entity, region, ID…" style="min-width:160px"/>
   <select class="tbl-sel" id="vcSev">
     <option value="">All Severity</option>
     <option>CRITICAL</option><option>HIGH</option><option>MEDIUM</option><option>LOW</option><option>INFO</option>
@@ -433,12 +443,10 @@
     <option value="">All Regions</option>
     <option>gaza</option><option>westbank</option><option>north</option><option>south</option>
   </select>
-  ${hasSrcFilter ? `<select class="tbl-sel" id="vcType">
-    <option value="">All Types</option>
-    <option value="pin">Pins</option>
-    ${caps.sources.includes('missions') ? '<option value="mission">Missions</option>' : ''}
-    ${caps.sources.includes('logs')     ? '<option value="log">Logs</option>'         : ''}
-  </select>` : ''}
+  <select class="tbl-sel" id="vcEntType">
+    <option value="">All Entities</option>
+    <option>VEHICLE</option><option>FIRE</option><option>EARTHQUAKE</option><option>PERSON</option><option>VESSEL</option><option>AIRCRAFT</option>
+  </select>
   <button class="act-btn" onclick="window.VaultChain.reload()">↻ Refresh</button>
 </div>
 <div id="vcContainer"></div>`;
@@ -452,10 +460,10 @@
         q:      document.getElementById('vcQ')?.value,
         sev:    document.getElementById('vcSev')?.value,
         region: document.getElementById('vcRegion')?.value,
-        type:   document.getElementById('vcType')?.value,
+        entType: document.getElementById('vcEntType')?.value,
       });
     };
-    ['vcQ', 'vcSev', 'vcRegion', 'vcType'].forEach(id => {
+    ['vcQ', 'vcSev', 'vcRegion', 'vcEntType'].forEach(id => {
       const el = document.getElementById(id);
       if (!el) return;
       el.addEventListener(el.tagName === 'INPUT' ? 'input' : 'change', apply);
