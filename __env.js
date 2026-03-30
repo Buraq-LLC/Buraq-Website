@@ -30,5 +30,5 @@ window.__env = {
   EV_APP_ID:                     '1:503997504949:web:7d57b5142f25ab120e0dfc',
 
   // BuraqAI API — set to wherever BuraqAI is hosted/running
-  VAULT_BURAQAI_API:             'http://localhost:5000',
+  VAULT_BURAQAI_API:             'http://localhost:5001',
 };

@@ -14,7 +14,7 @@ service cloud.firestore {
     //                 the Firebase console; clients can never modify records.
     match /vault_access/{email} {
       allow get:  if true;
-      allow list: if false;
+      allow list: if true;   // admin dashboard reads full collection
       allow write: if false;
     }
 

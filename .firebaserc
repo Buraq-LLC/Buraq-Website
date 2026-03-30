@@ -2,5 +2,15 @@
   "projects": {
     "default": "buraq-ai-2670c",
     "vault": "vault-access-a2961"
-  }
+  },
+  "targets": {
+    "buraq-ai-2670c": {
+      "hosting": {
+        "default": [
+          "buraq-ai-2670c"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
