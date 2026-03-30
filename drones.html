@@ -9,12 +9,13 @@
 <meta name="description" content="Buraq AI drone systems — autonomous ISR platforms for humanitarian intelligence, surveillance, and reconnaissance operations." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-logo.png" />
 <link rel="stylesheet" href="styles.css?v=7" />
 </head>
 <body>
 
+<div class="scanlines" aria-hidden="true"></div>
 <div class="progress"><div class="progress__fill"></div></div>
 
 <header id="topnav">
@@ -22,9 +23,18 @@
     <img src="assets/buraq-horse.png" width="16" height="16" alt="" />
     Buraq AI
   </a>
-  <button class="nav__burger" aria-label="Open menu" aria-expanded="false" aria-controls="sidenav">
-    <span></span><span></span><span></span>
-  </button>
+  <nav class="nav__links" aria-label="Primary navigation">
+    <a href="/drones">Drones</a>
+    <a href="/evidence-vault">Evidence Vault</a>
+    <a href="/reports">Reports</a>
+    <a href="/marqab">Edge</a>
+  </nav>
+  <div class="nav__right">
+    <a href="/#contact" class="nav__cta">Contact Us</a>
+    <button class="nav__burger" aria-label="Open menu" aria-expanded="false" aria-controls="sidenav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </header>
 
 <div class="sidenav" id="sidenav" aria-hidden="true">
