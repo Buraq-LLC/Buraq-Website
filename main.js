@@ -253,131 +253,155 @@ function initYear() {
   if (el) el.textContent = '2025';
 }
 
-/* ─── HERO CANVAS — binary data rain + mouse field + glitch ─────── */
+/* ─── HERO CANVAS — static etched matrix + glitch ───────────────── */
 function initHeroCanvas() {
   const canvas = document.getElementById('heroCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  // Character set: binary heavy, occasional hex/katakana for texture
-  const CHARS = '01010101001101001101100101110100110100101!@#$%^<>/\\|[]{}~*';
-  const FS = 13;          // font size / column width (px)
-  const SPEED_BASE = 0.35;
-  const SPEED_VAR  = 0.3;
-  const GLITCH_INTERVAL_MIN = 3500;
-  const GLITCH_INTERVAL_MAX = 8000;
+  // Binary-heavy char set — etched into the surface
+  const CHARS = '010110010011010011011001011101001101001010110110100110';
+  const FS = 13;  // cell size in px
 
-  let W, H, cols;
-  let drops  = [];   // current y position of each column head (in rows)
-  let speeds = [];   // fall speed of each column
+  // Glitch timing
+  const GLITCH_MIN = 2200;
+  const GLITCH_MAX = 6000;
+
+  let W, H, cols, rows;
+  // Grid: each cell stores { char, alpha } — stable, not regenerated every frame
+  let grid = [];
   let glitchSlices = [];
-  let nextGlitch = GLITCH_INTERVAL_MIN + Math.random() * (GLITCH_INTERVAL_MAX - GLITCH_INTERVAL_MIN);
+  let nextGlitch = GLITCH_MIN + Math.random() * (GLITCH_MAX - GLITCH_MIN);
   let elapsed = 0;
   let lastTs  = 0;
   let raf;
+
+  // Build (or rebuild) the static character grid
+  function buildGrid() {
+    grid = [];
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        grid.push({
+          char:  CHARS[Math.floor(Math.random() * CHARS.length)],
+          alpha: 0.06 + Math.random() * 0.13,  // each cell has its own fixed brightness
+        });
+      }
+    }
+  }
 
   function resize() {
     W = canvas.width  = canvas.offsetWidth;
     H = canvas.height = canvas.offsetHeight;
     cols = Math.floor(W / FS);
-    // Preserve existing drops, extend or trim
-    while (drops.length < cols) {
-      drops.push(-(Math.random() * (H / FS)));
-      speeds.push(SPEED_BASE + Math.random() * SPEED_VAR);
-    }
-    drops.length  = cols;
-    speeds.length = cols;
+    rows = Math.floor(H / FS);
+    buildGrid();
   }
 
   const resizeObs = new ResizeObserver(resize);
   resizeObs.observe(canvas);
   resize();
 
-  // Schedule random glitch events
+  // Randomly mutate ~1.5% of cells per frame — gives subtle "alive" noise
+  function flicker() {
+    const n = Math.ceil(grid.length * 0.015);
+    for (let i = 0; i < n; i++) {
+      const idx = Math.floor(Math.random() * grid.length);
+      grid[idx].char  = CHARS[Math.floor(Math.random() * CHARS.length)];
+      // Occasional bright flare on a cell
+      grid[idx].alpha = Math.random() < 0.05
+        ? 0.55 + Math.random() * 0.3    // bright flare
+        : 0.06 + Math.random() * 0.13;  // normal dim
+    }
+  }
+
+  // Burst of glitch slices + optional full-row strobe
   function triggerGlitch() {
-    const count = 3 + Math.floor(Math.random() * 5);
-    glitchSlices = [];
+    const count = 4 + Math.floor(Math.random() * 6);
     for (let i = 0; i < count; i++) {
       glitchSlices.push({
-        y:        Math.random() * H,
-        h:        4 + Math.random() * 22,
-        shiftX:   (Math.random() < 0.5 ? -1 : 1) * (8 + Math.random() * 36),
-        life:     80 + Math.random() * 100,
-        age:      0
+        y:      Math.random() * H,
+        h:      2 + Math.random() * 18,
+        shiftX: (Math.random() < 0.5 ? -1 : 1) * (10 + Math.random() * 44),
+        life:   60 + Math.random() * 130,
+        age:    0,
       });
     }
-    nextGlitch = GLITCH_INTERVAL_MIN + Math.random() * (GLITCH_INTERVAL_MAX - GLITCH_INTERVAL_MIN);
-    elapsed = 0;
+    // Occasionally also strobe a wide band bright white
+    if (Math.random() < 0.35) {
+      glitchSlices.push({
+        y:      Math.random() * H,
+        h:      1 + Math.floor(Math.random() * 3),
+        shiftX: 0,
+        life:   40 + Math.random() * 60,
+        age:    0,
+        strobe: true,
+      });
+    }
+    nextGlitch = GLITCH_MIN + Math.random() * (GLITCH_MAX - GLITCH_MIN);
+    elapsed    = 0;
   }
 
   function draw(ts) {
     const dt = ts - lastTs || 16;
-    lastTs = ts;
+    lastTs   = ts;
     elapsed += dt;
 
-    // Trigger glitch
     if (elapsed >= nextGlitch) triggerGlitch();
 
-    // Clear to solid background each frame — no motion blur trail
-    ctx.fillStyle = 'rgba(10,10,10,1)';
+    // Solid clear — characters are etched, no trails
+    ctx.fillStyle = '#0a0a0a';
     ctx.fillRect(0, 0, W, H);
 
-    ctx.font = `${FS}px "Chivo Mono", monospace`;
+    ctx.font         = `${FS}px "Chivo Mono", monospace`;
     ctx.textBaseline = 'top';
 
-    for (let i = 0; i < cols; i++) {
-      const x = i * FS;
-      const y = Math.floor(drops[i]) * FS;
-      if (y < -FS || y > H + FS) { drops[i]++; continue; }
+    // Mutate a tiny fraction of cells each frame
+    flicker();
 
-      // Character — randomise each frame
-      const ch = CHARS[Math.floor(Math.random() * CHARS.length)];
-
-      // Uniform blue tint — no mouse proximity effect
-      const a = 0.05 + Math.random() * 0.04;
-      ctx.fillStyle = `rgba(41,151,255,${a})`;
-      ctx.fillText(ch, x, y);
-
-      // Head character — slightly brighter
-      ctx.fillStyle = `rgba(200,230,255,${0.45 + Math.random() * 0.2})`;
-      ctx.fillText(CHARS[Math.floor(Math.random() * CHARS.length)], x, y);
-
-      // Advance column at constant speed
-      drops[i] += speeds[i];
-
-      if (drops[i] * FS > H && Math.random() > 0.975) {
-        drops[i] = -(2 + Math.random() * 6);
-        speeds[i] = SPEED_BASE + Math.random() * SPEED_VAR;
+    // Draw the full static grid
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const cell = grid[r * cols + c];
+        if (!cell) continue;
+        ctx.fillStyle = `rgba(41,151,255,${cell.alpha.toFixed(3)})`;
+        ctx.fillText(cell.char, c * FS, r * FS);
       }
     }
 
-    // Apply glitch slices
+    // Apply glitch slices on top
     for (let s = glitchSlices.length - 1; s >= 0; s--) {
       const sl = glitchSlices[s];
       sl.age += dt;
-      const t = sl.age / sl.life;            // 0 → 1
+      const t = sl.age / sl.life;
       if (t >= 1) { glitchSlices.splice(s, 1); continue; }
 
-      const fade   = Math.sin(t * Math.PI);  // ease in & out
-      const shift  = sl.shiftX * fade;
-      const sy     = Math.max(0, Math.round(sl.y));
-      const sh     = Math.min(Math.round(sl.h), H - sy);
+      const fade = Math.sin(t * Math.PI);
+      const sy   = Math.max(0, Math.round(sl.y));
+      const sh   = Math.min(Math.round(sl.h), H - sy);
       if (sh <= 0) continue;
 
-      try {
-        const img = ctx.getImageData(0, sy, W, sh);
-        ctx.clearRect(0, sy, W, sh);
-
-        // RGB fringe: red channel ahead, blue behind
-        ctx.globalAlpha = 0.25 * fade;
-        ctx.fillStyle   = '#ff003c';
-        ctx.fillRect(shift - 4, sy, W, sh);
-        ctx.fillStyle   = '#0096ff';
-        ctx.fillRect(shift + 4, sy, W, sh);
+      if (sl.strobe) {
+        // White strobe band — phosphor burn effect
+        ctx.globalAlpha = 0.18 * fade;
+        ctx.fillStyle   = '#ffffff';
+        ctx.fillRect(0, sy, W, sh);
         ctx.globalAlpha = 1;
+        continue;
+      }
 
-        ctx.putImageData(img, Math.round(shift), sy);
-      } catch (_) { /* cross-origin / zero-size guard */ }
+      try {
+        const img   = ctx.getImageData(0, sy, W, sh);
+        const shift = Math.round(sl.shiftX * fade);
+        ctx.clearRect(0, sy, W, sh);
+        // RGB chromatic fringe
+        ctx.globalAlpha = 0.22 * fade;
+        ctx.fillStyle   = '#ff003c';
+        ctx.fillRect(shift - 5, sy, W, sh);
+        ctx.fillStyle   = '#0096ff';
+        ctx.fillRect(shift + 5, sy, W, sh);
+        ctx.globalAlpha = 1;
+        ctx.putImageData(img, shift, sy);
+      } catch (_) { /* zero-size / cross-origin guard */ }
     }
 
     raf = requestAnimationFrame(draw);
@@ -385,7 +409,7 @@ function initHeroCanvas() {
 
   raf = requestAnimationFrame(draw);
 
-  // Stop when hero leaves viewport to save GPU
+  // Pause animation when hero is off-screen
   const heroEl = document.getElementById('hero');
   if (heroEl) {
     new IntersectionObserver(([entry]) => {

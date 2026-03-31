@@ -15,13 +15,13 @@
 </head>
 <body>
 
-  <!-- scanlines overlay -->
+  
   <div class="scanlines" aria-hidden="true"></div>
 
-  <!-- scroll progress -->
+  
   <div class="progress"><div class="progress__fill"></div></div>
 
-  <!-- ─── NAV ─── -->
+  
   <header id="topnav">
     <a class="logo" href="/">
       <img src="assets/buraq-horse.png" width="16" height="16" alt="" />
@@ -30,8 +30,7 @@
     <nav class="nav__links" aria-label="Primary navigation">
       <a href="/drones">Drones</a>
       <a href="/evidence-vault">Evidence Vault</a>
-      <a href="/reports">Reports</a>
-      <a href="/marqab">Edge</a>
+<a href="/marqab">Edge</a>
     </nav>
     <div class="nav__right">
       <a href="#contact" class="nav__cta">Contact Us</a>
@@ -41,13 +40,12 @@
     </div>
   </header>
 
-  <!-- ─── SIDE NAV ─── -->
+  
   <div class="sidenav" id="sidenav" aria-hidden="true">
     <div class="sidenav__top"><button class="sidenav__close" aria-label="Close menu">&times;</button></div><div class="sidenav__links">
       <a href="/drones">Drones</a>
       <a href="/evidence-vault">Evidence Vault</a>
-      <a href="/reports">Reports</a>
-      <a href="/marqab">Edge</a>
+<a href="/marqab">Edge</a>
       <a href="#contact" class="sidenav__cta">Contact Us</a>
 
     </div>
@@ -62,20 +60,18 @@
   </div>
   <div class="sidenav__backdrop" aria-hidden="true"></div>
 
-  <!-- ─────────────────────────────────────────────────
-       HERO — rig.ai layout with Buraq branding
-  ───────────────────────────────────────────────────── -->
+  
   <section class="hero" id="hero">
-    <!-- Canvas: binary data rain + mouse field + glitch -->
+    
     <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
 
-    <!-- Two-column layout -->
+    
     <div class="hero__inner">
 
-      <!-- LEFT: text content -->
+      
       <div class="hero__left">
 
-        <!-- Status badge — rig.ai's pill -->
+        
         <div class="hero__badge">
           <span class="hero__badge-dot"></span>
           <span>Buraq Active</span>
@@ -83,7 +79,7 @@
           <span>5+ Nations Monitored</span>
         </div>
 
-        <!-- Giant headline -->
+        
         <h1 class="hero__title">
           <span class="ht-solid">AI-Powered Platform for</span>
           <span class="ht-outline">Humanitarian Operations.</span>
@@ -120,7 +116,7 @@
         </div>
       </div>
 
-      <!-- RIGHT: targeting reticle + typing (Buraq's version of the rig.ai eye) -->
+      
       <div class="hero__right">
         <div class="hero__reticle-wrap" id="heroReticleWrap">
           <svg class="hero__reticle-svg" viewBox="0 0 480 480" fill="none"
@@ -133,24 +129,24 @@
               </radialGradient>
             </defs>
 
-            <!-- Outer ring -->
+            
             <circle cx="240" cy="240" r="218" stroke="rgba(41,151,255,0.12)" stroke-width="1"/>
-            <!-- Tick marks (major every 30°, minor every 10°) -->
+            
             <g stroke="rgba(41,151,255,0.3)" stroke-width="1">
-              <line x1="240" y1="22"  x2="240" y2="42"/>  <!-- 0° -->
-              <line x1="349" y1="53"  x2="334" y2="66"/>  <!-- 30° -->
-              <line x1="416" y1="162" x2="401" y2="170"/> <!-- 60° -->
-              <line x1="458" y1="240" x2="438" y2="240"/> <!-- 90° -->
-              <line x1="416" y1="318" x2="401" y2="310"/> <!-- 120° -->
-              <line x1="349" y1="427" x2="334" y2="414"/> <!-- 150° -->
-              <line x1="240" y1="458" x2="240" y2="438"/> <!-- 180° -->
-              <line x1="131" y1="427" x2="146" y2="414"/> <!-- 210° -->
-              <line x1="64"  y1="318" x2="79"  y2="310"/> <!-- 240° -->
-              <line x1="22"  y1="240" x2="42"  y2="240"/> <!-- 270° -->
-              <line x1="64"  y1="162" x2="79"  y2="170"/> <!-- 300° -->
-              <line x1="131" y1="53"  x2="146" y2="66"/>  <!-- 330° -->
+              <line x1="240" y1="22"  x2="240" y2="42"/>  
+              <line x1="349" y1="53"  x2="334" y2="66"/>  
+              <line x1="416" y1="162" x2="401" y2="170"/> 
+              <line x1="458" y1="240" x2="438" y2="240"/> 
+              <line x1="416" y1="318" x2="401" y2="310"/> 
+              <line x1="349" y1="427" x2="334" y2="414"/> 
+              <line x1="240" y1="458" x2="240" y2="438"/> 
+              <line x1="131" y1="427" x2="146" y2="414"/> 
+              <line x1="64"  y1="318" x2="79"  y2="310"/> 
+              <line x1="22"  y1="240" x2="42"  y2="240"/> 
+              <line x1="64"  y1="162" x2="79"  y2="170"/> 
+              <line x1="131" y1="53"  x2="146" y2="66"/>  
             </g>
-            <!-- Minor ticks -->
+            
             <g stroke="rgba(41,151,255,0.12)" stroke-width="1">
               <line x1="276" y1="23"  x2="272" y2="32"/>
               <line x1="311" y1="31"  x2="303" y2="40"/>
@@ -165,46 +161,46 @@
               <line x1="24"  y1="276" x2="35"  y2="273"/>
             </g>
 
-            <!-- Middle dashed ring -->
+            
             <circle cx="240" cy="240" r="160" stroke="rgba(41,151,255,0.07)"
                     stroke-width="1" stroke-dasharray="3 11"/>
-            <!-- Inner ring -->
+            
             <circle cx="240" cy="240" r="88" stroke="rgba(41,151,255,0.2)"
                     stroke-width="1"/>
-            <!-- Tiny inner ring -->
+            
             <circle cx="240" cy="240" r="28" stroke="rgba(41,151,255,0.3)"
                     stroke-width="1" stroke-dasharray="2 6"/>
 
-            <!-- Cardinal crosshairs -->
+            
             <line x1="240" y1="22"  x2="240" y2="152" stroke="rgba(41,151,255,0.35)" stroke-width="1"/>
             <line x1="240" y1="328" x2="240" y2="458" stroke="rgba(41,151,255,0.35)" stroke-width="1"/>
             <line x1="22"  y1="240" x2="152" y2="240" stroke="rgba(41,151,255,0.35)" stroke-width="1"/>
             <line x1="328" y1="240" x2="458" y2="240" stroke="rgba(41,151,255,0.35)" stroke-width="1"/>
 
-            <!-- Corner brackets -->
+            
             <path d="M52 52 L92 52 M52 52 L52 92"    stroke="rgba(41,151,255,0.55)" stroke-width="1.5"/>
             <path d="M428 52 L388 52 M428 52 L428 92" stroke="rgba(41,151,255,0.55)" stroke-width="1.5"/>
             <path d="M52 428 L92 428 M52 428 L52 388" stroke="rgba(41,151,255,0.55)" stroke-width="1.5"/>
             <path d="M428 428 L388 428 M428 428 L428 388" stroke="rgba(41,151,255,0.55)" stroke-width="1.5"/>
 
-            <!-- Degree labels -->
+            
             <text x="229" y="16"  fill="rgba(41,151,255,0.5)" font-family="monospace" font-size="8" letter-spacing="1">000°</text>
             <text x="462" y="243" fill="rgba(41,151,255,0.5)" font-family="monospace" font-size="8" letter-spacing="1">090°</text>
             <text x="225" y="474" fill="rgba(41,151,255,0.5)" font-family="monospace" font-size="8" letter-spacing="1">180°</text>
             <text x="-2"  y="243" fill="rgba(41,151,255,0.5)" font-family="monospace" font-size="8" letter-spacing="1">270°</text>
 
-            <!-- HUD telemetry corners -->
+            
             <text x="58"  y="108" fill="rgba(41,151,255,0.3)" font-family="monospace" font-size="7" letter-spacing="0.5">LAT 31.7767°N</text>
             <text x="58"  y="120" fill="rgba(41,151,255,0.3)" font-family="monospace" font-size="7" letter-spacing="0.5">LON 35.2345°E</text>
             <text x="316" y="368" fill="rgba(41,151,255,0.3)" font-family="monospace" font-size="7" letter-spacing="0.5">ALT 850m</text>
             <text x="316" y="380" fill="rgba(41,151,255,0.3)" font-family="monospace" font-size="7" letter-spacing="0.5">SPD 12kn</text>
 
-            <!-- Scanning sweep arc (CSS-animated rotation) -->
+            
             <g class="hero__scan-arc" id="heroScanArc">
               <path d="M240 240 L240 22 A218 218 0 0 1 349 53 Z" fill="url(#scanGrad)" opacity="0.6"/>
             </g>
 
-            <!-- Tracking dot — JS moves this group with mouse -->
+            
             <g id="heroTrackDot">
               <line x1="228" y1="240" x2="252" y2="240" stroke="rgba(41,151,255,0.6)" stroke-width="0.75"/>
               <line x1="240" y1="228" x2="240" y2="252" stroke="rgba(41,151,255,0.6)" stroke-width="0.75"/>
@@ -213,12 +209,12 @@
               <circle cx="240" cy="240" r="22" stroke="rgba(41,151,255,0.2)" stroke-width="1" fill="none"/>
             </g>
 
-            <!-- Status label -->
+            
             <text x="254" y="256" fill="rgba(41,151,255,0.4)" font-family="monospace" font-size="7" letter-spacing="2">ACQUIRING</text>
           </svg>
         </div>
 
-        <!-- Typing terminal — rig.ai's typing animation equivalent -->
+        
         <div class="hero__terminal">
           <span class="hero__terminal-prompt">// </span><span
             id="heroTyping"></span><span class="hero__terminal-cursor">_</span>
@@ -226,7 +222,7 @@
       </div>
     </div>
 
-    <!-- Ticker strip at bottom — rig.ai's badge ticker -->
+    
     <div class="hero__ticker" aria-hidden="true">
       <div class="hero__ticker-track">
         <span>Evidence Chain</span><span class="t-sep">·</span>
@@ -238,7 +234,7 @@
         <span>Zero Suppression</span><span class="t-sep">·</span>
         <span>Cryptographic Verification</span><span class="t-sep">·</span>
         <span>Autonomous Detection</span><span class="t-sep">·</span>
-        <!-- Duplicate for seamless infinite scroll -->
+        
         <span aria-hidden="true">Evidence Chain</span><span class="t-sep" aria-hidden="true">·</span>
         <span aria-hidden="true">Real-Time Intelligence</span><span class="t-sep" aria-hidden="true">·</span>
         <span aria-hidden="true">Tamper-Proof Records</span><span class="t-sep" aria-hidden="true">·</span>
@@ -252,7 +248,7 @@
     </div>
   </section>
 
-  <!-- ─── STATEMENT — WHY BURAQ ─── -->
+  
   <section class="statement" id="mission">
     <span class="label-mono reveal">Why Buraq?</span>
     <h2 class="reveal reveal-d1">Purpose-built<br/>for <em class="dim">protection.</em></h2>
@@ -277,7 +273,7 @@
     </div>
   </section>
 
-  <!-- ─── FULL BLEED HUD — UNIFIED OPERATIONS ─── -->
+  
   <div class="visual-section" id="unified-operations">
     <div class="visual-card">
       <video class="visual-video" autoplay loop muted playsinline
@@ -294,7 +290,7 @@
     </div>
   </div>
 
-  <!-- ─── DATA STRIP ─── -->
+  
   <div class="data-strip">
     <div class="data-cell">
       <span class="data-label">Global Coverage</span>
@@ -318,7 +314,7 @@
     </div>
   </div>
 
-  <!-- ─── SYSTEMS GRID — MONITORING + DETECTION ─── -->
+  
   <section class="systems" id="monitoring">
     <div class="systems-header">
       <span class="label-mono reveal">Capabilities</span>
@@ -368,7 +364,7 @@
         </div>
       </div>
     </div>
-    <!-- cluster.png — platform preview below sys grid -->
+    
     <div class="sys-platform-preview">
       <div class="sys-platform-label">
         <span class="label-mono">Infrastructure</span>
@@ -380,7 +376,7 @@
     </div>
   </section>
 
-  <!-- ─── DOCTRINE — EVIDENCE MANAGEMENT ─── -->
+  
   <section class="doctrine" id="evidence">
     <div class="doctrine-inner">
       <div class="doctrine-left">
@@ -415,7 +411,7 @@
     </div>
   </section>
 
-  <!-- ─── INTEL SECTION — DATA INTELLIGENCE ─── -->
+  
   <div class="intel-section" id="intelligence">
     <div class="intel-inner">
       <div class="intel-text">
@@ -436,7 +432,7 @@
             <div class="intel-metric-label">System<br/><span>Get timely alerts to anticipate risks before they escalate into crises.</span></div>
           </div>
         </div>
-        <a class="doctrine-link" href="#contact">Request Intelligence Briefing →</a>
+        <a class="doctrine-link" href="#contact">Request More Info →</a>
       </div>
       <div class="intel-visual">
         <img src="assets/intelligenceanalysis.png" alt="Intelligence analysis workstation" class="intel-screenshot" />
@@ -444,7 +440,7 @@
     </div>
   </div>
 
-  <!-- ─── MANIFESTO ─── -->
+  
   <section class="manifesto">
     <div class="manifesto-inner">
       <span class="label-mono reveal">Our Mission</span>
@@ -455,7 +451,7 @@
     </div>
   </section>
 
-  <!-- ─── AIRBASE DETECTION — FULL BLEED HUD ─── -->
+  
   <section class="visual-section airbase-section">
     <div class="visual-card">
       <img class="airbase-img" src="assets/airbaseblurred.png" alt="Detected military airbase — classified intelligence" />
@@ -467,7 +463,7 @@
     </div>
   </section>
 
-  <!-- ─── WATCHLIST — PRIORITY THREATS ─── -->
+  
   <section class="watchlist-section" id="extensions">
     <div class="watchlist-header">
       <span class="label-mono reveal">Active Monitoring</span>
@@ -520,7 +516,7 @@
     </div>
   </section>
 
-  <!-- ─── PRINCIPLES — RESPONSIBLE BY DESIGN ─── -->
+  
   <section class="principles-section" id="developers">
     <div class="principles-header">
       <span class="label-mono reveal">Responsible by Design</span>
@@ -565,7 +561,7 @@
     </div>
   </section>
 
-  <!-- ─── CONTACT / FINAL CTA ─── -->
+  
   <section class="final-cta" id="contact">
     <div class="final-cta-bg"></div>
     <div class="final-cta-inner">
@@ -620,7 +616,7 @@
     </div>
   </section>
 
-  <!-- ─── FOOTER ─── -->
+  
   <footer>
     <div class="footer-top">
       <div class="footer-brand">
@@ -646,8 +642,7 @@
         <ul>
           <li><a href="/drones">Drones</a></li>
           <li><a href="/evidence-vault">Evidence Vault</a></li>
-          <li><a href="/reports">Reports</a></li>
-          <li><a href="/marqab">Buraq Edge</a></li>
+<li><a href="/marqab">Buraq Edge</a></li>
         </ul>
       </div>
       <div class="footer-col">

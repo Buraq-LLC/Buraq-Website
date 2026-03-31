@@ -193,7 +193,7 @@ tr:hover td{background:rgba(255,255,255,.012)}
 </head>
 <body>
 
-<!-- ── auth guard ── -->
+
 <script>
 (function(){
   var s=null;try{s=JSON.parse(sessionStorage.getItem('vault_session'))}catch(_){}
@@ -207,7 +207,7 @@ tr:hover td{background:rgba(255,255,255,.012)}
 
 <div class="layout">
 
-<!-- ══ SIDEBAR ══ -->
+
 <aside class="sidebar">
   <div class="sb-brand">
     <div class="sb-wordmark"><img src="/assets/buraq-horse.png" alt=""/> Buraq AI</div>
@@ -251,7 +251,7 @@ tr:hover td{background:rgba(255,255,255,.012)}
   </div>
 </aside>
 
-<!-- ══ MAIN ══ -->
+
 <main class="main">
   <div class="topbar">
     <div class="tb-left">
@@ -265,7 +265,7 @@ tr:hover td{background:rgba(255,255,255,.012)}
 
   <div class="content">
 
-    <!-- ══ DASHBOARD ══ -->
+    
     <section id="sec-dashboard" class="section">
       <div class="stats">
         <div class="stat accent">
@@ -306,7 +306,7 @@ tr:hover td{background:rgba(255,255,255,.012)}
       </div>
     </section>
 
-    <!-- ══ EVIDENCE ══ -->
+    
     <section id="sec-evidence" class="section">
       <div class="sec-head">
         <div><div class="sec-title">My Evidence Records</div><div class="sec-sub" id="evSub">Loading from BuraqAI…</div></div>
@@ -322,7 +322,7 @@ tr:hover td{background:rgba(255,255,255,.012)}
       </div>
     </section>
 
-    <!-- ══ SUBMIT ══ -->
+    
     <section id="sec-submit" class="section">
       <div class="sec-head">
         <div><div class="sec-title">Submit Evidence</div><div class="sec-sub">Files are hashed and encrypted immediately upon upload</div></div>
@@ -361,7 +361,7 @@ tr:hover td{background:rgba(255,255,255,.012)}
       </div>
     </section>
 
-    <!-- ══ EXPORT ══ -->
+    
     <section id="sec-export" class="section">
       <div class="sec-head">
         <div><div class="sec-title">Export Records</div><div class="sec-sub">All exports include chain of custody documentation</div></div>
@@ -396,7 +396,7 @@ tr:hover td{background:rgba(255,255,255,.012)}
       </div>
     </section>
 
-    <!-- ══ AUDIT ══ -->
+    
     <section id="sec-audit" class="section">
       <div class="sec-head">
         <div><div class="sec-title">Audit Log</div><div class="sec-sub">Immutable record of all actions — tamper-proof and append-only</div></div>
@@ -404,14 +404,14 @@ tr:hover td{background:rgba(255,255,255,.012)}
       <div class="audit-wrap" id="auditWrap"></div>
     </section>
 
-    <!-- ══ EVIDENCE CHAIN ══ -->
+    
     <section id="sec-chain" class="section active"></section>
 
-  </div><!-- /content -->
+  </div>
 </main>
-</div><!-- /layout -->
+</div>
 
-<!-- ── CUSTODY MODAL ── -->
+
 <div class="modal-bg" id="custodyModal" style="display:none" onclick="if(event.target===this)this.style.display='none'">
   <div class="modal">
     <div class="modal-title">Chain of Custody</div>
@@ -578,7 +578,7 @@ setInterval(()=>{document.getElementById('clock').textContent=new Date().toISOSt
 })();
 </script>
 
-<!-- Firestore session polling -->
+
 <script src="/__env.js"></script>
 <script src="/evidence-vault/access/vault-chain.js"></script>
 <script type="module">
