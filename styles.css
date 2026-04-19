@@ -433,11 +433,13 @@ button { cursor: pointer; font-family: inherit; }
 @media (max-width: 900px) {
   .hero__inner {
     grid-template-columns: 1fr; padding: 100px 28px 40px;
-    gap: 40px;
+    gap: 0;
   }
   .hero__right { order: -1; }
   .hero__reticle-wrap { width: min(300px, 70vw); height: min(300px, 70vw); }
   .hero__title { font-size: clamp(2.4rem, 8vw, 4rem); }
+  /* Glitch horse negative margin works as spacing in single-col */
+  .hero__glitch-wrap { margin-bottom: -100px; }
 }
 @media (max-width: 560px) {
   .hero__inner { padding: 90px 20px 36px; }
@@ -445,6 +447,7 @@ button { cursor: pointer; font-family: inherit; }
   .hero__stat { padding-right: 18px; margin-right: 18px; }
   .hero__stat-num { font-size: 1.2rem; }
   .hero__reticle-wrap { width: 240px; height: 240px; }
+  .hero__glitch-wrap { width: min(320px, 82vw); margin-bottom: -70px; }
 }
 
 /* scroll-reveal stubs (JS adds .active) */
@@ -2417,4 +2420,220 @@ footer {
   .report-card:first-child .report-card__footer { grid-row: 4; }
   .reports-process { padding: 80px 24px; }
   .reports-cta { padding: 80px 24px; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   COMPREHENSIVE MOBILE IMPROVEMENTS
+   Targets: ≤600px (phone), ≤480px (small phone), ≤380px (tiny)
+══════════════════════════════════════════════════════════════ */
+
+/* ── Global mobile base ── */
+@media (max-width: 600px) {
+  /* Prevent any element from blowing out the horizontal scroll */
+  .hero__ticker-track { animation-duration: 22s; }
+
+  /* ── Nav ── */
+  .nav { padding: 0 16px; }
+
+  /* ── HOME HERO ── */
+  .hero__inner { padding: 80px 16px 32px; gap: 24px; }
+  .hero__badge { font-size: 0.58rem; padding: 6px 10px; gap: 7px; margin-bottom: 24px; }
+  .hero__title { font-size: clamp(2.2rem, 9.5vw, 3.4rem); margin-bottom: 20px; }
+  .hero__sub { font-size: 0.82rem; margin-bottom: 28px; max-width: 100%; }
+  .hero__actions { flex-direction: column; gap: 10px; margin-bottom: 32px; }
+  .hero__actions .btn-hero { width: 100%; justify-content: center; padding: 14px 20px; }
+  .hero__stats { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 20px; gap: 0; }
+  .hero__stat { padding-right: 14px; margin-right: 14px; }
+  .hero__stat-num { font-size: 1.1rem; }
+  .hero__stat-label { font-size: 0.5rem; }
+
+  /* Glitch horse — shrink and fix negative margin on single-col layout */
+  .hero__glitch-wrap {
+    width: min(300px, 82vw);
+    margin-bottom: -60px;
+  }
+
+  /* ── STATUS BAR ── */
+  .status-bar { gap: 16px; padding: 16px 16px; flex-wrap: wrap; justify-content: flex-start; }
+  .status-item { font-size: 0.65rem; gap: 7px; }
+
+  /* ── STATEMENT ── */
+  .statement { padding: 80px 16px; }
+
+  /* ── VISUAL SECTION ── */
+  .visual-section { padding: 0 12px; }
+  .visual-card { min-height: 380px; }
+  .hud-corner.tl { top: 16px; left: 16px; font-size: 0.6rem; }
+  .visual-caption { padding: 0 16px 36px; }
+  .visual-caption h2 { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+
+  /* ── DATA STRIP ── */
+  .data-strip { grid-template-columns: 1fr 1fr; padding: 32px 16px; gap: 0; }
+  .data-cell { padding: 16px 0; border-right: none; border-bottom: 1px solid var(--border); }
+  .data-cell:nth-child(odd) { padding-right: 16px; }
+  .data-cell:nth-child(even) { padding-left: 16px; border-left: 1px solid var(--border); }
+  .data-cell:nth-last-child(-n+2) { border-bottom: none; }
+  .data-num { font-size: 2rem; }
+
+  /* ── SYSTEMS ── */
+  .systems { padding: 64px 16px; }
+  .sys-card { padding: 32px 24px; }
+  .sys-card h3 { font-size: 1.3rem; }
+
+  /* ── MAP INTEL ── */
+  .map-intel { padding: 64px 16px; }
+  .map-cards { right: 0; gap: 6px; }
+  .map-card { width: 110px; }
+
+  /* ── DOCTRINE ── */
+  .doctrine { padding: 64px 16px; }
+  .doctrine-item p { padding-left: 0; }
+
+  /* ── INTEL ── */
+  .intel-text { padding: 48px 16px 32px; }
+  .intel-visual { padding: 0 16px 32px; }
+  .intel-metric-val { font-size: 0.8rem; min-width: 90px; }
+
+  /* ── MANIFESTO ── */
+  .manifesto { padding: 64px 16px; }
+
+  /* ── WATCHLIST ── */
+  .watchlist-section { padding: 64px 16px; }
+
+  /* ── PRINCIPLES ── */
+  .principles-section { padding: 64px 16px; }
+
+  /* ── FINAL CTA ── */
+  .final-cta { padding: 64px 16px; }
+  .form__field input, .form__field textarea, .form__field select,
+  .field input, .field textarea,
+  .vault-hero__sub-input { font-size: 16px; /* prevent iOS zoom on focus */ }
+
+  /* ── FOOTER ── */
+  footer { padding: 40px 16px 24px; }
+  .footer-bottom { flex-direction: column; gap: 8px; }
+
+  /* ── DRONES HERO ── */
+  .drones-hero { padding: 72px 16px 48px; }
+  .drones-hero__title { font-size: clamp(3rem, 11vw, 5rem); }
+  .drones-hero__sub { font-size: 0.875rem; margin-bottom: 40px; }
+  .drones-hero__stats { max-width: 100%; width: 100%; }
+  .drones-hero__stat { padding: 14px 20px; }
+  .drones-hero__stat-val { font-size: 1rem; }
+
+  /* ── DRONE CAPABILITIES ── */
+  .drones-capabilities { padding: 64px 16px; }
+  .drones-capabilities .sys-card {
+    grid-template-columns: 40px 1fr;
+    gap: 0 14px;
+    padding: 24px 16px;
+  }
+  .drones-capabilities .sys-tag-row { gap: 4px; }
+  .sys-tag { font-size: 0.55rem; padding: 3px 7px; }
+
+  /* ── DRONE PLATFORM CARDS ── */
+  .drone-platform__content { padding: 24px 16px; }
+  .drone-platform__specs { gap: 2px; }
+  .drone-platform__spec { padding: 10px 12px; }
+  .drone-platform__spec-val { font-size: 0.9rem; }
+  .drone-model__svg { height: 240px; }
+  .drones-specs { padding: 64px 16px; }
+
+  /* ── EVIDENCE VAULT HERO ── */
+  .vault-hero { padding: 72px 16px 48px; }
+  .vault-hero__badge { font-size: 0.58rem; padding: 5px 12px; }
+  .vault-hero__title { letter-spacing: 0.02em; }
+  .vault-hero__sub { font-size: 0.85rem; }
+  .vault-hero__subscribe { flex-direction: column; gap: 8px; max-width: 100%; }
+  .vault-hero__sub-input { min-width: 0; width: 100%; }
+  .vault-hero__sub-btn { width: 100%; padding: 13px 20px; }
+  .vault-hero__actions { gap: 8px; }
+  .vault-hero__btn { width: 100%; justify-content: center; padding: 13px 20px; }
+
+  /* ── VAULT CHAIN ── */
+  .vault-chain { padding: 64px 16px; }
+  .vault-step { gap: 0 18px; padding-bottom: 40px; }
+  .vault-step__title { padding-top: 14px; font-size: 0.95rem; }
+
+  /* ── VAULT FEATURES ── */
+  .vault-features { padding: 64px 16px; }
+  .vault-features__left h2 { font-size: clamp(1.8rem, 7vw, 2.8rem); }
+
+  /* ── VAULT METRICS ── */
+  .vault-metrics { padding: 32px 16px; }
+  .vault-metric__val { font-size: 1.35rem; }
+
+  /* ── VAULT COMPLIANCE ── */
+  .vault-compliance { padding: 64px 16px; }
+  .vault-card { gap: 0 18px; padding: 20px 0; }
+
+  /* ── VAULT ACCESS FORM ── */
+  .vault-access { padding: 64px 16px; }
+  .form-field input, .form-field textarea { font-size: 16px; }
+  .vault-access__btn { width: 100%; justify-content: center; }
+
+  /* ── REPORTS HERO ── */
+  .reports-hero { padding: 80px 16px 48px; }
+  .reports-hero__title { font-size: clamp(2.8rem, 10vw, 5rem); }
+
+  /* ── REPORTS INDEX ── */
+  .reports-index { padding: 64px 16px; }
+  .report-card { padding: 28px 20px; }
+  .report-card:first-child { padding: 28px 20px; }
+
+  /* ── REPORTS CTA ── */
+  .reports-cta { padding: 64px 16px; }
+  .reports-cta__actions { flex-direction: column; gap: 10px; align-items: stretch; }
+  .reports-cta__actions .btn-hero,
+  .reports-cta__actions a { text-align: center; justify-content: center; }
+
+  /* ── MARQAB HERO ── */
+  .marqab-hero { padding: 5rem 16px 3rem; }
+  .marqab-hero__products { height: 320px; }
+  .marqab-deployment__specs { border-radius: 10px; }
+  .marqab-deployment__spec { padding: 24px 16px; }
+  .site-footer__container { padding: 0 16px; }
+  .buraq-container { padding: 0 16px; }
+}
+
+/* ── Small phones (≤420px) ── */
+@media (max-width: 420px) {
+  .hero__glitch-wrap { width: 85vw; margin-bottom: -40px; }
+  .hero__title { font-size: clamp(2rem, 10vw, 3rem); }
+  .hero__stat { padding-right: 10px; margin-right: 10px; }
+
+  /* Vault title scaling — ensure it never clips */
+  .vault-hero__title {
+    font-size: clamp(1.6rem, 8.5vw, 3.5rem);
+    white-space: normal;
+    letter-spacing: 0.02em;
+  }
+
+  .drones-hero__title { font-size: clamp(2.5rem, 12vw, 4rem); }
+
+  .marqab-hero__products { height: 260px; }
+  .marqab-hero__product { width: clamp(150px, 38vw, 240px); }
+
+  /* Report card featured layout */
+  .report-card:first-child { padding: 24px 16px; }
+
+  /* Drone model view shorter on tiny phones */
+  .drone-model__svg { height: 200px; }
+
+  /* Data strip: single column on tiny */
+  .data-strip { grid-template-columns: 1fr; }
+  .data-cell { border-right: none !important; border-left: none !important; border-bottom: 1px solid var(--border) !important; padding: 16px 0 !important; }
+  .data-cell:last-child { border-bottom: none !important; }
+}
+
+/* ── Landscape phones ── */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 500px) {
+  .hero { min-height: auto; }
+  .hero__inner { padding-top: 72px; padding-bottom: 24px; }
+  .hero__glitch-wrap { width: min(240px, 40vw); margin-bottom: -40px; }
+  .drones-hero { min-height: auto; padding-top: 80px; }
+  .vault-hero { min-height: auto; padding-top: 80px; }
+  .marqab-hero { min-height: auto; padding-top: 80px; }
+  .reports-hero { min-height: auto; }
+  .marqab-hero__products { height: 260px; }
 }
