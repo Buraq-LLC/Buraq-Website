@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "buraq-ai-2670c"
+    "default": "buraq-ai-2670c",
+    "vault": "vault-access-a2961"
   }
 }

@@ -1,815 +1,555 @@
-  // Enhanced main.js with Apple-style animations
+/**
+ * Buraq AI — main.js
+ * Clean, dependency-free. Works alongside firebase-init.js.
+ */
 
-  // Import security manager
-  import { securityManager } from './security-manager.js';
+'use strict';
 
-  // Configuration constants
-  const CONFIG = {
-    ANIMATION_DELAY: 100,
-    FADE_OUT_DELAY: 4500,
-    HERO_REVEAL_DELAY: 1500,
-    SCROLL_OFFSET: 80,
-    REVEAL_THRESHOLD: 100,
-    DEBUG_MODE: true, // Enabled for debugging exploded view
-    // Animation settings for Apple-like feel
-    ANIMATION_DURATION: 0.8,
-    ANIMATION_EASING: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)', // Apple's easing
-    STAGGER_DELAY: 100
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+/* ─── SCROLL PROGRESS ───────────────────────────────────────────── */
+function initProgress() {
+  const fill = $('.progress__fill');
+  if (!fill) return;
+  const update = () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    fill.style.width = total > 0 ? Math.min((scrolled / total) * 100, 100) + '%' : '0%';
+  };
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+}
+
+/* ─── NAV ───────────────────────────────────────────────────────── */
+function initNav() {
+  const nav      = $('#topnav');
+  const burger   = $('.nav__burger');
+  const sidenav  = $('#sidenav');
+  const backdrop = $('.sidenav__backdrop');
+  if (!nav || !burger || !sidenav) return;
+
+  const open = () => {
+    sidenav.setAttribute('aria-hidden', 'false');
+    burger.setAttribute('aria-expanded', 'true');
+    backdrop?.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  };
+  const close = () => {
+    sidenav.setAttribute('aria-hidden', 'true');
+    burger.setAttribute('aria-expanded', 'false');
+    backdrop?.classList.remove('is-open');
+    document.body.style.overflow = '';
   };
 
-  // Utility functions
-  const $ = (selector) => document.querySelector(selector);
-  const $$ = (selector) => document.querySelectorAll(selector);
-  const log = (...args) => CONFIG.DEBUG_MODE && console.log(...args);
-  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+  burger.addEventListener('click', () => {
+    sidenav.getAttribute('aria-hidden') === 'false' ? close() : open();
+  });
+  document.querySelector('.sidenav__close')?.addEventListener('click', close);
+  backdrop?.addEventListener('click', close);
+  sidenav.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+}
 
-  // Enhanced hero animation controller with Apple-style animations
-  class HeroAnimationController {
-    constructor() {
-      this.elements = {
-        hero: $('.hero'),
-        heroContent: $('.hero__content'),
-        introAnimation: $('.hero__intro-animation'),
-        bgVideo: $('.hero__bg-video'),
-        siteNav: $('.site-nav'),
-        heroTitle: $('.hero__title'),
-        heroSubtitle: $('.hero__subtitle'),
-        heroStats: $('.hero__stats'),
-        heroActions: $('.hero__actions'),
-        heroVersion: $('.hero__version')
-      };
-      this.initialized = false;
-    }
+/* ─── HERO — reticle tracking + typing animation ────────────────── */
+function initHero() {
+  const hero = $('.hero');
+  if (!hero) return;
 
-    init() {
-      if (this.initialized) return;
-      
-      // If no intro animation exists (like on pi-model page), skip directly
-      if (!this.elements.introAnimation) {
-        if (this.elements.hero && this.elements.heroContent) {
-          this.elements.hero.classList.add('skip-animation');
-          this.showNavigation();
-          this.showHeroContent();
-          log('No intro animation - showing hero immediately');
-        }
-        this.initialized = true;
-        return;
-      }
-      
-      if (!this.validateElements()) return;
-      
-      // Check if animation has already played this session
-      const hasPlayedAnimation = sessionStorage.getItem('buraq-animation-played');
-      
-      if (hasPlayedAnimation === 'true') {
-        // Skip animation, show content immediately
-        this.skipAnimation();
-      } else {
-        // Play animation for first time this session
-        this.playAnimation();
-        sessionStorage.setItem('buraq-animation-played', 'true');
-      }
-      
-      this.initialized = true;
-      log('HeroAnimationController initialized');
-    }
+  // ── Targeting reticle: dot follows mouse ──
+  const trackDot  = document.getElementById('heroTrackDot');
+  const reticleSVG = document.getElementById('heroReticleSVG');
+  const MAX_OFFSET = 55; // max pixels the dot drifts from center
 
-    skipAnimation() {
-      // Add class to show background and content immediately
-      if (this.elements.hero) {
-        this.elements.hero.classList.add('skip-animation');
-      }
-      
-      // Hide the intro animation immediately
-      if (this.elements.introAnimation) {
-        this.elements.introAnimation.style.display = 'none';
-      }
-      
-      // Show navigation and content immediately
-      this.showNavigation();
-      this.showHeroContent();
-      
-      log('Animation skipped - already played this session');
-    }
+  if (trackDot && reticleSVG) {
+    let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+    let rafId;
 
-    playAnimation() {
-      // Add class to trigger delayed animations
-      if (this.elements.hero) {
-        this.elements.hero.classList.add('with-animation');
-      }
-      
-      this.showNavigation();
-      this.configureVideo();
-      this.scheduleAnimationSequence();
-      log('Playing animation - first visit this session');
-    }
+    window.addEventListener('mousemove', e => {
+      const rect = reticleSVG.getBoundingClientRect();
+      const cx = rect.left + rect.width  / 2;
+      const cy = rect.top  + rect.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      const norm = Math.min(dist / (window.innerWidth * 0.4), 1);
+      targetX = (dx / dist) * norm * MAX_OFFSET;
+      targetY = (dy / dist) * norm * MAX_OFFSET;
+    }, { passive: true });
 
-    validateElements() {
-      const { heroContent, introAnimation, siteNav } = this.elements;
-      return heroContent && introAnimation && siteNav;
+    // Smooth lerp so the dot glides gracefully
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function animateDot() {
+      currentX = lerp(currentX, targetX, 0.06);
+      currentY = lerp(currentY, targetY, 0.06);
+      trackDot.setAttribute('transform', `translate(${currentX.toFixed(2)}, ${currentY.toFixed(2)})`);
+      rafId = requestAnimationFrame(animateDot);
     }
+    animateDot();
 
-    showNavigation() {
-      this.elements.siteNav?.classList.add('visible');
-    }
-
-    configureVideo() {
-      const video = this.elements.introAnimation;
-      if (!video) return;
-      
-      video.loop = false;
-      video.removeAttribute('loop');
-      log('Animation configured');
-    }
-
-    scheduleAnimationSequence() {
-      setTimeout(() => {
-        this.fadeOutAnimation();
-        setTimeout(() => this.showHeroContent(), CONFIG.HERO_REVEAL_DELAY);
-      }, CONFIG.FADE_OUT_DELAY);
-    }
-
-    fadeOutAnimation() {
-      this.elements.introAnimation?.classList.add('fade-out');
-      log('Animation fading out');
-    }
-
-    showHeroContent() {
-      this.elements.heroContent?.classList.add('visible');
-      
-      // Fade in background video
-      this.elements.bgVideo?.classList.add('visible');
-      
-      // Stagger the animation of hero elements
-      if (this.elements.heroTitle) {
-        this.elements.heroTitle.classList.add('animate-on-load', 'fade-in-up');
-        this.elements.heroTitle.style.animationDelay = '0s';
-        this.elements.heroTitle.style.animationDuration = `${CONFIG.ANIMATION_DURATION}s`;
-        this.elements.heroTitle.style.animationTimingFunction = CONFIG.ANIMATION_EASING;
-      }
-      
-      if (this.elements.heroSubtitle) {
-        this.elements.heroSubtitle.classList.add('animate-on-load', 'fade-in-up');
-        this.elements.heroSubtitle.style.animationDelay = '0.2s';
-        this.elements.heroSubtitle.style.animationDuration = `${CONFIG.ANIMATION_DURATION}s`;
-        this.elements.heroSubtitle.style.animationTimingFunction = CONFIG.ANIMATION_EASING;
-      }
-      
-      if (this.elements.heroStats) {
-        this.elements.heroStats.classList.add('animate-on-load', 'fade-in-up');
-        this.elements.heroStats.style.animationDelay = '0.4s';
-        this.elements.heroStats.style.animationDuration = `${CONFIG.ANIMATION_DURATION}s`;
-        this.elements.heroStats.style.animationTimingFunction = CONFIG.ANIMATION_EASING;
-      }
-      
-      if (this.elements.heroActions) {
-        this.elements.heroActions.classList.add('animate-on-load', 'fade-in-up');
-        this.elements.heroActions.style.animationDelay = '0.6s';
-        this.elements.heroActions.style.animationDuration = `${CONFIG.ANIMATION_DURATION}s`;
-        this.elements.heroActions.style.animationTimingFunction = CONFIG.ANIMATION_EASING;
-      }
-      
-      if (this.elements.heroVersion) {
-        this.elements.heroVersion.classList.add('animate-on-load', 'fade-in-up');
-        this.elements.heroVersion.style.animationDelay = '0.8s';
-        this.elements.heroVersion.style.animationDuration = `${CONFIG.ANIMATION_DURATION}s`;
-        this.elements.heroVersion.style.animationTimingFunction = CONFIG.ANIMATION_EASING;
-      }
-      
-      log('Hero content visible with staggered animations');
-    }
+    // Stop when hero out of view
+    new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) { cancelAnimationFrame(rafId); rafId = null; }
+      else if (!rafId) animateDot();
+    }).observe(hero);
   }
 
-  // Enhanced scroll progress controller
-  class ScrollProgressController {
-    constructor() {
-      this.progressBar = $('.scroll-progress');
-      this.progressSpan = $('.scroll-progress span');
-      this.rafId = null;
-      this.ticking = false;
-    }
+  // ── Typing animation ──
+  const typingEl = document.getElementById('heroTyping');
+  if (!typingEl) return;
 
-    init() {
-      if (!this.progressBar || !this.progressSpan) {
-        log('Scroll progress elements not found');
-        return;
-      }
+  const PHRASES = [
+    'analyzing satellite imagery...',
+    'building evidence chain...',
+    'detecting military assets...',
+    'verifying humanitarian corridor...',
+    'logging conflict incident...',
+    'cross-referencing OSINT sources...',
+    'flagging civilian threat zone...',
+    'generating accountability report...',
+  ];
+  let pi = 0, ci = 0, deleting = false, pauseFrames = 0;
 
-      this.initializeStyles();
-      this.attachScrollListener();
-      this.update();
-    }
-
-    initializeStyles() {
-      this.progressSpan.style.width = '0%';
-      this.progressBar.style.display = 'block';
-      this.progressBar.style.visibility = 'visible';
-    }
-
-    attachScrollListener() {
-      window.addEventListener('scroll', () => {
-        if (!this.ticking) {
-          this.rafId = requestAnimationFrame(() => this.update());
-          this.ticking = true;
-        }
-      }, { passive: true });
-    }
-
-    update() {
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      const scrollTop = window.scrollY;
-      const scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
-      
-      this.progressSpan.style.width = `${clamp(scrollPercentage, 0, 100)}%`;
-      this.ticking = false;
+  function typeStep() {
+    if (pauseFrames > 0) { pauseFrames--; setTimeout(typeStep, 40); return; }
+    const phrase = PHRASES[pi];
+    if (!deleting) {
+      typingEl.textContent = phrase.slice(0, ++ci);
+      if (ci === phrase.length) { deleting = true; pauseFrames = 60; }
+      setTimeout(typeStep, 55 + Math.random() * 30);
+    } else {
+      typingEl.textContent = phrase.slice(0, --ci);
+      if (ci === 0) { deleting = false; pi = (pi + 1) % PHRASES.length; pauseFrames = 18; }
+      setTimeout(typeStep, 28);
     }
   }
+  setTimeout(typeStep, 800);
+}
 
-  // Enhanced scroll reveal controller with Apple-style animations
-  class ScrollRevealController {
-    constructor() {
-      this.elements = Array.from($$('[data-reveal], .animate-on-scroll'));
-      this.ticking = false;
-      this.observer = null;
-    }
-
-    init() {
-      if (!this.elements.length) return;
-
-      // Add Apple-style animation classes to elements
-      this.enhanceElements();
-      
-      // Use Intersection Observer for better performance
-      if ('IntersectionObserver' in window) {
-        this.initIntersectionObserver();
-      } else {
-        this.initScrollListener();
-      }
-    }
-
-    enhanceElements() {
-      this.elements.forEach((element, index) => {
-        // Add base animation class if not present
-        if (!element.classList.contains('fade-in-up') && 
-            !element.classList.contains('fade-in-left') && 
-            !element.classList.contains('fade-in-right')) {
-          element.classList.add('fade-in-up');
-        }
-        
-        // Set animation properties
-        element.style.animationDuration = `${CONFIG.ANIMATION_DURATION}s`;
-        element.style.animationTimingFunction = CONFIG.ANIMATION_EASING;
-        element.style.animationFillMode = 'both';
-        
-        // Add staggered delay for elements in the same section
-        const parent = element.closest('section');
-        if (parent) {
-          const siblings = Array.from(parent.querySelectorAll('.animate-on-scroll'));
-          const siblingIndex = siblings.indexOf(element);
-          if (siblingIndex > 0) {
-            element.style.animationDelay = `${siblingIndex * CONFIG.STAGGER_DELAY}ms`;
-          }
-        }
-      });
-    }
-
-    initIntersectionObserver() {
-      const options = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-      };
-
-      this.observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-            this.observer.unobserve(entry.target);
-          }
-        });
-      }, options);
-
-      this.elements.forEach(el => this.observer.observe(el));
-    }
-
-    initScrollListener() {
-      const revealOnScroll = () => {
-        if (!this.ticking) {
-          requestAnimationFrame(() => {
-            this.checkVisibility();
-            this.ticking = false;
-          });
-          this.ticking = true;
-        }
-      };
-
-      window.addEventListener('scroll', revealOnScroll, { passive: true });
-      this.checkVisibility();
-    }
-
-    checkVisibility() {
-      const windowHeight = window.innerHeight;
-      this.elements.forEach(element => {
-        if (element.classList.contains('active')) return;
-        
-        const elementTop = element.getBoundingClientRect().top;
-        if (elementTop < windowHeight - CONFIG.REVEAL_THRESHOLD) {
-          element.classList.add('active');
-        }
-      });
-    }
+/* ─── SCROLL REVEAL ─────────────────────────────────────────────── */
+function initReveal() {
+  const elements = $$('.reveal');
+  if (!elements.length || !('IntersectionObserver' in window)) {
+    // Fallback: show everything
+    elements.forEach(el => el.classList.add('is-visible'));
+    return;
   }
 
-  // Command palette controller
-  class CommandPaletteController {
-    constructor() {
-      this.items = $$('.command-palette__item');
-      this.preview = $('.spotlight__preview img');
-    }
-
-    init() {
-      if (!this.items.length) return;
-
-      this.items.forEach(item => {
-        item.addEventListener('click', () => this.selectItem(item));
-      });
-    }
-
-    selectItem(selectedItem) {
-      this.items.forEach(item => item.classList.remove('is-active'));
-      selectedItem.classList.add('is-active');
-      
-      const commandText = selectedItem.querySelector('strong')?.textContent;
-      log('Selected command:', commandText);
-    }
-  }
-
-  // Mobile menu controller
-  class MobileMenuController {
-    constructor() {
-      this.toggle = $('.site-nav__toggle');
-      this.menu = $('.mobile-menu');
-    }
-
-    init() {
-      if (!this.toggle || !this.menu) return;
-
-      this.toggle.addEventListener('click', () => this.toggleMenu());
-    }
-
-    toggleMenu() {
-      const isExpanded = this.toggle.getAttribute('aria-expanded') === 'true';
-      this.toggle.setAttribute('aria-expanded', !isExpanded);
-      this.menu.setAttribute('aria-hidden', isExpanded);
-    }
-
-    close() {
-      if (!this.toggle || !this.menu) return;
-      this.toggle.setAttribute('aria-expanded', 'false');
-      this.menu.setAttribute('aria-hidden', 'true');
-    }
-  }
-
-  // Form controller with validation and security
-  class FormController {
-    constructor() {
-      this.form = $('#inqForm');
-      this.message = $('#formMsg');
-      this.isSubmitting = false;
-      this.securityInitialized = false;
-    }
-
-    async init() {
-      if (!this.form || !this.message) return;
-
-      // Initialize security manager
-      await securityManager.init();
-      this.securityInitialized = true;
-
-      this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-      log('FormController initialized with security');
-    }
-
-    async handleSubmit(e) {
-      e.preventDefault();
-      
-      if (this.isSubmitting) return;
-      this.isSubmitting = true;
-
-      const data = this.getFormData();
-      
-      // Basic validation
-      if (!this.validateData(data)) {
-        this.showMessage('Please fill in all required fields.', 'error');
-        this.isSubmitting = false;
-        return;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
       }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -80px 0px',
+  });
 
-      // Security validation
-      if (this.securityInitialized) {
-        const securityCheck = await securityManager.validateSubmission(data);
-        if (!securityCheck.valid) {
-          this.showMessage(securityCheck.errors[0], 'error');
-          this.isSubmitting = false;
-          return;
-        }
+  elements.forEach(el => observer.observe(el));
+
+  // Also handle legacy hero `.animate-on-scroll` elements
+  const legacyEls = $$('.animate-on-scroll');
+  const legacyObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        legacyObserver.unobserve(entry.target);
       }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  legacyEls.forEach(el => legacyObserver.observe(el));
+}
 
-      this.showMessage('Submitting...', 'loading');
-
-      try {
-        // Add fingerprint for abuse tracking
-        const fingerprint = await securityManager.generateFingerprint();
-        data._fingerprint = fingerprint;
-        data._timestamp = Date.now();
-        
-        await this.submitData(data);
-        this.showMessage('Thank you for your inquiry. We will be in touch shortly.', 'success');
-        this.form.reset();
-        this.resetCaptcha();
-        
-        // Regenerate CSRF token after successful submission
-        securityManager.generateCSRFToken();
-      } catch (error) {
-        log('Form submission error:', error);
-        this.showMessage(error.message || 'There was an error submitting your inquiry. Please try again.', 'error');
-      } finally {
-        this.isSubmitting = false;
-      }
-    }
-
-    getFormData() {
-      const formData = new FormData(this.form);
-      return {
-        firstName: this.sanitize(formData.get('firstName')),
-        lastName: this.sanitize(formData.get('lastName')),
-        email: this.sanitize(formData.get('email')),
-        org: this.sanitize(formData.get('org')),
-        title: this.sanitize(formData.get('title') || ''),
-        country: this.sanitize(formData.get('country')),
-        notes: this.sanitize(formData.get('notes')),
-        recaptchaToken: this.getRecaptchaResponse()
-      };
-    }
-
-    sanitize(value) {
-      if (typeof value !== 'string') return value;
-      return value.trim().replace(/[<>]/g, '');
-    }
-
-    validateData(data) {
-      const required = ['firstName', 'lastName', 'email', 'org', 'country'];
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      
-      const hasRequired = required.every(field => data[field]);
-      const validEmail = emailPattern.test(data.email);
-      
-      // Validate reCAPTCHA
-      const recaptchaResponse = this.getRecaptchaResponse();
-      if (!recaptchaResponse) {
-        this.showMessage('Please complete the reCAPTCHA verification.', 'error');
-        return false;
-      }
-      
-      return hasRequired && validEmail;
-    }
-
-    getRecaptchaResponse() {
-      if (typeof grecaptcha === 'undefined') {
-        log('reCAPTCHA not loaded');
-        // Allow submission if reCAPTCHA is not loaded (development mode)
-        return 'dev-mode';
-      }
-      
-      try {
-        return grecaptcha.getResponse();
-      } catch (error) {
-        log('reCAPTCHA error:', error);
-        return 'dev-mode';
-      }
-    }
-
-    async submitData(data) {
-      if (typeof window.saveInquiry !== 'function') {
-        throw new Error('Firebase not initialized');
-      }
-
-      const result = await window.saveInquiry(data);
-      
-      if (!result.ok) {
-        throw new Error(result.error || 'Submission failed');
-      }
-
-      return result;
-    }
-
-    showMessage(text, type) {
-      const colors = {
-        loading: '#60a5fa',
-        success: '#10b981',
-        error: '#ef4444'
-      };
-
-      this.message.textContent = text;
-      this.message.style.color = colors[type] || colors.loading;
-    }
-
-    resetCaptcha() {
-      if (typeof grecaptcha !== 'undefined' && grecaptcha.reset) {
-        try {
-          grecaptcha.reset();
-        } catch (e) {
-          log('reCAPTCHA reset error:', e);
-        }
-      }
-    }
-  }
-
-  // Smooth scroll controller
-  class SmoothScrollController {
-    constructor() {
-      this.links = $$('a[href^="#"]');
-      this.mobileMenu = null;
-    }
-
-    init(mobileMenuController) {
-      this.mobileMenu = mobileMenuController;
-      
-      this.links.forEach(link => {
-        link.addEventListener('click', (e) => this.handleClick(e, link));
-      });
-    }
-
-    handleClick(e, link) {
-      const targetId = link.getAttribute('href');
-      if (targetId === '#') return;
-
-      const target = $(targetId);
+/* ─── SMOOTH SCROLL ─────────────────────────────────────────────── */
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const id = link.getAttribute('href');
+      if (!id || id === '#') return;
+      const target = document.querySelector(id);
       if (!target) return;
-
       e.preventDefault();
-      
-      const targetPosition = target.offsetTop - CONFIG.SCROLL_OFFSET;
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth'
-      });
+      const offset = 84; // account for fixed nav (64px) + breathing room
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  });
+}
 
-      this.mobileMenu?.close();
-    }
-  }
+/* ─── CONTACT FORM ──────────────────────────────────────────────── */
+function initForm() {
+  const form = $('#inqForm');
+  const msg  = $('#formMsg');
+  if (!form || !msg) return;
 
-  // Utility controller for miscellaneous tasks
-  class UtilityController {
-    static updateFooterYear() {
-      const yearElement = $('[data-year]');
-      if (yearElement) {
-        yearElement.textContent = new Date().getFullYear();
-      }
-    }
-  }
+  const setMsg = (text, color) => {
+    msg.textContent = text;
+    msg.style.color = color;
+  };
 
-  /**
-   * Threat Animation Controller
-   * - 3 clear header states: "center" → "top" → "free"
-   * - Word "Threats" goes blue → red; description fades at same time
-   * - Header unsticks just before the first card would touch it
-   */
-  class ThreatAnimationController {
-    constructor() {
-      this.section = $('.threats');
-      this.header = $('.threats__header');
-      this.title = $('.threats__title');
-      this.description = $('.threats__description');
-      this.cards = Array.from($$('.threat-card'));
-      this.firstCard = this.cards[0] || null;
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
 
-      this.state = null; // 'center' | 'top' | 'free' – start null so first setState always applies
-      this.ticking = false;
-      this.lastScrollY = window.scrollY || 0;
-    }
+    const btn = form.querySelector('.connect__btn');
+    if (btn) btn.disabled = true;
 
-    init() {
-      if (!this.section || !this.header || !this.title || !this.description || !this.cards.length) {
+    const raw = new FormData(form);
+    const data = {
+      firstName: raw.get('firstName')?.trim(),
+      lastName:  raw.get('lastName')?.trim(),
+      email:     raw.get('email')?.trim(),
+      org:       raw.get('org')?.trim(),
+      title:     raw.get('title')?.trim() || '',
+      country:   raw.get('country')?.trim(),
+      notes:     raw.get('notes')?.trim(),
+    };
+
+    // Validate required fields
+    const required = ['firstName', 'lastName', 'email', 'org', 'country', 'notes'];
+    for (const k of required) {
+      if (!data[k]) {
+        setMsg('Please fill in all required fields.', '#ff453a');
+        if (btn) btn.disabled = false;
         return;
       }
-
-      // Fade cards in as they enter viewport (no sticky cards)
-      this.initCardObserver();
-
-      window.addEventListener('scroll', () => this.onScroll(), { passive: true });
-      window.addEventListener('resize', () => this.onScroll());
-
-      // Initial pass
-      this.update();
     }
 
-    initCardObserver() {
-      if (!('IntersectionObserver' in window)) {
-        this.cards.forEach(card => card.classList.add('threat-card--visible'));
-        return;
+    // Validate email
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+      setMsg('Please enter a valid email address.', '#ff453a');
+      if (btn) btn.disabled = false;
+      return;
+    }
+
+    if (!window.grecaptcha || !window.grecaptcha.getResponse()) {
+      setMsg('Please complete the reCAPTCHA.', '#ff453a');
+      if (btn) btn.disabled = false;
+      return;
+    }
+
+    setMsg('Sending…', '#2997ff');
+
+    try {
+      if (typeof window.saveInquiry !== 'function') {
+        throw new Error('Service unavailable. Please try again later.');
       }
-
-      const observer = new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('threat-card--visible');
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        {
-          threshold: 0.2,
-          rootMargin: '0px 0px -10% 0px'
-        }
-      );
-
-      this.cards.forEach(card => observer.observe(card));
+      const result = await window.saveInquiry(data);
+      if (result && result.ok === false) throw new Error(result.error || 'Submission failed.');
+      setMsg('Thank you. We\'ll be in touch shortly.', '#30d158');
+      form.reset();
+    } catch (err) {
+      setMsg(err.message || 'Something went wrong. Please try again.', '#ff453a');
+    } finally {
+      if (btn) btn.disabled = false;
     }
+  });
+}
 
-    onScroll() {
-      if (!this.ticking) {
-        requestAnimationFrame(() => {
-          this.update();
-          this.ticking = false;
+/* ─── FOOTER YEAR ───────────────────────────────────────────────── */
+function initYear() {
+  const el = $('[data-year]');
+  if (el) el.textContent = '2025';
+}
+
+/* ─── HERO CANVAS — static etched matrix + glitch ───────────────── */
+function initHeroCanvas() {
+  const canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  // Binary-heavy char set — etched into the surface
+  const CHARS = '010110010011010011011001011101001101001010110110100110';
+  const FS = 13;  // cell size in px
+
+  // Glitch timing
+  const GLITCH_MIN = 2200;
+  const GLITCH_MAX = 6000;
+
+  let W, H, cols, rows;
+  // Grid: each cell stores { char, alpha } — stable, not regenerated every frame
+  let grid = [];
+  let glitchSlices = [];
+  let nextGlitch = GLITCH_MIN + Math.random() * (GLITCH_MAX - GLITCH_MIN);
+  let elapsed = 0;
+  let lastTs  = 0;
+  let raf;
+
+  // Build (or rebuild) the static character grid
+  function buildGrid() {
+    grid = [];
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        grid.push({
+          char:  CHARS[Math.floor(Math.random() * CHARS.length)],
+          alpha: 0.06 + Math.random() * 0.13,  // each cell has its own fixed brightness
         });
-        this.ticking = true;
+      }
+    }
+  }
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+    cols = Math.floor(W / FS);
+    rows = Math.floor(H / FS);
+    buildGrid();
+  }
+
+  const resizeObs = new ResizeObserver(resize);
+  resizeObs.observe(canvas);
+  resize();
+
+  // Randomly mutate ~1.5% of cells per frame — gives subtle "alive" noise
+  function flicker() {
+    const n = Math.ceil(grid.length * 0.015);
+    for (let i = 0; i < n; i++) {
+      const idx = Math.floor(Math.random() * grid.length);
+      grid[idx].char  = CHARS[Math.floor(Math.random() * CHARS.length)];
+      // Occasional bright flare on a cell
+      grid[idx].alpha = Math.random() < 0.05
+        ? 0.55 + Math.random() * 0.3    // bright flare
+        : 0.06 + Math.random() * 0.13;  // normal dim
+    }
+  }
+
+  // Burst of glitch slices + optional full-row strobe
+  function triggerGlitch() {
+    const count = 4 + Math.floor(Math.random() * 6);
+    for (let i = 0; i < count; i++) {
+      glitchSlices.push({
+        y:      Math.random() * H,
+        h:      2 + Math.random() * 18,
+        shiftX: (Math.random() < 0.5 ? -1 : 1) * (10 + Math.random() * 44),
+        life:   60 + Math.random() * 130,
+        age:    0,
+      });
+    }
+    // Occasionally also strobe a wide band bright white
+    if (Math.random() < 0.35) {
+      glitchSlices.push({
+        y:      Math.random() * H,
+        h:      1 + Math.floor(Math.random() * 3),
+        shiftX: 0,
+        life:   40 + Math.random() * 60,
+        age:    0,
+        strobe: true,
+      });
+    }
+    nextGlitch = GLITCH_MIN + Math.random() * (GLITCH_MAX - GLITCH_MIN);
+    elapsed    = 0;
+  }
+
+  function draw(ts) {
+    const dt = ts - lastTs || 16;
+    lastTs   = ts;
+    elapsed += dt;
+
+    if (elapsed >= nextGlitch) triggerGlitch();
+
+    // Solid clear — characters are etched, no trails
+    ctx.fillStyle = '#0a0a0a';
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.font         = `${FS}px "Chivo Mono", monospace`;
+    ctx.textBaseline = 'top';
+
+    // Mutate a tiny fraction of cells each frame
+    flicker();
+
+    // Draw the full static grid
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const cell = grid[r * cols + c];
+        if (!cell) continue;
+        ctx.fillStyle = `rgba(41,151,255,${cell.alpha.toFixed(3)})`;
+        ctx.fillText(cell.char, c * FS, r * FS);
       }
     }
 
-    update() {
-      if (!this.section) return;
+    // Apply glitch slices on top
+    for (let s = glitchSlices.length - 1; s >= 0; s--) {
+      const sl = glitchSlices[s];
+      sl.age += dt;
+      const t = sl.age / sl.life;
+      if (t >= 1) { glitchSlices.splice(s, 1); continue; }
 
-      const viewportHeight = window.innerHeight;
-      const sectionRect = this.section.getBoundingClientRect();
-      const sectionTop = sectionRect.top;
-      const sectionBottom = sectionRect.bottom;
+      const fade = Math.sin(t * Math.PI);
+      const sy   = Math.max(0, Math.round(sl.y));
+      const sh   = Math.min(Math.round(sl.h), H - sy);
+      if (sh <= 0) continue;
 
-      // Section completely off-screen: reset
-      if (sectionBottom <= 0 || sectionTop >= viewportHeight) {
-        this.setState('center');
-        this.setColorState(false);
-        return;
+      if (sl.strobe) {
+        // White strobe band — phosphor burn effect
+        ctx.globalAlpha = 0.18 * fade;
+        ctx.fillStyle   = '#ffffff';
+        ctx.fillRect(0, sy, W, sh);
+        ctx.globalAlpha = 1;
+        continue;
       }
 
-      // Simple trigger points
-      const colorTrigger = viewportHeight * 0.35;
-      const topTrigger = viewportHeight * 0.25;
-
-      // Color change
-      const shouldBeRed = sectionTop <= colorTrigger;
-      this.setColorState(shouldBeRed);
-
-      // Position logic - only switch to free when cards are very close
-      let nextState = sectionTop <= topTrigger ? 'top' : 'center';
-      
-      // Only check for free state if we're already at top
-      if (nextState === 'top' && this.firstCard) {
-        const headerRect = this.header.getBoundingClientRect();
-        const cardRect = this.firstCard.getBoundingClientRect();
-        
-        // Only go free when card is about to overlap
-        if (cardRect.top <= headerRect.bottom + 10) {
-          nextState = 'free';
-        }
-      }
-
-      this.setState(nextState);
+      try {
+        const img   = ctx.getImageData(0, sy, W, sh);
+        const shift = Math.round(sl.shiftX * fade);
+        ctx.clearRect(0, sy, W, sh);
+        // RGB chromatic fringe
+        ctx.globalAlpha = 0.22 * fade;
+        ctx.fillStyle   = '#ff003c';
+        ctx.fillRect(shift - 5, sy, W, sh);
+        ctx.fillStyle   = '#0096ff';
+        ctx.fillRect(shift + 5, sy, W, sh);
+        ctx.globalAlpha = 1;
+        ctx.putImageData(img, shift, sy);
+      } catch (_) { /* zero-size / cross-origin guard */ }
     }
 
-    setState(newState) {
-      if (this.state === newState) return;
-      this.state = newState;
+    raf = requestAnimationFrame(draw);
+  }
 
-      this.header.classList.remove(
-        'threats__header--center',
-        'threats__header--top',
-        'threats__header--free'
-      );
+  raf = requestAnimationFrame(draw);
 
-      if (newState === 'center') {
-        this.header.classList.add('threats__header--center');
-        this.description.classList.remove('is-hidden');
-      } else if (newState === 'top') {
-        this.header.classList.add('threats__header--top');
-        this.description.classList.remove('is-hidden');
-      } else if (newState === 'free') {
-        this.header.classList.add('threats__header--free');
-        this.description.classList.add('is-hidden');
-      }
-    }
-
-    setColorState(isRed) {
-      if (!this.title) return;
-
-      if (isRed) {
-        this.title.classList.add('is-red');
+  // Pause animation when hero is off-screen
+  const heroEl = document.getElementById('hero');
+  if (heroEl) {
+    new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        if (!raf) raf = requestAnimationFrame(draw);
       } else {
-        this.title.classList.remove('is-red');
+        cancelAnimationFrame(raf);
+        raf = null;
       }
+    }).observe(heroEl);
+  }
+}
+
+/* ─── GLITCH HORSE — 3D canvas animation ─────────────────────────── */
+function removeWhiteBg(data) {
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i], g = data[i+1], b = data[i+2];
+    const brightness = (r + g + b) / 3;
+    if (brightness > 220) {
+      data[i+3] = Math.max(0, Math.round((255 - brightness) * (255 / 35)));
     }
   }
+}
 
-  // Pi Module Exploded View Controller
-  class PiModuleController {
-    constructor() {
-      this.explodedView = null;
-      this.hasTriggered = false;
-      this.storageKey = 'buraq_module_exploded';
+function colorCanvas(raw, W, H, rMul, gMul, bMul) {
+  const out = new Uint8ClampedArray(W * H * 4);
+  const d = raw.data;
+  for (let i = 0; i < d.length; i += 4) {
+    out[i]   = Math.min(255, d[i]   * rMul);
+    out[i+1] = Math.min(255, d[i+1] * gMul);
+    out[i+2] = Math.min(255, d[i+2] * bMul);
+    out[i+3] = d[i+3];
+  }
+  const c = document.createElement('canvas');
+  c.width = W; c.height = H;
+  c.getContext('2d').putImageData(new ImageData(out, W, H), 0, 0);
+  return c;
+}
+
+function initGlitchHorse() {
+  const wrap = document.getElementById('heroGlitchWrap');
+  if (!wrap) return;
+  const canvas = document.createElement('canvas');
+  canvas.className = 'hero__glitch-canvas';
+  wrap.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  const img = new Image();
+  img.onload = () => {
+    const W = img.naturalWidth, H = img.naturalHeight;
+    canvas.width = W; canvas.height = H;
+
+    const tmp = document.createElement('canvas');
+    tmp.width = W; tmp.height = H;
+    const tCtx = tmp.getContext('2d');
+    tCtx.drawImage(img, 0, 0);
+    const raw = tCtx.getImageData(0, 0, W, H);
+    removeWhiteBg(raw.data);
+
+    // Base + channel-split canvases
+    const clean = colorCanvas(raw, W, H, 1,    1,    1);
+    const redC  = colorCanvas(raw, W, H, 1.4,  0.1,  0.4);
+    const blueC = colorCanvas(raw, W, H, 0.05, 0.6,  1.5);
+
+    let elapsed = 0, lastTs = 0;
+    let nextGlitch = 1800 + Math.random() * 3000;
+    let glitching = false, glitchAge = 0, glitchDur = 0;
+
+    function layer3D(src, scaleX, scaleY, tx, ty, alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      // Centre the scale transform
+      ctx.transform(scaleX, 0, 0, scaleY, tx + W * (1 - scaleX) / 2, ty + H * (1 - scaleY) / 2);
+      ctx.drawImage(src, 0, 0);
+      ctx.restore();
     }
 
-    init() {
-      // Look for exploded view on page
-      this.explodedView = $('.exploded-view');
-      
-      if (!this.explodedView) {
-        log('No exploded view found on this page');
-        return;
-      }
+    function frame(ts) {
+      const dt = ts - lastTs || 16; lastTs = ts; elapsed += dt;
+      ctx.clearRect(0, 0, W, H);
 
-      log('Initializing Pi Module exploded view animation');
-      
-      // Check if animation has already been triggered in this session
-      const wasExploded = sessionStorage.getItem(this.storageKey);
-      
-      if (wasExploded) {
-        // Skip animation, show exploded state immediately
-        log('Module was already exploded in this session, showing final state');
-        this.explodedView.classList.add('exploded');
-        this.hasTriggered = true;
-        return;
+      if (!glitching && elapsed > nextGlitch) {
+        glitching = true; glitchAge = 0;
+        glitchDur = 80 + Math.random() * 320;
+        nextGlitch = elapsed + 1600 + Math.random() * 4000;
       }
-      
-      // Ensure it starts collapsed and hidden
-      this.explodedView.classList.remove('exploded');
-      
-      // Use Intersection Observer to trigger on scroll
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting && !this.hasTriggered) {
-              this.hasTriggered = true;
-              log('Exploded view is visible, triggering animation');
-              // First make it visible, then trigger explosion after fade in
-              this.explodedView.classList.add('exploded');
-              // Save state to sessionStorage
-              sessionStorage.setItem(this.storageKey, 'true');
-              log('Exploded view animation triggered - layers should pull apart now');
-            }
-          });
-        },
-        {
-          threshold: 0.3,
-          rootMargin: '0px'
+      if (glitching) {
+        glitchAge += dt;
+        if (glitchAge >= glitchDur) glitching = false;
+
+        const sh  = 10 + Math.random() * 18;   // horizontal channel shift
+        const sv  = 3  + Math.random() * 7;    // vertical channel shift
+        const ds  = 0.03 + Math.random() * 0.05; // depth scale delta
+
+        // 3D channel layers: red pushed forward (bigger), blue receded (smaller)
+        layer3D(redC,  1 + ds, 1 + ds,  sh,  -sv, 0.65);
+        layer3D(blueC, 1 - ds, 1 - ds, -sh,   sv, 0.55);
+        layer3D(clean, 1,      1,        0,    0,  1);
+
+        // Depth-perspective slice tears
+        if (Math.random() < 0.65) {
+          const slices = 3 + Math.floor(Math.random() * 5);
+          for (let i = 0; i < slices; i++) {
+            const sy   = Math.random() * H;
+            const sh2  = 4 + Math.random() * 22;
+            const depth = sy / H;                       // 0=top, 1=bottom
+            const sx   = (Math.random() < 0.5 ? -1 : 1)
+                         * (6 + Math.random() * 32) * (0.4 + depth * 0.9);
+            const skew = (Math.random() - 0.5) * 0.08; // slight z-skew
+            ctx.save();
+            ctx.transform(1, skew, 0, 1, sx, 0);
+            ctx.drawImage(clean, 0, sy, W, sh2, 0, sy, W, sh2);
+            ctx.restore();
+          }
         }
-      );
-
-      observer.observe(this.explodedView);
-      log('Observer attached to exploded view');
+      } else {
+        ctx.globalAlpha = 1;
+        ctx.drawImage(clean, 0, 0);
+      }
+      requestAnimationFrame(frame);
     }
-  }
+    requestAnimationFrame(frame);
+  };
+  img.src = 'assets/Adobe Express - file.png';
+}
 
-  // Main application controller
-  class App {
-    constructor() {
-      this.controllers = {
-        hero: new HeroAnimationController(),
-        scrollProgress: new ScrollProgressController(),
-        scrollReveal: new ScrollRevealController(),
-        commandPalette: new CommandPaletteController(),
-        mobileMenu: new MobileMenuController(),
-        form: new FormController(),
-        smoothScroll: new SmoothScrollController(),
-        threatAnimation: new ThreatAnimationController(),
-        piModule: new PiModuleController()
-      };
-    }
+/* ─── BOOT ───────────────────────────────────────────────────────── */
+function init() {
+  initProgress();
+  initNav();
+  initHero();
+  initHeroCanvas();
+  initGlitchHorse();
+  initReveal();
+  initSmoothScroll();
+  initForm();
+  initYear();
+}
 
-    init() {
-      log('Initializing Buraq AI Website');
-      
-      // Initialize all controllers
-      this.controllers.hero.init();
-      this.controllers.scrollProgress.init();
-      this.controllers.scrollReveal.init();
-      this.controllers.commandPalette.init();
-      this.controllers.mobileMenu.init();
-      this.controllers.form.init();
-      this.controllers.smoothScroll.init(this.controllers.mobileMenu);
-      this.controllers.threatAnimation.init();
-      this.controllers.piModule.init();
-      
-      // Utility functions
-      UtilityController.updateFooterYear();
-      
-      log('All controllers initialized');
-    }
-  }
-
-  // Initialize when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => new App().init());
-  } else {
-    new App().init();
-  }
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}

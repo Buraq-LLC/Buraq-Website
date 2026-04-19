@@ -1,55 +1,38 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-    // Helper function to check if request is valid
-    function isValidRequest() {
-      return request.time < timestamp.date(2030, 1, 1);
-    }
-    
-    // Helper function to validate inquiry data
-    function isValidInquiry(data) {
-      return data.keys().hasAll(['firstName', 'lastName', 'email', 'org', 'country', 'createdAt', 'userAgent', 'timestamp'])
-        && data.firstName is string
-        && data.lastName is string
-        && data.email is string
-        && data.org is string
-        && data.country is string
-        && data.firstName.size() > 0 && data.firstName.size() <= 100
-        && data.lastName.size() > 0 && data.lastName.size() <= 100
-        && data.email.size() > 0 && data.email.size() <= 255
-        && data.org.size() > 0 && data.org.size() <= 200
-        && data.country.size() > 0 && data.country.size() <= 100
-        && data.email.matches('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$')
-        && (!('title' in data) || (data.title is string && data.title.size() <= 200))
-        && (!('notes' in data) || (data.notes is string && data.notes.size() <= 5000));
-    }
-    
-    // Helper function for rate limiting
-    function isRateLimited() {
-      // Allow max 5 writes per minute per IP (approximate)
-      return request.time > (resource == null ? timestamp.date(1970, 1, 1) : resource.data.createdAt + duration.value(1, 'm'));
-    }
-    
-    // Inquiries collection - write only, no read access from client
-    match /inquiries/{inquiry} {
-      // Allow creation only with valid data and rate limiting
-      allow create: if isValidRequest()
-                    && isValidInquiry(request.resource.data)
-                    && request.resource.data.createdAt == request.time
-                    && request.resource.data.timestamp is number
-                    && request.resource.data.userAgent is string
-                    && request.resource.data.userAgent.size() > 0
-                    && request.resource.data.userAgent.size() <= 500;
-      
-      // Deny all read operations from client
-      allow read: if false;
-      
-      // Deny updates and deletes from client
+    match /inquiries/{document} {
+      // Allow read only for authenticated admin users
+      allow read: if request.auth != null && request.auth.token.admin == true;
+
+      // Allow write with strict validation
+      allow create: if request.resource.data.keys().hasAll([
+        'firstName', 'lastName', 'email', 'org', 'country', 'createdAt'
+      ])
+      && request.resource.data.firstName is string
+      && request.resource.data.firstName.size() <= 100
+      && request.resource.data.lastName is string
+      && request.resource.data.lastName.size() <= 100
+      && request.resource.data.email is string
+      && request.resource.data.email.matches('^[^@]+@[^@]+\\.[^@]+$')
+      && request.resource.data.email.size() <= 255
+      && request.resource.data.org is string
+      && request.resource.data.org.size() <= 200
+      && request.resource.data.country is string
+      && request.resource.data.country.size() <= 100
+      && request.resource.data.createdAt == request.time
+      // Rate limiting: max 3 submissions per hour per IP hash
+      && request.resource.data._fingerprint is string
+      && (
+        !exists(/databases/$(database)/documents/rate_limits/$(request.resource.data._fingerprint))
+        || get(/databases/$(database)/documents/rate_limits/$(request.resource.data._fingerprint)).data.count < 3
+      );
+
+      // Deny updates and deletes from clients
       allow update, delete: if false;
     }
-    
-    // Deny all other collections by default
+
+    // Deny all other collections
     match /{document=**} {
       allow read, write: if false;
     }

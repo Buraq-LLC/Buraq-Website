@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
+<meta name="theme-color" content="#040507" />
+<link rel="manifest" href="manifest.json" />
+<title>Buraq AI | Drone Systems</title>
+<meta name="description" content="Buraq AI drone systems — autonomous ISR platforms for humanitarian intelligence, surveillance, and reconnaissance operations." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-logo.png" />
+<link rel="stylesheet" href="styles.css?v=7" />
+</head>
+<body>
+
+<div class="scanlines" aria-hidden="true"></div>
+<div class="progress"><div class="progress__fill"></div></div>
+
+<header id="topnav">
+  <a class="logo" href="/">
+    <img src="assets/buraq-horse.png" width="16" height="16" alt="" />
+    Buraq AI
+  </a>
+  <nav class="nav__links" aria-label="Primary navigation">
+    <a href="/drones">Drones</a>
+    <a href="/evidence-vault">Evidence Vault</a>
+    <a href="/marqab">Edge</a>
+  </nav>
+  <div class="nav__right">
+    <a href="/#contact" class="nav__cta">Contact Us</a>
+    <button class="nav__burger" aria-label="Open menu" aria-expanded="false" aria-controls="sidenav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="sidenav" id="sidenav" aria-hidden="true">
+  <div class="sidenav__top"><button class="sidenav__close" aria-label="Close menu">&times;</button></div><div class="sidenav__links">
+    <a href="/drones">Drones</a>
+    <a href="/evidence-vault">Evidence Vault</a>
+    <a href="/marqab">Edge</a>
+    <a href="/#contact" class="sidenav__cta">Contact Us</a>
+
+  </div>
+  <div class="sidenav__socials">
+    <p class="sidenav__socials-label">Follow Us</p>
+    <div class="sidenav__socials-row">
+      <a href="https://www.linkedin.com/company/buraq-ai" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.36 4.26 5.44v6.3zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"/></svg></a>
+      <a href="https://www.instagram.com/buraqaiofficial/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.241 1.308 3.608.058 1.265.07 1.645.07 4.851s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.241 1.246-3.608 1.308-1.265.058-1.645.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.241-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.974-.974 2.241-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.014 7.052.072 5.197.157 3.355.673 1.978 2.05.6 3.426.084 5.268 0 7.123-.014 8.403 0 8.812 0 12s.014 3.597.072 4.877c.085 1.855.6 3.697 1.978 5.073 1.376 1.377 3.218 1.893 5.073 1.978C8.332 23.986 8.741 24 12 24s3.668-.014 4.948-.072c1.855-.085 3.697-.6 5.073-1.978 1.377-1.376 1.893-3.218 1.978-5.073.058-1.28.072-1.689.072-4.877s-.014-3.597-.072-4.877c-.085-1.855-.6-3.697-1.978-5.073C20.645.673 18.803.157 16.948.072 15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+      <a href="https://twitter.com/buraq_ai" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    </div>
+  </div>
+  </div>
+</div>
+<div class="sidenav__backdrop" aria-hidden="true"></div>
+
+
+<section class="drones-hero">
+  <div class="drones-hero__grid"></div>
+  <div class="drones-hero__reticle" aria-hidden="true">
+    <svg viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="240" cy="240" r="238" stroke="rgba(41,151,255,1)" stroke-width="1"/>
+      <circle cx="240" cy="240" r="180" stroke="rgba(41,151,255,1)" stroke-width="1" stroke-dasharray="4 8"/>
+      <circle cx="240" cy="240" r="120" stroke="rgba(41,151,255,1)" stroke-width="1"/>
+      <circle cx="240" cy="240" r="60" stroke="rgba(41,151,255,1)" stroke-width="1" stroke-dasharray="2 6"/>
+      <line x1="240" y1="0" x2="240" y2="80" stroke="rgba(41,151,255,1)" stroke-width="1"/>
+      <line x1="240" y1="400" x2="240" y2="480" stroke="rgba(41,151,255,1)" stroke-width="1"/>
+      <line x1="0" y1="240" x2="80" y2="240" stroke="rgba(41,151,255,1)" stroke-width="1"/>
+      <line x1="400" y1="240" x2="480" y2="240" stroke="rgba(41,151,255,1)" stroke-width="1"/>
+      <path d="M 240 2 L 248 16 L 240 12 L 232 16 Z" fill="rgba(41,151,255,1)"/>
+      <text x="252" y="38" fill="rgba(41,151,255,1)" font-family="monospace" font-size="9" letter-spacing="2">000°</text>
+      <text x="255" y="162" fill="rgba(41,151,255,0.8)" font-family="monospace" font-size="9" letter-spacing="2">090°</text>
+      <text x="12" y="162" fill="rgba(41,151,255,0.8)" font-family="monospace" font-size="9" letter-spacing="2">270°</text>
+      <text x="224" y="458" fill="rgba(41,151,255,0.8)" font-family="monospace" font-size="9" letter-spacing="2">180°</text>
+    </svg>
+  </div>
+  <div class="drones-hero__content">
+    <p class="drones-hero__eyebrow">
+      <span class="drones-hero__eyebrow-dot"></span>
+      Buraq AI Aerial Intelligence
+    </p>
+    <h1 class="drones-hero__title">DRONE<br/><span>SYSTEMS</span></h1>
+    <p class="drones-hero__sub">
+      Autonomous ISR platforms delivering persistent surveillance, real-time intelligence, and encrypted data relay to the Buraq AI platform.
+    </p>
+    <div class="drones-hero__stats reveal">
+      <div class="drones-hero__stat">
+        <span class="drones-hero__stat-val">400m</span>
+        <span class="drones-hero__stat-label">AGL Altitude</span>
+      </div>
+      <div class="drones-hero__stat">
+        <span class="drones-hero__stat-val">4h+</span>
+        <span class="drones-hero__stat-label">Endurance</span>
+      </div>
+      <div class="drones-hero__stat">
+        <span class="drones-hero__stat-val">15km</span>
+        <span class="drones-hero__stat-label">Range</span>
+      </div>
+      <div class="drones-hero__stat">
+        <span class="drones-hero__stat-val">AES-256</span>
+        <span class="drones-hero__stat-label">Encryption</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="status-bar">
+  <div class="status-item"><span class="status-dot green"></span>ISR: <span class="status-val">ACTIVE</span></div>
+  <div class="status-item"><span class="status-dot blue-dot"></span>AI Detection: <span class="status-val">ENABLED</span></div>
+  <div class="status-item"><span class="status-dot green"></span>Data Relay: <span class="status-val">ENCRYPTED</span></div>
+  <div class="status-item"><span class="status-dot green"></span>Autonomous Nav: <span class="status-val">GPS-DENIED READY</span></div>
+  <div class="status-item"><span class="status-dot green"></span>Platform: <span class="status-val">FIELD READY</span></div>
+</div>
+
+
+<section class="drones-capabilities">
+  <div class="systems-header">
+    <span class="label-mono reveal">Capabilities</span>
+    <h2 class="reveal reveal-d1">Built to see everything.<br/>Miss nothing.</h2>
+  </div>
+  <div class="systems-grid">
+    <div class="sys-card reveal">
+      <div class="sys-num">01</div>
+      <h3>Persistent Surveillance</h3>
+      <p>Continuous wide-area monitoring with optical, thermal, and multispectral sensors. Maintain uninterrupted coverage of designated areas of interest during active operations.</p>
+      <div class="sys-tag-row">
+        <span class="sys-tag">Optical</span>
+        <span class="sys-tag">Thermal</span>
+        <span class="sys-tag">Multispectral</span>
+      </div>
+    </div>
+    <div class="sys-card highlight reveal reveal-d1">
+      <div class="sys-num">02</div>
+      <h3>AI Target Identification</h3>
+      <p>On-board AI detects, classifies, and tracks objects in real time — vehicles, personnel, structures, and assets — without latency-inducing cloud dependency.</p>
+      <div class="sys-tag-row">
+        <span class="sys-tag">On-Board AI</span>
+        <span class="sys-tag">Auto-Classify</span>
+        <span class="sys-tag">&lt;100ms</span>
+      </div>
+      <div class="sys-corner-mark"></div>
+    </div>
+    <div class="sys-card highlight reveal reveal-d2">
+      <div class="sys-num">03</div>
+      <h3>Encrypted Data Relay</h3>
+      <p>All telemetry, sensor feeds, and intelligence data is encrypted AES-256 end-to-end and relayed directly to the Buraq platform, on-premise servers, or Marqab edge nodes.</p>
+      <div class="sys-tag-row">
+        <span class="sys-tag">AES-256</span>
+        <span class="sys-tag">Mesh Relay</span>
+        <span class="sys-tag">Marqab-Ready</span>
+      </div>
+      <div class="sys-corner-mark"></div>
+    </div>
+    <div class="sys-card reveal reveal-d3">
+      <div class="sys-num">04</div>
+      <h3>Autonomous Navigation</h3>
+      <p>Operates reliably in GPS-denied, signal-jammed, and contested environments using inertial navigation, optical flow, and pre-loaded mission planning.</p>
+      <div class="sys-tag-row">
+        <span class="sys-tag">GPS-Denied</span>
+        <span class="sys-tag">Inertial Nav</span>
+        <span class="sys-tag">Auto-Return</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── DRONE PLATFORMS ─── -->
+<section class="drone-platforms">
+  <div class="buraq-container">
+    <div class="systems-header">
+      <span class="label-mono reveal">Integrated Platforms</span>
+      <h2 class="reveal reveal-d1">Two platforms. One mission.</h2>
+    </div>
+
+    <!-- ── STORK ── -->
+    <div class="drone-platform reveal">
+      <div class="drone-platform__inner">
+
+        <!-- Interactive model -->
+        <div class="drone-model__wrap" id="storkWrap">
+          <div class="drone-model__hud-bar">
+            <span><span class="drone-model__hud-dot"></span>STORK — FIXED-WING ISR</span>
+            <span>WS: 1600MM</span>
+          </div>
+          <svg class="drone-model__svg" id="storkSVG" viewBox="0 0 360 360" fill="none" aria-hidden="true">
+            <defs>
+              <pattern id="stork-grid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M20 0L0 0 0 20" fill="none" stroke="rgba(41,151,255,0.07)" stroke-width="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="360" height="360" fill="#070c18"/>
+            <rect width="360" height="360" fill="url(#stork-grid)"/>
+
+            <!-- Left wing -->
+            <path d="M175 153 L15 163 L15 176 L175 170 Z"
+                  fill="rgba(41,151,255,0.10)" stroke="rgba(41,151,255,0.7)" stroke-width="1.4"/>
+            <!-- Right wing -->
+            <path d="M185 153 L345 163 L345 176 L185 170 Z"
+                  fill="rgba(41,151,255,0.10)" stroke="rgba(41,151,255,0.7)" stroke-width="1.4"/>
+            <!-- Wing rib lines -->
+            <line x1="90"  y1="170" x2="175" y2="160" stroke="rgba(41,151,255,0.2)"  stroke-width="0.75"/>
+            <line x1="145" y1="169" x2="175" y2="164" stroke="rgba(41,151,255,0.14)" stroke-width="0.75"/>
+            <line x1="270" y1="170" x2="185" y2="160" stroke="rgba(41,151,255,0.2)"  stroke-width="0.75"/>
+            <line x1="215" y1="169" x2="185" y2="164" stroke="rgba(41,151,255,0.14)" stroke-width="0.75"/>
+
+            <!-- Fuselage -->
+            <path d="M180 65 L186 85 L190 128 L191 158 L191 196 L188 248 L185 272 L183 280 L180 285
+                     L177 280 L175 272 L172 248 L169 196 L169 158 L170 128 L174 85 Z"
+                  fill="rgba(41,151,255,0.13)" stroke="rgba(41,151,255,0.78)" stroke-width="1.5" stroke-linejoin="round"/>
+            <!-- Panel lines -->
+            <line x1="175" y1="120" x2="185" y2="120" stroke="rgba(41,151,255,0.30)" stroke-width="0.75"/>
+            <line x1="174" y1="145" x2="186" y2="145" stroke="rgba(41,151,255,0.22)" stroke-width="0.75"/>
+            <line x1="173" y1="205" x2="187" y2="205" stroke="rgba(41,151,255,0.22)" stroke-width="0.75"/>
+            <line x1="174" y1="240" x2="186" y2="240" stroke="rgba(41,151,255,0.30)" stroke-width="0.75"/>
+            <!-- Fuselage spine -->
+            <line x1="180" y1="84" x2="180" y2="278" stroke="rgba(41,151,255,0.1)" stroke-width="0.75" stroke-dasharray="4 6"/>
+
+            <!-- Wing root joints -->
+            <circle cx="176" cy="160" r="3.5" fill="rgba(41,151,255,0.3)" stroke="rgba(41,151,255,0.6)" stroke-width="1"/>
+            <circle cx="184" cy="160" r="3.5" fill="rgba(41,151,255,0.3)" stroke="rgba(41,151,255,0.6)" stroke-width="1"/>
+
+            <!-- V-tail left -->
+            <path d="M177 265 L143 296 L152 298 L179 272 Z"
+                  fill="rgba(41,151,255,0.07)" stroke="rgba(41,151,255,0.58)" stroke-width="1.2"/>
+            <!-- V-tail right -->
+            <path d="M183 265 L217 296 L208 298 L181 272 Z"
+                  fill="rgba(41,151,255,0.07)" stroke="rgba(41,151,255,0.58)" stroke-width="1.2"/>
+
+            <!-- Pusher prop -->
+            <circle cx="180" cy="290" r="18" stroke="rgba(41,151,255,0.45)" stroke-width="1.5" stroke-dasharray="6 4"/>
+            <g transform="translate(180,290)">
+              <g><animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="0.55s" repeatCount="indefinite"/>
+                <path d="M0 0 C2-4 3-11 1-17 C-1-17-3-11-2-4Z" fill="rgba(41,151,255,0.5)" stroke="rgba(41,151,255,0.7)" stroke-width="0.8"/>
+                <path d="M0 0 C2-4 3-11 1-17 C-1-17-3-11-2-4Z" fill="rgba(41,151,255,0.5)" stroke="rgba(41,151,255,0.7)" stroke-width="0.8" transform="rotate(180 0 0)"/>
+              </g>
+            </g>
+            <circle cx="180" cy="290" r="4"  fill="rgba(41,151,255,0.75)"/>
+
+            <!-- Blue tail indicator triangle -->
+            <path d="M180 310 L174 322 L186 322 Z" fill="rgba(41,151,255,0.85)"/>
+
+            <!-- Nose green triangle -->
+            <path d="M180 50 L173 64 L187 64 Z" fill="#32d74b"/>
+            <!-- Nose camera -->
+            <circle cx="180" cy="74" r="9"  fill="rgba(41,151,255,0.18)" stroke="rgba(41,151,255,0.85)" stroke-width="1.5"/>
+            <circle cx="180" cy="74" r="4"  fill="rgba(41,151,255,0.9)"/>
+
+            <!-- Orange CoM dot -->
+            <circle cx="180" cy="175" r="5.5" fill="#ff9f0a"/>
+
+            <!-- Wingtip nodes -->
+            <circle cx="15"  cy="169" r="5" fill="#2997ff" stroke="rgba(41,151,255,0.35)" stroke-width="1"/>
+            <circle cx="345" cy="169" r="5" fill="#2997ff" stroke="rgba(41,151,255,0.35)" stroke-width="1"/>
+          </svg>
+          <div class="drone-model__footer">
+            <span>V-TAIL / PUSHER PROP</span>
+            <span>LW-PLA COMPOSITE</span>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="drone-platform__content">
+          <div class="drone-platform__header">
+            <div class="drone-platform__model">STORK</div>
+            <span class="drone-platform__badge">Fixed-Wing · Long-Range ISR</span>
+          </div>
+          <p class="drone-platform__tagline">Long-range fixed-wing reconnaissance platform. 1600mm wingspan, 3D-printed LW-PLA airframe, push-propeller V-tail configuration engineered for maximum endurance over contested terrain.</p>
+          <ul class="drone-platform__features">
+            <li><span class="dp-feat-label">Airframe</span>1600mm wingspan · 950mm fuselage · 24 dm² wing area</li>
+            <li><span class="dp-feat-label">Config</span>Push-propeller V-tail — low radar cross-section</li>
+            <li><span class="dp-feat-label">Weight</span>1500g ISR config · 3000g max AUW</li>
+            <li><span class="dp-feat-label">Speed</span>50–60 km/h cruise · 1.21 Wh/km efficiency</li>
+            <li><span class="dp-feat-label">Materials</span>LW-PLA primary · PLA/composite reinforcements</li>
+            <li><span class="dp-feat-label">Autopilot</span>Pixhawk-compatible · FPV + autonomous LOS</li>
+            <li><span class="dp-feat-label">Data Link</span>AES-256 encrypted relay to Buraq platform</li>
+            <li><span class="dp-feat-label">Loiter</span>Stable low-speed persistent area surveillance</li>
+          </ul>
+          <div class="drone-platform__specs">
+            <div class="drone-platform__spec"><span class="drone-platform__spec-val">1600mm</span><span class="drone-platform__spec-key">Wingspan</span></div>
+            <div class="drone-platform__spec"><span class="drone-platform__spec-val">1500g</span><span class="drone-platform__spec-key">ISR AUW</span></div>
+            <div class="drone-platform__spec"><span class="drone-platform__spec-val">60 km/h</span><span class="drone-platform__spec-key">Cruise Speed</span></div>
+            <div class="drone-platform__spec"><span class="drone-platform__spec-val">24 dm²</span><span class="drone-platform__spec-key">Wing Area</span></div>
+            <div class="drone-platform__spec"><span class="drone-platform__spec-val">1.21</span><span class="drone-platform__spec-key">Wh/km</span></div>
+            <div class="drone-platform__spec"><span class="drone-platform__spec-val">3 kg</span><span class="drone-platform__spec-key">Max AUW</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── REPLICANT GEN 1 ── -->
+    <div class="drone-platform drone-platform--alt reveal reveal-d1">
+      <div class="drone-platform__inner drone-platform__inner--rev">
+
+        <!-- Content -->
+        <div class="drone-platform__content">
+          <div class="drone-platform__header">
+            <div class="drone-platform__model">REPLICANT <span class="dp-gen">GEN 1</span></div>
+            <span class="drone-platform__badge">Multi-Rotor · Close ISR &amp; Evidence Capture</span>
+          </div>
+          <p class="drone-platform__tagline">Enclosed 7" multi-rotor on carbon-fiber tube arms and CF-Nylon structural nodes. Modular battery swaps, dual-band antennas, and active venturi cooling for extended-range ISR and tamper-proof evidence capture.</p>
+          <ul class="drone-platform__features">
+            <li><span class="dp-feat-label">Frame</span>CF tube arms · CF-Nylon printed structural nodes</li>
+            <li><span class="dp-feat-label">Prop Class</span>7" primary · 6"/7"/8" configurable per mission</li>
+            <li><span class="dp-feat-label">Chassis</span>Fully enclosed aerodynamic body — field protection</li>
+            <li><span class="dp-feat-label">Power</span>6S 5000mAh Eve 50 PL · rail-mounted rapid swap</li>
+            <li><span class="dp-feat-label">ESC</span>iFlight BLITZ E55 · 55A · 20×20 or 30×30 stack</li>
+            <li><span class="dp-feat-label">RF</span>Dual Cavalry 2.4 GHz + 5.8 GHz fore/aft</li>
+            <li><span class="dp-feat-label">GPS</span>MATEK M10-5883 · 25–30 sat lock · low-EMI</li>
+            <li><span class="dp-feat-label">Thermal</span>Front cooling duct + dorsal venturi ducts</li>
+          </ul>
+          <div class="drone-platform__specs">
+            <div class="drone-platform__spec"><span class="drone-platform__spec-val">7"</span><span class="drone-platform__spec-key">Prop Class</span></div>
+            <div class="drone-platform__spec"><span class="drone-platform__spec-val">6S</span><span class="drone-platform__spec-key">Battery</span></div>
+            <div class="drone-platform__spec"><span class="drone-platform__spec-val">5000mAh</span><span class="drone-platform__spec-key">Pack</span></div>
+            <div class="drone-platform__spec"><span class="drone-platform__spec-val">55A</span><span class="drone-platform__spec-key">ESC</span></div>
+            <div class="drone-platform__spec"><span class="drone-platform__spec-val">2.4/5.8</span><span class="drone-platform__spec-key">GHz RF</span></div>
+            <div class="drone-platform__spec"><span class="drone-platform__spec-val">25–30</span><span class="drone-platform__spec-key">Sat Lock</span></div>
+          </div>
+        </div>
+
+        <!-- Interactive model -->
+        <div class="drone-model__wrap" id="gen1Wrap">
+          <div class="drone-model__hud-bar">
+            <span><span class="drone-model__hud-dot"></span>GEN 1 — MULTI-ROTOR ISR</span>
+            <span>7" CLASS</span>
+          </div>
+          <svg class="drone-model__svg" id="gen1SVG" viewBox="0 0 360 360" fill="none" aria-hidden="true">
+            <defs>
+              <pattern id="gen1-grid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M20 0L0 0 0 20" fill="none" stroke="rgba(41,151,255,0.07)" stroke-width="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="360" height="360" fill="#070c18"/>
+            <rect width="360" height="360" fill="url(#gen1-grid)"/>
+
+            <!-- Arms (V-brace, 2 lines per motor) -->
+            <line x1="163" y1="108" x2="72"  y2="78"  stroke="rgba(41,151,255,0.72)" stroke-width="3"   stroke-linecap="round"/>
+            <line x1="163" y1="140" x2="72"  y2="78"  stroke="rgba(41,151,255,0.5)"  stroke-width="2"   stroke-linecap="round"/>
+            <line x1="197" y1="108" x2="288" y2="78"  stroke="rgba(41,151,255,0.72)" stroke-width="3"   stroke-linecap="round"/>
+            <line x1="197" y1="140" x2="288" y2="78"  stroke="rgba(41,151,255,0.5)"  stroke-width="2"   stroke-linecap="round"/>
+            <line x1="163" y1="220" x2="72"  y2="282" stroke="rgba(41,151,255,0.5)"  stroke-width="2"   stroke-linecap="round"/>
+            <line x1="163" y1="252" x2="72"  y2="282" stroke="rgba(41,151,255,0.72)" stroke-width="3"   stroke-linecap="round"/>
+            <line x1="197" y1="220" x2="288" y2="282" stroke="rgba(41,151,255,0.5)"  stroke-width="2"   stroke-linecap="round"/>
+            <line x1="197" y1="252" x2="288" y2="282" stroke="rgba(41,151,255,0.72)" stroke-width="3"   stroke-linecap="round"/>
+
+            <!-- Prop guard: FL (72,78) -->
+            <circle cx="72"  cy="78"  r="50" fill="rgba(41,151,255,0.06)" stroke="rgba(41,151,255,0.72)" stroke-width="1.5"/>
+            <line x1="22"  y1="78"  x2="122" y2="78"  stroke="rgba(41,151,255,0.5)"  stroke-width="1"/>
+            <line x1="72"  y1="28"  x2="72"  y2="128" stroke="rgba(41,151,255,0.5)"  stroke-width="1"/>
+            <line x1="37"  y1="43"  x2="107" y2="113" stroke="#30d158" stroke-width="1.2" stroke-dasharray="7 5"/>
+            <line x1="107" y1="43"  x2="37"  y2="113" stroke="#30d158" stroke-width="1.2" stroke-dasharray="7 5"/>
+            <g transform="translate(72,78)">
+              <g><animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="0.42s" repeatCount="indefinite"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8" transform="rotate(120 0 0)"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8" transform="rotate(240 0 0)"/>
+              </g>
+            </g>
+            <circle cx="72"  cy="78"  r="9"   fill="rgba(41,151,255,0.25)" stroke="rgba(41,151,255,0.8)" stroke-width="1.5"/>
+            <circle cx="72"  cy="78"  r="3.5" fill="rgba(41,151,255,0.9)"/>
+
+            <!-- Prop guard: FR (288,78) -->
+            <circle cx="288" cy="78"  r="50" fill="rgba(41,151,255,0.06)" stroke="rgba(41,151,255,0.72)" stroke-width="1.5"/>
+            <line x1="238" y1="78"  x2="338" y2="78"  stroke="rgba(41,151,255,0.5)"  stroke-width="1"/>
+            <line x1="288" y1="28"  x2="288" y2="128" stroke="rgba(41,151,255,0.5)"  stroke-width="1"/>
+            <line x1="253" y1="43"  x2="323" y2="113" stroke="#30d158" stroke-width="1.2" stroke-dasharray="7 5"/>
+            <line x1="323" y1="43"  x2="253" y2="113" stroke="#30d158" stroke-width="1.2" stroke-dasharray="7 5"/>
+            <g transform="translate(288,78)">
+              <g><animateTransform attributeName="transform" type="rotate" from="0 0 0" to="-360 0 0" dur="0.42s" repeatCount="indefinite"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8" transform="rotate(120 0 0)"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8" transform="rotate(240 0 0)"/>
+              </g>
+            </g>
+            <circle cx="288" cy="78"  r="9"   fill="rgba(41,151,255,0.25)" stroke="rgba(41,151,255,0.8)" stroke-width="1.5"/>
+            <circle cx="288" cy="78"  r="3.5" fill="rgba(41,151,255,0.9)"/>
+
+            <!-- Prop guard: RL (72,282) -->
+            <circle cx="72"  cy="282" r="50" fill="rgba(41,151,255,0.06)" stroke="rgba(41,151,255,0.72)" stroke-width="1.5"/>
+            <line x1="22"  y1="282" x2="122" y2="282" stroke="rgba(41,151,255,0.5)"  stroke-width="1"/>
+            <line x1="72"  y1="232" x2="72"  y2="332" stroke="rgba(41,151,255,0.5)"  stroke-width="1"/>
+            <line x1="37"  y1="247" x2="107" y2="317" stroke="#30d158" stroke-width="1.2" stroke-dasharray="7 5"/>
+            <line x1="107" y1="247" x2="37"  y2="317" stroke="#30d158" stroke-width="1.2" stroke-dasharray="7 5"/>
+            <g transform="translate(72,282)">
+              <g><animateTransform attributeName="transform" type="rotate" from="0 0 0" to="-360 0 0" dur="0.42s" repeatCount="indefinite"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8" transform="rotate(120 0 0)"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8" transform="rotate(240 0 0)"/>
+              </g>
+            </g>
+            <circle cx="72"  cy="282" r="9"   fill="rgba(41,151,255,0.25)" stroke="rgba(41,151,255,0.8)" stroke-width="1.5"/>
+            <circle cx="72"  cy="282" r="3.5" fill="rgba(41,151,255,0.9)"/>
+
+            <!-- Prop guard: RR (288,282) -->
+            <circle cx="288" cy="282" r="50" fill="rgba(41,151,255,0.06)" stroke="rgba(41,151,255,0.72)" stroke-width="1.5"/>
+            <line x1="238" y1="282" x2="338" y2="282" stroke="rgba(41,151,255,0.5)"  stroke-width="1"/>
+            <line x1="288" y1="232" x2="288" y2="332" stroke="rgba(41,151,255,0.5)"  stroke-width="1"/>
+            <line x1="253" y1="247" x2="323" y2="317" stroke="#30d158" stroke-width="1.2" stroke-dasharray="7 5"/>
+            <line x1="323" y1="247" x2="253" y2="317" stroke="#30d158" stroke-width="1.2" stroke-dasharray="7 5"/>
+            <g transform="translate(288,282)">
+              <g><animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="0.42s" repeatCount="indefinite"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8" transform="rotate(120 0 0)"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8" transform="rotate(240 0 0)"/>
+              </g>
+            </g>
+            <circle cx="288" cy="282" r="9"   fill="rgba(41,151,255,0.25)" stroke="rgba(41,151,255,0.8)" stroke-width="1.5"/>
+            <circle cx="288" cy="282" r="3.5" fill="rgba(41,151,255,0.9)"/>
+
+            <!-- Central body -->
+            <path d="M180 55 C194 55 200 72 200 100 L200 165 L200 195 L200 260
+                     C200 288 194 305 180 305
+                     C166 305 160 288 160 260 L160 195 L160 165 L160 100
+                     C160 72 166 55 180 55 Z"
+                  fill="rgba(41,151,255,0.14)" stroke="rgba(41,151,255,0.82)" stroke-width="1.6"/>
+            <!-- Body panel lines -->
+            <line x1="161" y1="130" x2="199" y2="130" stroke="rgba(41,151,255,0.28)" stroke-width="0.75"/>
+            <line x1="160" y1="180" x2="200" y2="180" stroke="rgba(41,151,255,0.22)" stroke-width="0.75"/>
+            <line x1="161" y1="230" x2="199" y2="230" stroke="rgba(41,151,255,0.28)" stroke-width="0.75"/>
+            <!-- Body spine -->
+            <line x1="180" y1="65" x2="180" y2="298" stroke="rgba(41,151,255,0.12)" stroke-width="0.75" stroke-dasharray="4 6"/>
+
+            <!-- Arm bracket mounts -->
+            <rect x="155" y="100" width="8" height="16" rx="1.5" fill="rgba(41,151,255,0.32)" stroke="rgba(41,151,255,0.65)" stroke-width="0.75"/>
+            <rect x="197" y="100" width="8" height="16" rx="1.5" fill="rgba(41,151,255,0.32)" stroke="rgba(41,151,255,0.65)" stroke-width="0.75"/>
+            <rect x="155" y="244" width="8" height="16" rx="1.5" fill="rgba(41,151,255,0.32)" stroke="rgba(41,151,255,0.65)" stroke-width="0.75"/>
+            <rect x="197" y="244" width="8" height="16" rx="1.5" fill="rgba(41,151,255,0.32)" stroke="rgba(41,151,255,0.65)" stroke-width="0.75"/>
+
+            <!-- Nose green dome -->
+            <ellipse cx="180" cy="62" rx="12" ry="9" fill="rgba(48,209,88,0.15)" stroke="#30d158" stroke-width="1.5"/>
+            <circle  cx="180" cy="62" r="4.5" fill="#30d158"/>
+
+            <!-- Orange CoM dot -->
+            <circle cx="180" cy="180" r="6" fill="#ff9f0a"/>
+          </svg>
+          <div class="drone-model__footer">
+            <span>CF-NYLON NODES</span>
+            <span>DUAL-BAND RF</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<div class="drones-visual">
+  <div class="visual-card">
+    <img class="airbase-img" src="assets/mapaircrafts.png" alt="Real-time aircraft detection over conflict zone" style="opacity: 0.65;" />
+    <div class="visual-caption">
+      <span class="label-mono caption-label">— Aerial Intelligence —</span>
+      <h2>Eyes over<br/>the horizon.</h2>
+      <p>Buraq drone systems integrate seamlessly with the platform's geospatial intelligence layer — detected assets are automatically logged, classified, and added to the evidence chain in real time.</p>
+    </div>
+  </div>
+</div>
+
+
+<section class="drones-specs">
+  <div class="drones-specs__header">
+    <span class="label-mono reveal">Technical Specifications</span>
+    <h2 class="reveal reveal-d1">Engineered for<br/>the mission.</h2>
+    <p class="reveal reveal-d2">Military-grade construction with open integration standards. Designed for rapid field deployment with minimal support infrastructure.</p>
+  </div>
+  <div class="drones-specs__grid">
+    <div class="drones-spec reveal">
+      <div class="drones-spec__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <div class="drones-spec__val">400m</div>
+      <div class="drones-spec__label">AGL Altitude</div>
+    </div>
+    <div class="drones-spec reveal reveal-d1">
+      <div class="drones-spec__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </div>
+      <div class="drones-spec__val">4h+</div>
+      <div class="drones-spec__label">Flight Endurance</div>
+    </div>
+    <div class="drones-spec reveal reveal-d2">
+      <div class="drones-spec__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+        </svg>
+      </div>
+      <div class="drones-spec__val">15km</div>
+      <div class="drones-spec__label">Operational Range</div>
+    </div>
+    <div class="drones-spec reveal reveal-d3">
+      <div class="drones-spec__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <div class="drones-spec__val">AES-256</div>
+      <div class="drones-spec__label">Encryption</div>
+    </div>
+  </div>
+</section>
+
+
+<section class="doctrine" id="integration">
+  <div class="doctrine-inner">
+    <div class="doctrine-left">
+      <span class="label-mono reveal">Platform Integration</span>
+      <h2 class="reveal reveal-d1">Feeds directly<br/>into <span>Buraq.</span></h2>
+      <p class="reveal reveal-d2">Every frame captured, every asset detected, every flight log — automatically ingested into the Buraq AI platform as verified, tamper-proof intelligence records ready for analysis and legal accountability.</p>
+      <a class="doctrine-link" href="/#contact">Request Integration Brief →</a>
+    </div>
+    <div class="doctrine-right">
+      <div class="doctrine-item reveal">
+        <div class="doctrine-item-head">
+          <div class="doctrine-item-num">01</div>
+          <h4>Live Feed Ingestion</h4>
+        </div>
+        <p>Video, thermal, and telemetry streams are ingested into the Buraq platform in real time via encrypted relay.</p>
+      </div>
+      <div class="doctrine-item reveal reveal-d1">
+        <div class="doctrine-item-head">
+          <div class="doctrine-item-num">02</div>
+          <h4>Automated Evidence Capture</h4>
+        </div>
+        <p>Every detection event is automatically logged with GPS coordinates, timestamp, and cryptographic hash — no manual intervention required.</p>
+      </div>
+      <div class="doctrine-item reveal reveal-d2">
+        <div class="doctrine-item-head">
+          <div class="doctrine-item-num">03</div>
+          <h4>AI Threat Tagging</h4>
+        </div>
+        <p>Detected assets are classified and cross-referenced against the Buraq threat database, surfacing relevant intelligence automatically.</p>
+      </div>
+      <div class="doctrine-item reveal reveal-d3">
+        <div class="doctrine-item-head">
+          <div class="doctrine-item-num">04</div>
+          <h4>Marqab Edge Upload</h4>
+        </div>
+        <p>Where cloud connectivity is unavailable, drone data is relayed through Marqab edge nodes for local processing and store-and-forward delivery.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/" class="footer-brand-name">
+        <img src="assets/buraq-logo.png" width="14" height="14" alt="" />
+        Buraq AI&trade;
+      </a>
+      <p>A next-generation platform built for protecting civilians, enforcing humanitarian operations, and prosecuting abusers worldwide.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/buraqaiofficial/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/buraq-ai" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="https://twitter.com/buraq_ai" target="_blank" rel="noopener" aria-label="X / Twitter">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733-16z"/><path d="M4 20l6.768-6.768m2.46-2.46l6.772-6.772"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Products</h4>
+      <ul>
+        <li><a href="/drones">Drones</a></li>
+        <li><a href="/evidence-vault">Evidence Vault</a></li>
+        <li><a href="/marqab">Buraq Edge</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/terms-of-use">Terms of Use</a></li>
+        <li><a href="/privacy-policy">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; <span data-year></span> Buraq AI Inc. — All rights reserved</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var burger = document.querySelector('.nav__burger');
+  var drawer = document.getElementById('sidenav');
+  var backdrop = document.querySelector('.sidenav__backdrop');
+  if (!burger || !drawer) return;
+  var open = function () { drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); if(backdrop) backdrop.classList.add('is-open'); document.body.style.overflow='hidden'; };
+  var close = function () { drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); if(backdrop) backdrop.classList.remove('is-open'); document.body.style.overflow=''; };
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function() { if(nav) nav.classList.toggle('is-scrolled', window.scrollY > 60); }, { passive: true });
+  burger.addEventListener('click', function() { drawer.getAttribute('aria-hidden') === 'false' ? close() : open(); });
+  backdrop && backdrop.addEventListener('click', close);
+  var closeBtn = drawer.querySelector('.sidenav__close');
+  closeBtn && closeBtn.addEventListener('click', close);
+  drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+})();
+(function () {
+  var bar = document.querySelector('.progress__fill');
+  if (!bar) return;
+  window.addEventListener('scroll', function () {
+    var total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = total > 0 ? Math.min((window.scrollY/total)*100,100)+'%' : '0%';
+  }, { passive: true });
+})();
+(function () {
+  var el = document.querySelector('[data-year]');
+  if (el) el.textContent = '2025';
+})();
+(function () {
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('is-visible'); });
+    return;
+  }
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+})();
+// Drone model — 3D tilt on mousemove
+(function () {
+  document.querySelectorAll('.drone-model__wrap').forEach(function (wrap) {
+    var svg = wrap.querySelector('.drone-model__svg');
+    if (!svg) return;
+    var cx = 0, cy = 0, tx = 0, ty = 0, raf;
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function tick() {
+      cx = lerp(cx, tx, 0.1);
+      cy = lerp(cy, ty, 0.1);
+      svg.style.transform = 'rotateX(' + cy + 'deg) rotateY(' + cx + 'deg)';
+      raf = requestAnimationFrame(tick);
+    }
+    wrap.addEventListener('mouseenter', function () { raf = requestAnimationFrame(tick); });
+    wrap.addEventListener('mouseleave', function () {
+      tx = 0; ty = 0;
+      setTimeout(function () { cancelAnimationFrame(raf); svg.style.transform = ''; }, 600);
+    });
+    wrap.addEventListener('mousemove', function (e) {
+      var r = wrap.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width  - 0.5;
+      var y = (e.clientY - r.top)  / r.height - 0.5;
+      tx =  x * 24;
+      ty = -y * 18;
+    });
+  });
+})();
+</script>
+</body>
+</html>

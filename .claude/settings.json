@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(do)",
+      "Bash(sed -i 's|fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900\\\\&display=swap|fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900\\\\&display=swap|g' \"c:/Users/Adam/Buraq-Website-Updated/$f\")",
+      "Bash(grep -rn \"fonts.googleapis\" c:/Users/Adam/Buraq-Website-Updated/*.html)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\Adam\\Buraq-Website-Updated"
+    ]
+  }
+}

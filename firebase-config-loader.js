@@ -62,19 +62,18 @@ class FirebaseConfigLoader {
    * @returns {Object} Firebase configuration
    */
   getLocalConfig() {
-    // For client-side apps, these values are not truly secret
-    // Firebase security comes from Firestore Security Rules, not hiding credentials
-    // However, we still want to avoid committing them to git
-    
+    // Keys are loaded at runtime from /__env.js (gitignored, deployed separately).
+    // Never hardcode API keys here — use window.__env instead.
+    const e = (typeof window !== 'undefined' && window.__env) || {};
     return {
-      apiKey: this.getEnvVar('FIREBASE_API_KEY') || 'AIzaSyBAQdBxdnV_-qsmVxjdK4fzAUNBEf-QHG8',
-      authDomain: this.getEnvVar('FIREBASE_AUTH_DOMAIN') || 'buraq-ai-2670c.firebaseapp.com',
-      databaseURL: this.getEnvVar('FIREBASE_DATABASE_URL') || 'https://buraq-ai-2670c-default-rtdb.firebaseio.com',
-      projectId: this.getEnvVar('FIREBASE_PROJECT_ID') || 'buraq-ai-2670c',
-      storageBucket: this.getEnvVar('FIREBASE_STORAGE_BUCKET') || 'buraq-ai-2670c.firebasestorage.app',
-      messagingSenderId: this.getEnvVar('FIREBASE_MESSAGING_SENDER_ID') || '910712236530',
-      appId: this.getEnvVar('FIREBASE_APP_ID') || '1:910712236530:web:9ad3566251dbf05e0fe36b',
-      measurementId: this.getEnvVar('FIREBASE_MEASUREMENT_ID') || 'G-P9RSTYSVT3'
+      apiKey:            this.getEnvVar('FIREBASE_API_KEY')            || e.FIREBASE_API_KEY,
+      authDomain:        this.getEnvVar('FIREBASE_AUTH_DOMAIN')        || e.FIREBASE_AUTH_DOMAIN,
+      databaseURL:       this.getEnvVar('FIREBASE_DATABASE_URL')       || e.FIREBASE_DATABASE_URL,
+      projectId:         this.getEnvVar('FIREBASE_PROJECT_ID')         || e.FIREBASE_PROJECT_ID,
+      storageBucket:     this.getEnvVar('FIREBASE_STORAGE_BUCKET')     || e.FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: this.getEnvVar('FIREBASE_MESSAGING_SENDER_ID')|| e.FIREBASE_MESSAGING_SENDER_ID,
+      appId:             this.getEnvVar('FIREBASE_APP_ID')             || e.FIREBASE_APP_ID,
+      measurementId:     this.getEnvVar('FIREBASE_MEASUREMENT_ID')     || e.FIREBASE_MEASUREMENT_ID,
     };
   }
 
