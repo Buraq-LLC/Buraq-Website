@@ -26,4 +26,6 @@ window.__env = {
   EV_STORAGE_BUCKET:     'buraq-ai-2670c.firebasestorage.app',
   EV_MESSAGING_SENDER_ID:'910712236530',
   EV_APP_ID:             '1:910712236530:web:9ad3566251dbf05e0fe36b',
+  // BuraqAI API endpoint
+  VAULT_BURAQAI_API:      'http://localhost:5000',
 };
