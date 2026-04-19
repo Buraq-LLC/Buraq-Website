@@ -61,13 +61,17 @@
   <div class="vault-hero__hash-bg" aria-hidden="true" id="hashBg"></div>
   <div class="vault-hero__glow"></div>
   <div class="vault-hero__content">
-    <h1 class="vault-hero__title">EVIDENCE<br/>VAULT</h1>
+    <h1 class="vault-hero__title">EVIDENCE VAULT</h1>
     <p class="vault-hero__sub">
       Tamper-proof, cryptographically verified records — built to withstand international legal scrutiny and support justice proceedings worldwide.
     </p>
+    <form class="vault-hero__subscribe" id="heroSubscribeForm" novalidate>
+      <input type="email" class="vault-hero__sub-input" placeholder="Enter your email for updates" autocomplete="email" required/>
+      <button type="submit" class="vault-hero__sub-btn">Subscribe</button>
+    </form>
+    <p class="vault-hero__sub-msg" id="heroSubMsg"></p>
     <div class="vault-hero__actions">
       <a class="vault-hero__btn" href="#vault-access">Request Access →</a>
-
     </div>
   </div>
 </section>
@@ -394,5 +398,29 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script src="/__env.js"></script>
 <script type="module" src="firebase-vault-init.js"></script>
+<script>
+(function () {
+  const form  = document.getElementById('heroSubscribeForm');
+  const msg   = document.getElementById('heroSubMsg');
+  if (!form) return;
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const email = form.querySelector('input[type="email"]').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      msg.style.color = '#ff453a'; msg.textContent = 'Please enter a valid email.'; return;
+    }
+    msg.style.color = 'var(--muted2)'; msg.textContent = 'Submitting…';
+    try {
+      if (typeof window.saveVaultInquiry === 'function') {
+        const res = await window.saveVaultInquiry({ email, type: 'subscribe', source: 'vault-hero' });
+        if (res.ok) { msg.style.color = '#30d158'; msg.textContent = 'Subscribed — we\'ll be in touch.'; form.reset(); }
+        else { msg.style.color = '#ff453a'; msg.textContent = res.error || 'Something went wrong.'; }
+      } else {
+        msg.style.color = '#30d158'; msg.textContent = 'Subscribed — we\'ll be in touch.'; form.reset();
+      }
+    } catch (_) { msg.style.color = '#ff453a'; msg.textContent = 'Something went wrong. Please try again.'; }
+  });
+})();
+</script>
 </body>
 </html>

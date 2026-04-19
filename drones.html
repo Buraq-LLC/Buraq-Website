@@ -188,75 +188,73 @@
           </div>
           <svg class="drone-model__svg" id="storkSVG" viewBox="0 0 360 360" fill="none" aria-hidden="true">
             <defs>
-              <pattern id="sg" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
-                <path d="M30 0L0 0 0 30" fill="none" stroke="rgba(41,151,255,0.07)" stroke-width="0.5"/>
+              <pattern id="stork-grid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M20 0L0 0 0 20" fill="none" stroke="rgba(41,151,255,0.07)" stroke-width="0.5"/>
               </pattern>
-              <radialGradient id="storkGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="rgba(41,151,255,0.08)"/>
-                <stop offset="100%" stop-color="rgba(41,151,255,0)"/>
-              </radialGradient>
             </defs>
-            <!-- Background -->
-            <rect width="360" height="360" fill="url(#sg)"/>
-            <rect width="360" height="360" fill="url(#storkGlow)"/>
-            <!-- HUD rings -->
-            <circle cx="180" cy="180" r="155" stroke="rgba(41,151,255,0.06)" stroke-width="1" stroke-dasharray="4 10"/>
-            <circle cx="180" cy="180" r="95"  stroke="rgba(41,151,255,0.04)" stroke-width="1"/>
-            <!-- Scan line (rotates) -->
-            <g>
-              <animateTransform attributeName="transform" type="rotate" from="0 180 180" to="360 180 180" dur="9s" repeatCount="indefinite"/>
-              <line x1="180" y1="180" x2="180" y2="28" stroke="rgba(41,151,255,0.22)" stroke-width="1"/>
-              <path d="M180 180 L145 88 A95 95 0 0 1 215 88 Z" fill="rgba(41,151,255,0.04)"/>
-            </g>
-            <!-- Crosshair -->
-            <line x1="180" y1="14" x2="180" y2="56"  stroke="rgba(41,151,255,0.18)" stroke-width="1"/>
-            <line x1="180" y1="304" x2="180" y2="346" stroke="rgba(41,151,255,0.18)" stroke-width="1"/>
-            <line x1="14"  y1="180" x2="56"  y2="180" stroke="rgba(41,151,255,0.18)" stroke-width="1"/>
-            <line x1="304" y1="180" x2="346" y2="180" stroke="rgba(41,151,255,0.18)" stroke-width="1"/>
+            <rect width="360" height="360" fill="#070c18"/>
+            <rect width="360" height="360" fill="url(#stork-grid)"/>
 
-            <!-- ── STORK AIRFRAME (top-down, nose up) ── -->
-            <!-- Fuselage -->
-            <path d="M180 46 L187 82 L191 150 L192 208 L189 284 L184 318 L180 322 L176 318 L171 284 L168 208 L169 150 L173 82 Z"
-                  fill="rgba(41,151,255,0.14)" stroke="rgba(41,151,255,0.75)" stroke-width="1.5" stroke-linejoin="round"/>
             <!-- Left wing -->
-            <path d="M170 157 L22 198 L44 214 L169 178 Z"
-                  fill="rgba(41,151,255,0.09)" stroke="rgba(41,151,255,0.6)" stroke-width="1.2"/>
+            <path d="M175 153 L15 163 L15 176 L175 170 Z"
+                  fill="rgba(41,151,255,0.10)" stroke="rgba(41,151,255,0.7)" stroke-width="1.4"/>
             <!-- Right wing -->
-            <path d="M190 157 L338 198 L316 214 L191 178 Z"
-                  fill="rgba(41,151,255,0.09)" stroke="rgba(41,151,255,0.6)" stroke-width="1.2"/>
-            <!-- Wing rib lines left -->
-            <line x1="96"  y1="205" x2="170" y2="167" stroke="rgba(41,151,255,0.18)" stroke-width="0.75"/>
-            <line x1="145" y1="202" x2="170" y2="172" stroke="rgba(41,151,255,0.13)" stroke-width="0.75"/>
-            <!-- Wing rib lines right -->
-            <line x1="264" y1="205" x2="190" y2="167" stroke="rgba(41,151,255,0.18)" stroke-width="0.75"/>
-            <line x1="215" y1="202" x2="190" y2="172" stroke="rgba(41,151,255,0.13)" stroke-width="0.75"/>
-            <!-- V-tail left -->
-            <path d="M175 288 L136 328 L150 330 L178 298 Z"
-                  fill="rgba(41,151,255,0.06)" stroke="rgba(41,151,255,0.5)" stroke-width="1"/>
-            <!-- V-tail right -->
-            <path d="M185 288 L224 328 L210 330 L182 298 Z"
-                  fill="rgba(41,151,255,0.06)" stroke="rgba(41,151,255,0.5)" stroke-width="1"/>
-            <!-- Pusher prop (dashed spinning ring) -->
-            <circle cx="180" cy="314" r="17" stroke="rgba(41,151,255,0.35)" stroke-width="1.2" stroke-dasharray="7 5">
-              <animateTransform attributeName="transform" type="rotate" from="0 180 314" to="360 180 314" dur="0.7s" repeatCount="indefinite"/>
-            </circle>
-            <circle cx="180" cy="314" r="3" fill="rgba(41,151,255,0.7)"/>
-            <!-- Nose camera pod -->
-            <circle cx="180" cy="56"  r="8"  fill="rgba(41,151,255,0.22)" stroke="rgba(41,151,255,0.85)" stroke-width="1.2"/>
-            <circle cx="180" cy="56"  r="3.5" fill="rgba(41,151,255,0.9)"/>
-            <!-- Fuselage centre line -->
-            <line x1="180" y1="65" x2="180" y2="305" stroke="rgba(41,151,255,0.12)" stroke-width="0.75" stroke-dasharray="3 5"/>
+            <path d="M185 153 L345 163 L345 176 L185 170 Z"
+                  fill="rgba(41,151,255,0.10)" stroke="rgba(41,151,255,0.7)" stroke-width="1.4"/>
+            <!-- Wing rib lines -->
+            <line x1="90"  y1="170" x2="175" y2="160" stroke="rgba(41,151,255,0.2)"  stroke-width="0.75"/>
+            <line x1="145" y1="169" x2="175" y2="164" stroke="rgba(41,151,255,0.14)" stroke-width="0.75"/>
+            <line x1="270" y1="170" x2="185" y2="160" stroke="rgba(41,151,255,0.2)"  stroke-width="0.75"/>
+            <line x1="215" y1="169" x2="185" y2="164" stroke="rgba(41,151,255,0.14)" stroke-width="0.75"/>
 
-            <!-- HUD data -->
-            <text x="24"  y="150" font-family="'Chivo Mono',monospace" font-size="7" fill="rgba(41,151,255,0.45)" letter-spacing="1">WS:1600MM</text>
-            <text x="24"  y="162" font-family="'Chivo Mono',monospace" font-size="7" fill="rgba(41,151,255,0.45)" letter-spacing="1">SPD:60KM/H</text>
-            <text x="246" y="150" font-family="'Chivo Mono',monospace" font-size="7" fill="rgba(41,151,255,0.45)" letter-spacing="1">AUW:1.5KG</text>
-            <text x="246" y="162" font-family="'Chivo Mono',monospace" font-size="7" fill="rgba(41,151,255,0.45)" letter-spacing="1">EFF:1.21WH</text>
-            <!-- Corner brackets -->
-            <path d="M16 16 L16 36 M16 16 L36 16" stroke="rgba(41,151,255,0.28)" stroke-width="1"/>
-            <path d="M344 16 L344 36 M344 16 L324 16" stroke="rgba(41,151,255,0.28)" stroke-width="1"/>
-            <path d="M16 344 L16 324 M16 344 L36 344" stroke="rgba(41,151,255,0.28)" stroke-width="1"/>
-            <path d="M344 344 L344 324 M344 344 L324 344" stroke="rgba(41,151,255,0.28)" stroke-width="1"/>
+            <!-- Fuselage -->
+            <path d="M180 65 L186 85 L190 128 L191 158 L191 196 L188 248 L185 272 L183 280 L180 285
+                     L177 280 L175 272 L172 248 L169 196 L169 158 L170 128 L174 85 Z"
+                  fill="rgba(41,151,255,0.13)" stroke="rgba(41,151,255,0.78)" stroke-width="1.5" stroke-linejoin="round"/>
+            <!-- Panel lines -->
+            <line x1="175" y1="120" x2="185" y2="120" stroke="rgba(41,151,255,0.30)" stroke-width="0.75"/>
+            <line x1="174" y1="145" x2="186" y2="145" stroke="rgba(41,151,255,0.22)" stroke-width="0.75"/>
+            <line x1="173" y1="205" x2="187" y2="205" stroke="rgba(41,151,255,0.22)" stroke-width="0.75"/>
+            <line x1="174" y1="240" x2="186" y2="240" stroke="rgba(41,151,255,0.30)" stroke-width="0.75"/>
+            <!-- Fuselage spine -->
+            <line x1="180" y1="84" x2="180" y2="278" stroke="rgba(41,151,255,0.1)" stroke-width="0.75" stroke-dasharray="4 6"/>
+
+            <!-- Wing root joints -->
+            <circle cx="176" cy="160" r="3.5" fill="rgba(41,151,255,0.3)" stroke="rgba(41,151,255,0.6)" stroke-width="1"/>
+            <circle cx="184" cy="160" r="3.5" fill="rgba(41,151,255,0.3)" stroke="rgba(41,151,255,0.6)" stroke-width="1"/>
+
+            <!-- V-tail left -->
+            <path d="M177 265 L143 296 L152 298 L179 272 Z"
+                  fill="rgba(41,151,255,0.07)" stroke="rgba(41,151,255,0.58)" stroke-width="1.2"/>
+            <!-- V-tail right -->
+            <path d="M183 265 L217 296 L208 298 L181 272 Z"
+                  fill="rgba(41,151,255,0.07)" stroke="rgba(41,151,255,0.58)" stroke-width="1.2"/>
+
+            <!-- Pusher prop -->
+            <circle cx="180" cy="290" r="18" stroke="rgba(41,151,255,0.45)" stroke-width="1.5" stroke-dasharray="6 4"/>
+            <g transform="translate(180,290)">
+              <g><animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="0.55s" repeatCount="indefinite"/>
+                <path d="M0 0 C2-4 3-11 1-17 C-1-17-3-11-2-4Z" fill="rgba(41,151,255,0.5)" stroke="rgba(41,151,255,0.7)" stroke-width="0.8"/>
+                <path d="M0 0 C2-4 3-11 1-17 C-1-17-3-11-2-4Z" fill="rgba(41,151,255,0.5)" stroke="rgba(41,151,255,0.7)" stroke-width="0.8" transform="rotate(180 0 0)"/>
+              </g>
+            </g>
+            <circle cx="180" cy="290" r="4"  fill="rgba(41,151,255,0.75)"/>
+
+            <!-- Blue tail indicator triangle -->
+            <path d="M180 310 L174 322 L186 322 Z" fill="rgba(41,151,255,0.85)"/>
+
+            <!-- Nose green triangle -->
+            <path d="M180 50 L173 64 L187 64 Z" fill="#32d74b"/>
+            <!-- Nose camera -->
+            <circle cx="180" cy="74" r="9"  fill="rgba(41,151,255,0.18)" stroke="rgba(41,151,255,0.85)" stroke-width="1.5"/>
+            <circle cx="180" cy="74" r="4"  fill="rgba(41,151,255,0.9)"/>
+
+            <!-- Orange CoM dot -->
+            <circle cx="180" cy="175" r="5.5" fill="#ff9f0a"/>
+
+            <!-- Wingtip nodes -->
+            <circle cx="15"  cy="169" r="5" fill="#2997ff" stroke="rgba(41,151,255,0.35)" stroke-width="1"/>
+            <circle cx="345" cy="169" r="5" fill="#2997ff" stroke="rgba(41,151,255,0.35)" stroke-width="1"/>
           </svg>
           <div class="drone-model__footer">
             <span>V-TAIL / PUSHER PROP</span>
@@ -333,169 +331,112 @@
           </div>
           <svg class="drone-model__svg" id="gen1SVG" viewBox="0 0 360 360" fill="none" aria-hidden="true">
             <defs>
-              <pattern id="gg" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
-                <path d="M30 0L0 0 0 30" fill="none" stroke="rgba(41,151,255,0.07)" stroke-width="0.5"/>
+              <pattern id="gen1-grid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M20 0L0 0 0 20" fill="none" stroke="rgba(41,151,255,0.07)" stroke-width="0.5"/>
               </pattern>
-              <radialGradient id="gen1Glow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="rgba(41,151,255,0.09)"/>
-                <stop offset="100%" stop-color="rgba(41,151,255,0)"/>
-              </radialGradient>
             </defs>
-            <rect width="360" height="360" fill="url(#gg)"/>
-            <rect width="360" height="360" fill="url(#gen1Glow)"/>
+            <rect width="360" height="360" fill="#070c18"/>
+            <rect width="360" height="360" fill="url(#gen1-grid)"/>
 
-            <!-- HUD rings -->
-            <circle cx="180" cy="184" r="152" stroke="rgba(41,151,255,0.055)" stroke-width="1" stroke-dasharray="4 10"/>
-            <circle cx="180" cy="184" r="105" stroke="rgba(41,151,255,0.04)"  stroke-width="1" stroke-dasharray="2 8"/>
-            <!-- Scan sweep (rotates around centre-of-mass) -->
-            <g>
-              <animateTransform attributeName="transform" type="rotate" from="0 180 184" to="360 180 184" dur="7s" repeatCount="indefinite"/>
-              <line x1="180" y1="184" x2="180" y2="32" stroke="rgba(41,151,255,0.18)" stroke-width="1"/>
-              <path d="M180 184 L150 78 A108 108 0 0 1 210 78 Z" fill="rgba(41,151,255,0.04)"/>
-            </g>
-            <!-- Crosshair stubs -->
-            <line x1="180" y1="14"  x2="180" y2="48"  stroke="rgba(41,151,255,0.15)" stroke-width="1"/>
-            <line x1="180" y1="320" x2="180" y2="346" stroke="rgba(41,151,255,0.15)" stroke-width="1"/>
-            <line x1="14"  y1="184" x2="48"  y2="184" stroke="rgba(41,151,255,0.15)" stroke-width="1"/>
-            <line x1="312" y1="184" x2="346" y2="184" stroke="rgba(41,151,255,0.15)" stroke-width="1"/>
+            <!-- Arms (V-brace, 2 lines per motor) -->
+            <line x1="163" y1="108" x2="72"  y2="78"  stroke="rgba(41,151,255,0.72)" stroke-width="3"   stroke-linecap="round"/>
+            <line x1="163" y1="140" x2="72"  y2="78"  stroke="rgba(41,151,255,0.5)"  stroke-width="2"   stroke-linecap="round"/>
+            <line x1="197" y1="108" x2="288" y2="78"  stroke="rgba(41,151,255,0.72)" stroke-width="3"   stroke-linecap="round"/>
+            <line x1="197" y1="140" x2="288" y2="78"  stroke="rgba(41,151,255,0.5)"  stroke-width="2"   stroke-linecap="round"/>
+            <line x1="163" y1="220" x2="72"  y2="282" stroke="rgba(41,151,255,0.5)"  stroke-width="2"   stroke-linecap="round"/>
+            <line x1="163" y1="252" x2="72"  y2="282" stroke="rgba(41,151,255,0.72)" stroke-width="3"   stroke-linecap="round"/>
+            <line x1="197" y1="220" x2="288" y2="282" stroke="rgba(41,151,255,0.5)"  stroke-width="2"   stroke-linecap="round"/>
+            <line x1="197" y1="252" x2="288" y2="282" stroke="rgba(41,151,255,0.72)" stroke-width="3"   stroke-linecap="round"/>
 
-            <!-- ══ REPLICANT GEN 1 AIRFRAME (accurate top-down) ══ -->
-
-            <!-- ── V-BRACE ARMS: two CF struts per motor ── -->
-            <!-- Each motor has: upper strut (primary, thicker) + lower strut (brace, thinner) -->
-
-            <!-- FL motor at (78,102): upper from body(153,100), lower from body(153,148) -->
-            <line x1="153" y1="100" x2="78"  y2="102" stroke="rgba(41,151,255,0.7)"  stroke-width="2.8" stroke-linecap="round"/>
-            <line x1="153" y1="148" x2="78"  y2="102" stroke="rgba(41,151,255,0.5)"  stroke-width="2"   stroke-linecap="round"/>
-            <!-- FR motor at (282,102): upper from (207,100), lower from (207,148) -->
-            <line x1="207" y1="100" x2="282" y2="102" stroke="rgba(41,151,255,0.7)"  stroke-width="2.8" stroke-linecap="round"/>
-            <line x1="207" y1="148" x2="282" y2="102" stroke="rgba(41,151,255,0.5)"  stroke-width="2"   stroke-linecap="round"/>
-            <!-- RL motor at (78,270): upper from body(153,218), lower from (153,264) -->
-            <line x1="153" y1="218" x2="78"  y2="270" stroke="rgba(41,151,255,0.5)"  stroke-width="2"   stroke-linecap="round"/>
-            <line x1="153" y1="264" x2="78"  y2="270" stroke="rgba(41,151,255,0.7)"  stroke-width="2.8" stroke-linecap="round"/>
-            <!-- RR motor at (282,270): upper from (207,218), lower from (207,264) -->
-            <line x1="207" y1="218" x2="282" y2="270" stroke="rgba(41,151,255,0.5)"  stroke-width="2"   stroke-linecap="round"/>
-            <line x1="207" y1="264" x2="282" y2="270" stroke="rgba(41,151,255,0.7)"  stroke-width="2.8" stroke-linecap="round"/>
-
-            <!-- Arm bracket mounts on body sides (small rectangles) -->
-            <rect x="147" y="92"  width="7" height="18" rx="1" fill="rgba(41,151,255,0.35)" stroke="rgba(41,151,255,0.65)" stroke-width="0.75"/>
-            <rect x="147" y="140" width="7" height="16" rx="1" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)"  stroke-width="0.75"/>
-            <rect x="206" y="92"  width="7" height="18" rx="1" fill="rgba(41,151,255,0.35)" stroke="rgba(41,151,255,0.65)" stroke-width="0.75"/>
-            <rect x="206" y="140" width="7" height="16" rx="1" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)"  stroke-width="0.75"/>
-            <rect x="147" y="210" width="7" height="16" rx="1" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)"  stroke-width="0.75"/>
-            <rect x="147" y="256" width="7" height="18" rx="1" fill="rgba(41,151,255,0.35)" stroke="rgba(41,151,255,0.65)" stroke-width="0.75"/>
-            <rect x="206" y="210" width="7" height="16" rx="1" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)"  stroke-width="0.75"/>
-            <rect x="206" y="256" width="7" height="18" rx="1" fill="rgba(41,151,255,0.35)" stroke="rgba(41,151,255,0.65)" stroke-width="0.75"/>
-
-            <!-- ── MOTOR MOUNTS ── -->
-            <circle cx="78"  cy="102" r="12" fill="rgba(41,151,255,0.16)" stroke="rgba(41,151,255,0.75)" stroke-width="1.5"/>
-            <circle cx="282" cy="102" r="12" fill="rgba(41,151,255,0.16)" stroke="rgba(41,151,255,0.75)" stroke-width="1.5"/>
-            <circle cx="78"  cy="270" r="12" fill="rgba(41,151,255,0.16)" stroke="rgba(41,151,255,0.75)" stroke-width="1.5"/>
-            <circle cx="282" cy="270" r="12" fill="rgba(41,151,255,0.16)" stroke="rgba(41,151,255,0.75)" stroke-width="1.5"/>
-            <!-- Motor centre shafts -->
-            <circle cx="78"  cy="102" r="4"  fill="rgba(41,151,255,0.7)"/>
-            <circle cx="282" cy="102" r="4"  fill="rgba(41,151,255,0.7)"/>
-            <circle cx="78"  cy="270" r="4"  fill="rgba(41,151,255,0.7)"/>
-            <circle cx="282" cy="270" r="4"  fill="rgba(41,151,255,0.7)"/>
-
-            <!-- ── 3-BLADE PROPS (each translated to motor, inner group spins) ── -->
-            <!-- Blade path (local coords, pointing -Y): swept teardrop shape -->
-            <!-- FL: CW -->
-            <g transform="translate(78,102)">
+            <!-- Prop guard: FL (72,78) -->
+            <circle cx="72"  cy="78"  r="50" fill="rgba(41,151,255,0.06)" stroke="rgba(41,151,255,0.72)" stroke-width="1.5"/>
+            <line x1="22"  y1="78"  x2="122" y2="78"  stroke="rgba(41,151,255,0.5)"  stroke-width="1"/>
+            <line x1="72"  y1="28"  x2="72"  y2="128" stroke="rgba(41,151,255,0.5)"  stroke-width="1"/>
+            <line x1="37"  y1="43"  x2="107" y2="113" stroke="#30d158" stroke-width="1.2" stroke-dasharray="7 5"/>
+            <line x1="107" y1="43"  x2="37"  y2="113" stroke="#30d158" stroke-width="1.2" stroke-dasharray="7 5"/>
+            <g transform="translate(72,78)">
               <g><animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="0.42s" repeatCount="indefinite"/>
-                <path d="M0-5 C5-11 7-22 4-35 C2-40-2-40-4-35 C-7-22-5-11 0-5Z" fill="rgba(41,151,255,0.3)" stroke="rgba(41,151,255,0.55)" stroke-width="0.8" stroke-linejoin="round"/>
-                <path d="M0-5 C5-11 7-22 4-35 C2-40-2-40-4-35 C-7-22-5-11 0-5Z" fill="rgba(41,151,255,0.3)" stroke="rgba(41,151,255,0.55)" stroke-width="0.8" stroke-linejoin="round" transform="rotate(120 0 0)"/>
-                <path d="M0-5 C5-11 7-22 4-35 C2-40-2-40-4-35 C-7-22-5-11 0-5Z" fill="rgba(41,151,255,0.3)" stroke="rgba(41,151,255,0.55)" stroke-width="0.8" stroke-linejoin="round" transform="rotate(240 0 0)"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8" transform="rotate(120 0 0)"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8" transform="rotate(240 0 0)"/>
               </g>
             </g>
-            <!-- FR: CCW -->
-            <g transform="translate(282,102)">
+            <circle cx="72"  cy="78"  r="9"   fill="rgba(41,151,255,0.25)" stroke="rgba(41,151,255,0.8)" stroke-width="1.5"/>
+            <circle cx="72"  cy="78"  r="3.5" fill="rgba(41,151,255,0.9)"/>
+
+            <!-- Prop guard: FR (288,78) -->
+            <circle cx="288" cy="78"  r="50" fill="rgba(41,151,255,0.06)" stroke="rgba(41,151,255,0.72)" stroke-width="1.5"/>
+            <line x1="238" y1="78"  x2="338" y2="78"  stroke="rgba(41,151,255,0.5)"  stroke-width="1"/>
+            <line x1="288" y1="28"  x2="288" y2="128" stroke="rgba(41,151,255,0.5)"  stroke-width="1"/>
+            <line x1="253" y1="43"  x2="323" y2="113" stroke="#30d158" stroke-width="1.2" stroke-dasharray="7 5"/>
+            <line x1="323" y1="43"  x2="253" y2="113" stroke="#30d158" stroke-width="1.2" stroke-dasharray="7 5"/>
+            <g transform="translate(288,78)">
               <g><animateTransform attributeName="transform" type="rotate" from="0 0 0" to="-360 0 0" dur="0.42s" repeatCount="indefinite"/>
-                <path d="M0-5 C5-11 7-22 4-35 C2-40-2-40-4-35 C-7-22-5-11 0-5Z" fill="rgba(41,151,255,0.3)" stroke="rgba(41,151,255,0.55)" stroke-width="0.8" stroke-linejoin="round"/>
-                <path d="M0-5 C5-11 7-22 4-35 C2-40-2-40-4-35 C-7-22-5-11 0-5Z" fill="rgba(41,151,255,0.3)" stroke="rgba(41,151,255,0.55)" stroke-width="0.8" stroke-linejoin="round" transform="rotate(120 0 0)"/>
-                <path d="M0-5 C5-11 7-22 4-35 C2-40-2-40-4-35 C-7-22-5-11 0-5Z" fill="rgba(41,151,255,0.3)" stroke="rgba(41,151,255,0.55)" stroke-width="0.8" stroke-linejoin="round" transform="rotate(240 0 0)"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8" transform="rotate(120 0 0)"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8" transform="rotate(240 0 0)"/>
               </g>
             </g>
-            <!-- RL: CCW -->
-            <g transform="translate(78,270)">
+            <circle cx="288" cy="78"  r="9"   fill="rgba(41,151,255,0.25)" stroke="rgba(41,151,255,0.8)" stroke-width="1.5"/>
+            <circle cx="288" cy="78"  r="3.5" fill="rgba(41,151,255,0.9)"/>
+
+            <!-- Prop guard: RL (72,282) -->
+            <circle cx="72"  cy="282" r="50" fill="rgba(41,151,255,0.06)" stroke="rgba(41,151,255,0.72)" stroke-width="1.5"/>
+            <line x1="22"  y1="282" x2="122" y2="282" stroke="rgba(41,151,255,0.5)"  stroke-width="1"/>
+            <line x1="72"  y1="232" x2="72"  y2="332" stroke="rgba(41,151,255,0.5)"  stroke-width="1"/>
+            <line x1="37"  y1="247" x2="107" y2="317" stroke="#30d158" stroke-width="1.2" stroke-dasharray="7 5"/>
+            <line x1="107" y1="247" x2="37"  y2="317" stroke="#30d158" stroke-width="1.2" stroke-dasharray="7 5"/>
+            <g transform="translate(72,282)">
               <g><animateTransform attributeName="transform" type="rotate" from="0 0 0" to="-360 0 0" dur="0.42s" repeatCount="indefinite"/>
-                <path d="M0-5 C5-11 7-22 4-35 C2-40-2-40-4-35 C-7-22-5-11 0-5Z" fill="rgba(41,151,255,0.3)" stroke="rgba(41,151,255,0.55)" stroke-width="0.8" stroke-linejoin="round"/>
-                <path d="M0-5 C5-11 7-22 4-35 C2-40-2-40-4-35 C-7-22-5-11 0-5Z" fill="rgba(41,151,255,0.3)" stroke="rgba(41,151,255,0.55)" stroke-width="0.8" stroke-linejoin="round" transform="rotate(120 0 0)"/>
-                <path d="M0-5 C5-11 7-22 4-35 C2-40-2-40-4-35 C-7-22-5-11 0-5Z" fill="rgba(41,151,255,0.3)" stroke="rgba(41,151,255,0.55)" stroke-width="0.8" stroke-linejoin="round" transform="rotate(240 0 0)"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8" transform="rotate(120 0 0)"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8" transform="rotate(240 0 0)"/>
               </g>
             </g>
-            <!-- RR: CW -->
-            <g transform="translate(282,270)">
+            <circle cx="72"  cy="282" r="9"   fill="rgba(41,151,255,0.25)" stroke="rgba(41,151,255,0.8)" stroke-width="1.5"/>
+            <circle cx="72"  cy="282" r="3.5" fill="rgba(41,151,255,0.9)"/>
+
+            <!-- Prop guard: RR (288,282) -->
+            <circle cx="288" cy="282" r="50" fill="rgba(41,151,255,0.06)" stroke="rgba(41,151,255,0.72)" stroke-width="1.5"/>
+            <line x1="238" y1="282" x2="338" y2="282" stroke="rgba(41,151,255,0.5)"  stroke-width="1"/>
+            <line x1="288" y1="232" x2="288" y2="332" stroke="rgba(41,151,255,0.5)"  stroke-width="1"/>
+            <line x1="253" y1="247" x2="323" y2="317" stroke="#30d158" stroke-width="1.2" stroke-dasharray="7 5"/>
+            <line x1="323" y1="247" x2="253" y2="317" stroke="#30d158" stroke-width="1.2" stroke-dasharray="7 5"/>
+            <g transform="translate(288,282)">
               <g><animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="0.42s" repeatCount="indefinite"/>
-                <path d="M0-5 C5-11 7-22 4-35 C2-40-2-40-4-35 C-7-22-5-11 0-5Z" fill="rgba(41,151,255,0.3)" stroke="rgba(41,151,255,0.55)" stroke-width="0.8" stroke-linejoin="round"/>
-                <path d="M0-5 C5-11 7-22 4-35 C2-40-2-40-4-35 C-7-22-5-11 0-5Z" fill="rgba(41,151,255,0.3)" stroke="rgba(41,151,255,0.55)" stroke-width="0.8" stroke-linejoin="round" transform="rotate(120 0 0)"/>
-                <path d="M0-5 C5-11 7-22 4-35 C2-40-2-40-4-35 C-7-22-5-11 0-5Z" fill="rgba(41,151,255,0.3)" stroke="rgba(41,151,255,0.55)" stroke-width="0.8" stroke-linejoin="round" transform="rotate(240 0 0)"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8" transform="rotate(120 0 0)"/>
+                <path d="M0-4 C4-9 5-22 3-38 C1-42-1-42-3-38 C-5-22-4-9 0-4Z" fill="rgba(41,151,255,0.28)" stroke="rgba(41,151,255,0.5)" stroke-width="0.8" transform="rotate(240 0 0)"/>
               </g>
             </g>
-            <!-- Prop guard rings (dashed, faint) -->
-            <circle cx="78"  cy="102" r="40" stroke="rgba(41,151,255,0.1)" stroke-width="1" stroke-dasharray="3 7"/>
-            <circle cx="282" cy="102" r="40" stroke="rgba(41,151,255,0.1)" stroke-width="1" stroke-dasharray="3 7"/>
-            <circle cx="78"  cy="270" r="40" stroke="rgba(41,151,255,0.1)" stroke-width="1" stroke-dasharray="3 7"/>
-            <circle cx="282" cy="270" r="40" stroke="rgba(41,151,255,0.1)" stroke-width="1" stroke-dasharray="3 7"/>
+            <circle cx="288" cy="282" r="9"   fill="rgba(41,151,255,0.25)" stroke="rgba(41,151,255,0.8)" stroke-width="1.5"/>
+            <circle cx="288" cy="282" r="3.5" fill="rgba(41,151,255,0.9)"/>
 
-            <!-- ── ELONGATED TORPEDO BODY (nose up, tail down) ── -->
-            <path d="M180 57
-                     C193 57 208 80 208 114
-                     L208 155 L208 188 L208 228
-                     C208 262 198 296 188 308
-                     L184 316 L180 320
-                     L176 316 L172 308
-                     C162 296 152 262 152 228
-                     L152 188 L152 155 L152 114
-                     C152 80 167 57 180 57 Z"
-                  fill="rgba(41,151,255,0.14)" stroke="rgba(41,151,255,0.82)" stroke-width="1.6" stroke-linejoin="round"/>
+            <!-- Central body -->
+            <path d="M180 55 C194 55 200 72 200 100 L200 165 L200 195 L200 260
+                     C200 288 194 305 180 305
+                     C166 305 160 288 160 260 L160 195 L160 165 L160 100
+                     C160 72 166 55 180 55 Z"
+                  fill="rgba(41,151,255,0.14)" stroke="rgba(41,151,255,0.82)" stroke-width="1.6"/>
+            <!-- Body panel lines -->
+            <line x1="161" y1="130" x2="199" y2="130" stroke="rgba(41,151,255,0.28)" stroke-width="0.75"/>
+            <line x1="160" y1="180" x2="200" y2="180" stroke="rgba(41,151,255,0.22)" stroke-width="0.75"/>
+            <line x1="161" y1="230" x2="199" y2="230" stroke="rgba(41,151,255,0.28)" stroke-width="0.75"/>
+            <!-- Body spine -->
+            <line x1="180" y1="65" x2="180" y2="298" stroke="rgba(41,151,255,0.12)" stroke-width="0.75" stroke-dasharray="4 6"/>
 
-            <!-- Body panel / rib lines -->
-            <line x1="153" y1="130" x2="207" y2="130" stroke="rgba(41,151,255,0.28)" stroke-width="0.75"/>
-            <line x1="152" y1="188" x2="208" y2="188" stroke="rgba(41,151,255,0.22)" stroke-width="0.75"/>
-            <line x1="153" y1="246" x2="207" y2="246" stroke="rgba(41,151,255,0.28)" stroke-width="0.75"/>
-            <!-- Centre spine (dashed) -->
-            <line x1="180" y1="68" x2="180" y2="312" stroke="rgba(41,151,255,0.12)" stroke-width="0.75" stroke-dasharray="4 6"/>
-            <!-- Chevron accent marks (mid-body, like the angular cuts in the image) -->
-            <path d="M172 175 L180 185 L188 175" fill="none" stroke="rgba(41,151,255,0.3)" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M172 195 L180 205 L188 195" fill="none" stroke="rgba(41,151,255,0.22)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
-            <!-- Venturi duct slots (top of body, near nose) -->
-            <rect x="169" y="118" width="10" height="5" rx="1" fill="rgba(41,151,255,0.25)" stroke="rgba(41,151,255,0.5)" stroke-width="0.75"/>
-            <rect x="181" y="118" width="10" height="5" rx="1" fill="rgba(41,151,255,0.25)" stroke="rgba(41,151,255,0.5)" stroke-width="0.75"/>
+            <!-- Arm bracket mounts -->
+            <rect x="155" y="100" width="8" height="16" rx="1.5" fill="rgba(41,151,255,0.32)" stroke="rgba(41,151,255,0.65)" stroke-width="0.75"/>
+            <rect x="197" y="100" width="8" height="16" rx="1.5" fill="rgba(41,151,255,0.32)" stroke="rgba(41,151,255,0.65)" stroke-width="0.75"/>
+            <rect x="155" y="244" width="8" height="16" rx="1.5" fill="rgba(41,151,255,0.32)" stroke="rgba(41,151,255,0.65)" stroke-width="0.75"/>
+            <rect x="197" y="244" width="8" height="16" rx="1.5" fill="rgba(41,151,255,0.32)" stroke="rgba(41,151,255,0.65)" stroke-width="0.75"/>
 
-            <!-- ── NOSE CAMERA (cylindrical pod at top) ── -->
-            <ellipse cx="180" cy="67" rx="11" ry="8" fill="rgba(41,151,255,0.2)" stroke="rgba(41,151,255,0.85)" stroke-width="1.3"/>
-            <circle  cx="180" cy="67" r="5"  fill="rgba(10,10,20,0.8)"    stroke="rgba(41,151,255,0.7)"  stroke-width="1"/>
-            <circle  cx="180" cy="67" r="2"  fill="rgba(41,151,255,0.95)"/>
+            <!-- Nose green dome -->
+            <ellipse cx="180" cy="62" rx="12" ry="9" fill="rgba(48,209,88,0.15)" stroke="#30d158" stroke-width="1.5"/>
+            <circle  cx="180" cy="62" r="4.5" fill="#30d158"/>
 
-            <!-- ── GREEN POWER INDICATOR RING (upper body ~35% from nose) ── -->
-            <circle cx="180" cy="158" r="10" fill="none" stroke="rgba(30,220,80,0.85)" stroke-width="2.2">
-              <animate attributeName="opacity" values="1;0.35;1" dur="2.8s" repeatCount="indefinite"/>
-            </circle>
-            <circle cx="180" cy="158" r="4.5" fill="rgba(30,220,80,0.55)">
-              <animate attributeName="opacity" values="1;0.35;1" dur="2.8s" repeatCount="indefinite"/>
-            </circle>
-
-            <!-- ── RED TAIL ELEMENT (antenna / connector at tail tip) ── -->
-            <rect x="176" y="308" width="8" height="14" rx="2.5" fill="rgba(255,45,45,0.95)" stroke="rgba(255,90,90,0.5)" stroke-width="0.75"/>
-
-            <!-- HUD data labels -->
-            <text x="18"  y="102" font-family="'Chivo Mono',monospace" font-size="7" fill="rgba(41,151,255,0.42)" letter-spacing="1">3-BLADE</text>
-            <text x="18"  y="114" font-family="'Chivo Mono',monospace" font-size="7" fill="rgba(41,151,255,0.42)" letter-spacing="1">7IN PROP</text>
-            <text x="248" y="102" font-family="'Chivo Mono',monospace" font-size="7" fill="rgba(41,151,255,0.42)" letter-spacing="1">ESC:55A</text>
-            <text x="248" y="114" font-family="'Chivo Mono',monospace" font-size="7" fill="rgba(41,151,255,0.42)" letter-spacing="1">6S/5AH</text>
-            <text x="18"  y="270" font-family="'Chivo Mono',monospace" font-size="7" fill="rgba(41,151,255,0.38)" letter-spacing="1">CF-NYLON</text>
-            <text x="248" y="270" font-family="'Chivo Mono',monospace" font-size="7" fill="rgba(41,151,255,0.38)" letter-spacing="1">V-BRACE</text>
-
-            <!-- Corner brackets -->
-            <path d="M16 16 L16 36 M16 16 L36 16" stroke="rgba(41,151,255,0.28)" stroke-width="1"/>
-            <path d="M344 16 L344 36 M344 16 L324 16" stroke="rgba(41,151,255,0.28)" stroke-width="1"/>
-            <path d="M16 344 L16 324 M16 344 L36 344" stroke="rgba(41,151,255,0.28)" stroke-width="1"/>
-            <path d="M344 344 L344 324 M344 344 L324 344" stroke="rgba(41,151,255,0.28)" stroke-width="1"/>
-            <!-- Status dot -->
-            <circle cx="334" cy="28" r="4" fill="#30d158">
-              <animate attributeName="opacity" values="1;0.2;1" dur="2.2s" repeatCount="indefinite"/>
-            </circle>
+            <!-- Orange CoM dot -->
+            <circle cx="180" cy="180" r="6" fill="#ff9f0a"/>
           </svg>
           <div class="drone-model__footer">
             <span>CF-NYLON NODES</span>

@@ -62,10 +62,9 @@
 
   
   <section class="hero" id="hero">
-    
     <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
 
-    
+
     <div class="hero__inner">
 
       
@@ -118,103 +117,9 @@
 
       
       <div class="hero__right">
-        <div class="hero__reticle-wrap" id="heroReticleWrap">
-          <svg class="hero__reticle-svg" viewBox="0 0 480 480" fill="none"
-               id="heroReticleSVG" aria-hidden="true">
-            <defs>
-              <radialGradient id="scanGrad" cx="240" cy="240" r="218"
-                              gradientUnits="userSpaceOnUse">
-                <stop offset="0%"   stop-color="rgba(41,151,255,0.18)"/>
-                <stop offset="100%" stop-color="rgba(41,151,255,0)"/>
-              </radialGradient>
-            </defs>
 
-            
-            <circle cx="240" cy="240" r="218" stroke="rgba(41,151,255,0.12)" stroke-width="1"/>
-            
-            <g stroke="rgba(41,151,255,0.3)" stroke-width="1">
-              <line x1="240" y1="22"  x2="240" y2="42"/>  
-              <line x1="349" y1="53"  x2="334" y2="66"/>  
-              <line x1="416" y1="162" x2="401" y2="170"/> 
-              <line x1="458" y1="240" x2="438" y2="240"/> 
-              <line x1="416" y1="318" x2="401" y2="310"/> 
-              <line x1="349" y1="427" x2="334" y2="414"/> 
-              <line x1="240" y1="458" x2="240" y2="438"/> 
-              <line x1="131" y1="427" x2="146" y2="414"/> 
-              <line x1="64"  y1="318" x2="79"  y2="310"/> 
-              <line x1="22"  y1="240" x2="42"  y2="240"/> 
-              <line x1="64"  y1="162" x2="79"  y2="170"/> 
-              <line x1="131" y1="53"  x2="146" y2="66"/>  
-            </g>
-            
-            <g stroke="rgba(41,151,255,0.12)" stroke-width="1">
-              <line x1="276" y1="23"  x2="272" y2="32"/>
-              <line x1="311" y1="31"  x2="303" y2="40"/>
-              <line x1="386" y1="100" x2="377" y2="109"/>
-              <line x1="422" y1="130" x2="411" y2="137"/>
-              <line x1="450" y1="204" x2="439" y2="207"/>
-              <line x1="456" y1="276" x2="445" y2="273"/>
-              <line x1="440" y1="350" x2="429" y2="343"/>
-              <line x1="204" y1="23"  x2="208" y2="32"/>
-              <line x1="169" y1="31"  x2="177" y2="40"/>
-              <line x1="58"  y1="204" x2="69"  y2="207"/>
-              <line x1="24"  y1="276" x2="35"  y2="273"/>
-            </g>
+        <div class="hero__glitch-wrap" id="heroGlitchWrap" aria-hidden="true"></div>
 
-            
-            <circle cx="240" cy="240" r="160" stroke="rgba(41,151,255,0.07)"
-                    stroke-width="1" stroke-dasharray="3 11"/>
-            
-            <circle cx="240" cy="240" r="88" stroke="rgba(41,151,255,0.2)"
-                    stroke-width="1"/>
-            
-            <circle cx="240" cy="240" r="28" stroke="rgba(41,151,255,0.3)"
-                    stroke-width="1" stroke-dasharray="2 6"/>
-
-            
-            <line x1="240" y1="22"  x2="240" y2="152" stroke="rgba(41,151,255,0.35)" stroke-width="1"/>
-            <line x1="240" y1="328" x2="240" y2="458" stroke="rgba(41,151,255,0.35)" stroke-width="1"/>
-            <line x1="22"  y1="240" x2="152" y2="240" stroke="rgba(41,151,255,0.35)" stroke-width="1"/>
-            <line x1="328" y1="240" x2="458" y2="240" stroke="rgba(41,151,255,0.35)" stroke-width="1"/>
-
-            
-            <path d="M52 52 L92 52 M52 52 L52 92"    stroke="rgba(41,151,255,0.55)" stroke-width="1.5"/>
-            <path d="M428 52 L388 52 M428 52 L428 92" stroke="rgba(41,151,255,0.55)" stroke-width="1.5"/>
-            <path d="M52 428 L92 428 M52 428 L52 388" stroke="rgba(41,151,255,0.55)" stroke-width="1.5"/>
-            <path d="M428 428 L388 428 M428 428 L428 388" stroke="rgba(41,151,255,0.55)" stroke-width="1.5"/>
-
-            
-            <text x="229" y="16"  fill="rgba(41,151,255,0.5)" font-family="monospace" font-size="8" letter-spacing="1">000°</text>
-            <text x="462" y="243" fill="rgba(41,151,255,0.5)" font-family="monospace" font-size="8" letter-spacing="1">090°</text>
-            <text x="225" y="474" fill="rgba(41,151,255,0.5)" font-family="monospace" font-size="8" letter-spacing="1">180°</text>
-            <text x="-2"  y="243" fill="rgba(41,151,255,0.5)" font-family="monospace" font-size="8" letter-spacing="1">270°</text>
-
-            
-            <text x="58"  y="108" fill="rgba(41,151,255,0.3)" font-family="monospace" font-size="7" letter-spacing="0.5">LAT 31.7767°N</text>
-            <text x="58"  y="120" fill="rgba(41,151,255,0.3)" font-family="monospace" font-size="7" letter-spacing="0.5">LON 35.2345°E</text>
-            <text x="316" y="368" fill="rgba(41,151,255,0.3)" font-family="monospace" font-size="7" letter-spacing="0.5">ALT 850m</text>
-            <text x="316" y="380" fill="rgba(41,151,255,0.3)" font-family="monospace" font-size="7" letter-spacing="0.5">SPD 12kn</text>
-
-            
-            <g class="hero__scan-arc" id="heroScanArc">
-              <path d="M240 240 L240 22 A218 218 0 0 1 349 53 Z" fill="url(#scanGrad)" opacity="0.6"/>
-            </g>
-
-            
-            <g id="heroTrackDot">
-              <line x1="228" y1="240" x2="252" y2="240" stroke="rgba(41,151,255,0.6)" stroke-width="0.75"/>
-              <line x1="240" y1="228" x2="240" y2="252" stroke="rgba(41,151,255,0.6)" stroke-width="0.75"/>
-              <circle cx="240" cy="240" r="4"  fill="#2997ff"/>
-              <circle cx="240" cy="240" r="12" stroke="#2997ff" stroke-width="1" fill="none" class="track-ring-pulse"/>
-              <circle cx="240" cy="240" r="22" stroke="rgba(41,151,255,0.2)" stroke-width="1" fill="none"/>
-            </g>
-
-            
-            <text x="254" y="256" fill="rgba(41,151,255,0.4)" font-family="monospace" font-size="7" letter-spacing="2">ACQUIRING</text>
-          </svg>
-        </div>
-
-        
         <div class="hero__terminal">
           <span class="hero__terminal-prompt">// </span><span
             id="heroTyping"></span><span class="hero__terminal-cursor">_</span>

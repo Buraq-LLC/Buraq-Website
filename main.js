@@ -423,12 +423,125 @@ function initHeroCanvas() {
   }
 }
 
+/* ─── GLITCH HORSE — 3D canvas animation ─────────────────────────── */
+function removeWhiteBg(data) {
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i], g = data[i+1], b = data[i+2];
+    const brightness = (r + g + b) / 3;
+    if (brightness > 220) {
+      data[i+3] = Math.max(0, Math.round((255 - brightness) * (255 / 35)));
+    }
+  }
+}
+
+function colorCanvas(raw, W, H, rMul, gMul, bMul) {
+  const out = new Uint8ClampedArray(W * H * 4);
+  const d = raw.data;
+  for (let i = 0; i < d.length; i += 4) {
+    out[i]   = Math.min(255, d[i]   * rMul);
+    out[i+1] = Math.min(255, d[i+1] * gMul);
+    out[i+2] = Math.min(255, d[i+2] * bMul);
+    out[i+3] = d[i+3];
+  }
+  const c = document.createElement('canvas');
+  c.width = W; c.height = H;
+  c.getContext('2d').putImageData(new ImageData(out, W, H), 0, 0);
+  return c;
+}
+
+function initGlitchHorse() {
+  const wrap = document.getElementById('heroGlitchWrap');
+  if (!wrap) return;
+  const canvas = document.createElement('canvas');
+  canvas.className = 'hero__glitch-canvas';
+  wrap.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  const img = new Image();
+  img.onload = () => {
+    const W = img.naturalWidth, H = img.naturalHeight;
+    canvas.width = W; canvas.height = H;
+
+    const tmp = document.createElement('canvas');
+    tmp.width = W; tmp.height = H;
+    const tCtx = tmp.getContext('2d');
+    tCtx.drawImage(img, 0, 0);
+    const raw = tCtx.getImageData(0, 0, W, H);
+    removeWhiteBg(raw.data);
+
+    // Base + channel-split canvases
+    const clean = colorCanvas(raw, W, H, 1,    1,    1);
+    const redC  = colorCanvas(raw, W, H, 1.4,  0.1,  0.4);
+    const blueC = colorCanvas(raw, W, H, 0.05, 0.6,  1.5);
+
+    let elapsed = 0, lastTs = 0;
+    let nextGlitch = 1800 + Math.random() * 3000;
+    let glitching = false, glitchAge = 0, glitchDur = 0;
+
+    function layer3D(src, scaleX, scaleY, tx, ty, alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      // Centre the scale transform
+      ctx.transform(scaleX, 0, 0, scaleY, tx + W * (1 - scaleX) / 2, ty + H * (1 - scaleY) / 2);
+      ctx.drawImage(src, 0, 0);
+      ctx.restore();
+    }
+
+    function frame(ts) {
+      const dt = ts - lastTs || 16; lastTs = ts; elapsed += dt;
+      ctx.clearRect(0, 0, W, H);
+
+      if (!glitching && elapsed > nextGlitch) {
+        glitching = true; glitchAge = 0;
+        glitchDur = 80 + Math.random() * 320;
+        nextGlitch = elapsed + 1600 + Math.random() * 4000;
+      }
+      if (glitching) {
+        glitchAge += dt;
+        if (glitchAge >= glitchDur) glitching = false;
+
+        const sh  = 10 + Math.random() * 18;   // horizontal channel shift
+        const sv  = 3  + Math.random() * 7;    // vertical channel shift
+        const ds  = 0.03 + Math.random() * 0.05; // depth scale delta
+
+        // 3D channel layers: red pushed forward (bigger), blue receded (smaller)
+        layer3D(redC,  1 + ds, 1 + ds,  sh,  -sv, 0.65);
+        layer3D(blueC, 1 - ds, 1 - ds, -sh,   sv, 0.55);
+        layer3D(clean, 1,      1,        0,    0,  1);
+
+        // Depth-perspective slice tears
+        if (Math.random() < 0.65) {
+          const slices = 3 + Math.floor(Math.random() * 5);
+          for (let i = 0; i < slices; i++) {
+            const sy   = Math.random() * H;
+            const sh2  = 4 + Math.random() * 22;
+            const depth = sy / H;                       // 0=top, 1=bottom
+            const sx   = (Math.random() < 0.5 ? -1 : 1)
+                         * (6 + Math.random() * 32) * (0.4 + depth * 0.9);
+            const skew = (Math.random() - 0.5) * 0.08; // slight z-skew
+            ctx.save();
+            ctx.transform(1, skew, 0, 1, sx, 0);
+            ctx.drawImage(clean, 0, sy, W, sh2, 0, sy, W, sh2);
+            ctx.restore();
+          }
+        }
+      } else {
+        ctx.globalAlpha = 1;
+        ctx.drawImage(clean, 0, 0);
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  };
+  img.src = 'assets/Adobe Express - file.png';
+}
+
 /* ─── BOOT ───────────────────────────────────────────────────────── */
 function init() {
   initProgress();
   initNav();
   initHero();
   initHeroCanvas();
+  initGlitchHorse();
   initReveal();
   initSmoothScroll();
   initForm();
