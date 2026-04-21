@@ -1650,6 +1650,7 @@ footer {
   background: var(--bg2); border: 1px solid var(--border);
   border-radius: 2px; margin-bottom: 24px; overflow: hidden;
   transition: border-color 0.25s;
+  clip-path: inset(0 round 2px);
 }
 .drone-platform:hover { border-color: var(--border2); }
 .drone-platform--alt { border-color: rgba(41,151,255,0.18); }
@@ -1665,7 +1666,9 @@ footer {
 .drone-model__wrap {
   background: #070c18; border-right: 1px solid var(--border);
   display: flex; flex-direction: column;
-  perspective: 900px; cursor: default; user-select: none;
+  cursor: default; user-select: none;
+  position: relative; z-index: 0;
+  overflow: hidden;
 }
 .drone-platform__inner--rev .drone-model__wrap {
   border-right: none; border-left: 1px solid var(--border);
@@ -1695,7 +1698,7 @@ footer {
 }
 
 /* ── Content panel ── */
-.drone-platform__content { padding: 40px 44px; }
+.drone-platform__content { padding: 40px 44px; position: relative; z-index: 1; }
 .drone-platform__header {
   display: flex; align-items: center; gap: 16px; margin-bottom: 12px; flex-wrap: wrap;
 }

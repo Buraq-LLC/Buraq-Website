@@ -649,7 +649,7 @@
     function tick() {
       cx = lerp(cx, tx, 0.1);
       cy = lerp(cy, ty, 0.1);
-      svg.style.transform = 'rotateX(' + cy + 'deg) rotateY(' + cx + 'deg)';
+      svg.style.transform = 'perspective(900px) rotateX(' + cy + 'deg) rotateY(' + cx + 'deg)';
       raf = requestAnimationFrame(tick);
     }
     wrap.addEventListener('mouseenter', function () { raf = requestAnimationFrame(tick); });
