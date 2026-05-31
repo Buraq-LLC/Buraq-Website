@@ -79,12 +79,15 @@ class SecurityManager {
   setupSecurityHeaders() {
     // Log recommendations for server-side implementation
     console.log('[Security] Recommended HTTP headers for server configuration:');
-    console.log('Content-Security-Policy: default-src \'self\'; script-src \'self\' https://www.google.com https://www.gstatic.com; style-src \'self\' \'unsafe-inline\' https://fonts.googleapis.com; font-src \'self\' https://fonts.gstatic.com; img-src \'self\' data: https:; connect-src \'self\' https://*.googleapis.com https://*.firebaseio.com;');
+    console.log('Content-Security-Policy: default-src \'self\'; script-src \'self\' https://www.google.com https://www.gstatic.com; style-src \'self\' \'unsafe-inline\' https://fonts.googleapis.com; font-src \'self\' https://fonts.gstatic.com; img-src \'self\' data: https:; connect-src \'self\' https://*.googleapis.com https://*.firebaseio.com; frame-ancestors \'none\'; base-uri \'self\'; object-src \'none\'; form-action \'self\';');
     console.log('X-Content-Type-Options: nosniff');
     console.log('X-Frame-Options: DENY');
     console.log('X-XSS-Protection: 1; mode=block');
     console.log('Referrer-Policy: strict-origin-when-cross-origin');
     console.log('Permissions-Policy: geolocation=(), microphone=(), camera=()');
+    console.log('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
+    console.log('Cross-Origin-Opener-Policy: same-origin');
+    console.log('Cross-Origin-Resource-Policy: same-origin');
   }
 
   /**
