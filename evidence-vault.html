@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
-<meta name="theme-color" content="#020305" />
+<meta name="theme-color" content="#040507" />
 <link rel="manifest" href="manifest.json" />
 <title>Buraq AI | Evidence Vault</title>
 <meta name="description" content="Buraq AI Evidence Vault — tamper-proof, cryptographically verified records for international accountability and legal proceedings." />
@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" sizes="48x48" href="assets/buraq-logo.png" />
-<link rel="stylesheet" href="styles.css?v=8" />
+<link rel="stylesheet" href="styles.css?v=9" />
 </head>
 <body>
 
@@ -77,40 +77,76 @@
 </section>
 
 
-<section class="vault-chain">
-  <div class="vault-chain__inner">
-    <div class="vault-chain__header">
+<div class="vault-console">
+  <aside class="vault-rail" aria-label="Case file navigation">
+    <div class="vault-rail__case">
+      <span class="vault-rail__case-label">Case File</span>
+      <span class="vault-rail__case-id">EV-2026</span>
+    </div>
+    <nav class="vault-rail__index" aria-label="Section index">
+      <a href="#vault-custody" class="is-active"><span>01</span> Custody</a>
+      <a href="#vault-capabilities"><span>02</span> Capabilities</a>
+      <a href="#vault-metrics"><span>03</span> Metrics</a>
+      <a href="#vault-compliance"><span>04</span> Compliance</a>
+      <a href="#vault-access"><span>05</span> Access</a>
+    </nav>
+    <div class="vault-rail__status">
+      <div class="vault-rail__status-row"><span class="vault-rail__dot"></span> SECURE</div>
+      <div class="vault-rail__status-row vault-rail__status-meta">AES-256 · SHA-256</div>
+      <code class="vault-rail__hash" id="liveHash">sha256:0000000000000000 ✓</code>
+    </div>
+  </aside>
+
+  <div class="vault-console__main">
+
+  <section class="vault-chain" id="vault-custody">
+    <div class="vault-chain__head">
       <span class="label-mono reveal">Chain of Custody</span>
-      <h2 class="reveal reveal-d1">From field capture<br/>to courtroom.</h2>
+      <h2 class="reveal reveal-d1">From field capture to courtroom.</h2>
       <p class="reveal reveal-d2">Every piece of evidence follows an unbroken, cryptographically verified chain from the moment of capture to legal submission — no gaps, no tampering possible.</p>
     </div>
-    <div class="vault-chain__steps">
-      <div class="vault-step reveal">
-        <div class="vault-step__num">01</div>
-        <div class="vault-step__title">Capture</div>
-        <p class="vault-step__desc">Field sensors and operators capture events through Buraq-connected devices. Each capture is immediately hashed at the point of origin.</p>
+    <div class="vault-ledger">
+      <div class="vault-record reveal">
+        <div class="vault-record__head">
+          <span class="vault-record__id">01</span>
+          <span class="vault-record__op">CAPTURE</span>
+          <code class="vault-record__hash">sha256:9f2a1c7d4e8b…</code>
+          <span class="vault-record__stamp">✓ VERIFIED</span>
+        </div>
+        <p class="vault-record__desc">Field sensors and operators capture events through Buraq-connected devices. Each capture is immediately hashed at the point of origin.</p>
       </div>
-      <div class="vault-step reveal reveal-d1">
-        <div class="vault-step__num">02</div>
-        <div class="vault-step__title">Hash</div>
-        <p class="vault-step__desc">A SHA-256 cryptographic fingerprint is generated and appended to the record. Any subsequent modification invalidates the hash — making tampering detectable.</p>
+      <div class="vault-record reveal reveal-d1">
+        <div class="vault-record__head">
+          <span class="vault-record__id">02</span>
+          <span class="vault-record__op">HASH</span>
+          <code class="vault-record__hash">sha256:1c7d4e8b9f2a…</code>
+          <span class="vault-record__stamp">✓ VERIFIED</span>
+        </div>
+        <p class="vault-record__desc">A SHA-256 cryptographic fingerprint is generated and appended to the record. Any subsequent modification invalidates the hash — making tampering detectable.</p>
       </div>
-      <div class="vault-step reveal reveal-d2">
-        <div class="vault-step__num">03</div>
-        <div class="vault-step__title">Store</div>
-        <p class="vault-step__desc">Records are encrypted with AES-256 and stored across geographically distributed, air-gapped infrastructure with automated redundancy verification.</p>
+      <div class="vault-record reveal reveal-d2">
+        <div class="vault-record__head">
+          <span class="vault-record__id">03</span>
+          <span class="vault-record__op">STORE</span>
+          <code class="vault-record__hash">sha256:4e8b9f2a1c7d…</code>
+          <span class="vault-record__stamp">✓ VERIFIED</span>
+        </div>
+        <p class="vault-record__desc">Records are encrypted with AES-256 and stored across geographically distributed, air-gapped infrastructure with automated redundancy verification.</p>
       </div>
-      <div class="vault-step reveal reveal-d3">
-        <div class="vault-step__num">04</div>
-        <div class="vault-step__title">Export</div>
-        <p class="vault-step__desc">Court-ready export in international standard formats — PDF/A, XML, and open-chain formats — with full chain of custody documentation attached.</p>
+      <div class="vault-record reveal reveal-d3">
+        <div class="vault-record__head">
+          <span class="vault-record__id">04</span>
+          <span class="vault-record__op">EXPORT</span>
+          <code class="vault-record__hash">sha256:b9f2a1c7d4e8…</code>
+          <span class="vault-record__stamp">✓ VERIFIED</span>
+        </div>
+        <p class="vault-record__desc">Court-ready export in international standard formats — PDF/A, XML, and open-chain formats — with full chain of custody documentation attached.</p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
 
-<section class="vault-features">
+<section class="vault-features" id="vault-capabilities">
   <div class="vault-features__inner">
     <div class="vault-features__left">
       <span class="label-mono reveal">Core Capabilities</span>
@@ -121,28 +157,28 @@
     <div class="vault-features__right">
       <div class="doctrine-item reveal">
         <div class="doctrine-item-head">
-          <div class="doctrine-item-num" style="color:#d4a017; border-color:rgba(212,160,23,0.3);">01</div>
+          <div class="doctrine-item-num">01</div>
           <h4>Tamper-Proof Storage</h4>
         </div>
         <p>Every record is cryptographically sealed at the moment of creation. Any modification — even a single bit — is immediately detectable through hash verification.</p>
       </div>
       <div class="doctrine-item reveal reveal-d1">
         <div class="doctrine-item-head">
-          <div class="doctrine-item-num" style="color:#d4a017; border-color:rgba(212,160,23,0.3);">02</div>
+          <div class="doctrine-item-num">02</div>
           <h4>Chronological Verification</h4>
         </div>
         <p>Timestamps are anchored to independent, verifiable time sources. Every record in the Vault carries a provable creation time that cannot be backdated or altered.</p>
       </div>
       <div class="doctrine-item reveal reveal-d2">
         <div class="doctrine-item-head">
-          <div class="doctrine-item-num" style="color:#d4a017; border-color:rgba(212,160,23,0.3);">03</div>
+          <div class="doctrine-item-num">03</div>
           <h4>Access Control & Audit Trail</h4>
         </div>
         <p>Granular role-based access with a full immutable audit log of every read, export, and administrative action — every interaction is recorded and verifiable.</p>
       </div>
       <div class="doctrine-item reveal reveal-d3">
         <div class="doctrine-item-head">
-          <div class="doctrine-item-num" style="color:#d4a017; border-color:rgba(212,160,23,0.3);">04</div>
+          <div class="doctrine-item-num">04</div>
           <h4>Court-Ready Export</h4>
         </div>
         <p>Automated export in PDF/A, XML, and internationally recognized legal formats with complete chain of custody documentation — ready for submission to international tribunals.</p>
@@ -152,7 +188,7 @@
 </section>
 
 
-<div class="vault-metrics">
+<div class="vault-metrics" id="vault-metrics">
   <div class="vault-metric reveal">
     <div class="vault-metric__label">Encryption</div>
     <div class="vault-metric__val">AES-256</div>
@@ -176,7 +212,7 @@
 </div>
 
 
-<section class="vault-compliance">
+<section class="vault-compliance" id="vault-compliance">
   <div class="vault-compliance__header">
     <span class="label-mono reveal">Built for Accountability</span>
     <h2 class="reveal reveal-d1">Designed for<br/>international justice.</h2>
@@ -248,6 +284,9 @@
     </form>
   </div>
 </section>
+
+  </div><!-- /.vault-console__main -->
+</div><!-- /.vault-console -->
 
 
 <footer>
@@ -341,6 +380,23 @@
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
 })();
+// Rail scroll-spy
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.vault-rail__index a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var sections = [];
+  links.forEach(function (a) {
+    var sec = document.getElementById(a.getAttribute('href').slice(1));
+    if (sec) sections.push(sec);
+  });
+  var setActive = function (id) {
+    links.forEach(function (a) { a.classList.toggle('is-active', a.getAttribute('href') === '#' + id); });
+  };
+  var spy = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) setActive(e.target.id); });
+  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+  sections.forEach(function (sec) { spy.observe(sec); });
+})();
 // Vault Access form
 (function () {
   var form = document.getElementById('vaultAccessForm');
@@ -355,12 +411,12 @@
     if (!email) { setMsg('Please enter your email address.','#ff453a'); if(btn) btn.disabled=false; return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setMsg('Please enter a valid email address.','#ff453a'); if(btn) btn.disabled=false; return; }
     if (!window.grecaptcha || !window.grecaptcha.getResponse()) { setMsg('Please complete the reCAPTCHA.','#ff453a'); if(btn) btn.disabled=false; return; }
-    setMsg('Sending…','#d4a017');
+    setMsg('Sending…','#2997ff');
     try {
       if (typeof window.saveVaultInquiry !== 'function') throw new Error('Service unavailable. Please try again later.');
       var result = await window.saveVaultInquiry({ email: email });
       if (result && result.ok === false) throw new Error(result.error || 'Submission failed.');
-      setMsg('Request submitted. We\'ll be in touch shortly.','#d4a017');
+      setMsg('Request submitted. We\'ll be in touch shortly.','#2997ff');
       form.reset();
     } catch(err) {
       setMsg(err.message || 'Something went wrong. Please try again.','#ff453a');
