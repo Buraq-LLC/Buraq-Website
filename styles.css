@@ -1898,10 +1898,6 @@ footer {
   background: var(--blue); box-shadow: 0 0 8px rgba(41,151,255,0.8);
   animation: blink 1.4s ease-in-out infinite;
 }
-.vault-rail__hash {
-  font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.02em;
-  color: rgba(41,151,255,0.5); word-break: break-all; line-height: 1.5;
-}
 
 .vault-hero {
   min-height: 100vh; display: flex; align-items: center; justify-content: center;
@@ -2229,7 +2225,6 @@ footer {
     margin: 0 0 0 auto; padding: 0; border: none;
     flex-direction: row; align-items: center; gap: 14px;
   }
-  .vault-rail__hash { display: none; }
   .vault-console__main > [id] { scroll-margin-top: 116px; }
 }
 

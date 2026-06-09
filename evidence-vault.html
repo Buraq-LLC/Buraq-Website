@@ -93,7 +93,6 @@
     <div class="vault-rail__status">
       <div class="vault-rail__status-row"><span class="vault-rail__dot"></span> SECURE</div>
       <div class="vault-rail__status-row vault-rail__status-meta">AES-256 · SHA-256</div>
-      <code class="vault-rail__hash" id="liveHash">sha256:0000000000000000 ✓</code>
     </div>
   </aside>
 
@@ -442,13 +441,6 @@
     html += '</div>';
   }
   container.innerHTML = html;
-  // Animate live hash display
-  var liveEl = document.getElementById('liveHash');
-  if (liveEl) {
-    setInterval(function () {
-      liveEl.textContent = randHash(48) + ' ✓ verified';
-    }, 2400);
-  }
 })();
 </script>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
