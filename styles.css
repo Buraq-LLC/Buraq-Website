@@ -2018,10 +2018,6 @@ footer {
   font-family: var(--mono); font-size: 0.82rem; font-weight: 700;
   letter-spacing: 0.12em; color: #fff;
 }
-.vault-record__hash {
-  font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.02em;
-  color: rgba(41,151,255,0.55);
-}
 .vault-record__stamp {
   margin-left: auto;
   font-family: var(--mono); font-size: 0.6rem; font-weight: 700;
